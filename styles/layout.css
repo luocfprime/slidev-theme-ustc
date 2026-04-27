@@ -333,7 +333,8 @@
 }
 
 /* ─── Content subtitle slot ──────────────────────────────────────────────── */
-.slidev-layout.content .content-subtitle {
+.slidev-layout.content .content-subtitle,
+.slidev-layout.split .content-subtitle {
   font-size: var(--ustc-fs-subtitle);
   color: var(--ustc-text-muted);
   line-height: 1.4;
@@ -341,33 +342,39 @@
   margin-bottom: 0.8rem;
 }
 
-.slidev-layout.content .content-subtitle p {
+.slidev-layout.content .content-subtitle p,
+.slidev-layout.split .content-subtitle p {
   margin: 0;
   font-size: inherit;
   color: inherit;
   line-height: inherit;
 }
 
-.slidev-layout.content.dense .content-subtitle {
+.slidev-layout.content.dense .content-subtitle,
+.slidev-layout.split.dense .content-subtitle {
   font-size: var(--ustc-fs-subtitle-dense);
 }
 
 /* Reorder subtitle to appear immediately after h1, before body.
    Requires :has() — Chrome 105+ / modern Chromium for PDF export. */
-.slidev-layout.content:has(.content-subtitle) {
+.slidev-layout.content:has(.content-subtitle),
+.slidev-layout.split:has(.content-subtitle) {
   display: flex;
   flex-direction: column;
 }
 
-.slidev-layout.content:has(.content-subtitle) > h1 {
+.slidev-layout.content:has(.content-subtitle) > h1,
+.slidev-layout.split:has(.content-subtitle) > h1 {
   order: 1;
 }
 
-.slidev-layout.content:has(.content-subtitle) > .content-subtitle {
+.slidev-layout.content:has(.content-subtitle) > .content-subtitle,
+.slidev-layout.split:has(.content-subtitle) > .content-subtitle {
   order: 2;
 }
 
-.slidev-layout.content:has(.content-subtitle) > *:not(h1):not(.content-subtitle) {
+.slidev-layout.content:has(.content-subtitle) > *:not(h1):not(.content-subtitle),
+.slidev-layout.split:has(.content-subtitle) > *:not(h1):not(.content-subtitle) {
   order: 3;
 }
 
