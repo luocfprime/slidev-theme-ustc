@@ -58,8 +58,8 @@ const figureMap = computed((): Map<number, number> => {
   const map = new Map<number, number>()
   let globalNum = 1
   for (const slide of slides) {
-    const content: string =
-      slide.source?.content ?? slide.content ?? ''
+    const content: string = slide.source?.content ?? slide.content ?? ''
+    // TODO: also match kebab-case <figure-block> usage
     const count = (content.match(/<FigureBlock\b/g) ?? []).length
     if (count > 0) {
       map.set(slide.no, globalNum)
@@ -74,8 +74,8 @@ const tableMap = computed((): Map<number, number> => {
   const map = new Map<number, number>()
   let globalNum = 1
   for (const slide of slides) {
-    const content: string =
-      slide.source?.content ?? slide.content ?? ''
+    const content: string = slide.source?.content ?? slide.content ?? ''
+    // TODO: also match kebab-case <table-block> usage
     const count = (content.match(/<TableBlock\b/g) ?? []).length
     if (count > 0) {
       map.set(slide.no, globalNum)
@@ -110,7 +110,7 @@ const visible = computed(() => {
     s?.meta?.slide?.frontmatter?.sectionBar ??
     s?.meta?.frontmatter?.sectionBar ??
     s?.meta?.sectionBar
-  const locallyDisabled = barVal === false || barVal === 'false'
+  const locallyDisabled = barVal === false
   return (
     enabled &&
     sections.value.length > 0 &&

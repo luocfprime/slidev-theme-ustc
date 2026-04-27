@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 const props = withDefaults(defineProps<{
   type?: 'note' | 'tip' | 'warning' | 'important' | 'example'
   title?: string
@@ -15,14 +17,14 @@ const iconMap: Record<string, string> = {
   example:   'i-mdi-beaker-outline',
 }
 
-const icon = iconMap[props.type] ?? 'i-mdi-information-outline'
+const icon = computed(() => iconMap[props.type] ?? 'i-mdi-information-outline')
 </script>
 
 <template>
   <div class="callout" :class="`callout-${type}`">
     <span class="callout-icon" :class="icon" aria-hidden="true" />
     <div class="callout-body">
-      <p v-if="title" class="callout-title">{{ title }}</p>
+      <div v-if="title" class="callout-title">{{ title }}</div>
       <slot />
     </div>
   </div>
@@ -68,8 +70,8 @@ const icon = iconMap[props.type] ?? 'i-mdi-information-outline'
 
 .callout-title {
   font-weight: 650;
-  margin: 0 0 0.15rem !important;
-  font-size: 1.1rem !important;
+  margin: 0 0 0.15rem;
+  font-size: 1.1rem;
 }
 
 /* note — blue */

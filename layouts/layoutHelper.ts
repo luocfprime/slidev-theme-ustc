@@ -14,7 +14,6 @@ export function handleBackground(background?: string, dim = false, opacity = 0.5
 
   const style: CSSProperties = {
     background: isColor ? background : undefined,
-    color: background && !isColor ? 'black' : undefined,
     backgroundImage: isColor
       ? undefined
       : background

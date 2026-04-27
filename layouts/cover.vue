@@ -25,8 +25,10 @@ const props = withDefaults(defineProps<{
 
 const bgStyle = computed(() => handleBackground(props.background, true, 1.0))
 const presenterName = computed(() => getPresenterName(props.authors))
-const [authorsDict, instituteList] = handleAuthor(props.authors)
-const authorKeys = props.authors.map(a => Object.keys(a)[0])
+const authorData = computed(() => handleAuthor(props.authors))
+const authorsDict = computed(() => authorData.value[0])
+const instituteList = computed(() => authorData.value[1])
+const authorKeys = computed(() => props.authors.map(a => Object.keys(a)[0]))
 </script>
 
 <template>

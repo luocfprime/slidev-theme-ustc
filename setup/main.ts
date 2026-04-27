@@ -28,7 +28,11 @@ export default async function setup({ router }: AppContext) {
     })
   }
 
-  const schedule = () => requestAnimationFrame(applyTooltips)
+  let rafHandle = 0
+  const schedule = () => {
+    cancelAnimationFrame(rafHandle)
+    rafHandle = requestAnimationFrame(applyTooltips)
+  }
   schedule()
   // Guard against HMR cold-start where router may not be ready yet
   router?.afterEach(() => nextTick(schedule))

@@ -1,10 +1,6 @@
-<script lang="ts">
-let _tableMapPromise: Promise<Map<number, number>> | null = null
-</script>
-
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
-import { useNav, useSlideContext } from '@slidev/client'
+import { computed, ref, onMounted, inject, type Ref } from 'vue'
+import { useSlideContext } from '@slidev/client'
 
 const props = withDefaults(defineProps<{
   caption?: string
@@ -20,54 +16,28 @@ const props = withDefaults(defineProps<{
   number: 0,
 })
 
-const { slides } = useNav()
 const { $page } = useSlideContext()
 
-const globalPrefix = computed(() => {
-  const fm = (slides.value[0] as any)?.meta?.slide?.frontmatter
-  return (fm?.tablePrefix as string) ?? 'Table'
-})
-
-function buildTableMap(): Promise<Map<number, number>> {
-  if (_tableMapPromise) return _tableMapPromise
-  _tableMapPromise = (async () => {
-    const map = new Map<number, number>()
-    const allSlides = slides.value ?? []
-    let globalNum = 1
-    for (const slide of allSlides) {
-      const no = (slide as any).no as number
-      try {
-        const res = await fetch(`/__slidev/slides/${no}.json`)
-        if (res.ok) {
-          const info = await res.json()
-          const content: string = info.content ?? ''
-          const count = (content.match(/<TableBlock\b/g) ?? []).length
-          if (count > 0) {
-            map.set(no, globalNum)
-            globalNum += count
-          }
-        }
-      } catch {}
-    }
-    return map
-  })()
-  return _tableMapPromise!
-}
+const tableMapRef = inject<Ref<Map<number, number>>>('ustcTableMap', ref(new Map()))
+const globalPrefix = inject<string>('ustcTablePrefix', 'Table')
 
 const el = ref<HTMLElement>()
-const autoNumber = ref(0)
+const localIdx = ref(0)
 
-onMounted(async () => {
+onMounted(() => {
   if (props.number > 0) return
-  const map = await buildTableMap()
   const slideEl = el.value?.closest('.slidev-page') ?? el.value?.closest('.slidev-layout')
   const allTables = Array.from(slideEl?.querySelectorAll('.table-block') ?? [])
-  const localIdx = allTables.indexOf(el.value!)
-  const startNum = map.get($page.value) ?? 1
-  autoNumber.value = startNum + (localIdx >= 0 ? localIdx : 0)
+  localIdx.value = Math.max(0, allTables.indexOf(el.value!))
 })
 
-const displayPrefix = computed(() => props.prefix || globalPrefix.value)
+const autoNumber = computed(() => {
+  if (props.number > 0) return 0
+  const startNum = tableMapRef.value.get($page.value) ?? 0
+  return startNum ? startNum + localIdx.value : 0
+})
+
+const displayPrefix = computed(() => props.prefix || globalPrefix)
 
 const fullCaption = computed(() => {
   const num = props.number > 0 ? props.number : autoNumber.value

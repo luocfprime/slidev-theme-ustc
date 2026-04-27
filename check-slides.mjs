@@ -1,5 +1,5 @@
-import pkg from '/Users/chaofanluo/.npm/_npx/e41f203b7505f1fb/node_modules/playwright/index.js'
-const { chromium } = pkg
+// TODO: ensure @playwright/test is in devDependencies (`pnpm add -D @playwright/test`)
+import { chromium } from '@playwright/test'
 
 const BASE = 'http://localhost:3030'
 

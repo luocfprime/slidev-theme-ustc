@@ -217,6 +217,7 @@
 .slidev-layout.blank {
   height: 100%;
   overflow: hidden;
+  position: relative;
 }
 
 /* ─── Backup ─────────────────────────────────────────────────────────────── */
@@ -450,6 +451,19 @@
 .slidev-layout.content.dense blockquote,
 .slidev-layout.split.dense blockquote {
   font-size: 1rem;
+}
+
+/* Callout body text must scale with dense mode (component scoped styles otherwise win) */
+.slidev-layout.content.dense .callout .callout-body p,
+.slidev-layout.content.dense .callout .callout-body li,
+.slidev-layout.content .dense .callout .callout-body p,
+.slidev-layout.content .dense .callout .callout-body li,
+.slidev-layout.split.dense .callout .callout-body p,
+.slidev-layout.split.dense .callout .callout-body li,
+.slidev-layout.split .dense .callout .callout-body p,
+.slidev-layout.split .dense .callout .callout-body li {
+  font-size: 0.95rem;
+  line-height: var(--ustc-lh, 1.38);
 }
 
 /* Tables */

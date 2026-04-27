@@ -5,6 +5,7 @@ const props = defineProps<{
   x: string
   y: string
   w?: string
+  z?: number
 }>()
 
 const style = computed(() => ({
@@ -12,7 +13,7 @@ const style = computed(() => ({
   left: props.x,
   top: props.y,
   width: props.w ?? 'auto',
-  zIndex: 10,
+  zIndex: props.z ?? 10,
 }))
 </script>
 

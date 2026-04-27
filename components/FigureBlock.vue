@@ -1,12 +1,6 @@
-<script lang="ts">
-// Module-level cache shared across all FigureBlock instances
-let _figureMapPromise: Promise<Map<number, number>> | null = null
-export function resetFigureMap() { _figureMapPromise = null }
-</script>
-
 <script setup lang="ts">
-import { computed, ref, onMounted } from 'vue'
-import { useNav, useSlideContext } from '@slidev/client'
+import { computed, ref, onMounted, inject, type Ref } from 'vue'
+import { useSlideContext } from '@slidev/client'
 
 const props = withDefaults(defineProps<{
   src: string
@@ -37,54 +31,28 @@ const captionStyle = computed(() => ({
   textAlign: props.captionAlign,
 }))
 
-const { slides } = useNav()
 const { $page } = useSlideContext()
 
-const globalPrefix = computed(() => {
-  const fm = (slides.value[0] as any)?.meta?.slide?.frontmatter
-  return (fm?.figurePrefix as string) ?? 'Figure'
-})
-
-function buildFigureMap(): Promise<Map<number, number>> {
-  if (_figureMapPromise) return _figureMapPromise
-  _figureMapPromise = (async () => {
-    const map = new Map<number, number>()
-    const allSlides = slides.value ?? []
-    let globalNum = 1
-    for (const slide of allSlides) {
-      const no = (slide as any).no as number
-      try {
-        const res = await fetch(`/__slidev/slides/${no}.json`)
-        if (res.ok) {
-          const info = await res.json()
-          const content: string = info.content ?? ''
-          const count = (content.match(/<FigureBlock\b/g) ?? []).length
-          if (count > 0) {
-            map.set(no, globalNum)
-            globalNum += count
-          }
-        }
-      } catch {}
-    }
-    return map
-  })()
-  return _figureMapPromise!
-}
+const figureMapRef = inject<Ref<Map<number, number>>>('ustcFigureMap', ref(new Map()))
+const globalPrefix = inject<string>('ustcFigurePrefix', 'Figure')
 
 const el = ref<HTMLElement>()
-const autoNumber = ref(0)
+const localIdx = ref(0)
 
-onMounted(async () => {
+onMounted(() => {
   if (props.number > 0) return
-  const map = await buildFigureMap()
   const slideEl = el.value?.closest('.slidev-page') ?? el.value?.closest('.slidev-layout')
   const allFigures = Array.from(slideEl?.querySelectorAll('.figure-block') ?? [])
-  const localIdx = allFigures.indexOf(el.value!)
-  const startNum = map.get($page.value) ?? 1
-  autoNumber.value = startNum + (localIdx >= 0 ? localIdx : 0)
+  localIdx.value = Math.max(0, allFigures.indexOf(el.value!))
 })
 
-const displayPrefix = computed(() => props.prefix || globalPrefix.value)
+const autoNumber = computed(() => {
+  if (props.number > 0) return 0
+  const startNum = figureMapRef.value.get($page.value) ?? 0
+  return startNum ? startNum + localIdx.value : 0
+})
+
+const displayPrefix = computed(() => props.prefix || globalPrefix)
 
 const fullCaption = computed(() => {
   const num = props.number > 0 ? props.number : autoNumber.value
