@@ -51,7 +51,8 @@ const hasHighlight = computed(() => props.highlight > 0)
 
 const autoFontSize = computed(() => {
   const n = sections.value.length || 1
-  const size = Math.min(1.9, Math.max(1.0, 12 / n))
+  const rows = Math.ceil(n / props.columns)
+  const size = Math.min(1.9, Math.max(1.0, 12 / rows))
   return `${size.toFixed(2)}rem`
 })
 </script>
