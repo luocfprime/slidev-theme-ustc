@@ -1,46 +1,39 @@
 <script setup lang="ts">
-import { computed, ref, onMounted, inject, type Ref } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useSlideContext } from '@slidev/client'
+import { renderInlineMd } from '../utils/markdown'
+import { tableDefaults } from '../defaults'
+import { tableMapShared, tablePrefixShared } from '../utils/numbering'
 
 const props = withDefaults(defineProps<{
   caption?: string
   captionAlign?: 'left' | 'center'
   width?: string
   prefix?: string
-  number?: number
 }>(), {
-  caption: '',
-  captionAlign: 'center',
-  width: '100%',
-  prefix: '',
-  number: 0,
+  ...tableDefaults,
 })
 
 const { $page } = useSlideContext()
-
-const tableMapRef = inject<Ref<Map<number, number>>>('ustcTableMap', ref(new Map()))
-const globalPrefix = inject<string>('ustcTablePrefix', 'Table')
 
 const el = ref<HTMLElement>()
 const localIdx = ref(0)
 
 onMounted(() => {
-  if (props.number > 0) return
   const slideEl = el.value?.closest('.slidev-page') ?? el.value?.closest('.slidev-layout')
   const allTables = Array.from(slideEl?.querySelectorAll('.table-block') ?? [])
   localIdx.value = Math.max(0, allTables.indexOf(el.value!))
 })
 
 const autoNumber = computed(() => {
-  if (props.number > 0) return 0
-  const startNum = tableMapRef.value.get($page.value) ?? 0
+  const startNum = tableMapShared.value.get($page.value) ?? 0
   return startNum ? startNum + localIdx.value : 0
 })
 
-const displayPrefix = computed(() => props.prefix || globalPrefix)
+const displayPrefix = computed(() => props.prefix || tablePrefixShared.value)
 
 const fullCaption = computed(() => {
-  const num = props.number > 0 ? props.number : autoNumber.value
+  const num = autoNumber.value
   if (!num && !props.caption) return ''
   if (!num) return props.caption
   const label = `${displayPrefix.value} ${num}`
@@ -50,9 +43,7 @@ const fullCaption = computed(() => {
 
 <template>
   <div ref="el" class="table-block" :style="{ width }">
-    <p v-if="fullCaption" class="table-block-caption" :style="{ textAlign: captionAlign }">
-      {{ fullCaption }}
-    </p>
+    <p v-if="fullCaption" class="table-block-caption" :style="{ textAlign: captionAlign }" v-html="renderInlineMd(fullCaption)" />
     <slot />
   </div>
 </template>

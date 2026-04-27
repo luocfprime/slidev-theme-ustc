@@ -212,7 +212,9 @@
 
 .slidev-layout.toc .toc-list.toc-two-col {
   display: grid;
+  grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(var(--toc-rows, 1), auto);
   gap: 0.4rem 1.5rem;
 }
 

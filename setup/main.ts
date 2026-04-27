@@ -1,5 +1,6 @@
 import type { AppContext } from '@slidev/types'
 import { nextTick } from 'vue'
+import 'katex/dist/katex.min.css'
 
 export default async function setup({ router }: AppContext) {
   const applyTooltips = () => {

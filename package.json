@@ -19,11 +19,15 @@
     "export": "slidev export example.md"
   },
   "dependencies": {
+    "katex": "^0.16.45",
+    "markdown-it": "^14.1.1",
     "plotly.js-dist": "^3.5.0"
   },
   "devDependencies": {
     "@iconify-json/mdi": "^1.2.3",
     "@slidev/cli": "^52.14.2",
+    "@types/katex": "^0.16.8",
+    "@types/markdown-it": "^14.1.2",
     "qrcode.vue": "^3.9.0",
     "vite": "^7.0.0"
   },

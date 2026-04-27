@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { renderInlineMd } from '../utils/markdown'
+import { calloutDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   type?: 'note' | 'tip' | 'warning' | 'important' | 'example'
   title?: string
 }>(), {
-  type: 'note',
-  title: '',
+  ...calloutDefaults,
 })
 
 const iconMap: Record<string, string> = {
@@ -18,13 +19,14 @@ const iconMap: Record<string, string> = {
 }
 
 const icon = computed(() => iconMap[props.type] ?? 'i-mdi-information-outline')
+const hasTitle = computed(() => props.title.trim().length > 0)
 </script>
 
 <template>
   <div class="callout" :class="`callout-${type}`">
-    <span class="callout-icon" :class="icon" aria-hidden="true" />
+    <span v-if="hasTitle" class="callout-icon" :class="icon" aria-hidden="true" />
     <div class="callout-body">
-      <div v-if="title" class="callout-title">{{ title }}</div>
+      <div v-if="hasTitle" class="callout-title" v-html="renderInlineMd(title)" />
       <slot />
     </div>
   </div>

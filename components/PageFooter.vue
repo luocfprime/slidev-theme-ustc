@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
+import { renderInlineMd } from '../utils/markdown'
 
 defineProps<{
   title?: string
@@ -37,16 +38,16 @@ const pageLabel = computed(() => {
 <template>
   <div class="page-footer">
     <span class="footer-left">
-      <span v-if="author" class="footer-author">{{ author }}</span>
+      <span v-if="author" class="footer-author" v-html="renderInlineMd(author)" />
     </span>
 
     <span class="footer-center">
-      <span v-if="mode === 'full' && title">{{ title }}</span>
+      <span v-if="mode === 'full' && title" v-html="renderInlineMd(title)" />
     </span>
 
     <span class="footer-right">
       <template v-if="mode === 'full'">
-        <span v-if="meeting" class="footer-meta">{{ meeting }}</span>
+        <span v-if="meeting" class="footer-meta" v-html="renderInlineMd(meeting)" />
         <span v-if="meeting" class="footer-sep" aria-hidden="true">·</span>
         <span v-if="date" class="footer-meta">{{ date }}</span>
         <span v-if="date" class="footer-sep" aria-hidden="true">·</span>

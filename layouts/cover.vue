@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { handleBackground, handleAuthor, getPresenterName } from './layoutHelper'
+import { logoDefaults } from '../defaults'
+import { renderInlineMd } from '../utils/markdown'
 
 const props = withDefaults(defineProps<{
   background?: string
@@ -19,8 +21,7 @@ const props = withDefaults(defineProps<{
   talkTitle: 'Presentation Title',
   date: '',
   showLogo: true,
-  logoSrc: '/ustc/logo.svg',
-  logoAlt: 'USTC logo',
+  ...logoDefaults,
 })
 
 const bgStyle = computed(() => handleBackground(props.background, true, 1.0))
@@ -40,8 +41,8 @@ const authorKeys = computed(() => props.authors.map(a => Object.keys(a)[0]))
       class="cover-logo"
     />
 
-    <h1>{{ props.talkTitle }}</h1>
-    <p v-if="props.subtitle" class="cover-subtitle">{{ props.subtitle }}</p>
+    <h1 v-html="renderInlineMd(props.talkTitle)" />
+    <p v-if="props.subtitle" class="cover-subtitle" v-html="renderInlineMd(props.subtitle)" />
 
     <template v-if="authorKeys.length">
       <p class="cover-author-line">
@@ -58,7 +59,7 @@ const authorKeys = computed(() => props.authors.map(a => Object.keys(a)[0]))
       </p>
     </template>
     <p v-if="props.date" class="cover-date">{{ props.date }}</p>
-    <p v-if="props.conference" class="cover-meeting">{{ props.conference }}</p>
+    <p v-if="props.conference" class="cover-meeting" v-html="renderInlineMd(props.conference)" />
 
     <div v-if="$slots.default" class="cover-slot">
       <slot />

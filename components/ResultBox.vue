@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { renderInlineMd } from '../utils/markdown'
 defineProps<{
   title?: string
 }>()
@@ -6,7 +7,7 @@ defineProps<{
 
 <template>
   <div class="result-box">
-    <p v-if="title" class="result-box-title">{{ title }}</p>
+    <p v-if="title" class="result-box-title" v-html="renderInlineMd(title)" />
     <div class="result-box-body">
       <slot />
     </div>

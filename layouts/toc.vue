@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getPresenterName } from './layoutHelper'
+import { renderInlineMd } from '../utils/markdown'
+import { footerDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   highlight?: number
@@ -8,10 +10,9 @@ const props = withDefaults(defineProps<{
   footerMode?: 'full' | 'minimal'
   columns?: 1 | 2
 }>(), {
+  ...footerDefaults,
   highlight: 0,
-  footer: true,
-  footerMode: 'full',
-  columns: 1,
+  columns: 1 as 1 | 2,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
@@ -55,13 +56,15 @@ const autoFontSize = computed(() => {
   const size = Math.min(1.9, Math.max(1.0, 12 / rows))
   return `${size.toFixed(2)}rem`
 })
+
+const tocRows = computed(() => Math.ceil((sections.value.length || 1) / props.columns))
 </script>
 
 <template>
   <div class="slidev-layout toc">
     <slot />
 
-    <ol class="toc-list" :class="{ 'toc-two-col': columns === 2 }" :style="{ '--toc-fs': autoFontSize }">
+    <ol class="toc-list" :class="{ 'toc-two-col': columns === 2 }" :style="{ '--toc-fs': autoFontSize, '--toc-rows': tocRows }">
       <li
         v-for="entry in sections"
         :key="entry.index"
@@ -72,7 +75,7 @@ const autoFontSize = computed(() => {
         }"
         @click="$slidev.nav.go(entry.no)"
       >
-        <span class="toc-label">{{ entry.title }}</span>
+        <span class="toc-label" v-html="renderInlineMd(entry.title)" />
       </li>
     </ol>
 

@@ -429,7 +429,7 @@ highlight: 0
 
 # 目录（columns: 2）
 
-`columns: 2` 将条目排为两列，适合章节数量较多时使用。
+`columns: 2` 将条目排为两列，并按列优先填充：左列从上到下排列前半部分，右列排列后半部分。
 
 ---
 layout: section

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import QrcodeVue from 'qrcode.vue'
+import { renderInlineMd } from '../utils/markdown'
 
 withDefaults(defineProps<{
   url: string
@@ -25,7 +26,7 @@ withDefaults(defineProps<{
       render-as="svg"
       class="ustc-qrcode"
     />
-    <figcaption v-if="caption" class="ustc-qrcode-caption">{{ caption }}</figcaption>
+    <figcaption v-if="caption" class="ustc-qrcode-caption" v-html="renderInlineMd(caption)" />
   </figure>
 </template>
 

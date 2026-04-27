@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getPresenterName } from './layoutHelper'
+import { footerDefaults, logoDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   showLogo?: boolean
@@ -10,10 +11,8 @@ const props = withDefaults(defineProps<{
   footerMode?: 'full' | 'minimal'
 }>(), {
   showLogo: false,
-  logoSrc: '/ustc/logo.svg',
-  logoAlt: 'USTC logo',
-  footer: true,
-  footerMode: 'full',
+  ...logoDefaults,
+  ...footerDefaults,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))

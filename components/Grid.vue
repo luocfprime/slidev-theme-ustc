@@ -1,14 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { gridDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   cols?: string
   gap?: 'sm' | 'md' | 'lg'
   align?: 'top' | 'center' | 'bottom'
 }>(), {
-  cols: '2',
-  gap: 'md',
-  align: 'top',
+  ...gridDefaults,
 })
 
 const gridStyle = computed(() => {

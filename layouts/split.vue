@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import { getPresenterName } from './layoutHelper'
+import { bodyDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   density?: 'normal' | 'dense'
@@ -13,13 +14,9 @@ const props = withDefaults(defineProps<{
   lineHeight?: number
   align?: 'left' | 'center' | 'right' | 'justify'
 }>(), {
-  density: 'normal',
-  footer: true,
-  footerMode: 'full',
+  ...bodyDefaults,
   ratio: '2:1',
-  footnote: 'overlay',
-  gap: 'md',
-  sectionBar: true,
+  gap: 'md' as 'sm' | 'md' | 'lg',
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getPresenterName } from './layoutHelper'
+import { footerDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   footer?: boolean
   footerMode?: 'full' | 'minimal'
 }>(), {
-  footer: true,
-  footerMode: 'full',
+  ...footerDefaults,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))

@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getPresenterName } from './layoutHelper'
+import { renderInlineMd } from '../utils/markdown'
+import { bodyDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   density?: 'normal' | 'dense'
@@ -12,11 +14,7 @@ const props = withDefaults(defineProps<{
   align?: 'left' | 'center' | 'right' | 'justify'
   subtitle?: string
 }>(), {
-  density: 'normal',
-  footer: true,
-  footerMode: 'full',
-  footnote: 'overlay',
-  sectionBar: true,
+  ...bodyDefaults,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
@@ -39,7 +37,7 @@ const pageStyle = computed(() => {
   <div class="slidev-layout content" :class="pageClass" :style="pageStyle">
     <slot />
 
-    <div v-if="props.subtitle" class="content-subtitle">{{ props.subtitle }}</div>
+    <div v-if="props.subtitle" class="content-subtitle" v-html="renderInlineMd(props.subtitle)" />
 
     <PageFooter
       v-if="props.footer"

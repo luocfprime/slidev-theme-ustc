@@ -1,5 +1,11 @@
 <script setup lang="ts">
-import { computed, watchEffect, provide } from 'vue'
+import { computed, watchEffect } from 'vue'
+import {
+  figureMapShared,
+  tableMapShared,
+  figurePrefixShared,
+  tablePrefixShared,
+} from './utils/numbering'
 
 const enabled = $slidev.configs.sectionBar === true
 
@@ -11,6 +17,14 @@ interface SectionGroup {
 
 function getLayout(slide: any): string {
   return slide?.frontmatter?.layout ?? slide?.meta?.layout ?? slide?.meta?.frontmatter?.layout ?? ''
+}
+
+function getContent(slide: any): string {
+  return slide?.source?.content ?? slide?.content ?? slide?.meta?.slide?.content ?? ''
+}
+
+function countComponentTags(content: string, pascalName: string, kebabName: string): number {
+  return (content.match(new RegExp(`<(?:${pascalName}|${kebabName})\\b`, 'g')) ?? []).length
 }
 
 const sections = computed((): SectionGroup[] => {
@@ -51,16 +65,12 @@ const backupStartNo = computed((): number => {
   return 0
 })
 
-provide('ustcBackupStartNo', backupStartNo)
-
 const figureMap = computed((): Map<number, number> => {
   const slides = $slidev.nav.slides ?? []
   const map = new Map<number, number>()
   let globalNum = 1
   for (const slide of slides) {
-    const content: string = slide.source?.content ?? slide.content ?? ''
-    // TODO: also match kebab-case <figure-block> usage
-    const count = (content.match(/<FigureBlock\b/g) ?? []).length
+    const count = countComponentTags(getContent(slide), 'FigureBlock', 'figure-block')
     if (count > 0) {
       map.set(slide.no, globalNum)
       globalNum += count
@@ -74,9 +84,7 @@ const tableMap = computed((): Map<number, number> => {
   const map = new Map<number, number>()
   let globalNum = 1
   for (const slide of slides) {
-    const content: string = slide.source?.content ?? slide.content ?? ''
-    // TODO: also match kebab-case <table-block> usage
-    const count = (content.match(/<TableBlock\b/g) ?? []).length
+    const count = countComponentTags(getContent(slide), 'TableBlock', 'table-block')
     if (count > 0) {
       map.set(slide.no, globalNum)
       globalNum += count
@@ -85,10 +93,12 @@ const tableMap = computed((): Map<number, number> => {
   return map
 })
 
-provide('ustcFigureMap', figureMap)
-provide('ustcTableMap', tableMap)
-provide('ustcFigurePrefix', ($slidev.configs.figurePrefix as string) ?? 'Figure')
-provide('ustcTablePrefix', ($slidev.configs.tablePrefix as string) ?? 'Table')
+watchEffect(() => {
+  figureMapShared.value = figureMap.value
+  tableMapShared.value = tableMap.value
+  figurePrefixShared.value = ($slidev.configs.figurePrefix as string) ?? 'Figure'
+  tablePrefixShared.value = ($slidev.configs.tablePrefix as string) ?? 'Table'
+})
 
 const currentPage = computed(() => $slidev.nav.currentPage)
 

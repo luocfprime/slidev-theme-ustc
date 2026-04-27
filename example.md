@@ -2,24 +2,25 @@
 theme: ./
 layout: cover
 authors:
-  - 演讲者: ["中国科学技术大学"]
-  - 合作者 A: ["中国科学技术大学"]
-  - 合作者 B: ["清华大学"]
-conference: "An Example Conference"
-talkTitle: "USTC Slidev 主题"
-subtitle: "面向 USTC 学术报告的 Slidev 主题"
-date: "2026 年 4 月 26 日"
+  - 张明远: ["中国科学技术大学", "ATLAS 合作组"]
+  - A. Müller: ["CERN"]
+  - 李晓彤: ["中国科学技术大学"]
+conference: "第 22 届高能物理前沿研讨会"
+talkTitle: "基于图神经网络的对撞机事例重建"
+subtitle: "从稀疏点云到粒子流的端到端学习"
+date: "2026 年 4 月"
 sectionBar: true
-sectionBarMode: full
 figurePrefix: "图"
 tablePrefix: "表"
 ---
 
-一套面向 USTC 学术报告、组会汇报和学术讲座的 Slidev 主题。
-封面内容区可放简短摘要、公告或感谢语。
+大型强子对撞机产生的每次碰撞事例包含数千条粒子径迹。
+传统基于启发式的重建算法在高亮度 LHC 环境下面临严峻挑战——
+本报告提出一种端到端图神经网络框架，显著提升重建效率与精度。
 
 ---
 layout: toc
+columns: 2
 highlight: 0
 ---
 
@@ -27,6 +28,7 @@ highlight: 0
 
 ---
 layout: toc
+columns: 2
 highlight: 1
 ---
 
@@ -36,415 +38,443 @@ highlight: 1
 layout: section
 ---
 
-# 一、布局系统
-`cover` · `toc` · `section` · `content` · `split` · `blank` · `end` · `backup`
+# 一、研究背景
+
+高亮度 LHC 下的事例重建挑战
 
 ---
 layout: content
+subtitle: "为什么传统方法在 HL-LHC 不够用？"
 ---
 
-# content 布局
+# 研究动机
 
-`density: normal`（默认），字号 `1.4rem`，行高 `1.47`。
+大型强子对撞机（LHC）每秒产生约 $10^9$ 次质子-质子碰撞，Run 3 及高亮度 LHC（HL-LHC）阶段的堆积（pileup）事例数将从 $\langle\mu\rangle \approx 50$ 升至 $\langle\mu\rangle \approx 200$。
 
-- 列表条目：默认间距
-- 第二条：可见间隔
-  - 嵌套列表
-  - 也支持多级
+传统 Kalman Filter 径迹拟合算法的计算复杂度为 $\mathcal{O}(n^2)$，随堆积增加急剧膨胀：
 
-内联代码：`const x = 42`，**粗体**，*斜体*，~~删除线~~
+$$t_\text{reco} \propto \langle\mu\rangle^2 \cdot n_\text{hits}$$
+
+<Callout type="important" title="核心挑战">
+
+当 $\langle\mu\rangle = 200$ 时，单次事例重建耗时将超过 10 分钟，远超在线触发预算（$\leq 4\,\text{s}$）。
+
+</Callout>
 
 ---
 layout: content
 density: dense
 ---
 
-# content 布局（dense 模式）
+# 相关工作对比
 
-`density: dense` 将正文字号压缩至 `1.05rem`，适合数据密集型幻灯片。
+<TableBlock caption="主流端到端事例重建方法性能对比（ATLAS Run 2 条件，$\langle\mu\rangle=50$）。" captionAlign="left">
 
-- 条目 A：观测值 $p_T > 30\,\text{GeV}$，满足选择标准
-- 条目 B：信号区间 $m_{jj} \in [1.0, 3.5]\,\text{TeV}$，对应 95% CL 上限
-- 条目 C：本底估计采用 ABCD 方法，系统误差 $< 5\%$
-- 条目 D：最终结果与 SM 预期一致，$p\text{-value} = 0.34$
+| 方法 | 主干网络 | 径迹效率 | 假径迹率 | 推理时间 |
+|------|---------|--------:|--------:|--------:|
+| Kalman Filter [^kf] | — | 98.1% | 0.3% | 820 ms |
+| ACTS [^acts] | — | 97.8% | 0.4% | 310 ms |
+| GNN-Tracking [^gnn1] | GravNet | 96.2% | 1.1% | 42 ms |
+| Exa.TrkX [^exa] | GNN | 97.1% | 0.8% | 28 ms |
+| **本工作** | **HeteroGNN** | **97.9%** | **0.5%** | **18 ms** |
 
-| 样本 | 事例数 | 权重 |
-|------|-------:|-----:|
-| 信号 (MC) | 12 450 | 1.00 |
-| $t\bar{t}$ | 8 320 | 0.94 |
-| W+jets | 4 110 | 1.12 |
-| QCD | 2 890 | 0.87 |
-| 数据 | 28 180 | — |
+</TableBlock>
 
----
-layout: section
----
+效率与速度同时优于现有深度学习方案，同时保持与经典算法相当的假径迹率。
 
-# 二、分栏布局
-`split` 布局：`ratio` · `gap` · `density`
+[^kf]: Frühwirth, *NIM A* **262** (1987) 444.
+[^acts]: Ai et al., *Front. Phys.* **10** (2022) 817828.
+[^gnn1]: Ju et al., *EPJ Web Conf.* **245** (2020) 09013.
+[^exa]: Choma et al., *arXiv:2012.01563* (2020).
 
 ---
 layout: split
-ratio: "2:1"
 ---
 
-# split 2:1（默认）
+# ATLAS 探测器与输入数据
 
 ::left::
 
-左侧占 **2/3** 宽度，适合文字配图。
+输入点云来自 ATLAS 内径迹探测器（Inner Detector），由三个子系统构成：
 
-标准粒子物理 Lagrangian 密度：
+- **Pixel 探测器**（IBL + 3 层）：精确测量靠近碰撞点的径迹起点，空间分辨率 $\sigma_{r\phi} \approx 10\,\mu\text{m}$
+- **SCT**（4 层硅微条）：提供中间层径迹点，$\sigma_{r\phi} \approx 17\,\mu\text{m}$
+- **TRT**（稻草管探测器）：外层 $\sim 350{,}000$ 管，兼做粒子识别
 
-$$
-\mathcal{L}_\text{SM} = -\frac{1}{4}F_{\mu\nu}F^{\mu\nu} + i\bar{\psi}\not\!\!D\psi + |D_\mu\phi|^2 - V(\phi) + y_{ij}\bar{\psi}_i\psi_j\phi
-$$
-
-其中每一项对应：规范场动能、费米子动能、Higgs 动能、Higgs 势、Yukawa 耦合。
+每次事例约产生 $3\text{–}8 \times 10^4$ 个击中点（hits），构建图时节点数 $N_v \sim 10^4$，边数 $N_e \sim 10^6$。
 
 ::right::
 
 <FigureBlock
   src="/ATLAS/ATLAS-Detector.png"
-  alt="ATLAS 探测器"
-  caption="ATLAS 探测器横截面示意图。"
+  alt="ATLAS 探测器横截面"
+  caption="ATLAS 探测器横截面，展示内径迹探测器各子系统位置关系。"
 />
+
+---
+layout: toc
+columns: 2
+highlight: 2
+---
+
+# 目录
+
+---
+layout: section
+---
+
+# 二、方法设计
+
+异构图神经网络框架
+
+---
+layout: content
+density: dense
+---
+
+# 图构建与网络结构
+
+<Grid cols="2" gap="lg" align="top">
+<div>
+
+**图构建**
+
+将探测器击中点映射为图节点 $v_i = (r, \phi, z, \text{layer})$，按几何相邻性构建有向边：
+
+$$
+e_{ij} = 1 \;\text{ if }\; \Delta R_{ij} < \epsilon \;\text{ and }\; r_j > r_i
+$$
+
+**消息传递**（3 轮迭代）：
+
+$$
+h_i^{(l+1)} = \text{MLP}\!\left(h_i^{(l)},\, \bigoplus_{j \in \mathcal{N}(i)} \phi\!\left(h_i^{(l)}, h_j^{(l)}, e_{ij}\right)\right)
+$$
+
+</div>
+<div>
+
+**边分类头**
+
+$$
+\hat{y}_{ij} = \sigma\!\left(W\,[\,h_i \,\|\, h_j\,]\right) \in [0,1]
+$$
+
+**损失函数**（带类权重的 BCE）：
+
+$$
+\mathcal{L} = -\!\sum_{ij}\!\left[\,w_+\,y_{ij}\log\hat{y}_{ij} + w_-\,(1-y_{ij})\log(1-\hat{y}_{ij})\right]
+$$
+
+<Callout type="tip" title="类不平衡处理">
+
+真实边与假边比约为 $1:50$，设 $w_+ = 50,\, w_- = 1$ 平衡正负样本。
+
+</Callout>
+
+</div>
+</Grid>
+
+---
+layout: content
+density: dense
+lineHeight: 1.55
+---
+
+# 核心理论性质
+
+<Block title="定义 1（异构图）">
+
+给定节点类型集 $\mathcal{A}$ 和边类型集 $\mathcal{R}$，**异构图** $G = (\mathcal{V}, \mathcal{E}, \mathcal{A}, \mathcal{R})$ 中每个节点 $v \in \mathcal{V}$ 和边 $e \in \mathcal{E}$ 分别对应一个类型映射 $\tau(v) \in \mathcal{A}$，$\phi(e) \in \mathcal{R}$。
+
+</Block>
+
+<Block title="定理 1（消息传递表达能力上界）">
+
+$k$ 轮消息传递的表达能力不超过 $k$ 阶 Weisfeiler-Leman 图同构测试。对径迹重建所需的局部结构（$k \leq 3$），3 轮迭代已足够。
+
+</Block>
+
+<Block title="命题 2（推理复杂度）">
+
+单次事例推理时间为 $\mathcal{O}(N_v \cdot d + N_e \cdot d^2)$，其中 $d$ 为隐层维度，与 $\langle\mu\rangle$ 线性相关，优于 Kalman Filter 的 $\mathcal{O}(\langle\mu\rangle^2)$。
+
+</Block>
+
+---
+layout: content
+density: dense
+---
+
+# 模型训练与实现细节
+
+```python {1-5|7-14|all} {lines:true}
+import torch
+from torch_geometric.nn import HeteroConv, SAGEConv
+
+# 定义异构图卷积层
+conv = HeteroConv({('hit', 'to', 'hit'): SAGEConv(-1, 128)}, aggr='mean')
+
+# 三轮消息传递
+class HeteroGNN(torch.nn.Module):
+    def forward(self, x_dict, edge_index_dict):
+        for _ in range(3):
+            x_dict = conv(x_dict, edge_index_dict)
+            x_dict = {k: F.relu(v) for k, v in x_dict.items()}
+        # 边分类头
+        return self.edge_classifier(x_dict)
+
+# 训练：AdamW, lr=1e-3, cosine annealing, 50 epochs
+```
+
+训练数据：ATLAS MC 模拟（$t\bar{t}$ 事例）$10^5$ 次，验证集 $2 \times 10^4$ 次；GPU：NVIDIA A100 80 GB × 8，批训练耗时约 6 小时。
+
+---
+layout: toc
+columns: 2
+highlight: 3
+---
+
+# 目录
+
+---
+layout: section
+---
+
+# 三、实验验证
+
+基准测试与消融分析
+
+---
+layout: content
+density: dense
+---
+
+# 实验设置
+
+<Grid cols="45 55" gap="lg" align="top">
+<div>
+
+**数据集**
+
+- 信号：$t\bar{t}$ MC（Pythia 8 + Geant4 全模拟）
+- 堆积：$\langle\mu\rangle = 50, 100, 140, 200$
+- 划分：7:1:2（训练/验证/测试）
+
+**评价指标**
+
+- **径迹效率**：$\varepsilon = N_\text{reco}^\text{match} / N_\text{truth}$
+- **假径迹率**：$f = N_\text{fake} / N_\text{reco}$
+- **推理时间**：单次事例，Tesla A100
+
+</div>
+<div>
+
+<TableBlock caption="各堆积条件下数据集规模（单位：$10^3$）。" captionAlign="left">
+
+| $\langle\mu\rangle$ | 节点数 | 边数 | 真实边 |
+|---:|---:|---:|---:|
+| 50 | 38 | 820 | 15 |
+| 100 | 71 | 3 100 | 29 |
+| 140 | 98 | 6 000 | 40 |
+| 200 | 139 | 12 200 | 57 |
+
+</TableBlock>
+
+</div>
+</Grid>
 
 ---
 layout: split
 ratio: "1:1"
+density: dense
 ---
 
-# split 1:1（等宽）
+# 径迹效率与假径迹率
 
 ::left::
 
-<TableBlock caption="信号区域事例统计。">
+<FigureBlock
+  src="/ATLAS/ATLAS-Detector.png"
+  alt="效率 vs 堆积"
+  caption="径迹效率随堆积增加的变化。本方法（红）在 $\langle\mu\rangle=200$ 时仍保持 97.1%。"
+/>
 
-| 过程 | 产额 |
-|------|-----:|
-| $ZH \to \ell\ell bb$ | $18.4 \pm 1.2$ |
-| $WH \to \ell\nu bb$ | $12.7 \pm 0.8$ |
-| $ggH \to bb$ | $4.3 \pm 0.5$ |
-| 总信号 | $35.4 \pm 1.5$ |
-| $t\bar{t}$ 本底 | $22.1 \pm 3.2$ |
-| 数据 | 58 |
+<Callout type="tip">
 
-</TableBlock>
+在 $p_T > 1\,\text{GeV}$ 的高动量区域，效率可进一步提升至 99.1%。
+
+</Callout>
 
 ::right::
 
 <FigureBlock
   src="/ATLAS/ATLAS-Logo.png"
-  alt="ATLAS Logo"
-  caption="ATLAS 合作组标志。"
+  alt="假径迹率 vs 堆积"
+  caption="假径迹率随堆积的变化。蓝线为本方法，灰线为 ACTS 基线。"
   captionAlign="center"
 />
 
----
-layout: section
----
+<Callout type="warning" title="低动量区注意">
 
-# 三、组件库
-`Callout` · `FigureBlock` · `TableBlock` · `ResultBox` · `QRCode` · `PlotlyGraph`
+$p_T < 0.5\,\text{GeV}$ 的径迹在 $\langle\mu\rangle = 200$ 时假径迹率升至 1.8%，尚需专项优化。
+
+</Callout>
 
 ---
 layout: content
 ---
 
-# Callout 组件
+# 主要性能结果
 
-五种语义类型，每种独立配色。可选 `title` 属性。
+<ResultBox title="核心指标（$\langle\mu\rangle = 200$，$p_T > 1\,\text{GeV}$）">
 
-<Callout type="note" title="说明">这是 `type="note"`（蓝色），适合**背景知识**或一般说明。</Callout>
+$$
+\varepsilon = 97.1\% \quad f = 0.6\% \quad t_\text{reco} = 18\,\text{ms/event}
+$$
 
-<Callout type="tip" title="提示">这是 `type="tip"`（绿色），适合技巧或最佳实践。</Callout>
+与最优基线 Exa.TrkX 相比：效率 +0.3%，速度 **1.6×**，假径迹率降低 0.2 个百分点。
 
-<Callout type="warning" title="注意">这是 `type="warning"`（琥珀色），适合提醒或潜在陷阱。</Callout>
+</ResultBox>
 
-<Callout type="important" title="重要">这是 `type="important"`（红色），适合**关键结论**或关注点。</Callout>
-
-<Callout type="example">这是 `type="example"`（紫色），适合示例或代码演示。无 `title` 属性。</Callout>
+<Grid cols="3" gap="md" style="margin-top:1rem">
+  <Block title="内层（Pixel + SCT）">效率 98.4%，占推理时间 40%</Block>
+  <Block title="外层（TRT）">效率 95.8%，占推理时间 35%</Block>
+  <Block title="全局合并">融合后综合效率 97.1%，无额外代价</Block>
+</Grid>
 
 ---
-layout: split
-ratio: "1:1"
+layout: content
+density: dense
+sectionBarMode: minimal
 ---
 
-# FigureBlock & TableBlock 组件
+# 消融实验：各模块贡献
 
-::left::
+<TableBlock caption="消融实验结果（$\langle\mu\rangle=140$）。逐步移除各模块，观察性能下降。" captionAlign="left">
 
-编号全局自动生成，`caption` 只填描述文字：
-
-<FigureBlock
-  src="/ATLAS/ATLAS-Detector.png"
-  alt="ATLAS 探测器"
-  caption="ATLAS 探测器横截面图。"
-  width="80%"
-/>
-
-::right::
-
-<TableBlock caption="探测器性能参数。" captionAlign="left">
-
-| 探测器 | $\eta$ 覆盖 |
-|--------|------------|
-| ID | $\lvert\eta\rvert < 2.5$ |
-| EMCal | $\lvert\eta\rvert < 3.2$ |
-| HCal | $\lvert\eta\rvert < 4.9$ |
-| MS | $\lvert\eta\rvert < 2.7$ |
+| 配置 | 效率 | 假径迹率 | 推理时间 |
+|------|-----:|--------:|--------:|
+| 完整模型 | **97.5%** | **0.5%** | **21 ms** |
+| −异构边类型 | 96.8% | 0.7% | 19 ms |
+| −3 轮迭代（→ 2 轮） | 96.1% | 0.9% | 14 ms |
+| −类权重 | 94.3% | 2.1% | 21 ms |
+| −几何特征 | 93.7% | 2.4% | 18 ms |
 
 </TableBlock>
 
----
-layout: split
-ratio: "2:1"
----
+类权重（处理正负样本不均衡）和几何特征（节点坐标输入）对最终性能贡献最大。
 
-# ResultBox & QRCode 组件
+<Callout type="note">
 
-::left::
+本页使用 `sectionBarMode: minimal` 演示单页覆盖效果：顶部进度条仅显示圆点，节省纵向空间。
 
-<ResultBox title="主要结果">
-
-$$\mu = 1.05^{+0.31}_{-0.29}\,(\text{stat.})^{+0.18}_{-0.15}\,(\text{syst.})$$
-
-观测显著性 $4.2\sigma$（预期 $3.8\sigma$），与标准模型一致。
-
-</ResultBox>
-
-`ResultBox` 用于突出展示核心定量结论，带双线边框。
-
-::right::
-
-<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;">
-  <QRCode url="https://github.com" :size="140" caption="github.com" />
-</div>
-
-`QRCode` 将 URL 渲染为内联 SVG 二维码，无需联网。
-
----
-layout: section
----
-
-# 四、数学与代码
-LaTeX 方程、代码块语法高亮
-
----
-layout: content
----
-
-# LaTeX 数学公式
-
-行内公式：质子质量 $m_p \approx 938.3\,\text{MeV}/c^2$，精细结构常数 $\alpha \approx 1/137$。
-
-块级公式——标准模型 Lagrangian：
-
-$$
-\mathcal{L}_\text{SM} =
-  \underbrace{-\tfrac{1}{4}F_{\mu\nu}^a F^{a\mu\nu}}_{\text{规范场动能}}
-  + \underbrace{i\bar{\psi}\not\!\!D\psi}_{\text{费米子动能}}
-  + \underbrace{|D_\mu H|^2 - V(H)}_{\text{Higgs 场}}
-  + \underbrace{y_{ij}\bar{\psi}_i H \psi_j + \text{h.c.}}_{\text{Yukawa 耦合}}
-$$
-
-Breit-Wigner 共振截面：
-
-$$
-\sigma(E) = \frac{2J+1}{(2s_1+1)(2s_2+1)} \cdot \frac{\pi}{k^2}
-            \cdot \frac{\Gamma_i \Gamma_f}{(E-E_0)^2 + (\Gamma/2)^2}
-$$
+</Callout>
 
 ---
 layout: content
 density: dense
 ---
 
-# 代码块与语法高亮
+# 推理速度随堆积的扩展性
 
-带行号和高亮行：
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
+  <PlotlyGraph filePath="/Graph/plotly1.json" :tickFontSize="11" :legendFontSize="10" :graphHeight="320" :graphWidth="480" />
+  <PlotlyGraph filePath="/Graph/plotly2.json" :tickFontSize="11" :graphHeight="320" :graphWidth="480" />
+</div>
 
-```python {1-3|5-8|all} {lines:true}
-import numpy as np
-import uproot
-import awkward as ak
+左图：推理时间与 $\langle\mu\rangle$ 的关系（本方法近线性，基线近二次）。右图：吞吐量（事例/秒）随 GPU 并行度的扩展。
 
-# 读取 ROOT 文件中的事例数据
-with uproot.open("signal.root") as f:
-    tree = f["CollectionTree"]
-    pt = tree["jet_pt"].array()
-    eta = tree["jet_eta"].array()
+---
+layout: blank
+sectionBar: false
+---
 
-# 筛选喷注：pT > 25 GeV，|η| < 2.5
-mask = (pt > 25_000) & (np.abs(eta) < 2.5)
-selected = pt[mask]
-print(f"Selected jets: {ak.sum(ak.num(selected))}")
-```
+<div style="height:100%;display:flex;align-items:center;justify-content:center;background:var(--ustc-blue-dark);">
+  <img src="/ATLAS/ATLAS-Detector.png" style="max-height:88%;max-width:92%;object-fit:contain;" alt="ATLAS 探测器全图" />
+</div>
+
+---
+layout: toc
+columns: 2
+highlight: 4
+---
+
+# 目录
 
 ---
 layout: section
 ---
 
-# 五、布局原语
-`Grid` · `Block` · `Takeaway` · `Abs`
+# 四、结论
+
+主要贡献与未来工作
 
 ---
 layout: content
 ---
 
-# Grid — 等宽列 / 比例列 / 多行
+# 主要贡献
 
 <Grid cols="3" gap="md">
-  <Block title="Hardness">NP-hard in the general case.</Block>
-  <Block title="Tractability">Polynomial-time under bounded parameters.</Block>
-  <Block title="Algorithm">Practical dynamic programming solver.</Block>
+  <Block title="算法贡献">
+
+  提出异构消息传递框架，首次在统一架构中同时处理 Pixel / SCT / TRT 三种探测器几何。
+
+  </Block>
+  <Block title="工程贡献">
+
+  推理时间降至 18 ms/event，比最优基线快 1.6×，满足 HL-LHC 在线触发预算。
+
+  </Block>
+  <Block title="科学价值">
+
+  在 $\langle\mu\rangle = 200$ 高堆积条件下保持 97.1% 效率，为未来 ATLAS Run 4 分析奠定基础。
+
+  </Block>
 </Grid>
-
-<Grid cols="45 55" gap="lg" align="top" style="margin-top:1rem">
-<div>
-
-`cols="3"` → 等宽三列，`cols="45 55"` → 比例两列，9 个子元素自动换行成九宫格。
-
-</div>
-<FigureBlock src="/ATLAS/ATLAS-Logo.png" alt="ATLAS" caption="右侧比例列图示。" />
-</Grid>
-
----
-layout: content
----
-
-# Block — 定义 / 定理 / 算法框
-
-<Block title="Definition">
-
-图 $G$ 是**平面图**，当且仅当它可以画在平面上而无边交叉。
-
-</Block>
-
-<Block title="Theorem 1 (Kuratowski)">
-
-图 $G$ 是平面图，当且仅当它不含 $K_5$ 或 $K_{3,3}$ 的细分作为子图。
-
-</Block>
-
-<Block>
-
-无 `title` 时退化为通用有边框容器，适合需要视觉分组但无需标签的场景。
-
-</Block>
-
----
-layout: content
----
-
-# Takeaway — 一句话结论
-
-正文叙述内容……结论落在 Takeaway 中。
 
 <Takeaway>
 
-Temporal consistency is the key factor driving accuracy gains across all benchmarks.
+端到端图神经网络不仅加速了重建，更在高堆积下首次同时满足效率与速度双重约束。
 
 </Takeaway>
 
-与 `ResultBox` 的区别：`Takeaway` 是定性一句话，`ResultBox` 是定量结果含数学公式。
-
-<ResultBox title="对比：ResultBox">
-
-$$\mu = 1.05^{+0.31}_{-0.29}\,(\text{stat.})^{+0.18}_{-0.15}\,(\text{syst.})$$
-
-</ResultBox>
-
----
-layout: section
----
-
-# 六、速查参考
-所有布局与组件选项一览
-
----
-layout: content
-density: dense
----
-
-# 布局 frontmatter 速查
-
-| 布局 | 独有选项 | 共有选项 |
-|------|---------|---------|
-| `cover` | `talkTitle`, `subtitle`, `authors`, `conference`, `date`, `showLogo`, `logoSrc`, `logoAlt`, `background` | — |
-| `content` / `default` | `density`, `footnote`, `lineHeight`, `align` | `footer`, `footerMode`, `sectionBar`, `sectionBarMode` |
-| `split` | 同 content + `ratio`, `gap` | 同上 |
-| `section` | `sectionLabel` | `footer`, `footerMode` |
-| `toc` | `highlight` | `footer`, `footerMode` |
-| `end` | `showLogo`, `logoSrc`, `logoAlt` | `footer`, `footerMode` |
-| `blank` | — | — |
-| `backup` | — | `footer`, `footerMode` |
-
-`density`: `normal`（默认）/ `dense` · `footerMode`: `full`（默认）/ `minimal` · `footnote`: `overlay`（默认）/ `flow`
-
-`ratio`: `2:1`（默认）/ `1:1` / `3:2` / `1:2` / `2:3` · `gap`: `sm` / `md`（默认）/ `lg`
-
----
-layout: content
-density: dense
----
-
-# 全局 headmatter 与组件速查
-
-**全局 headmatter（写在第一页 frontmatter 中）：**
-
-| 选项 | 说明 |
-|------|------|
-| `figurePrefix` | 图编号前缀，默认 `"Figure"` |
-| `tablePrefix` | 表编号前缀，默认 `"Table"` |
-| `sectionBar: true` | 开启顶部分节进度条 |
-| `sectionBarMode` | `full`（默认，点+标题）/ `minimal`（仅点） |
-
-**组件：**
-
-| 组件 | 关键 Props |
-|------|-----------|
-| `Callout` | `type` (note/tip/warning/important/example), `title?` |
-| `FigureBlock` | `src`, `alt?`, `caption?`, `width?`, `captionAlign?`, `captionInsetLeft/Right?`, `prefix?`, `:number?` |
-| `TableBlock` | `caption?`, `captionAlign?`, `width?`, `prefix?`, `:number?` |
-| `ResultBox` | `title?` |
-| `QRCode` | `url`, `:size?`, `color?`, `background?`, `caption?` |
-| `PlotlyGraph` | `filePath`, `:graphWidth?`, `:graphHeight?`, `:tickFontSize?`, `:legendFontSize?`, `:xTitleFontSize?`, `:yTitleFontSize?`, `:annotationFontSizeScale?` |
-| `Grid` | `cols` (数字或空格分隔比例), `gap?` (sm/md/lg), `align?` (top/center/bottom) |
-| `Block` | `title?` |
-| `Takeaway` | — |
-| `Abs` | `x`, `y`, `w?` |
-
 ---
 layout: content
 ---
 
-# 导航与键盘快捷键
+# 未来工作
 
-将鼠标悬停在左下角可调出导航控制面板。
+正文内容悬停标注演示：正文叙述延伸方向，`<Abs>` 用于在不打断行文的情况下添加补充信息或二维码。
 
-## 快捷键
+- **在线部署**：与 ATLAS TDAQ 系统集成，目标实现 FPGA 加速推理（$\leq 2\,\text{ms}$）
+- **扩展到量能器**：将同一框架推广至 ECal / HCal 团簇重建，实现全粒子流重建
+- **不确定性量化**：引入图上的贝叶斯推断，输出径迹级置信区间
 
-|  | 操作 |
-|--|------|
-| <kbd>Space</kbd> / <kbd>→</kbd> | 下一步动画 / 下一页 |
-| <kbd>←</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd> | 上一步动画 / 上一页 |
-| <kbd>↑</kbd> / <kbd>↓</kbd> | 上一页 / 下一页（跳过动画） |
-| <kbd>F</kbd> | 全屏 |
-| <kbd>G</kbd> | 开启摄像头录制 |
-| <kbd>D</kbd> | 开启画笔模式 |
-| <kbd>O</kbd> | 幻灯片概览 |
+<Callout type="example" title="开放资源">
+
+代码与预训练模型已在 GitHub 开源，数据集可通过 CERN Open Data 门户获取。
+
+</Callout>
+
+<Abs x="62%" y="52%" w="32%">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem">
+    <QRCode url="https://github.com" :size="120" caption="代码仓库" color="#16396b" />
+  </div>
+</Abs>
 
 ---
 layout: end
 ---
 
-# 谢 谢
-
-本次报告到此为止
+# 感谢聆听
 
 欢迎提问与讨论
+
+::contact::
+
+张明远 · zmy@ustc.edu.cn · github.com/ustc-hep/heterognn
 
 ---
 layout: backup
@@ -456,6 +486,59 @@ layout: backup
 layout: content
 ---
 
-# Backup Slide A.1
+# A.1　超参数敏感性分析
 
-备用幻灯片示例。页脚显示 `A.1`，主正文页码不变。
+<Grid cols="45 55" gap="lg" align="top">
+<div>
+
+网络深度（消息传递轮数）与隐层维度对性能的影响：
+
+- 轮数 $k \in \{1,2,3,4\}$：$k=3$ 时性能饱和，$k=4$ 无显著提升但推理时间增加 28%
+- 隐层维度 $d \in \{64, 128, 256\}$：$d=128$ 为最优平衡点
+
+网络过深会导致**过平滑**问题（over-smoothing），节点表示趋同，边分类头无法区分相邻径迹。
+
+<Callout type="note">
+
+最终选择 $k=3$，$d=128$，对应参数量 1.2 M，适合 GPU 批处理。
+
+</Callout>
+
+</div>
+<div>
+
+<FigureBlock
+  src="/ATLAS/ATLAS-Logo.png"
+  alt="超参数扫描结果"
+  caption="图 A.1　效率（上）与推理时间（下）随 $k$ 和 $d$ 的变化热图。"
+  captionAlign="left"
+/>
+
+</div>
+</Grid>
+
+---
+layout: content
+density: dense
+---
+
+# A.2　与标准 Kalman Filter 的误差分析
+
+<TableBlock caption="表 A.1　各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。" captionAlign="left">
+
+| $p_T$ 区间 | KF 效率 | 本方法效率 | KF 假率 | 本方法假率 |
+|-----------|--------:|----------:|--------:|----------:|
+| $0.5$–$1\,\text{GeV}$ | 91.2% | 89.4% | 0.8% | 1.2% |
+| $1$–$5\,\text{GeV}$ | 97.8% | 97.9% | 0.3% | 0.5% |
+| $5$–$20\,\text{GeV}$ | 98.9% | 98.7% | 0.2% | 0.4% |
+| $> 20\,\text{GeV}$ | 99.1% | 99.2% | 0.1% | 0.2% |
+
+</TableBlock>
+
+在低动量区（$p_T < 1\,\text{GeV}$），本方法效率略低于 KF，主要因为稀疏点云在低 $p_T$ 时曲率大，图构建时易遗漏远端击中点。高动量区表现持平或略优。
+
+<Takeaway>
+
+GNN 方法在高动量高堆积的实验条件下展现出优势；低动量优化是下一阶段的重点。
+
+</Takeaway>

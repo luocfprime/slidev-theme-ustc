@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getPresenterName } from './layoutHelper'
+import { bodyDefaults } from '../defaults'
 
 const props = withDefaults(defineProps<{
   density?: 'normal' | 'dense'
@@ -9,11 +10,7 @@ const props = withDefaults(defineProps<{
   footnote?: 'overlay' | 'flow'
   sectionBar?: boolean
 }>(), {
-  density: 'normal',
-  footer: true,
-  footerMode: 'full',
-  footnote: 'overlay',
-  sectionBar: true,
+  ...bodyDefaults,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
