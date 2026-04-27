@@ -1065,30 +1065,105 @@ dense 布局，正文较满，用 `<Abs>` 在右上角放一个 `Block` 作为�
 
 ---
 layout: content
-sectionBar: true
 ---
 
 # Abs — `:z` prop：层叠控制
 
-`z` 默认为 `10`，低于顶部进度条（`z-index: 50`）。设 `:z="60"` 可覆盖在进度条之上。
+`z` 控制 `<Abs>` 元素在**幻灯片内部**的层叠顺序，默认值 `10`。多个 `<Abs>` 重叠时，`z` 值大的显示在上层。
 
-本页启用了 `sectionBar: true`，可以观察以下两个悬浮框的层级差异：
+注意：`:z` 的作用域仅限于幻灯片内容层（`slidev-page` stacking context）。`sectionBar` 等全局组件在独立的渲染层，无法被 `:z` 覆盖。
 
-<Abs x="4%" y="0%" w="28%" :z="60">
-  <Callout type="important" title=":z=60（在进度条上方）">
-
-  `:z="60"` 覆盖在顶部进度条之上。
-
-  </Callout>
+<Abs x="4%" y="35%" w="38%" :z="20">
+  <div style="background:#c0392b;color:white;padding:1rem 1.2rem;border-radius:6px;font-weight:600;">
+    :z=20（上层，遮住下方蓝框）
+  </div>
 </Abs>
 
-<Abs x="36%" y="0%" w="28%">
-  <Callout type="note" title=":z=10（默认，被进度条遮挡）">
+<Abs x="16%" y="40%" w="38%" :z="10">
+  <div style="background:#16396b;color:white;padding:1rem 1.2rem;border-radius:6px;font-weight:600;">
+    :z=10（下层，被红框遮住左上角）
+  </div>
+</Abs>
 
-  默认 `z=10`，被进度条遮挡。
+---
+layout: section
+---
+
+# 十一、v-drag 与组件联用
+`<v-drag>` 直接包裹 Block · Callout · Takeaway · ResultBox · QRCode
+
+---
+layout: content
+dragPos:
+  vd-block: 782,185,478,_
+  vd-callout: 781,322,478,_
+---
+
+# v-drag — Block 与 Callout
+
+`<v-drag>` 包裹纯内容组件时无冲突——演示模式下双击即可拖拽，松开后位置自动写回 `dragPos`。
+
+左侧正文照常流式排版；右侧两个组件自由定位，与文档流完全独立。
+
+- 方法将全局问题分解为局部子问题
+- 在树分解上做动态规划，时间复杂度 $O(n \cdot 2^k)$
+- 实验在三个基准上验证，结果与理论吻合
+
+<v-drag pos="vd-block">
+  <Block title="定理（可拖拽）">
+
+  图 $G$ 是平面图，当且仅当不含 $K_5$ 或 $K_{3,3}$ 的细分作为子图。
+
+  </Block>
+</v-drag>
+
+<v-drag pos="vd-callout">
+  <Callout type="tip" title="提示（可拖拽）">
+
+  演示模式下**双击**即可拖拽；松开后位置自动写回 `dragPos`。
 
   </Callout>
-</Abs>
+</v-drag>
+
+---
+layout: content
+dragPos:
+  vd-result: 521,317,490,_
+  vd-takeaway: 51,545,978,_
+  vd-qr: 1042,165,100,_
+---
+
+# v-drag — Takeaway · ResultBox · QRCode
+
+三种组件均为纯内容块，直接放入 `<v-drag>` 无冲突。右侧定量结论与底部二维码可自由拖移。
+
+设信号强度参数 $\mu = \sigma_\text{obs}/\sigma_\text{SM}$，拟合结果见右侧：
+
+- 信号区间 $m_{jj} \in [1.0, 3.5]\,\text{TeV}$
+- 本底估计采用 ABCD 方法，系统误差 $< 5\%$
+- 最终结果与标准模型预期一致
+
+<v-drag pos="vd-result">
+  <ResultBox title="拟合结果（可拖拽）">
+
+  $$\mu = 1.05^{+0.31}_{-0.29}$$
+
+  观测显著性 $4.2\sigma$，与 SM 一致。
+
+  </ResultBox>
+</v-drag>
+
+<v-drag pos="vd-takeaway">
+  <Takeaway>
+
+  Bounded treewidth is both necessary and sufficient for tractability.
+
+  </Takeaway>
+</v-drag>
+
+<v-drag pos="vd-qr">
+  <QRCode url="https://sli.dev" :size="90" caption="sli.dev" />
+</v-drag>
 
 ---
 layout: end

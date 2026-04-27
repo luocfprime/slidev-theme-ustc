@@ -12,7 +12,7 @@ const props = withDefaults(defineProps<{
   footnote?: 'overlay' | 'flow'
   sectionBar?: boolean
   lineHeight?: number
-  align?: 'left' | 'center' | 'right' | 'justify'
+  align?: 'left' | 'center' | 'right'
   subtitle?: string
   background?: string
 }>(), {

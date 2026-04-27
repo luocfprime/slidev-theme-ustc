@@ -330,7 +330,7 @@ layout: content
 
 # Block — 定义、定理、命题
 
-<Block title="定义 1（Wasserstein 距离）">
+<Block title="定义 1（Wasserstein 距离 $W_p$）：">
 
 对概率测度 $\mu, \nu$ 在度量空间 $(X, d)$ 上，$p$-Wasserstein 距离定义为
 

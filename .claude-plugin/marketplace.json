@@ -1,0 +1,14 @@
+{
+  "name": "slidev-theme-ustc",
+  "owner": {
+    "name": "luocfprime"
+  },
+  "plugins": [
+    {
+      "name": "slidev-theme-ustc",
+      "version": "0.1.0",
+      "source": "./",
+      "description": "Claude Code skill for the slidev-theme-ustc academic presentation theme"
+    }
+  ]
+}

@@ -164,19 +164,6 @@ lineHeight: 2.0
 
 ---
 layout: content
-align: justify
----
-
-# align: justify
-
-`align: justify` 将正文设置为两端对齐（默认左对齐）。
-
-这是一段用于演示两端对齐效果的示例文字。在两端对齐模式下，每行文字都会拉伸至与内容区宽度一致，呈现出正式文档风格的排版效果。
-
-`align` 可选值：`left`（默认）/ `center` / `right` / `justify`
-
----
-layout: content
 margin: normal
 sectionBar: false
 ---

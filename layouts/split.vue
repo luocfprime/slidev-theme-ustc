@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   gap?: 'sm' | 'md' | 'lg'
   sectionBar?: boolean
   lineHeight?: number
-  align?: 'left' | 'center' | 'right' | 'justify'
+  align?: 'left' | 'center' | 'right'
   background?: string
 }>(), {
   ...bodyDefaults,

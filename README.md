@@ -1,6 +1,6 @@
 # USTC Slidev Theme
 
-A clean academic Slidev theme for USTC presentations.
+A clean academic Slidev theme for USTC presentations. This theme is inspired by [slidev-theme-hep](https://github.com/AvencastF/slidev-theme-hep).
 
 ## Development
 
@@ -32,8 +32,9 @@ This repository follows Slidev's conventional directories and keeps theme runtim
 |-- docs/                # Theme usage and configuration docs
 |-- examples/            # Additional demo decks
 |-- tests/               # Playwright smoke tests for rendered slides
+|-- skills/              # Claude Code skill for this theme
 |-- global-top.vue       # Global Slidev layer
-|-- example.md           # Main local template deck
+|-- example.md           # Symlink → skills/slidev-theme-ustc/references/example.md
 `-- vite.config.ts       # Vite extension config
 ```
 
@@ -56,3 +57,23 @@ theme: @luocfprime/slidev-theme-ustc
 ```
 
 See `docs/configuration.md` for supported frontmatter options, component props, and CSS variables.
+
+## Agent Skill
+
+> [!TIP]
+> **Claude Code** — add this repo as a plugin marketplace, then install:
+> ```
+> /plugin marketplace add luocfprime/slidev-theme-ustc
+> /plugin install slidev-theme-ustc@slidev-theme-ustc
+> ```
+> Then run `/reload-plugins` to activate.
+
+> [!TIP]
+> **Other agents (Copilot, Gemini CLI, Codex, …)** — install via [`npx skills`](https://github.com/vercel-labs/skills):
+> ```
+> npx skills add luocfprime/slidev-theme-ustc
+> ```
+> To install globally (all projects) or target a specific agent:
+> ```
+> npx skills add luocfprime/slidev-theme-ustc
+> ```
