@@ -1,0 +1,24 @@
+<template>
+  <div class="prim-takeaway">
+    <slot />
+  </div>
+</template>
+
+<style scoped>
+.prim-takeaway {
+  border-left: 4px solid var(--ustc-blue);
+  background: var(--ustc-blue-pale);
+  border-radius: 0 6px 6px 0;
+  padding: 0.55rem 1rem;
+  margin: 0.6rem 0;
+}
+
+/* font-size intentionally unset — inherits from layout dense/normal cascade.
+   margin: 0 prevents global p margin from adding unwanted spacing inside the box. */
+.prim-takeaway :deep(p) {
+  font-weight: 600;
+  color: var(--ustc-blue-dark);
+  margin: 0 !important;
+  line-height: 1.45;
+}
+</style>

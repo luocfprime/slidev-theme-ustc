@@ -357,20 +357,6 @@ $$\mu = 1.05^{+0.31}_{-0.29}\,(\text{stat.})^{+0.18}_{-0.15}\,(\text{syst.})$$
 </ResultBox>
 
 ---
-layout: blank
----
-
-![](/ATLAS/ATLAS-Detector.png)
-
-<Abs x="4%" y="28%" w="26%">
-  <Callout type="note" title="内探测器">追踪带电粒子径迹，覆盖 $|\eta| < 2.5$。</Callout>
-</Abs>
-
-<Abs x="68%" y="50%" w="26%">
-  <Callout type="important" title="μ 子谱仪">最外层探测器，识别 μ 子，覆盖 $|\eta| < 2.7$。</Callout>
-</Abs>
-
----
 layout: section
 ---
 

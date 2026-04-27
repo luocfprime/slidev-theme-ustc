@@ -17,6 +17,7 @@ sectionBarMode: full
 
 ---
 layout: toc
+columns: 2
 highlight: 0
 ---
 
@@ -24,6 +25,7 @@ highlight: 0
 
 ---
 layout: toc
+columns: 2
 highlight: 1
 ---
 
