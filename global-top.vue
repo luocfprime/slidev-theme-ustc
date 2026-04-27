@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
-import {
-  figureMapShared,
-  tableMapShared,
-  figurePrefixShared,
-  tablePrefixShared,
-} from './utils/numbering'
 import { getLayout, getSectionTitle } from './utils/layoutHelper'
+import { useAutoNumbering } from './utils/useAutoNumbering'
 
 const enabled = $slidev.configs.sectionBar === true
 
@@ -14,19 +9,6 @@ interface SectionGroup {
   title: string
   sectionNo: number
   slideNos: number[]
-}
-
-function getContent(slide: any): string {
-  return slide?.source?.content ?? slide?.content ?? slide?.meta?.slide?.content ?? ''
-}
-
-function stripCodeBlocks(content: string): string {
-  return content.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '')
-}
-
-function countComponentTags(content: string, pascalName: string, kebabName: string): number {
-  const stripped = stripCodeBlocks(content)
-  return (stripped.match(new RegExp(`<(?:${pascalName}|${kebabName})\\b`, 'g')) ?? []).length
 }
 
 const sections = computed((): SectionGroup[] => {
@@ -59,40 +41,10 @@ const backupStartNo = computed((): number => {
   return 0
 })
 
-const figureMap = computed((): Map<number, number> => {
-  const slides = $slidev.nav.slides ?? []
-  const map = new Map<number, number>()
-  let globalNum = 1
-  for (const slide of slides) {
-    const count = countComponentTags(getContent(slide), 'FigureBlock', 'figure-block')
-    if (count > 0) {
-      map.set(slide.no, globalNum)
-      globalNum += count
-    }
-  }
-  return map
-})
-
-const tableMap = computed((): Map<number, number> => {
-  const slides = $slidev.nav.slides ?? []
-  const map = new Map<number, number>()
-  let globalNum = 1
-  for (const slide of slides) {
-    const count = countComponentTags(getContent(slide), 'TableBlock', 'table-block')
-    if (count > 0) {
-      map.set(slide.no, globalNum)
-      globalNum += count
-    }
-  }
-  return map
-})
-
-watchEffect(() => {
-  figureMapShared.value = figureMap.value
-  tableMapShared.value = tableMap.value
-  figurePrefixShared.value = ($slidev.configs.figurePrefix as string) ?? 'Figure'
-  tablePrefixShared.value = ($slidev.configs.tablePrefix as string) ?? 'Table'
-})
+const allSlides = computed(() => $slidev.nav.slides ?? [])
+const configFigurePrefix = computed(() => ($slidev.configs.figurePrefix as string) ?? 'Figure')
+const configTablePrefix = computed(() => ($slidev.configs.tablePrefix as string) ?? 'Table')
+useAutoNumbering(allSlides, configFigurePrefix, configTablePrefix)
 
 const currentPage = computed(() => $slidev.nav.currentPage)
 
