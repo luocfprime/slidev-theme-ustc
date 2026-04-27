@@ -17,7 +17,6 @@
     "styles",
     "utils",
     "global-top.vue",
-    "vite.config.ts",
     "docs/configuration.md"
   ],
   "engines": {
