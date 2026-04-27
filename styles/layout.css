@@ -28,6 +28,21 @@
   --ustc-py:    1.75rem;
   --ustc-pl:    2.8rem;
   --ustc-pb:    calc(var(--ustc-footer-h) + 0.9rem);
+
+  /* ── Typography scale (content / split slides) ───────────────────────── */
+  /* Override any of these in your slides.md <style> block to adjust globally */
+  --ustc-fs-body:          1.4rem;   /* p, li — normal mode                */
+  --ustc-fs-body-dense:    1.05rem;  /* p, li — dense / compact-copy mode  */
+  --ustc-fs-h1:            2.75rem;  /* h1 in content, split, toc          */
+  --ustc-fs-h2:            1.55rem;  /* h2                                  */
+  --ustc-fs-h3:            1.3rem;   /* h3 (also used for dense h2)        */
+  --ustc-fs-table-cell:    1.1rem;   /* td, th                              */
+  --ustc-fs-blockquote:    1.2rem;   /* blockquote                          */
+  --ustc-fs-caption:       1.1rem;   /* figure & table captions             */
+  --ustc-fs-callout:       1.15rem;  /* Callout body text                   */
+  --ustc-fs-callout-dense: 0.95rem;  /* Callout body text in dense mode     */
+  --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
+  --ustc-lh:               1.47;     /* default line-height for body text   */
 }
 
 /* ─── Cover ──────────────────────────────────────────────────────────────── */
@@ -153,7 +168,7 @@
 }
 
 .slidev-layout.toc h1 {
-  font-size: 2.75rem;
+  font-size: var(--ustc-fs-h1);
   font-weight: 650;
   color: var(--ustc-blue-dark);
   letter-spacing: -0.025em;
@@ -348,7 +363,7 @@
 
 .slidev-layout.content h1,
 .slidev-layout.split h1 {
-  font-size: 2.75rem;
+  font-size: var(--ustc-fs-h1);
   font-weight: 650;
   color: var(--ustc-blue-dark);
   letter-spacing: -0.025em;
@@ -360,7 +375,7 @@
 
 .slidev-layout.content h2,
 .slidev-layout.split h2 {
-  font-size: 1.55rem;
+  font-size: var(--ustc-fs-h2);
   font-weight: 600;
   color: var(--ustc-text);
   margin: 0.85rem 0 0.2rem;
@@ -368,7 +383,7 @@
 
 .slidev-layout.content h3,
 .slidev-layout.split h3 {
-  font-size: 1.3rem;
+  font-size: var(--ustc-fs-h3);
   font-weight: 600;
   color: var(--ustc-text);
   margin: 0.6rem 0 0.15rem;
@@ -378,7 +393,7 @@
 .slidev-layout.content li,
 .slidev-layout.split p,
 .slidev-layout.split li {
-  font-size: 1.4rem;
+  font-size: var(--ustc-fs-body);
   line-height: var(--ustc-lh, 1.47);
   color: var(--ustc-text);
 }
@@ -387,13 +402,13 @@
 .slidev-layout.content th,
 .slidev-layout.split td,
 .slidev-layout.split th {
-  font-size: 1.1rem;
+  font-size: var(--ustc-fs-table-cell);
   line-height: 1.38;
 }
 
 .slidev-layout.content blockquote,
 .slidev-layout.split blockquote {
-  font-size: 1.2rem;
+  font-size: var(--ustc-fs-blockquote);
   line-height: 1.5;
   border-left: 3px solid var(--ustc-blue-border);
   padding: 0.2rem 0 0.2rem 1rem;
@@ -427,7 +442,7 @@
 .slidev-layout.content.compact-copy li,
 .slidev-layout.split.compact-copy p,
 .slidev-layout.split.compact-copy li {
-  font-size: 1.05rem;
+  font-size: var(--ustc-fs-body-dense);
   line-height: var(--ustc-lh, 1.38);
 }
 
@@ -440,7 +455,7 @@
 
 .slidev-layout.content.dense h2,
 .slidev-layout.split.dense h2 {
-  font-size: 1.3rem;
+  font-size: var(--ustc-fs-h3);
 }
 
 .slidev-layout.content.dense li + li,
@@ -462,7 +477,7 @@
 .slidev-layout.split.dense .callout .callout-body li,
 .slidev-layout.split .dense .callout .callout-body p,
 .slidev-layout.split .dense .callout .callout-body li {
-  font-size: 0.95rem;
+  font-size: var(--ustc-fs-callout-dense);
   line-height: var(--ustc-lh, 1.38);
 }
 
@@ -509,8 +524,8 @@
 .slidev-layout.split figcaption.figure-caption,
 .slidev-layout.content p.table-block-caption,
 .slidev-layout.split p.table-block-caption {
-  color: #374151;
-  font-size: 1.1rem;
+  color: var(--ustc-text-muted);
+  font-size: var(--ustc-fs-caption);
   line-height: 1.35;
   margin: 0.28rem 0 0;
   text-wrap: pretty;
@@ -553,7 +568,7 @@
 .slidev-layout.split .footnotes li,
 .slidev-layout.content .footnotes p,
 .slidev-layout.split .footnotes p {
-  font-size: 0.67rem;
+  font-size: var(--ustc-fs-footnote);
   line-height: 1.28;
   color: var(--ustc-text-muted);
   margin: 0.05rem 0;
@@ -617,7 +632,7 @@
 
 .slidev-layout.end .footnotes li,
 .slidev-layout.end .footnotes p {
-  font-size: 0.67rem;
+  font-size: var(--ustc-fs-footnote);
   line-height: 1.28;
   color: var(--ustc-text-muted);
   margin: 0.05rem 0;
@@ -674,7 +689,7 @@
 }
 
 .slidev-layout.end p {
-  font-size: 1.4rem;
+  font-size: var(--ustc-fs-body);
   color: var(--ustc-text-muted);
   line-height: 1.8;
   margin: 0;

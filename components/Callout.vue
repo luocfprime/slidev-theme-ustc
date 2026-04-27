@@ -56,12 +56,12 @@ const icon = computed(() => iconMap[props.type] ?? 'i-mdi-information-outline')
 
 .callout .callout-body :deep(p) {
   margin: 0.1rem 0;
-  font-size: 1.15rem;
+  font-size: var(--ustc-fs-callout, 1.15rem);
   line-height: 1.48;
 }
 
 .callout .callout-body :deep(li) {
-  font-size: 1.15rem;
+  font-size: var(--ustc-fs-callout, 1.15rem);
 }
 
 .callout .callout-body :deep(code) {
