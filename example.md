@@ -203,6 +203,48 @@ $k$ 轮消息传递的表达能力不超过 $k$ 阶 Weisfeiler-Leman 图同构�
 
 ---
 layout: content
+---
+
+# 消息传递公式推导
+
+输入：初始节点特征 $h_i^{(0)} = \text{MLP}_\text{init}(x_i)$，$x_i = (r,\phi,z,\text{layer})$。
+
+<div v-click>
+
+**① 邻域消息聚合**
+
+$$m_i^{(l)} = \bigoplus_{j \in \mathcal{N}(i)} \phi\!\left(h_i^{(l)},\, h_j^{(l)},\, e_{ij}\right)$$
+
+</div>
+
+<div v-click>
+
+**② 节点状态更新**
+
+$$h_i^{(l+1)} = \text{MLP}\!\left(h_i^{(l)},\, m_i^{(l)}\right)$$
+
+</div>
+
+<div v-click>
+
+**③ 边分类输出**（重复 $L=3$ 轮后）
+
+$$\hat{y}_{ij} = \sigma\!\left(W\bigl[h_i^{(L)} \,\|\, h_j^{(L)}\bigr]\right) \in [0,1]$$
+
+</div>
+
+<div v-click>
+
+<Callout type="tip" title="三轮迭代的意义">
+
+每轮消息传递将感受野扩大一跳。<span v-mark="{ type: 'underline', color: '#c0392b' }">$k=3$ 轮已足够覆盖典型径迹段</span>，$k>3$ 反而导致节点表示过平滑（over-smoothing）。
+
+</Callout>
+
+</div>
+
+---
+layout: content
 density: dense
 ---
 
@@ -228,6 +270,30 @@ class HeteroGNN(torch.nn.Module):
 ```
 
 训练数据：ATLAS MC 模拟（$t\bar{t}$ 事例）$10^5$ 次，验证集 $2 \times 10^4$ 次；GPU：NVIDIA A100 80 GB × 8，批训练耗时约 6 小时。
+
+---
+layout: content
+density: dense
+---
+
+# 端到端处理流程
+
+```mermaid
+flowchart LR
+  A["原始击中点<br/>Hits<br/>$$N_v \sim 10^4$$"] --> B["几何图构建<br/>$$\Delta R \lt \epsilon$$"]
+  B --> C["HeteroGNN<br/>3 轮消息传递"]
+  C --> D["边分类头<br/>$$\hat{y}_{ij} \in [0,1]$$"]
+  D --> E{"阈值过滤<br/>ŷ > 0.5"}
+  E -->|保留| F["径迹候选<br/>Track Seeds"]
+  E -->|丢弃| G["背景边"]
+  F --> H["最终径迹<br/>$$N_\text{track} \sim 10^3$$"]
+
+  style A fill:#16396b,color:#fff,stroke:#16396b
+  style H fill:#003c71,color:#fff,stroke:#003c71
+  style G fill:#888,color:#fff,stroke:#888
+```
+
+整个流程从原始探测器击中点出发，经图构建、三轮 GNN 消息传递与边分类，最终输出重建径迹，推理延迟仅 **18 ms/event**。
 
 ---
 layout: toc
@@ -386,15 +452,6 @@ density: dense
 左图：推理时间与 $\langle\mu\rangle$ 的关系（本方法近线性，基线近二次）。右图：吞吐量（事例/秒）随 GPU 并行度的扩展。
 
 ---
-layout: blank
-sectionBar: false
----
-
-<div style="height:100%;display:flex;align-items:center;justify-content:center;background:var(--ustc-blue-dark);">
-  <img src="/ATLAS/ATLAS-Detector.png" style="max-height:88%;max-width:92%;object-fit:contain;" alt="ATLAS 探测器全图" />
-</div>
-
----
 layout: toc
 columns: 2
 highlight: 4
@@ -458,7 +515,7 @@ layout: content
 
 </Callout>
 
-<Abs x="62%" y="52%" w="32%">
+<Abs x="76%" y="16%" w="32%">
   <div style="display:flex;flex-direction:column;align-items:center;gap:0.5rem">
     <QRCode url="https://github.com" :size="120" caption="代码仓库" color="#16396b" />
   </div>

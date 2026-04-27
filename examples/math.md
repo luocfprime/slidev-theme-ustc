@@ -222,6 +222,40 @@ d\Phi_n = (2\pi)^4\delta^4\!\left(p_\text{in} - \sum_{i=1}^n k_i\right) \prod_{i
 $$
 
 ---
+layout: content
+density: dense
+---
+
+# 块级公式 — 行点击高亮
+
+`$$` 后紧跟 `{行号|行号|all}` 即可开启逐行点击高亮，语法与代码块一致：
+
+$$ {1|2|3|4|all}
+\begin{aligned}
+\nabla \times \vec{\mathbf{B}} -\, \frac{1}{c}\,\frac{\partial\vec{\mathbf{E}}}{\partial t} &= \frac{4\pi}{c}\vec{\mathbf{j}} \\[8pt]
+\nabla \cdot \vec{\mathbf{E}} &= 4 \pi \rho \\[8pt]
+\nabla \times \vec{\mathbf{E}}\, +\, \frac{1}{c}\,\frac{\partial\vec{\mathbf{B}}}{\partial t} &= \vec{\mathbf{0}} \\[8pt]
+\nabla \cdot \vec{\mathbf{B}} &= 0
+\end{aligned}
+$$
+
+点击顺序：**第 1 行**（Ampère 定律）→ **第 3 行**（Faraday 定律）→ **all**（完整 Maxwell 方程组）。
+
+<Callout type="tip" title="语法">
+
+````md
+$$ {1|3|all}
+\begin{aligned}
+第一行 \\
+第二行 \\
+第三行
+\end{aligned}
+$$
+````
+
+</Callout>
+
+---
 layout: section
 ---
 
