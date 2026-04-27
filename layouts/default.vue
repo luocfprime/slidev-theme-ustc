@@ -29,7 +29,7 @@ const pageStyle = computed(() => {
   const s: Record<string, string> = { ...resolveBodyMargin(props.margin) }
   if (props.lineHeight) s['--ustc-lh'] = String(props.lineHeight)
   if (props.align) s.textAlign = props.align
-  if (props.background) Object.assign(s, handleBackground(props.background, false, 1.0))
+  if (props.background) Object.assign(s, handleBackground(props.background))
   return s
 })
 </script>
