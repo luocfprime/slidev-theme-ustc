@@ -1,0 +1,50 @@
+{
+  "name": "@avencastf/slidev-theme-ustc",
+  "version": "2.0.0",
+  "type": "module",
+  "description": "A clean academic Slidev theme for USTC presentations",
+  "keywords": [
+    "slidev-theme",
+    "slidev",
+    "USTC",
+    "academic"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "slidev": ">=52.0.0"
+  },
+  "scripts": {
+    "dev": "slidev example.md --open",
+    "build": "slidev build example.md",
+    "export": "slidev export example.md"
+  },
+  "dependencies": {
+    "plotly.js-dist": "^3.5.0"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "@slidev/cli": "^52.14.2",
+    "qrcode.vue": "^3.9.0",
+    "vite": "^7.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "vue-demi"
+    ]
+  },
+  "slidev": {
+    "colorSchema": "light",
+    "highlighter": "all",
+    "defaults": {
+      "aspectRatio": "16/9",
+      "canvasWidth": 1280,
+      "lineNumbers": true,
+      "fonts": {
+        "mono": "Fira Code",
+        "sans": "Inter,Avenir Next,Nunito Sans",
+        "local": "Avenir Next"
+      }
+    }
+  }
+}
