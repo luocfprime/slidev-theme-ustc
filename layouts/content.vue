@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed } from 'vue'
 import { getPresenterName } from './layoutHelper'
 
 const props = withDefaults(defineProps<{
@@ -20,7 +20,6 @@ const props = withDefaults(defineProps<{
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
-const slots = useSlots()
 
 const pageClass = computed(() => ({
   dense: props.density === 'dense',
@@ -40,10 +39,7 @@ const pageStyle = computed(() => {
   <div class="slidev-layout content" :class="pageClass" :style="pageStyle">
     <slot />
 
-    <div v-if="props.subtitle || slots.subtitle" class="content-subtitle">
-      <template v-if="props.subtitle">{{ props.subtitle }}</template>
-      <slot v-else name="subtitle" />
-    </div>
+    <div v-if="props.subtitle" class="content-subtitle">{{ props.subtitle }}</div>
 
     <PageFooter
       v-if="props.footer"
