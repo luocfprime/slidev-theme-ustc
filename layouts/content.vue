@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getPresenterName } from './layoutHelper'
+import { getPresenterName, resolveBodyMargin } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
-import { bodyDefaults } from '../defaults'
+import { bodyDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   density?: 'normal' | 'dense'
+  margin?: 'normal' | 'tight' | 'tighter' | 'none'
   footer?: boolean
   footerMode?: 'full' | 'minimal'
   footnote?: 'overlay' | 'flow'
@@ -26,7 +27,7 @@ const pageClass = computed(() => ({
 }))
 
 const pageStyle = computed(() => {
-  const s: Record<string, string> = {}
+  const s: Record<string, string> = { ...resolveBodyMargin(props.margin) }
   if (props.lineHeight) s['--ustc-lh'] = String(props.lineHeight)
   if (props.align) s.textAlign = props.align
   return s

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { gridDefaults } from '../defaults'
+import { gridDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   cols?: string

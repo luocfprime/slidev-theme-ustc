@@ -9,6 +9,17 @@
     "USTC",
     "academic"
   ],
+  "files": [
+    "components",
+    "layouts",
+    "public",
+    "setup",
+    "styles",
+    "utils",
+    "global-top.vue",
+    "vite.config.ts",
+    "docs/configuration.md"
+  ],
   "engines": {
     "node": ">=18.0.0",
     "slidev": ">=52.0.0"

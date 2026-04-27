@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { handleBackground, handleAuthor, getPresenterName } from './layoutHelper'
-import { logoDefaults } from '../defaults'
+import { handleBackground, handleAuthor, getPresenterName } from '../utils/layoutHelper'
+import { logoDefaults } from '../utils/defaults'
 import { renderInlineMd } from '../utils/markdown'
 
 const props = withDefaults(defineProps<{

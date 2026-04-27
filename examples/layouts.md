@@ -83,7 +83,7 @@ layout: section
 ---
 
 # 二、content 布局
-`density` · `footer` · `footerMode` · `footnote` · `lineHeight` · `align` · `sectionBar` · `sectionBarMode`
+`density` · `margin` · `footer` · `footerMode` · `footnote` · `lineHeight` · `align` · `sectionBar` · `sectionBarMode`
 
 ---
 layout: content
@@ -177,6 +177,46 @@ align: justify
 
 ---
 layout: content
+margin: normal
+sectionBar: false
+---
+
+# margin: normal
+
+`margin: normal` 是默认边距，作为和其它档位对照的基准。
+
+---
+layout: content
+margin: tight
+sectionBar: false
+---
+
+# margin: tight
+
+`margin: tight` 同时收窄顶部和左侧边距，适合正文较多、但仍希望保留清晰页边的页面。
+
+---
+layout: content
+margin: tighter
+sectionBar: false
+---
+
+# margin: tighter
+
+`margin: tighter` 进一步压缩顶部和左侧边距，适合表格、长公式或更接近讲义风格的页面。
+
+---
+layout: content
+margin: none
+sectionBar: false
+---
+
+# margin: none
+
+`margin: none` 取消顶部和左侧边距，适合需要最大正文宽度的页面。
+
+---
+layout: content
 subtitle: "这里是副标题，渲染在标题正下方、正文之前。"
 ---
 
@@ -201,7 +241,7 @@ layout: section
 ---
 
 # 三、split 布局
-`ratio` · `gap` · `density` · `lineHeight` · `align` · `footnote`
+`ratio` · `gap` · `density` · `margin` · `lineHeight` · `align` · `footnote`
 
 ---
 layout: split

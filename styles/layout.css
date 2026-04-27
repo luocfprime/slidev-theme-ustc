@@ -30,7 +30,7 @@
   --ustc-pb:    calc(var(--ustc-footer-h) + 0.9rem);
 
   /* ── Typography scale (content / split slides) ───────────────────────── */
-  /* Override any of these in your slides.md <style> block to adjust globally */
+  /* Override any of these in your deck's <style> block to adjust globally */
   --ustc-fs-body:          1.4rem;   /* p, li — normal mode                */
   --ustc-fs-body-dense:    1.05rem;  /* p, li — dense / compact-copy mode  */
   --ustc-fs-h1:            2.75rem;  /* h1 in content, split, toc          */

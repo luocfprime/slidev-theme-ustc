@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getPresenterName } from './layoutHelper'
+import { getPresenterName } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
-import { footerDefaults } from '../defaults'
+import { footerDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   highlight?: number

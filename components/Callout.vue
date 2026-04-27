@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
-import { calloutDefaults } from '../defaults'
+import { calloutDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   type?: 'note' | 'tip' | 'warning' | 'important' | 'example'

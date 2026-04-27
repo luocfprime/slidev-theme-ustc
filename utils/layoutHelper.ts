@@ -30,6 +30,22 @@ export function handleBackground(background?: string, dim = false, opacity = 0.5
   return style
 }
 
+export function resolveBodyMargin(margin?: 'normal' | 'tight' | 'tighter' | 'none'): CSSProperties {
+  const marginMap: Record<'normal' | 'tight' | 'tighter' | 'none', { x: string; y: string }> = {
+    normal: { x: '2.8rem', y: '1.75rem' },
+    tight: { x: '2.0rem', y: '1.25rem' },
+    tighter: { x: '1.2rem', y: '0.8rem' },
+    none: { x: '0rem', y: '0rem' },
+  }
+
+  const value = marginMap[margin ?? 'normal']
+  return {
+    '--ustc-px': value.x,
+    '--ustc-pl': value.x,
+    '--ustc-py': value.y,
+  }
+}
+
 interface Author { [key: string]: string[] }
 interface InstitutionMap { [key: string]: number }
 interface AuthorInstitutions { instituteNum: number[]; instituteName: string[] }

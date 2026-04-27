@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getPresenterName } from './layoutHelper'
-import { footerDefaults } from '../defaults'
+import { getPresenterName } from '../utils/layoutHelper'
+import { footerDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   footer?: boolean

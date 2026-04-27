@@ -2,7 +2,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { useSlideContext } from '@slidev/client'
 import { renderInlineMd } from '../utils/markdown'
-import { figureDefaults } from '../defaults'
+import { figureDefaults } from '../utils/defaults'
 import { figureMapShared, figurePrefixShared } from '../utils/numbering'
 
 const props = withDefaults(defineProps<{

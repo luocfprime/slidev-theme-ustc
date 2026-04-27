@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getPresenterName } from './layoutHelper'
-import { footerDefaults, logoDefaults } from '../defaults'
+import { getPresenterName } from '../utils/layoutHelper'
+import { footerDefaults, logoDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   showLogo?: boolean

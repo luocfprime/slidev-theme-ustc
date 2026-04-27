@@ -2,7 +2,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { useSlideContext } from '@slidev/client'
 import { renderInlineMd } from '../utils/markdown'
-import { tableDefaults } from '../defaults'
+import { tableDefaults } from '../utils/defaults'
 import { tableMapShared, tablePrefixShared } from '../utils/numbering'
 
 const props = withDefaults(defineProps<{
