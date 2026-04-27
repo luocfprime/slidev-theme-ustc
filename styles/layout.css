@@ -298,16 +298,40 @@
 
 /* ─── Content subtitle slot ──────────────────────────────────────────────── */
 .slidev-layout.content .content-subtitle {
-  margin-top: 0.65rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--ustc-blue-border);
-  font-size: 1.0rem;
+  font-size: 1.15rem;
   color: var(--ustc-text-muted);
-  line-height: 1.45;
+  line-height: 1.4;
+  margin-top: 0.3rem;
+  margin-bottom: 0.8rem;
+}
+
+.slidev-layout.content .content-subtitle p {
+  margin: 0;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
 }
 
 .slidev-layout.content.dense .content-subtitle {
-  font-size: 0.88rem;
+  font-size: 0.97rem;
+}
+
+/* Reorder subtitle to appear immediately after h1, before body */
+.slidev-layout.content:has(.content-subtitle) {
+  display: flex;
+  flex-direction: column;
+}
+
+.slidev-layout.content:has(.content-subtitle) > h1 {
+  order: 1;
+}
+
+.slidev-layout.content:has(.content-subtitle) > .content-subtitle {
+  order: 2;
+}
+
+.slidev-layout.content:has(.content-subtitle) > *:not(h1):not(.content-subtitle) {
+  order: 3;
 }
 
 /* ─── Shared: content + split ────────────────────────────────────────────── */
