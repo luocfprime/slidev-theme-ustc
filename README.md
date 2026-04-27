@@ -2,6 +2,9 @@
 
 A clean academic Slidev theme for USTC presentations. This theme is inspired by [slidev-theme-hep](https://github.com/AvencastF/slidev-theme-hep).
 
+> [!NOTE]
+> This is a presentation theme template. All names, affiliations, titles, dates, and other content appearing in the example slides are fictional placeholders and do not represent real people or events. Factual claims, data, and technical content in the examples are for demonstration purposes only and may be inaccurate.
+
 ## Development
 
 ```bash
