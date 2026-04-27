@@ -175,30 +175,22 @@ align: justify
 
 ---
 layout: content
+subtitle: "这里是副标题，渲染在标题正下方、正文之前。"
 ---
 
-# content subtitle 具名插槽
+# content subtitle prop
 
-::subtitle::
+`subtitle` 在 frontmatter 中声明，自动渲染在 `h1` 正下方：
 
-这里是 subtitle 插槽内容，渲染在标题正下方。
-
-`content` 布局支持 `subtitle` 具名插槽，内容渲染在 `h1` 标题正下方、正文之前。
-
-在 Markdown 中使用 `::subtitle::` 语法填充：
-
-```md
+```yaml
 ---
 layout: content
+subtitle: "副标题或引言文字"
 ---
 
 # 幻灯片标题
 
-::subtitle::
-
-副标题或引言文字，出现在标题与正文之间。
-
-正文内容从这里开始…
+正文内容…
 ```
 
 

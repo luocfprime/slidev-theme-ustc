@@ -10,6 +10,7 @@ const props = withDefaults(defineProps<{
   sectionBar?: boolean
   lineHeight?: number
   align?: 'left' | 'center' | 'right' | 'justify'
+  subtitle?: string
 }>(), {
   density: 'normal',
   footer: true,
@@ -39,8 +40,9 @@ const pageStyle = computed(() => {
   <div class="slidev-layout content" :class="pageClass" :style="pageStyle">
     <slot />
 
-    <div v-if="slots.subtitle" class="content-subtitle">
-      <slot name="subtitle" />
+    <div v-if="props.subtitle || slots.subtitle" class="content-subtitle">
+      <template v-if="props.subtitle">{{ props.subtitle }}</template>
+      <slot v-else name="subtitle" />
     </div>
 
     <PageFooter
