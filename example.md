@@ -286,7 +286,95 @@ print(f"Selected jets: {ak.sum(ak.num(selected))}")
 layout: section
 ---
 
-# 五、速查参考
+# 五、布局原语
+`Grid` · `Block` · `Takeaway` · `Abs`
+
+---
+layout: content
+---
+
+# Grid — 等宽列 / 比例列 / 多行
+
+<Grid cols="3" gap="md">
+  <Block title="Hardness">NP-hard in the general case.</Block>
+  <Block title="Tractability">Polynomial-time under bounded parameters.</Block>
+  <Block title="Algorithm">Practical dynamic programming solver.</Block>
+</Grid>
+
+<Grid cols="45 55" gap="lg" align="top" style="margin-top:1rem">
+<div>
+
+`cols="3"` → 等宽三列，`cols="45 55"` → 比例两列，9 个子元素自动换行成九宫格。
+
+</div>
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" alt="ATLAS" caption="右侧比例列图示。" />
+</Grid>
+
+---
+layout: content
+---
+
+# Block — 定义 / 定理 / 算法框
+
+<Block title="Definition">
+
+图 $G$ 是**平面图**，当且仅当它可以画在平面上而无边交叉。
+
+</Block>
+
+<Block title="Theorem 1 (Kuratowski)">
+
+图 $G$ 是平面图，当且仅当它不含 $K_5$ 或 $K_{3,3}$ 的细分作为子图。
+
+</Block>
+
+<Block>
+
+无 `title` 时退化为通用有边框容器，适合需要视觉分组但无需标签的场景。
+
+</Block>
+
+---
+layout: content
+---
+
+# Takeaway — 一句话结论
+
+正文叙述内容……结论落在 Takeaway 中。
+
+<Takeaway>
+
+Temporal consistency is the key factor driving accuracy gains across all benchmarks.
+
+</Takeaway>
+
+与 `ResultBox` 的区别：`Takeaway` 是定性一句话，`ResultBox` 是定量结果含数学公式。
+
+<ResultBox title="对比：ResultBox">
+
+$$\mu = 1.05^{+0.31}_{-0.29}\,(\text{stat.})^{+0.18}_{-0.15}\,(\text{syst.})$$
+
+</ResultBox>
+
+---
+layout: blank
+---
+
+![](/ATLAS/ATLAS-Detector.png)
+
+<Abs x="4%" y="28%" w="26%">
+  <Callout type="note" title="内探测器">追踪带电粒子径迹，覆盖 $|\eta| < 2.5$。</Callout>
+</Abs>
+
+<Abs x="68%" y="50%" w="26%">
+  <Callout type="important" title="μ 子谱仪">最外层探测器，识别 μ 子，覆盖 $|\eta| < 2.7$。</Callout>
+</Abs>
+
+---
+layout: section
+---
+
+# 六、速查参考
 所有布局与组件选项一览
 
 ---
@@ -337,6 +425,10 @@ density: dense
 | `ResultBox` | `title?` |
 | `QRCode` | `url`, `:size?`, `color?`, `background?`, `caption?` |
 | `PlotlyGraph` | `filePath`, `:graphWidth?`, `:graphHeight?`, `:tickFontSize?`, `:legendFontSize?`, `:xTitleFontSize?`, `:yTitleFontSize?`, `:annotationFontSizeScale?` |
+| `Grid` | `cols` (数字或空格分隔比例), `gap?` (sm/md/lg), `align?` (top/center/bottom) |
+| `Block` | `title?` |
+| `Takeaway` | — |
+| `Abs` | `x`, `y`, `w?` |
 
 ---
 layout: content

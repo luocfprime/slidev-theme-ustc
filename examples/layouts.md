@@ -179,6 +179,10 @@ layout: content
 
 # content subtitle 具名插槽
 
+::subtitle::
+
+这里是 subtitle 插槽内容。
+
 `content` 布局支持 `subtitle` 具名插槽，内容渲染在正文区下方。
 
 在 Markdown 中使用 `::subtitle::` 语法填充：
@@ -197,9 +201,6 @@ layout: content
 这里是 subtitle 插槽内容，渲染在正文区末尾。
 ```
 
-::subtitle::
-
-这里是 subtitle 插槽内容，渲染在正文区末尾。
 
 ---
 layout: section
@@ -404,7 +405,7 @@ layout: section
 ---
 
 # 五、toc 布局
-`highlight` · `footer` · `footerMode`
+`highlight` · `columns` · `footer` · `footerMode`
 
 ---
 layout: toc
@@ -425,6 +426,16 @@ highlight: 3
 `highlight: 3` 高亮第三个分节，其余条目以较低不透明度显示。
 
 用于汇报进度时指示当前所在章节。
+
+---
+layout: toc
+columns: 2
+highlight: 0
+---
+
+# 目录（columns: 2）
+
+`columns: 2` 将条目排为两列，适合章节数量较多时使用。
 
 ---
 layout: section

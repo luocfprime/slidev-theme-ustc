@@ -195,8 +195,14 @@
   opacity: 0.35;
 }
 
+.slidev-layout.toc .toc-list.toc-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.4rem 1.5rem;
+}
+
 .slidev-layout.toc .toc-label {
-  font-size: 1.7rem;
+  font-size: var(--toc-fs, 1.7rem);
   font-weight: 500;
   color: var(--ustc-text);
   line-height: 1.25;

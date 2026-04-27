@@ -6,10 +6,12 @@ const props = withDefaults(defineProps<{
   highlight?: number
   footer?: boolean
   footerMode?: 'full' | 'minimal'
+  columns?: 1 | 2
 }>(), {
   highlight: 0,
   footer: true,
   footerMode: 'full',
+  columns: 1,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
@@ -46,13 +48,19 @@ const sections = computed((): TocEntry[] => {
 })
 
 const hasHighlight = computed(() => props.highlight > 0)
+
+const autoFontSize = computed(() => {
+  const n = sections.value.length || 1
+  const size = Math.min(1.9, Math.max(1.0, 12 / n))
+  return `${size.toFixed(2)}rem`
+})
 </script>
 
 <template>
   <div class="slidev-layout toc">
     <slot />
 
-    <ol class="toc-list">
+    <ol class="toc-list" :class="{ 'toc-two-col': columns === 2 }" :style="{ '--toc-fs': autoFontSize }">
       <li
         v-for="entry in sections"
         :key="entry.index"
