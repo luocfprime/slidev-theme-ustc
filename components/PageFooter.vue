@@ -25,7 +25,8 @@ const pageLabel = computed(() => {
   const bsn = backupStartNo.value
   const cur = currentPage.value
   if (bsn > 0 && cur >= bsn) {
-    return `A.${cur - bsn + 1}`
+    // backup slide itself → A.0; first content slide → A.1, etc.
+    return `A.${cur - bsn}`
   }
   const mainTotal = bsn > 0 ? bsn - 1 : total.value
   return `${cur} / ${mainTotal}`

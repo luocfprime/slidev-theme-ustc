@@ -8,7 +8,6 @@
   --ustc-blue-light:  #2d5fa8;
   --ustc-blue-pale:   rgba(30, 76, 144, 0.07);
   --ustc-blue-border: rgba(30, 76, 144, 0.18);
-  --ustc-blue-row:    rgba(30, 76, 144, 0.09);  /* table row separator */
 
   /* Text */
   --ustc-text:        #111827;
@@ -490,7 +489,26 @@
   font-size: var(--ustc-fs-blockquote-dense);
 }
 
-/* Callout body text must scale with dense mode (component scoped styles otherwise win) */
+/* Component body text — font-size managed here so dense overrides apply uniformly */
+.slidev-layout.content .callout .callout-body p,
+.slidev-layout.split .callout .callout-body p,
+.slidev-layout.content .callout .callout-body li,
+.slidev-layout.split .callout .callout-body li {
+  font-size: var(--ustc-fs-callout);
+}
+
+.slidev-layout.content .result-box-body p,
+.slidev-layout.split .result-box-body p,
+.slidev-layout.content .result-box-body li,
+.slidev-layout.split .result-box-body li {
+  font-size: var(--ustc-fs-result-body);
+}
+
+.slidev-layout.content .prim-block-title,
+.slidev-layout.split .prim-block-title {
+  font-size: var(--ustc-fs-result-title);
+}
+
 .slidev-layout.content.dense .callout .callout-body p,
 .slidev-layout.content.dense .callout .callout-body li,
 .slidev-layout.content .dense .callout .callout-body p,
@@ -503,6 +521,17 @@
   line-height: var(--ustc-lh);
 }
 
+.slidev-layout.content.dense .result-box-body p,
+.slidev-layout.content.dense .result-box-body li,
+.slidev-layout.content .dense .result-box-body p,
+.slidev-layout.content .dense .result-box-body li,
+.slidev-layout.split.dense .result-box-body p,
+.slidev-layout.split.dense .result-box-body li,
+.slidev-layout.split .dense .result-box-body p,
+.slidev-layout.split .dense .result-box-body li {
+  font-size: var(--ustc-fs-callout-dense);
+}
+
 /* Tables */
 .slidev-layout.content table,
 .slidev-layout.split table {
@@ -510,16 +539,13 @@
   border-collapse: collapse;
   margin: 0.65rem 0 0.3rem;
   table-layout: auto;
+  border-top: 1.5px solid var(--ustc-blue-dark);
+  border-bottom: 1.5px solid var(--ustc-blue-dark);
 }
 
 .slidev-layout.content thead tr,
 .slidev-layout.split thead tr {
-  border-bottom: 2px solid var(--ustc-blue-border);
-}
-
-.slidev-layout.content tbody tr + tr,
-.slidev-layout.split tbody tr + tr {
-  border-top: 1px solid var(--ustc-blue-row);
+  border-bottom: 1px solid var(--ustc-blue-dark);
 }
 
 .slidev-layout.content th,
@@ -542,6 +568,24 @@
   margin: 0;
 }
 
+/* FigureBlock: needs explicit top margin since the bare figure reset above removes it */
+.slidev-layout.content figure.figure-block,
+.slidev-layout.split figure.figure-block {
+  margin-top: 0.65rem;
+}
+
+/* TableBlock: add outer top margin to match other block components */
+.slidev-layout.content div.table-block,
+.slidev-layout.split div.table-block {
+  margin-top: 0.65rem;
+}
+
+/* Table inside TableBlock: wrapper handles outer spacing; caption margin handles caption→table gap */
+.slidev-layout.content div.table-block table,
+.slidev-layout.split div.table-block table {
+  margin-top: 0;
+}
+
 .slidev-layout.content figcaption.figure-caption,
 .slidev-layout.split figcaption.figure-caption,
 .slidev-layout.content p.table-block-caption,
@@ -559,7 +603,7 @@
 
 .slidev-layout.content p.table-block-caption,
 .slidev-layout.split p.table-block-caption {
-  margin: var(--ustc-tab-caption-gap) 0 0;
+  margin: 0 0 var(--ustc-tab-caption-gap);
 }
 
 .slidev-layout.content.dense figcaption.figure-caption,
@@ -700,4 +744,9 @@
 .slidev-layout.end .end-contact a {
   color: var(--ustc-blue);
   text-decoration: none;
+}
+
+/* ─── Typst (vendored from slidev-addon-typst, MIT) ───────────────────── */
+.typst-doc {
+  margin: 1rem auto;
 }

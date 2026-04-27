@@ -525,7 +525,7 @@ dragPos:
 layout: end
 ---
 
-# 感谢聆听
+# 感 谢 聆 听
 
 欢迎提问与讨论
 
@@ -537,7 +537,7 @@ layout: end
 layout: backup
 ---
 
-# 附录
+# 附 录
 
 ---
 layout: content
@@ -599,3 +599,149 @@ density: dense
 GNN 方法在高动量高堆积的实验条件下展现出优势；低动量优化是下一阶段的重点。
 
 </Takeaway>
+
+---
+layout: content
+density: dense
+---
+
+# A.3　预训练方法对比（Typst 排版示例）
+
+<TableBlock caption="Comparison to the state-of-the-art pre-training methods on semantic tasks (ImageNet-1K linear probing, ADE segmentation) and 3D vision tasks (NYUv2, Taskonomy) with ViT-Base/16. Bold = best, underlined = second best." captionAlign="left" />
+
+```typst
+#set text(size: 8.2pt)
+#set par(leading: 0.55em)
+
+#let best(x) = strong(x)
+#let second(x) = underline(x)
+#let cite(n) = box(
+  stroke: green + 0.45pt,
+  inset: (x: 0.4pt, y: -0.2pt),
+)[#text(fill: green)[#n]]
+
+#set table(
+  stroke: none,
+  inset: (x: 2.6pt, y: 0.7pt),
+)
+
+#table(
+  columns: (
+    36mm,
+    10mm, 10mm, 11mm,
+    10mm, 10mm, 9mm, 10mm, 10mm,
+    11mm, 9mm, 12mm, 10mm, 9mm,
+  ),
+  align: (
+    left,
+    center, center, center,
+    center, center, center, center, center,
+    center, center, center, center, center,
+  ),
+
+  table.hline(stroke: 0.8pt),
+
+  [*pre-training method (data)*],
+  [*IN1K ↑*],
+  [*ADE ↑*],
+  [*NYUv2 ↑*],
+  table.cell(colspan: 10)[*Taskonomy ↓*],
+
+  table.hline(start: 1, end: 2, stroke: 0.45pt),
+  table.hline(start: 2, end: 3, stroke: 0.45pt),
+  table.hline(start: 3, end: 4, stroke: 0.45pt),
+  table.hline(start: 4, end: 14, stroke: 0.45pt),
+
+  [],
+  [*lin.*],
+  [*segm.*],
+  [*depth*],
+  [*curv.*],
+  [*depth*],
+  [*edges*],
+  [*kpts2d*],
+  [*kpts3d*],
+  [*normal*],
+  [*occl.*],
+  [*reshad.*],
+  [*avg.*],
+  [*rank.*],
+
+  table.hline(stroke: 0.55pt),
+
+  [DINO #cite("14") (IN1K)],
+  [#best[78.2]], [44.7], [66.8],
+  [43.04], [38.42], [3.80], [0.16], [45.85],
+  [65.71], [0.57], [115.02], [39.07], [5.00],
+
+  [MAE #cite("38") (IN1K)],
+  [#second[68.0]], [#second[46.1]], [79.6],
+  [41.59], [35.83], [#best[1.19]], [#second[0.08]], [44.18],
+  [#second[59.20]], [#best[0.55]], [106.08], [36.09], [#second[2.13]],
+
+  [MutliMAE #cite("4") (IN1K)],
+  [60.2], [#best[46.4]], [#second[83.0]],
+  [41.42], [35.38], [2.17], [#best[0.07]], [#second[44.03]],
+  [60.35], [0.56], [105.25], [36.17], [2.75],
+
+  [MAE (Habitat)],
+  [32.5], [40.3], [79.0],
+  [42.06], [#second[33.63]], [1.79], [#second[0.08]], [44.81],
+  [59.76], [0.56], [#second[102.54]], [#second[35.65]], [2.88],
+
+  [#text(fill: green)[*CroCo*] (Habitat)],
+  [37.0], [40.6], [#best[85.6]],
+  [#best[40.91]], [#best[31.34]], [#second[1.74]], [#second[0.08]], [#best[41.69]],
+  [#best[54.13]], [#best[0.55]], [#best[93.58]], [#best[33.00]], [#best[1.25]],
+
+  table.hline(stroke: 0.8pt),
+)
+```
+
+---
+layout: content
+---
+
+# A.4　Typst 绘图示例（CeTZ）
+
+```typst
+#import "@preview/cetz:0.3.4": canvas, draw, vector, matrix
+
+#set text(size: 9pt)
+
+#html.frame(canvas({
+  import draw: *
+
+  ortho(y: -30deg, x: 30deg, {
+    on-xz({
+      grid((0,-2), (8,2), stroke: gray + .5pt)
+    })
+
+    let wave(amplitude: 1, fill: none, phases: 2, scale: 8, samples: 100) = {
+      line(..(for x in range(0, samples + 1) {
+        let x = x / samples
+        let p = (2 * phases * calc.pi) * x
+        ((x * scale, calc.sin(p) * amplitude),)
+      }), fill: fill)
+
+      let subdivs = 8
+      for phase in range(0, phases) {
+        let x = phase / phases
+        for div in range(1, subdivs + 1) {
+          let p = 2 * calc.pi * (div / subdivs)
+          let y = calc.sin(p) * amplitude
+          let x = x * scale + div / subdivs * scale / phases
+          line((x, 0), (x, y), stroke: rgb(0, 0, 0, 150) + .5pt)
+        }
+      }
+    }
+
+    on-xy({
+      wave(amplitude: 1.6, fill: rgb(0, 0, 255, 50))
+    })
+    on-xz({
+      wave(amplitude: 1, fill: rgb(255, 0, 0, 50))
+    })
+  })
+}))
+```

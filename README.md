@@ -61,6 +61,23 @@ theme: @luocfprime/slidev-theme-ustc
 
 See `docs/configuration.md` for supported frontmatter options, component props, and CSS variables.
 
+## Typst Support
+
+The theme bundles [Typst](https://typst.app) rendering support (vendored from [slidev-addon-typst](https://github.com/shigma/slidev-addon-typst), MIT). Use a `typst` code block to render Typst content inline:
+
+````md
+```typst
+#set text(font: "Times New Roman", size: 10pt)
+#table(
+  columns: 3,
+  [*Method*], [*Accuracy*], [*Speed*],
+  [Ours], [97.9%], [18 ms],
+)
+```
+````
+
+Note: `#set page(...)` is not supported — page dimensions are controlled by the slide layout.
+
 ## Agent Skill
 
 > [!TIP]
