@@ -156,7 +156,7 @@ layout: content
   src="/ATLAS/ATLAS-Detector.png"
   alt="ATLAS 探测器"
   caption="ATLAS 探测器横截面图，展示各子探测器从内到外的层级结构。"
-  width="60%"
+  width="50%"
 />
 
 ---

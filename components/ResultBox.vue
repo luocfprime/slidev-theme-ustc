@@ -32,11 +32,6 @@ defineProps<{
 
 .result-box-body :deep(p) {
   margin: 0.15rem 0;
-  font-size: var(--ustc-fs-result-body);
   line-height: 1.5;
-}
-
-.result-box-body :deep(li) {
-  font-size: var(--ustc-fs-result-body);
 }
 </style>

@@ -28,14 +28,12 @@ defineProps<{
   padding-top: 0.58rem;
 }
 
-/* !important overrides the global `p { font-size: 1.4rem; margin: ... }` rule
-   so the title strip stays compact regardless of layout density. */
 .prim-block-title {
   font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
-  font-size: 1.05rem !important;
+  font-size: 1.05rem;
   letter-spacing: 0;
-  margin: 0 -0.95rem 0.48rem !important;
+  margin: 0 -0.95rem 0.48rem;
   padding: 0.32rem 0.95rem 0.3rem;
   background: rgba(30, 76, 144, 0.035);
   border-bottom: 1px solid rgba(30, 76, 144, 0.14);

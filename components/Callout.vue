@@ -58,12 +58,7 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
 
 .callout .callout-body :deep(p) {
   margin: 0.1rem 0;
-  font-size: var(--ustc-fs-callout);
   line-height: 1.48;
-}
-
-.callout .callout-body :deep(li) {
-  font-size: var(--ustc-fs-callout);
 }
 
 .callout .callout-body :deep(code) {
