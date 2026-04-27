@@ -26,17 +26,17 @@ defineProps<{
 .result-box-title {
   font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
-  font-size: 1.05rem;
+  font-size: var(--ustc-fs-result-title);
   margin: 0 0 0.4rem;
 }
 
 .result-box-body :deep(p) {
   margin: 0.15rem 0;
-  font-size: 1.15rem;
+  font-size: var(--ustc-fs-result-body);
   line-height: 1.5;
 }
 
 .result-box-body :deep(li) {
-  font-size: 1.15rem;
+  font-size: var(--ustc-fs-result-body);
 }
 </style>

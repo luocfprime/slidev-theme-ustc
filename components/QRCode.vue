@@ -42,9 +42,9 @@ withDefaults(defineProps<{
 }
 
 .ustc-qrcode-caption {
-  font-size: 1.1rem;
+  font-size: var(--ustc-fs-caption);
   color: var(--ustc-text-muted);
   text-align: center;
-  line-height: 1.35;
+  line-height: var(--ustc-lh-caption);
 }
 </style>

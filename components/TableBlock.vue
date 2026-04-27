@@ -55,6 +55,6 @@ const fullCaption = computed(() => {
 }
 
 .table-block-caption {
-  margin: 0 0 0.3rem;
+  margin: 0 0 var(--ustc-tab-caption-gap);
 }
 </style>

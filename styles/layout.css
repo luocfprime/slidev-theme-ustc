@@ -50,11 +50,16 @@
   --ustc-fs-subtitle-dense: 0.97rem; /* content layout subtitle — dense    */
   --ustc-fs-callout:       1.15rem;  /* Callout body text                   */
   --ustc-fs-callout-dense: 0.95rem;  /* Callout body text in dense mode     */
+  --ustc-fs-callout-title: 1.1rem;   /* Callout title                       */
+  --ustc-fs-result-title:  1.05rem;  /* ResultBox title                     */
+  --ustc-fs-result-body:   1.15rem;  /* ResultBox body text                 */
   --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
   --ustc-lh:               2.0;      /* default line-height for body text   */
   --ustc-lh-caption:       1.35;     /* figure/table captions               */
   --ustc-lh-table:         1.38;     /* td, th                              */
   --ustc-lh-blockquote:    1.5;      /* blockquote                          */
+  --ustc-fig-caption-gap:  0.75rem;  /* gap between figure image and its caption  */
+  --ustc-tab-caption-gap:  0.3rem;   /* gap between table caption and the table   */
   --ustc-lh-heading:       1.1;      /* h1 across all layouts               */
   --ustc-lh-footnote:      1.28;     /* footnote list items                 */
   --ustc-fs-footnote-ref:  0.64em;   /* footnote superscript anchor         */
@@ -544,8 +549,17 @@
   color: var(--ustc-text-muted);
   font-size: var(--ustc-fs-caption);
   line-height: var(--ustc-lh-caption);
-  margin: 0.28rem 0 0;
   text-wrap: pretty;
+}
+
+.slidev-layout.content figcaption.figure-caption,
+.slidev-layout.split figcaption.figure-caption {
+  margin: var(--ustc-fig-caption-gap) 0 0;
+}
+
+.slidev-layout.content p.table-block-caption,
+.slidev-layout.split p.table-block-caption {
+  margin: var(--ustc-tab-caption-gap) 0 0;
 }
 
 .slidev-layout.content.dense figcaption.figure-caption,

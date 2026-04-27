@@ -73,7 +73,7 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
 .callout-title {
   font-weight: var(--ustc-fw-semibold);
   margin: 0 0 0.15rem;
-  font-size: 1.1rem;
+  font-size: var(--ustc-fs-callout-title);
 }
 
 /* note — blue */

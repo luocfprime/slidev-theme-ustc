@@ -77,11 +77,11 @@ const fullCaption = computed(() => {
   width: 100%;
   display: block;
   margin: 0 auto;
-  max-height: 30rem;
+  max-height: 38rem;
   object-fit: contain;
 }
 
 .figure-caption {
-  margin-top: 0.35rem;
+  margin-top: var(--ustc-fig-caption-gap);
 }
 </style>
