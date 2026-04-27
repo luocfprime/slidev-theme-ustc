@@ -6,16 +6,16 @@ defineProps<{
 </script>
 
 <template>
-  <div class="prim-block" :class="{ 'prim-block-untitled': !title }">
-    <p v-if="title" class="prim-block-title" v-html="renderInlineMd(title)" />
-    <div class="prim-block-body">
+  <div class="block" :class="{ 'block-untitled': !title }">
+    <p v-if="title" class="block-title" v-html="renderInlineMd(title)" />
+    <div class="block-body">
       <slot />
     </div>
   </div>
 </template>
 
 <style scoped>
-.prim-block {
+.block {
   background: #fff;
   border: 1px solid rgba(30, 76, 144, 0.16);
   border-radius: 5px;
@@ -24,13 +24,13 @@ defineProps<{
   margin: 0.55rem 0;
 }
 
-.prim-block-untitled {
+.block-untitled {
   padding-top: 0.58rem;
 }
 
 /* !important overrides the global `p { font-size: 1.4rem; margin: ... }` rule
    so the title strip stays compact regardless of layout density. */
-.prim-block-title {
+.block-title {
   font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
   font-size: 1.05rem !important;
@@ -42,20 +42,20 @@ defineProps<{
   line-height: 1.28;
 }
 
-.prim-block-body :deep(p):first-child {
+.block-body :deep(p):first-child {
   margin-top: 0.35rem;
 }
 
-.prim-block-body :deep(p):last-child {
+.block-body :deep(p):last-child {
   margin-bottom: 0;
 }
 
-.prim-block-untitled .prim-block-body :deep(p):first-child {
+.block-untitled .block-body :deep(p):first-child {
   margin-top: 0;
 }
 
-.prim-block-body :deep(ul),
-.prim-block-body :deep(ol) {
+.block-body :deep(ul),
+.block-body :deep(ol) {
   margin-top: 0.25rem;
   margin-bottom: 0.25rem;
 }

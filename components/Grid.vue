@@ -31,13 +31,13 @@ const gridStyle = computed(() => {
 </script>
 
 <template>
-  <div class="prim-grid" :style="gridStyle">
+  <div class="grid" :style="gridStyle">
     <slot />
   </div>
 </template>
 
 <style scoped>
-.prim-grid {
+.grid {
   width: 100%;
 }
 </style>
