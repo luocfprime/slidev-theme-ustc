@@ -52,7 +52,7 @@ export const endDefaults = {
 export const gridDefaults = {
   cols: '2',
   gap: 'md' as 'sm' | 'md' | 'lg',
-  align: 'top' as 'top' | 'center' | 'bottom',
+  alignY: 'top' as 'top' | 'center' | 'bottom',
 }
 
 export const calloutDefaults = {

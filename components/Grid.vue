@@ -5,7 +5,7 @@ import { gridDefaults } from '../utils/defaults'
 const props = withDefaults(defineProps<{
   cols?: string
   gap?: 'sm' | 'md' | 'lg'
-  align?: 'top' | 'center' | 'bottom'
+  alignY?: 'top' | 'center' | 'bottom'
 }>(), {
   ...gridDefaults,
 })
@@ -25,7 +25,7 @@ const gridStyle = computed(() => {
     display: 'grid',
     gridTemplateColumns: templateColumns,
     gap: gapMap[props.gap],
-    alignItems: alignMap[props.align],
+    alignItems: alignMap[props.alignY],
   }
 })
 </script>

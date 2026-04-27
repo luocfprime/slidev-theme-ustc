@@ -205,7 +205,7 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 ### Quick reference
 
 ```vue
-<Grid cols="2" gap="md" align="top">...</Grid>
+<Grid cols="2" gap="md" alignY="top">...</Grid>
 <Block title="Definition">...</Block>
 <Callout type="tip" title="Insight">...</Callout>    <!-- types: note tip warning important example -->
 <Takeaway>Key point.</Takeaway>
@@ -294,7 +294,7 @@ All slides after this use `A.N` footer numbering.
 ### Figure + caption side by side
 
 ```vue
-<Grid cols="1 1" gap="md" align="center">
+<Grid cols="1 1" gap="md" alignY="center">
 
 <FigureBlock src="/img/a.png" caption="Method A" width="100%" />
 

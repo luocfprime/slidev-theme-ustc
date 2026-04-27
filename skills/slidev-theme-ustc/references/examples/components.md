@@ -656,20 +656,20 @@ layout: content
 
 `align` 控制单元格纵向对齐方式（`align-items`）。高度不一致时效果明显。
 
-<Grid cols="3" gap="md" align="top" style="margin-bottom:0.8rem">
-  <Block title="align=top（默认）">顶部对齐。内容较短。</Block>
+<Grid cols="3" gap="md" alignY="top" style="margin-bottom:0.8rem">
+  <Block title="alignY=top（默认）">顶部对齐。内容较短。</Block>
   <Block title="较高的单元格">这个单元格的内容更多一些，撑高了整行，其他单元格顶部对齐。</Block>
   <Block title="短内容">短。</Block>
 </Grid>
 
-<Grid cols="3" gap="md" align="center" style="margin-bottom:0.8rem">
-  <Block title="align=center">居中对齐。</Block>
+<Grid cols="3" gap="md" alignY="center" style="margin-bottom:0.8rem">
+  <Block title="alignY=center">居中对齐。</Block>
   <Block title="较高的单元格">这个单元格的内容更多一些，撑高了整行，其他单元格垂直居中。</Block>
   <Block title="短内容">短。</Block>
 </Grid>
 
-<Grid cols="3" gap="md" align="bottom">
-  <Block title="align=bottom">底部对齐。</Block>
+<Grid cols="3" gap="md" alignY="bottom">
+  <Block title="alignY=bottom">底部对齐。</Block>
   <Block title="较高的单元格">这个单元格的内容更多一些，撑高了整行，其他单元格底部对齐。</Block>
   <Block title="短内容">短。</Block>
 </Grid>
@@ -710,7 +710,7 @@ density: dense
 
 `cols="45 55" gap="lg"` 替代 `split` 布局在内容区内做分栏。
 
-<Grid cols="45 55" gap="lg" align="top">
+<Grid cols="45 55" gap="lg" alignY="top">
   <div>
 
   **方法概述**
@@ -738,7 +738,7 @@ density: dense
 
 `cols="2" gap="lg"` 并排两张 PlotlyGraph，无需手写 `display:grid`。
 
-<Grid cols="2" gap="lg" align="top">
+<Grid cols="2" gap="lg" alignY="top">
   <div>
     <PlotlyGraph filePath="/Graph/plotly1.json" :tickFontSize="11" :legendFontSize="10" :graphHeight="400" :graphWidth="500" />
     <Takeaway>左图：2D 折线，观察趋势。</Takeaway>
@@ -758,7 +758,7 @@ density: dense
 
 `cols="55 45" gap="lg"` 让图占多数宽度，右侧配文字分析。
 
-<Grid cols="55 45" gap="lg" align="top">
+<Grid cols="55 45" gap="lg" alignY="top">
   <PlotlyGraph filePath="/Graph/plotly1.json" :tickFontSize="12" :legendFontSize="11" :graphHeight="340" />
   <div>
 
