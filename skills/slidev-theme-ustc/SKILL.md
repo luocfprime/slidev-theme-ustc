@@ -74,8 +74,8 @@ Standard content slide (also the fallback when no `layout:` is specified).
 layout: default
 density: normal            # 'normal' (default) | 'dense'
 margin: normal             # 'normal' | 'tight' | 'tighter' | 'none'
-lineHeight: 1.47           # override line-height for this slide
-align: left                # 'left' | 'center' | 'right' | 'justify'
+lineHeight: 2.0           # override line-height for this slide
+align: left                # 'left' | 'center' | 'right'
 footnote: overlay          # 'overlay' (default) | 'flow'
 footer: true
 footerMode: full           # 'full' (default) | 'minimal'
@@ -97,7 +97,7 @@ Two-column layout.
 ---
 layout: split
 ratio: "2:1"               # column width ratio (default: "2:1")
-gap: md                    # 'sm' | 'md' (default) | 'lg'
+gap: md                    # 'sm' (0.8rem) | 'md' (1.4rem, default) | 'lg' (2rem) — different pixel values than Grid
 # ...all default props also apply
 ---
 
@@ -231,7 +231,7 @@ Key overridable variables:
 | `--ustc-blue` | `#1E4C90` | primary brand color |
 | `--ustc-fs-body` | `1.4rem` | body text (normal density) |
 | `--ustc-fs-body-dense` | `1.05rem` | body text (dense density) |
-| `--ustc-lh` | `1.47` | line-height |
+| `--ustc-lh` | `2.0` | line-height |
 | `--ustc-px` / `--ustc-py` | `2.8rem` / `1.75rem` | slide padding |
 | `--ustc-footer-h` | `1.75rem` | footer bar height |
 
@@ -374,8 +374,28 @@ The `--ustc-nav-h` CSS variable is set automatically to account for the bar heig
 
 ---
 
+## Quick Reference
+
+| Goal | How |
+|------|-----|
+| Smaller body text globally | `--ustc-fs-body: 1.2rem` in `<style>` |
+| Dense text on one slide | `density: dense` in frontmatter |
+| Change brand colour | `--ustc-blue` + `--ustc-blue-dark` in `<style>` |
+| Hide section bar on one slide | `sectionBar: false` in frontmatter |
+| Dots-only section bar | `sectionBarMode: minimal` |
+| Custom figure/table prefix | `figurePrefix: "Fig."` / `tablePrefix: "Tab."` in global frontmatter |
+| Layer Abs elements | `:z="20"` on top, `:z="10"` behind |
+| Wider left column in split | `ratio: "3:1"` |
+| Inline footnotes | `footnote: flow` |
+| Absolute positioning | Prefer `<v-drag>`, use `<Abs>` for `%` coords |
+| All valid prop values | See [references/components.md](references/components.md) |
+| All CSS variables | See [references/css-variables.md](references/css-variables.md) |
+
+---
+
 ## Additional Resources
 
 - [references/components.md](references/components.md) — full prop tables for all components
+- [references/defaults.md](references/defaults.md) — all prop default values (source: `utils/defaults.ts`)
 - [references/css-variables.md](references/css-variables.md) — complete CSS variable reference
 - [references/example.md](references/example.md) — canonical demo deck showing all layouts and components in use

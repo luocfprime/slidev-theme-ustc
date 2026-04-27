@@ -8,22 +8,26 @@
   --ustc-blue-light:  #2d5fa8;
   --ustc-blue-pale:   rgba(30, 76, 144, 0.07);
   --ustc-blue-border: rgba(30, 76, 144, 0.18);
+  --ustc-blue-row:    rgba(30, 76, 144, 0.09);  /* table row separator */
 
   /* Text */
   --ustc-text:        #111827;
   --ustc-text-muted:  #6b7280;
   --ustc-text-light:  #9ca3af;
+  --ustc-footnote-ref: #7b8494;  /* footnote superscript ref */
 
   /* Footer bar */
   --ustc-footer-h:    1.75rem;
-  --ustc-footer-bg:   #1E4C90;
+  --ustc-footer-bg:   var(--ustc-blue);
   --ustc-footer-text: rgba(255, 255, 255, 0.88);
   --ustc-footer-fs:   0.74rem;
 
   /* Section progress bar (set to 2rem when sectionProgress: true) */
   --ustc-nav-h: 0px;
 
-  /* Slide padding */
+  /* Slide padding
+     TODO(low): --ustc-px (right) and --ustc-pl (left) share the same value but are kept
+     separate so right and left can be adjusted independently if needed. */
   --ustc-px:    2.8rem;
   --ustc-py:    1.75rem;
   --ustc-pl:    2.8rem;
@@ -37,15 +41,42 @@
   --ustc-fs-h2:            1.55rem;  /* h2                                  */
   --ustc-fs-h3:            1.3rem;   /* h3 (also used for dense h2)        */
   --ustc-fs-table-cell:    1.1rem;   /* td, th                              */
+  --ustc-fs-table-cell-dense: 0.96rem; /* td, th — dense mode              */
   --ustc-fs-blockquote:    1.2rem;   /* blockquote                          */
+  --ustc-fs-blockquote-dense: 1rem;  /* blockquote — dense mode            */
   --ustc-fs-caption:       1.1rem;   /* figure & table captions             */
+  --ustc-fs-caption-dense: 0.96rem;  /* figure & table captions — dense    */
+  --ustc-fs-subtitle:      1.15rem;  /* content layout subtitle             */
+  --ustc-fs-subtitle-dense: 0.97rem; /* content layout subtitle — dense    */
   --ustc-fs-callout:       1.15rem;  /* Callout body text                   */
   --ustc-fs-callout-dense: 0.95rem;  /* Callout body text in dense mode     */
   --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
-  --ustc-lh:               1.47;     /* default line-height for body text   */
+  --ustc-lh:               2.0;      /* default line-height for body text   */
+  --ustc-lh-caption:       1.35;     /* figure/table captions               */
+  --ustc-lh-table:         1.38;     /* td, th                              */
+  --ustc-lh-blockquote:    1.5;      /* blockquote                          */
+  --ustc-lh-heading:       1.1;      /* h1 across all layouts               */
+  --ustc-lh-footnote:      1.28;     /* footnote list items                 */
+  --ustc-fs-footnote-ref:  0.64em;   /* footnote superscript anchor         */
+  --ustc-footnotes-max-h:  22%;      /* footnote overlay max visible height  */
 
   /* Semibold weight — works on Inter (variable font); fallback renders as bold */
   --ustc-fw-semibold: 650;
+
+  /* ── Structural layout type scale ────────────────────────────────────── */
+  --ustc-fs-cover-h1:     3.5rem;   /* cover & end h1                      */
+  --ustc-fs-cover-sub:    1.9rem;   /* cover subtitle                      */
+  --ustc-fs-cover-author: 1.45rem;  /* author attribution line             */
+  --ustc-fs-cover-meta:   1.35rem;  /* date & conference/meeting line      */
+  --ustc-fs-cover-slot:   1.2rem;   /* cover slot / body text area         */
+  --ustc-fs-cover-aff:    1.1rem;   /* affiliations line                   */
+  --ustc-fs-section-h1:   3.4rem;   /* section & backup h1                 */
+  --ustc-fs-section-sub:  1.22rem;  /* section/backup subtitle paragraph   */
+  --ustc-fs-end-contact:  1rem;     /* end slide contact info              */
+
+  /* ── Max-width constraints ───────────────────────────────────────────────── */
+  --ustc-max-w-h1:        58rem;    /* h1 readable width (cover, section, backup) */
+  --ustc-max-w-sub:       48rem;    /* subtitle / body paragraph max width        */
 }
 
 /* ─── Cover ──────────────────────────────────────────────────────────────── */
@@ -60,6 +91,7 @@
   box-sizing: border-box;
 }
 
+/* TODO(low): .end-logo duplicates these position/size values; extract to a shared rule if they need to stay in sync */
 .slidev-layout.cover .cover-logo {
   position: absolute;
   top: 4%;
@@ -69,17 +101,17 @@
 }
 
 .slidev-layout.cover h1 {
-  font-size: 3.5rem;
+  font-size: var(--ustc-fs-cover-h1);
   font-weight: 700;
   letter-spacing: -0.035em;
-  line-height: 1.1;
+  line-height: var(--ustc-lh-heading);
   color: var(--ustc-blue-dark);
   margin: 0 0 0.7rem;
-  max-width: 58rem;
+  max-width: var(--ustc-max-w-h1);
 }
 
 .slidev-layout.cover .cover-subtitle {
-  font-size: 1.9rem;
+  font-size: var(--ustc-fs-cover-sub);
   font-weight: 500;
   color: var(--ustc-blue);
   margin: 0 0 0.6rem;
@@ -89,7 +121,7 @@
 
 /* Attribution block — large top margin creates the primary visual break */
 .slidev-layout.cover .cover-author-line {
-  font-size: 1.45rem;
+  font-size: var(--ustc-fs-cover-author);
   line-height: 1.5;
   color: var(--ustc-text);
   margin: 2.0rem 0 1.35rem;
@@ -108,14 +140,14 @@
 }
 
 .slidev-layout.cover .cover-date {
-  font-size: 1.35rem;
+  font-size: var(--ustc-fs-cover-meta);
   color: var(--ustc-text-muted);
   font-weight: 500;
   margin: 0 0 0.75rem;
 }
 
 .slidev-layout.cover .cover-meeting {
-  font-size: 1.35rem;
+  font-size: var(--ustc-fs-cover-meta);
   font-weight: 400;
   color: var(--ustc-text-muted);
   margin: 0 0 0;
@@ -123,7 +155,7 @@
 }
 
 .slidev-layout.cover .cover-slot {
-  font-size: 1.2rem;
+  font-size: var(--ustc-fs-cover-slot);
   line-height: 1.55;
   color: var(--ustc-text-light);
   max-width: 50rem;
@@ -144,7 +176,7 @@
   bottom: 1.3rem;
   left: 3.5rem;
   right: 3.5rem;
-  font-size: 1.1rem;
+  font-size: var(--ustc-fs-cover-aff);
   color: var(--ustc-text-light);
   line-height: 1.5;
   display: flex;
@@ -175,7 +207,7 @@
   font-weight: 650;
   color: var(--ustc-blue-dark);
   letter-spacing: -0.025em;
-  line-height: 1.1;
+  line-height: var(--ustc-lh-heading);
   margin: 0 0 1.4rem;
   padding: 0.08rem 0;
 }
@@ -240,63 +272,42 @@
   position: relative;
 }
 
-/* ─── Backup ─────────────────────────────────────────────────────────────── */
-.slidev-layout.backup {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 2.5rem 3.5rem calc(var(--ustc-footer-h) + 1rem) 4.8rem;
-  position: relative;
-  box-sizing: border-box;
-}
-
-.slidev-layout.backup h1 {
-  font-size: 3.4rem;
-  font-weight: 700;
-  color: var(--ustc-text-muted);
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  margin: 0;
-  max-width: 58rem;
-}
-
-.slidev-layout.backup h1 + p {
-  margin-top: 0.75rem;
-  font-size: 1.22rem;
-  color: var(--ustc-text-light);
-  line-height: 1.38;
-  max-width: 48rem;
-}
-
-/* ─── Section ────────────────────────────────────────────────────────────── */
+/* ─── Section + Backup — shared structure ────────────────────────────────── */
+.slidev-layout.backup,
 .slidev-layout.section {
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* TODO(medium): bottom uses +1rem; --ustc-pb uses +0.9rem — verify if intentional */
   padding: 2.5rem 3.5rem calc(var(--ustc-footer-h) + 1rem) 4.8rem;
   position: relative;
   box-sizing: border-box;
 }
 
+.slidev-layout.backup h1,
 .slidev-layout.section h1 {
-  font-size: 3.4rem;
+  font-size: var(--ustc-fs-section-h1);
   font-weight: 700;
-  color: var(--ustc-blue-dark);
   letter-spacing: -0.03em;
-  line-height: 1.1;
+  line-height: var(--ustc-lh-heading);
   margin: 0;
-  max-width: 58rem;
+  max-width: var(--ustc-max-w-h1);
 }
 
+.slidev-layout.backup h1  { color: var(--ustc-text-muted); }
+.slidev-layout.section h1 { color: var(--ustc-blue-dark); }
+
+.slidev-layout.backup h1 + p,
 .slidev-layout.section h1 + p {
   margin-top: 0.75rem;
-  font-size: 1.22rem;
-  color: var(--ustc-text-muted);
+  font-size: var(--ustc-fs-section-sub);
   line-height: 1.38;
-  max-width: 48rem;
+  max-width: var(--ustc-max-w-sub);
 }
+
+.slidev-layout.backup h1 + p  { color: var(--ustc-text-light); }
+.slidev-layout.section h1 + p { color: var(--ustc-text-muted); }
 
 /* ─── Content ────────────────────────────────────────────────────────────── */
 .slidev-layout.content {
@@ -319,7 +330,7 @@
 
 /* ─── Content subtitle slot ──────────────────────────────────────────────── */
 .slidev-layout.content .content-subtitle {
-  font-size: 1.15rem;
+  font-size: var(--ustc-fs-subtitle);
   color: var(--ustc-text-muted);
   line-height: 1.4;
   margin-top: 0.3rem;
@@ -334,7 +345,7 @@
 }
 
 .slidev-layout.content.dense .content-subtitle {
-  font-size: 0.97rem;
+  font-size: var(--ustc-fs-subtitle-dense);
 }
 
 /* Reorder subtitle to appear immediately after h1, before body.
@@ -373,7 +384,7 @@
   font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
   letter-spacing: -0.025em;
-  line-height: 1.1;
+  line-height: var(--ustc-lh-heading);
   margin: 0;
   padding: 0.08rem 0;
 }
@@ -400,7 +411,7 @@
 .slidev-layout.split p,
 .slidev-layout.split li {
   font-size: var(--ustc-fs-body);
-  line-height: var(--ustc-lh, 1.47);
+  line-height: var(--ustc-lh);
   color: var(--ustc-text);
 }
 
@@ -409,13 +420,13 @@
 .slidev-layout.split td,
 .slidev-layout.split th {
   font-size: var(--ustc-fs-table-cell);
-  line-height: 1.38;
+  line-height: var(--ustc-lh-table);
 }
 
 .slidev-layout.content blockquote,
 .slidev-layout.split blockquote {
   font-size: var(--ustc-fs-blockquote);
-  line-height: 1.5;
+  line-height: var(--ustc-lh-blockquote);
   border-left: 3px solid var(--ustc-blue-border);
   padding: 0.2rem 0 0.2rem 1rem;
   margin: 0.5rem 0;
@@ -449,14 +460,14 @@
 .slidev-layout.split.compact-copy p,
 .slidev-layout.split.compact-copy li {
   font-size: var(--ustc-fs-body-dense);
-  line-height: var(--ustc-lh, 1.38);
+  line-height: var(--ustc-lh);
 }
 
 .slidev-layout.content.dense td,
 .slidev-layout.content.dense th,
 .slidev-layout.split.dense td,
 .slidev-layout.split.dense th {
-  font-size: 0.96rem;
+  font-size: var(--ustc-fs-table-cell-dense);
 }
 
 .slidev-layout.content.dense h2,
@@ -471,7 +482,7 @@
 
 .slidev-layout.content.dense blockquote,
 .slidev-layout.split.dense blockquote {
-  font-size: 1rem;
+  font-size: var(--ustc-fs-blockquote-dense);
 }
 
 /* Callout body text must scale with dense mode (component scoped styles otherwise win) */
@@ -484,7 +495,7 @@
 .slidev-layout.split .dense .callout .callout-body p,
 .slidev-layout.split .dense .callout .callout-body li {
   font-size: var(--ustc-fs-callout-dense);
-  line-height: var(--ustc-lh, 1.38);
+  line-height: var(--ustc-lh);
 }
 
 /* Tables */
@@ -503,7 +514,7 @@
 
 .slidev-layout.content tbody tr + tr,
 .slidev-layout.split tbody tr + tr {
-  border-top: 1px solid rgba(30, 76, 144, 0.09);
+  border-top: 1px solid var(--ustc-blue-row);
 }
 
 .slidev-layout.content th,
@@ -532,7 +543,7 @@
 .slidev-layout.split p.table-block-caption {
   color: var(--ustc-text-muted);
   font-size: var(--ustc-fs-caption);
-  line-height: 1.35;
+  line-height: var(--ustc-lh-caption);
   margin: 0.28rem 0 0;
   text-wrap: pretty;
 }
@@ -541,12 +552,13 @@
 .slidev-layout.split.dense figcaption.figure-caption,
 .slidev-layout.content.dense p.table-block-caption,
 .slidev-layout.split.dense p.table-block-caption {
-  font-size: 0.96rem;
+  font-size: var(--ustc-fs-caption-dense);
 }
 
-/* Footnotes — overlay (default) */
+/* Footnotes — overlay (content, split, end) */
 .slidev-layout.content .footnotes,
-.slidev-layout.split .footnotes {
+.slidev-layout.split .footnotes,
+.slidev-layout.end .footnotes {
   position: absolute;
   left: var(--ustc-pl);
   right: var(--ustc-px);
@@ -555,35 +567,40 @@
   padding-top: 0.32rem;
   border-top: 1px solid var(--ustc-blue-border);
   z-index: 2;
-  max-height: 22%;
+  max-height: var(--ustc-footnotes-max-h);
   overflow: auto;
 }
 
 .slidev-layout.content .footnotes-sep,
-.slidev-layout.split .footnotes-sep {
+.slidev-layout.split .footnotes-sep,
+.slidev-layout.end .footnotes-sep {
   display: none;
 }
 
 .slidev-layout.content .footnotes ol,
-.slidev-layout.split .footnotes ol {
+.slidev-layout.split .footnotes ol,
+.slidev-layout.end .footnotes ol {
   margin: 0;
   padding-left: 1rem;
 }
 
 .slidev-layout.content .footnotes li,
 .slidev-layout.split .footnotes li,
+.slidev-layout.end .footnotes li,
 .slidev-layout.content .footnotes p,
-.slidev-layout.split .footnotes p {
+.slidev-layout.split .footnotes p,
+.slidev-layout.end .footnotes p {
   font-size: var(--ustc-fs-footnote);
-  line-height: 1.28;
+  line-height: var(--ustc-lh-footnote);
   color: var(--ustc-text-muted);
   margin: 0.05rem 0;
 }
 
 .slidev-layout.content .footnote-ref,
-.slidev-layout.split .footnote-ref {
-  font-size: 0.64em;
-  color: #7b8494;
+.slidev-layout.split .footnote-ref,
+.slidev-layout.end .footnote-ref {
+  font-size: var(--ustc-fs-footnote-ref);
+  color: var(--ustc-footnote-ref);
   font-weight: 500;
   cursor: help;
   white-space: nowrap;
@@ -613,48 +630,9 @@
   display: none;
 }
 
-/* ─── End — footnotes (overlay, always) ─────────────────────────────────── */
-.slidev-layout.end .footnotes:not(:has(li)) {
-  display: none;
-}
-
-.slidev-layout.end .footnotes {
-  position: absolute;
-  left: var(--ustc-pl);
-  right: var(--ustc-px);
-  bottom: calc(var(--ustc-footer-h) + 0.55rem);
-  margin: 0;
-  padding-top: 0.32rem;
-  border-top: 1px solid var(--ustc-blue-border);
-  z-index: 2;
-  max-height: 22%;
-  overflow: auto;
-  text-align: left;
-}
-
-.slidev-layout.end .footnotes-sep { display: none; }
-
-.slidev-layout.end .footnotes ol {
-  margin: 0;
-  padding-left: 1rem;
-}
-
-.slidev-layout.end .footnotes li,
-.slidev-layout.end .footnotes p {
-  font-size: var(--ustc-fs-footnote);
-  line-height: 1.28;
-  color: var(--ustc-text-muted);
-  margin: 0.05rem 0;
-}
-
-.slidev-layout.end .footnote-ref {
-  font-size: 0.64em;
-  color: #7b8494;
-  font-weight: 500;
-  cursor: help;
-  white-space: nowrap;
-  line-height: 1;
-}
+/* ─── End — footnotes (end-specific overrides; structure shared above) ────── */
+.slidev-layout.end .footnotes:not(:has(li)) { display: none; }
+.slidev-layout.end .footnotes { text-align: left; }
 
 /* ─── End ────────────────────────────────────────────────────────────────── */
 .slidev-layout.end {
@@ -680,7 +658,7 @@
 }
 
 .slidev-layout.end h1 {
-  font-size: 3.5rem;
+  font-size: var(--ustc-fs-cover-h1);
   font-weight: 700;
   color: var(--ustc-blue-dark);
   letter-spacing: -0.035em;
@@ -700,7 +678,7 @@
 
 .slidev-layout.end .end-contact {
   margin-top: 1.6rem;
-  font-size: 1rem;
+  font-size: var(--ustc-fs-end-contact);
   color: var(--ustc-text-muted);
   line-height: 1.7;
 }

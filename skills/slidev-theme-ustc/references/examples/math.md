@@ -241,20 +241,6 @@ $$
 
 点击顺序：**第 1 行**（Ampère 定律）→ **第 3 行**（Faraday 定律）→ **all**（完整 Maxwell 方程组）。
 
-<Callout type="tip" title="语法">
-
-````md
-$$ {1|3|all}
-\begin{aligned}
-第一行 \\
-第二行 \\
-第三行
-\end{aligned}
-$$
-````
-
-</Callout>
-
 ---
 layout: section
 ---

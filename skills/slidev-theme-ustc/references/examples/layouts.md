@@ -149,14 +149,14 @@ footnote: flow
 
 ---
 layout: content
-lineHeight: 2.0
+lineHeight: 2.5
 ---
 
-# lineHeight: 2.0
+# lineHeight: 2.5
 
-`lineHeight` 覆盖默认行高（`1.47`）。
+`lineHeight` 覆盖默认行高（`2.0`）。
 
-设为 `2.0` 时正文行间距明显增大，适合：
+设为 `2.5` 时正文行间距明显增大，适合：
 
 - 需要手写批注的讲义
 - 较长的逐行数学推导
