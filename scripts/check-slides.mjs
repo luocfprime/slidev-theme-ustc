@@ -1,4 +1,3 @@
-// TODO: ensure @playwright/test is in devDependencies (`pnpm add -D @playwright/test`)
 import { chromium } from '@playwright/test'
 
 const BASE = 'http://localhost:3030'

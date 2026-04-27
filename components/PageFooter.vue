@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useNav } from '@slidev/client'
 import { renderInlineMd } from '../utils/markdown'
+import { getLayout } from '../utils/layoutHelper'
 
 defineProps<{
   title?: string
@@ -12,10 +13,6 @@ defineProps<{
 }>()
 
 const { slides, currentPage, total } = useNav()
-
-function getLayout(slide: any): string {
-  return slide?.frontmatter?.layout ?? slide?.meta?.layout ?? slide?.meta?.frontmatter?.layout ?? ''
-}
 
 const backupStartNo = computed((): number => {
   for (const slide of slides.value ?? []) {
@@ -28,7 +25,7 @@ const pageLabel = computed(() => {
   const bsn = backupStartNo.value
   const cur = currentPage.value
   if (bsn > 0 && cur >= bsn) {
-    return `A.${cur - bsn}`
+    return `A.${cur - bsn + 1}`
   }
   const mainTotal = bsn > 0 ? bsn - 1 : total.value
   return `${cur} / ${mainTotal}`

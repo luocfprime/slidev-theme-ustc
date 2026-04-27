@@ -17,7 +17,9 @@ const gridStyle = computed(() => {
   const trimmed = props.cols.trim()
   const templateColumns = /^\d+$/.test(trimmed)
     ? `repeat(${trimmed}, 1fr)`
-    : trimmed.split(/\s+/).map(n => `${n}fr`).join(' ')
+    : /^[\d\s]+$/.test(trimmed)
+      ? trimmed.split(/\s+/).map(n => `${n}fr`).join(' ')
+      : trimmed
 
   return {
     display: 'grid',

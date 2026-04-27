@@ -43,6 +43,9 @@
   --ustc-fs-callout-dense: 0.95rem;  /* Callout body text in dense mode     */
   --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
   --ustc-lh:               1.47;     /* default line-height for body text   */
+
+  /* Semibold weight — works on Inter (variable font); fallback renders as bold */
+  --ustc-fw-semibold: 650;
 }
 
 /* ─── Cover ──────────────────────────────────────────────────────────────── */
@@ -334,7 +337,8 @@
   font-size: 0.97rem;
 }
 
-/* Reorder subtitle to appear immediately after h1, before body */
+/* Reorder subtitle to appear immediately after h1, before body.
+   Requires :has() — Chrome 105+ / modern Chromium for PDF export. */
 .slidev-layout.content:has(.content-subtitle) {
   display: flex;
   flex-direction: column;
@@ -366,7 +370,7 @@
 .slidev-layout.content h1,
 .slidev-layout.split h1 {
   font-size: var(--ustc-fs-h1);
-  font-weight: 650;
+  font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
   letter-spacing: -0.025em;
   line-height: 1.1;
@@ -594,7 +598,9 @@
 .slidev-layout.content .footnote-ref a,
 .slidev-layout.content .footnotes a,
 .slidev-layout.split .footnote-ref a,
-.slidev-layout.split .footnotes a {
+.slidev-layout.split .footnotes a,
+.slidev-layout.end .footnote-ref a,
+.slidev-layout.end .footnotes a {
   color: inherit;
   text-decoration: none;
   pointer-events: none;
@@ -602,7 +608,8 @@
 }
 
 .slidev-layout.content .footnote-backref,
-.slidev-layout.split .footnote-backref {
+.slidev-layout.split .footnote-backref,
+.slidev-layout.end .footnote-backref {
   display: none;
 }
 
@@ -648,16 +655,6 @@
   white-space: nowrap;
   line-height: 1;
 }
-
-.slidev-layout.end .footnote-ref a,
-.slidev-layout.end .footnotes a {
-  color: inherit;
-  text-decoration: none;
-  pointer-events: none;
-  cursor: default;
-}
-
-.slidev-layout.end .footnote-backref { display: none; }
 
 /* ─── End ────────────────────────────────────────────────────────────────── */
 .slidev-layout.end {

@@ -19,7 +19,7 @@ const iconMap: Record<string, string> = {
 }
 
 const icon = computed(() => iconMap[props.type] ?? 'i-mdi-information-outline')
-const hasTitle = computed(() => props.title.trim().length > 0)
+const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
 </script>
 
 <template>
@@ -58,12 +58,12 @@ const hasTitle = computed(() => props.title.trim().length > 0)
 
 .callout .callout-body :deep(p) {
   margin: 0.1rem 0;
-  font-size: var(--ustc-fs-callout, 1.15rem);
+  font-size: var(--ustc-fs-callout);
   line-height: 1.48;
 }
 
 .callout .callout-body :deep(li) {
-  font-size: var(--ustc-fs-callout, 1.15rem);
+  font-size: var(--ustc-fs-callout);
 }
 
 .callout .callout-body :deep(code) {
@@ -71,7 +71,7 @@ const hasTitle = computed(() => props.title.trim().length > 0)
 }
 
 .callout-title {
-  font-weight: 650;
+  font-weight: var(--ustc-fw-semibold);
   margin: 0 0 0.15rem;
   font-size: 1.1rem;
 }

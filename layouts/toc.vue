@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getPresenterName } from '../utils/layoutHelper'
+import { getPresenterName, getLayout, getSectionTitle } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
 import { footerDefaults } from '../utils/defaults'
 
@@ -17,10 +17,6 @@ const props = withDefaults(defineProps<{
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
 
-function getLayout(slide: any): string {
-  return slide?.frontmatter?.layout ?? slide?.meta?.layout ?? slide?.meta?.frontmatter?.layout ?? ''
-}
-
 interface TocEntry {
   title: string
   no: number
@@ -33,15 +29,7 @@ const sections = computed((): TocEntry[] => {
 
   slides.forEach((slide: any, i: number) => {
     if (getLayout(slide) === 'section') {
-      const title: string =
-        slide.frontmatter?.sectionLabel ??
-        slide.meta?.slide?.frontmatter?.sectionLabel ??
-        slide.meta?.frontmatter?.sectionLabel ??
-        slide.meta?.slide?.title ??
-        slide.meta?.title ??
-        slide.title ??
-        slide.frontmatter?.title ??
-        `§${result.length + 1}`
+      const title = getSectionTitle(slide, `§${result.length + 1}`)
       result.push({ title, no: slide.no ?? (i + 1), index: result.length + 1 })
     }
   })
@@ -50,14 +38,12 @@ const sections = computed((): TocEntry[] => {
 
 const hasHighlight = computed(() => props.highlight > 0)
 
+const tocRows = computed(() => Math.ceil((sections.value.length || 1) / props.columns))
+
 const autoFontSize = computed(() => {
-  const n = sections.value.length || 1
-  const rows = Math.ceil(n / props.columns)
-  const size = Math.min(1.9, Math.max(1.0, 12 / rows))
+  const size = Math.min(1.9, Math.max(1.0, 12 / tocRows.value))
   return `${size.toFixed(2)}rem`
 })
-
-const tocRows = computed(() => Math.ceil((sections.value.length || 1) / props.columns))
 </script>
 
 <template>

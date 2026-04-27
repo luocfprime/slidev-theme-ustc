@@ -12,6 +12,7 @@ export const bodyDefaults = {
   margin: 'normal' as 'normal' | 'tight' | 'tighter' | 'none',
   footnote: 'overlay' as 'overlay' | 'flow',
   sectionBar: true,
+  align: 'left' as 'left' | 'center' | 'right' | 'justify',
 }
 
 export const logoDefaults = {

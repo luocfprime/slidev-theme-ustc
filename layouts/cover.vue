@@ -19,6 +19,7 @@ const props = withDefaults(defineProps<{
   authors: () => [],
   conference: '',
   talkTitle: 'Presentation Title',
+  subtitle: '',
   date: '',
   showLogo: true,
   ...logoDefaults,

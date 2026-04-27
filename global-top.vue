@@ -6,6 +6,7 @@ import {
   figurePrefixShared,
   tablePrefixShared,
 } from './utils/numbering'
+import { getLayout, getSectionTitle } from './utils/layoutHelper'
 
 const enabled = $slidev.configs.sectionBar === true
 
@@ -15,16 +16,17 @@ interface SectionGroup {
   slideNos: number[]
 }
 
-function getLayout(slide: any): string {
-  return slide?.frontmatter?.layout ?? slide?.meta?.layout ?? slide?.meta?.frontmatter?.layout ?? ''
-}
-
 function getContent(slide: any): string {
   return slide?.source?.content ?? slide?.content ?? slide?.meta?.slide?.content ?? ''
 }
 
+function stripCodeBlocks(content: string): string {
+  return content.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '')
+}
+
 function countComponentTags(content: string, pascalName: string, kebabName: string): number {
-  return (content.match(new RegExp(`<(?:${pascalName}|${kebabName})\\b`, 'g')) ?? []).length
+  const stripped = stripCodeBlocks(content)
+  return (stripped.match(new RegExp(`<(?:${pascalName}|${kebabName})\\b`, 'g')) ?? []).length
 }
 
 const sections = computed((): SectionGroup[] => {
@@ -38,15 +40,7 @@ const sections = computed((): SectionGroup[] => {
     const no = slide.no ?? 0
     if (layout === 'backup') break
     if (layout === 'section') {
-      const title: string =
-        slide.frontmatter?.sectionLabel ??
-        slide.meta?.slide?.frontmatter?.sectionLabel ??
-        slide.meta?.frontmatter?.sectionLabel ??
-        slide.meta?.slide?.title ??
-        slide.meta?.title ??
-        slide.title ??
-        slide.frontmatter?.title ??
-        `§${result.length + 1}`
+      const title = getSectionTitle(slide, `§${result.length + 1}`)
       cur = { title, sectionNo: no, slideNos: [] }
       result.push(cur)
     } else if (layout !== 'cover' && layout !== 'end' && layout !== 'toc' && cur) {

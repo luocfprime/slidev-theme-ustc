@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
-import { getPresenterName, resolveBodyMargin } from '../utils/layoutHelper'
+import { getPresenterName, resolveBodyMargin, handleBackground } from '../utils/layoutHelper'
 import { bodyDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<{
   sectionBar?: boolean
   lineHeight?: number
   align?: 'left' | 'center' | 'right' | 'justify'
+  background?: string
 }>(), {
   ...bodyDefaults,
   ratio: '2:1',
@@ -34,6 +35,7 @@ const pageStyle = computed(() => {
   const s: Record<string, string> = { ...resolveBodyMargin(props.margin) }
   if (props.lineHeight) s['--ustc-lh'] = String(props.lineHeight)
   if (props.align) s.textAlign = props.align
+  if (props.background) Object.assign(s, handleBackground(props.background, false, 1.0))
   return s
 })
 

@@ -31,7 +31,7 @@ defineProps<{
 /* !important overrides the global `p { font-size: 1.4rem; margin: ... }` rule
    so the title strip stays compact regardless of layout density. */
 .prim-block-title {
-  font-weight: 650;
+  font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
   font-size: 1.05rem !important;
   letter-spacing: 0;

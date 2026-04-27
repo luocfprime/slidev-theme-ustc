@@ -51,7 +51,7 @@ Local template decks, extra examples, tests, and generated build output are inte
 
 ```md
 ---
-theme: @avencastf/slidev-theme-ustc
+theme: @luocfprime/slidev-theme-ustc
 ---
 ```
 

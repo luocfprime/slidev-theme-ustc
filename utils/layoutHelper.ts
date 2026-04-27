@@ -1,5 +1,22 @@
 import type { CSSProperties } from 'vue'
 
+export function getLayout(slide: any): string {
+  return slide?.frontmatter?.layout ?? slide?.meta?.layout ?? slide?.meta?.frontmatter?.layout ?? ''
+}
+
+export function getSectionTitle(slide: any, fallback: string): string {
+  return (
+    slide.frontmatter?.sectionLabel ??
+    slide.meta?.slide?.frontmatter?.sectionLabel ??
+    slide.meta?.frontmatter?.sectionLabel ??
+    slide.meta?.slide?.title ??
+    slide.meta?.title ??
+    slide.title ??
+    slide.frontmatter?.title ??
+    fallback
+  )
+}
+
 export function resolveAssetUrl(url: string) {
   if (url.startsWith('/'))
     return import.meta.env.BASE_URL + url.slice(1)

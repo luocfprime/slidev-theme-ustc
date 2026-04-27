@@ -1,100 +1,102 @@
-<script>
+<script setup lang="ts">
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import Plotly from 'plotly.js-dist'
 
-export default {
-  props: {
-    filePath: String,
-    graphWidth: Number,
-    graphHeight: Number,
-    xTitleFontSize: Number,
-    yTitleFontSize: Number,
-    tickFontSize: Number,
-    legendFontSize: Number,
-    annotationFontSizeScale: Number,
-  },
-  data() {
-    return {
-      plotlyConfig: null,
-      errorMessage: '',
-      renderRaf: null,
-    }
-  },
-  mounted() {
-    this.createPlot()
-    window.addEventListener('resize', this.resizePlot)
-  },
-  beforeUnmount() {
-    window.removeEventListener('resize', this.resizePlot)
-    if (this.renderRaf) cancelAnimationFrame(this.renderRaf)
-    if (this.$refs.plotDiv) Plotly.purge(this.$refs.plotDiv)
-  },
-  methods: {
-    async createPlot() {
-      if (!this.filePath) return
-      try {
-        const res = await fetch(this.filePath)
-        if (!res.ok) throw new Error(`HTTP ${res.status}`)
-        this.plotlyConfig = await res.json()
-        this.scheduleDraw()
-      } catch (err) {
-        this.errorMessage = `Load failed: ${err?.message ?? err}`
-      }
-    },
-    scheduleDraw() {
-      if (this.renderRaf) cancelAnimationFrame(this.renderRaf)
-      this.renderRaf = requestAnimationFrame(() => this.drawPlot())
-    },
-    buildSpec() {
-      const base = this.plotlyConfig ?? {}
-      const data = Array.isArray(base.data) ? base.data : []
-      const layout = { ...(base.layout ?? {}) }
+const props = defineProps<{
+  filePath?: string
+  graphWidth?: number
+  graphHeight?: number
+  xTitleFontSize?: number
+  yTitleFontSize?: number
+  tickFontSize?: number
+  legendFontSize?: number
+  annotationFontSizeScale?: number
+}>()
 
-      if (this.graphWidth !== undefined) {
-        layout.width = this.graphWidth
-      } else {
-        delete layout.width  // let responsive config control width
-      }
-      if (this.graphHeight !== undefined) layout.height = this.graphHeight
+const plotDiv = ref<HTMLElement>()
+const errorMessage = ref('')
+let renderRaf: number | null = null
+let plotlyConfig: any = null
 
-      if (this.legendFontSize !== undefined && layout.legend) {
-        layout.legend = { ...layout.legend, font: { ...(layout.legend.font ?? {}), size: this.legendFontSize } }
-      }
-
-      layout.xaxis = { ...(layout.xaxis ?? {}) }
-      layout.yaxis = { ...(layout.yaxis ?? {}) }
-
-      if (this.xTitleFontSize !== undefined) layout.xaxis.titlefont = { size: this.xTitleFontSize }
-      if (this.yTitleFontSize !== undefined) layout.yaxis.titlefont = { size: this.yTitleFontSize }
-      if (this.tickFontSize !== undefined) {
-        layout.xaxis.tickfont = { size: this.tickFontSize }
-        layout.yaxis.tickfont = { size: this.tickFontSize }
-      }
-
-      if (this.annotationFontSizeScale !== undefined && Array.isArray(layout.annotations)) {
-        layout.annotations = layout.annotations.map((a) => {
-          const cloned = { ...a }
-          const cur = Number(cloned?.font?.size ?? 12)
-          cloned.font = { ...(cloned.font ?? {}), size: cur * this.annotationFontSizeScale }
-          return cloned
-        })
-      }
-
-      return { data, layout }
-    },
-    drawPlot() {
-      if (!this.plotlyConfig || !this.$refs.plotDiv) return
-      const el = this.$refs.plotDiv
-      if (!el.offsetParent || el.clientWidth === 0) { this.scheduleDraw(); return }
-      const { data, layout } = this.buildSpec()
-      Plotly.react(el, data, layout, { displayModeBar: false, responsive: true })
-        .then(() => this.resizePlot())
-        .catch((err) => { this.errorMessage = `Render failed: ${err?.message ?? err}` })
-    },
-    resizePlot() {
-      if (this.$refs.plotDiv) Plotly.Plots.resize(this.$refs.plotDiv).catch(() => {})
-    },
-  },
+async function createPlot() {
+  if (!props.filePath) return
+  try {
+    const res = await fetch(props.filePath)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    plotlyConfig = await res.json()
+    scheduleDraw()
+  } catch (err: any) {
+    errorMessage.value = `Load failed: ${err?.message ?? err}`
+  }
 }
+
+function scheduleDraw() {
+  if (renderRaf) cancelAnimationFrame(renderRaf)
+  renderRaf = requestAnimationFrame(() => drawPlot())
+}
+
+function buildSpec() {
+  const base = plotlyConfig ?? {}
+  const data = Array.isArray(base.data) ? base.data : []
+  const layout: any = { ...(base.layout ?? {}) }
+
+  if (props.graphWidth !== undefined) {
+    layout.width = props.graphWidth
+  } else {
+    delete layout.width
+  }
+  if (props.graphHeight !== undefined) layout.height = props.graphHeight
+
+  if (props.legendFontSize !== undefined && layout.legend) {
+    layout.legend = { ...layout.legend, font: { ...(layout.legend.font ?? {}), size: props.legendFontSize } }
+  }
+
+  layout.xaxis = { ...(layout.xaxis ?? {}) }
+  layout.yaxis = { ...(layout.yaxis ?? {}) }
+
+  if (props.xTitleFontSize !== undefined) layout.xaxis.titlefont = { size: props.xTitleFontSize }
+  if (props.yTitleFontSize !== undefined) layout.yaxis.titlefont = { size: props.yTitleFontSize }
+  if (props.tickFontSize !== undefined) {
+    layout.xaxis.tickfont = { size: props.tickFontSize }
+    layout.yaxis.tickfont = { size: props.tickFontSize }
+  }
+
+  if (props.annotationFontSizeScale !== undefined && Array.isArray(layout.annotations)) {
+    layout.annotations = layout.annotations.map((a: any) => {
+      const cloned = { ...a }
+      const cur = Number(cloned?.font?.size ?? 12)
+      cloned.font = { ...(cloned.font ?? {}), size: cur * props.annotationFontSizeScale! }
+      return cloned
+    })
+  }
+
+  return { data, layout }
+}
+
+function drawPlot() {
+  if (!plotlyConfig || !plotDiv.value) return
+  const el = plotDiv.value
+  if (!el.offsetParent || el.clientWidth === 0) { scheduleDraw(); return }
+  const { data, layout } = buildSpec()
+  Plotly.react(el, data, layout, { displayModeBar: false, responsive: true })
+    .then(() => resizePlot())
+    .catch((err: any) => { errorMessage.value = `Render failed: ${err?.message ?? err}` })
+}
+
+function resizePlot() {
+  if (plotDiv.value) Plotly.Plots.resize(plotDiv.value).catch(() => {})
+}
+
+onMounted(() => {
+  createPlot()
+  window.addEventListener('resize', resizePlot)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', resizePlot)
+  if (renderRaf) cancelAnimationFrame(renderRaf)
+  if (plotDiv.value) Plotly.purge(plotDiv.value)
+})
 </script>
 
 <template>

@@ -6,20 +6,19 @@ const MAX_SLIDES = 40
 test('all slides load without errors', async ({ page }) => {
   const allErrors = []
 
-  page.on('pageerror', err => allErrors.push({ slide: 0, msg: `PAGE ERROR: ${err.message}` }))
-
-  // Visit slide 1 to find total count
-  await page.goto(`${BASE}/1`, { waitUntil: 'networkidle' })
-  await page.waitForTimeout(500)
-
   const slideErrors = []
   const vueWarnings = []
 
+  page.on('pageerror', err => allErrors.push({ slide: 0, msg: `PAGE ERROR: ${err.message}` }))
   page.on('console', msg => {
     const text = msg.text()
     if (msg.type() === 'error') slideErrors.push({ slide: 1, msg: text })
     if (msg.type() === 'warning' && text.includes('[Vue warn]')) vueWarnings.push({ slide: 1, msg: text })
   })
+
+  // Visit slide 1 to find total count
+  await page.goto(`${BASE}/1`, { waitUntil: 'networkidle' })
+  await page.waitForTimeout(500)
 
   const hasLayout1 = await page.locator('.slidev-layout').count()
   expect(hasLayout1, 'Slide 1 should render a layout').toBeGreaterThan(0)
