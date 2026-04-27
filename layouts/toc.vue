@@ -2,7 +2,7 @@
 import { computed } from 'vue'
 import { getPresenterName, getLayout, getSectionTitle } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
-import { footerDefaults } from '../utils/defaults'
+import { tocDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   highlight?: number
@@ -10,9 +10,7 @@ const props = withDefaults(defineProps<{
   footerMode?: 'full' | 'minimal'
   columns?: 1 | 2
 }>(), {
-  ...footerDefaults,
-  highlight: 0,
-  columns: 1 as 1 | 2,
+  ...tocDefaults,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))

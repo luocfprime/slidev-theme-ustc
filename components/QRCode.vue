@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import QrcodeVue from 'qrcode.vue'
 import { renderInlineMd } from '../utils/markdown'
+import { qrcodeDefaults } from '../utils/defaults'
 
 withDefaults(defineProps<{
   url: string
@@ -9,10 +10,7 @@ withDefaults(defineProps<{
   background?: string
   caption?: string
 }>(), {
-  size: 160,
-  color: '#000000',
-  background: '#ffffff',
-  caption: '',
+  ...qrcodeDefaults,
 })
 </script>
 

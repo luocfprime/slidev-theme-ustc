@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import { getPresenterName, resolveBodyMargin, handleBackground } from '../utils/layoutHelper'
-import { bodyDefaults } from '../utils/defaults'
+import { splitDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
   density?: 'normal' | 'dense'
@@ -16,9 +16,7 @@ const props = withDefaults(defineProps<{
   align?: 'left' | 'center' | 'right'
   background?: string
 }>(), {
-  ...bodyDefaults,
-  ratio: '2:1',
-  gap: 'md' as 'sm' | 'md' | 'lg',
+  ...splitDefaults,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))

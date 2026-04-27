@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { handleBackground, handleAuthor, getPresenterName } from '../utils/layoutHelper'
-import { logoDefaults } from '../utils/defaults'
+import { coverDefaults } from '../utils/defaults'
 import { renderInlineMd } from '../utils/markdown'
 
 const props = withDefaults(defineProps<{
@@ -15,14 +15,7 @@ const props = withDefaults(defineProps<{
   logoSrc?: string
   logoAlt?: string
 }>(), {
-  background: '',
-  authors: () => [],
-  conference: '',
-  talkTitle: 'Presentation Title',
-  subtitle: '',
-  date: '',
-  showLogo: true,
-  ...logoDefaults,
+  ...coverDefaults,
 })
 
 const bgStyle = computed(() => handleBackground(props.background, true, 1.0))

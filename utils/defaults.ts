@@ -12,12 +12,41 @@ export const bodyDefaults = {
   margin: 'normal' as 'normal' | 'tight' | 'tighter' | 'none',
   footnote: 'overlay' as 'overlay' | 'flow',
   sectionBar: true,
-  align: 'left' as 'left' | 'center' | 'right' | 'justify',
+  align: 'left' as 'left' | 'center' | 'right',
 }
 
 export const logoDefaults = {
   logoSrc: '/ustc/logo.svg',
   logoAlt: 'USTC logo',
+}
+
+export const splitDefaults = {
+  ...bodyDefaults,
+  ratio: '2:1',
+  gap: 'md' as 'sm' | 'md' | 'lg',
+}
+
+export const tocDefaults = {
+  ...footerDefaults,
+  highlight: 0,
+  columns: 1 as 1 | 2,
+}
+
+export const coverDefaults = {
+  ...logoDefaults,
+  background: '',
+  authors: (): Record<string, string[]>[] => [],
+  conference: '',
+  talkTitle: 'Presentation Title',
+  subtitle: '',
+  date: '',
+  showLogo: true,
+}
+
+export const endDefaults = {
+  ...logoDefaults,
+  ...footerDefaults,
+  showLogo: false,
 }
 
 export const gridDefaults = {
@@ -47,4 +76,11 @@ export const tableDefaults = {
   captionAlign: 'center' as 'left' | 'center',
   width: '100%',
   prefix: '',
+}
+
+export const qrcodeDefaults = {
+  size: 160,
+  color: '#000000',
+  background: '#ffffff',
+  caption: '',
 }
