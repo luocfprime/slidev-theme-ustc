@@ -32,7 +32,8 @@ async function main() {
   const results = []
 
   while (true) {
-    // Clear per-slide errors
+    if (slideNum > 40) break // safety limit
+
     const slideErrors = []
     const slideWarnings = []
 
@@ -46,13 +47,14 @@ async function main() {
     })
     page.on('pageerror', err => slideErrors.push(`PAGE ERROR: ${err.message}`))
 
-    await page.goto(`${BASE}/${slideNum}`, { waitUntil: 'networkidle', timeout: 10000 })
+    const res = await page.goto(`${BASE}/${slideNum}`, { waitUntil: 'networkidle', timeout: 10000 }).catch(() => null)
+    if (!res || res.status() === 404) break
+    // Slidev redirects out-of-range slide numbers back to /1
+    if (slideNum > 1 && (page.url() === `${BASE}/1` || page.url().endsWith('/1'))) break
+
     await page.waitForTimeout(800)
 
-    // Check if slide rendered
-    const hasLayout = await page.evaluate(() => {
-      return document.querySelector('.slidev-layout') !== null
-    })
+    const hasLayout = await page.evaluate(() => document.querySelector('.slidev-layout') !== null)
 
     results.push({
       slide: slideNum,
@@ -65,15 +67,7 @@ async function main() {
     if (slideErrors.length) slideErrors.forEach(e => console.log(`  ERROR: ${e.slice(0, 200)}`))
     if (slideWarnings.length) slideWarnings.forEach(w => console.log(`  WARN: ${w.slice(0, 200)}`))
 
-    // Try next slide — if 404 or same content, stop
     slideNum++
-    if (slideNum > 40) break // safety limit
-
-    const res = await page.goto(`${BASE}/${slideNum}`, { waitUntil: 'networkidle', timeout: 8000 }).catch(() => null)
-    if (!res || res.status() === 404) break
-
-    const stillHasSlide = await page.evaluate(() => document.querySelector('.slidev-layout') !== null)
-    if (!stillHasSlide) break
   }
 
   console.log(`\n=== SUMMARY ===`)
