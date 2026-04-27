@@ -322,7 +322,7 @@ density: dense
 
 `width` 控制整个 TableBlock 容器的宽度（默认 `"100%"`）：
 
-<TableBlock caption="width="70%"，居中显示。" captionAlign="center" width="70%">
+<TableBlock caption="缩减至 70% 宽度，居中显示。" captionAlign="center" width="70%">
 
 | 过程 | 产额 | 误差 |
 |------|-----:|-----:|

@@ -32,6 +32,8 @@ const sections = computed((): TocEntry[] => {
     if (getLayout(slide) === 'section') {
       const title: string =
         slide.frontmatter?.sectionLabel ??
+        slide.meta?.slide?.frontmatter?.sectionLabel ??
+        slide.meta?.frontmatter?.sectionLabel ??
         slide.meta?.slide?.title ??
         slide.meta?.title ??
         slide.title ??

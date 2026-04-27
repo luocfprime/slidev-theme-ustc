@@ -3,3 +3,5 @@ dist/
 .slidev/
 test-results/
 playwright-report/
+docs/superpowers/
+

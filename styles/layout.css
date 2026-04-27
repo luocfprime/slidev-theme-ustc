@@ -613,9 +613,11 @@
 }
 
 .slidev-layout.end .end-logo {
-  height: 2.8rem;
+  position: absolute;
+  top: 4%;
+  right: 3%;
+  height: 3.4rem;
   width: auto;
-  margin-bottom: 3rem;
   opacity: 0.85;
 }
 

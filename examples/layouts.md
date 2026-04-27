@@ -39,7 +39,7 @@ layout: section
 ---
 layout: cover
 talkTitle: "showLogo: true（默认）"
-subtitle: "副标题"
+subtitle: "副标题（可选）"
 authors:
   - 演讲者: ["中国科学技术大学"]
   - 合作者: ["清华大学"]
@@ -70,7 +70,7 @@ talkTitle: "background 背景色"
 authors:
   - 演讲者: ["中国科学技术大学"]
 date: "2026 年 4 月"
-background: "#0f2a4a"
+background: "/ATLAS/ATLAS-Detector.png"
 showLogo: false
 ---
 
@@ -537,7 +537,7 @@ showLogo: false
 
 ::contact::
 
-📧 example@mail.ustc.edu.cn · 🔗 github.com/example
+Author · example@mail.ustc.edu.cn · github.com/example
 
 ---
 layout: section
