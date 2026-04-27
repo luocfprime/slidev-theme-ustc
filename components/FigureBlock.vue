@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useSlideContext } from '@slidev/client'
 import { renderInlineMd } from '../utils/markdown'
 import { figureDefaults } from '../utils/defaults'
 import { figureMapShared, figurePrefixShared } from '../utils/numbering'
+import { useLocalIndex } from '../utils/useLocalIndex'
 
 const props = withDefaults(defineProps<{
   src: string
@@ -33,15 +34,7 @@ const imageStyle = computed(() => ({
 
 const { $page } = useSlideContext()
 
-const el = ref<HTMLElement>()
-const localIdx = ref(0)
-
-watch(el, (newEl) => {
-  if (!newEl) return
-  const slideEl = newEl.closest('.slidev-page') ?? newEl.closest('.slidev-layout')
-  const allFigures = Array.from(slideEl?.querySelectorAll('.figure-block') ?? [])
-  localIdx.value = Math.max(0, allFigures.indexOf(newEl))
-}, { immediate: true })
+const { el, localIdx } = useLocalIndex('figure-block')
 
 const autoNumber = computed(() => {
   const startNum = figureMapShared.value.get($page.value) ?? 0
