@@ -51,6 +51,7 @@
   --ustc-fs-callout-title: 1.1rem;   /* Callout title                       */
   --ustc-fs-result-title:  1.05rem;  /* ResultBox title                     */
   --ustc-fs-result-body:   1.15rem;  /* ResultBox body text                 */
+  --ustc-fs-result-body-dense: 0.96rem;  /* ResultBox body text — dense mode    */
   --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
   --ustc-lh:               2.0;      /* default line-height for body text   */
   --ustc-lh-caption:       1.35;     /* figure/table captions               */
@@ -81,6 +82,7 @@
   /* ── Max-width constraints ───────────────────────────────────────────────── */
   --ustc-max-w-h1:        58rem;    /* h1 readable width (cover, section, backup) */
   --ustc-max-w-sub:       48rem;    /* subtitle / body paragraph max width        */
+  --ustc-max-w-cover-slot: 50rem;  /* cover slot / body text area               */
 }
 
 /* ─── Cover ──────────────────────────────────────────────────────────────── */
@@ -162,7 +164,7 @@
   font-size: var(--ustc-fs-cover-slot);
   line-height: 1.55;
   color: var(--ustc-text-light);
-  max-width: 50rem;
+  max-width: var(--ustc-max-w-cover-slot);
   margin-top: 2.1rem;
 }
 
@@ -585,7 +587,7 @@
 .slidev-layout.split.dense .result-box-body li,
 .slidev-layout.split .dense .result-box-body p,
 .slidev-layout.split .dense .result-box-body li {
-  font-size: var(--ustc-fs-callout-dense);
+  font-size: var(--ustc-fs-result-body-dense);
 }
 
 /* Tables */
