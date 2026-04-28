@@ -13,6 +13,7 @@
     "components",
     "layouts",
     "public",
+    "vite.config.ts",
     "setup",
     "styles",
     "utils",
