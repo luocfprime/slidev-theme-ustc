@@ -67,7 +67,6 @@ The theme bundles [Typst](https://typst.app) rendering support (vendored from [s
 
 ````md
 ```typst
-#set text(font: "Times New Roman", size: 10pt)
 #table(
   columns: 3,
   [*Method*], [*Accuracy*], [*Speed*],
