@@ -18,7 +18,7 @@
 .takeaway :deep(p) {
   font-weight: 600;
   color: var(--ustc-blue-dark);
-  margin: 0 !important;
+  margin: 0;
   line-height: 1.45;
 }
 </style>
