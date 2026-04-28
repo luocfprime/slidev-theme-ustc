@@ -32,15 +32,6 @@ const sections = computed((): SectionGroup[] => {
   return result
 })
 
-const backupStartNo = computed((): number => {
-  const slides = $slidev.nav.slides ?? []
-  for (const slide of slides) {
-    const layout = getLayout(slide)
-    if (layout === 'backup') return slide.no ?? 0
-  }
-  return 0
-})
-
 const allSlides = computed(() => $slidev.nav.slides ?? [])
 const configFigurePrefix = computed(() => ($slidev.configs.figurePrefix as string) ?? 'Figure')
 const configTablePrefix = computed(() => ($slidev.configs.tablePrefix as string) ?? 'Table')
