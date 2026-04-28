@@ -49,6 +49,24 @@ The `files` field in `package.json` only publishes the theme runtime surface:
 
 Local template decks, extra examples, tests, and generated build output are intentionally excluded from the npm package.
 
+## Installation
+
+Install from npm:
+
+```bash
+pnpm add @luocfprime/slidev-theme-ustc
+# or
+npm install @luocfprime/slidev-theme-ustc
+```
+
+Or install directly from GitHub (latest main):
+
+```bash
+pnpm add github:luocfprime/slidev-theme-ustc
+# or
+npm install github:luocfprime/slidev-theme-ustc
+```
+
 ## Usage
 
 ```md
