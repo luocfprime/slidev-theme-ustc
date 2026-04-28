@@ -150,14 +150,15 @@ layout: content
 
 # FigureBlock — 基础用法（自动编号）
 
-编号由组件全局自动生成，`caption` 只填描述文字，前缀来自 headmatter `figurePrefix`。
-
 <FigureBlock
   src="/ATLAS/ATLAS-Detector.png"
   alt="ATLAS 探测器"
   caption="ATLAS 探测器横截面图，展示各子探测器从内到外的层级结构。"
   width="50%"
 />
+
+编号由组件全局自动生成，`caption` 只填描述文字，前缀来自 headmatter `figurePrefix`。
+
 
 ---
 layout: split
@@ -841,6 +842,7 @@ dense 模式下，Block 标题行保持紧凑，正文字号随布局缩小。
 
 ---
 layout: content
+lineHeight: 1.5
 ---
 
 # Block — 内容多样性
