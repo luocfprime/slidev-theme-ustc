@@ -64,5 +64,14 @@
         "local": "Avenir Next"
       }
     }
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luocfprime/slidev-theme-ustc.git"
+  },
+  "author": "luocfprime",
+  "bugs": {
+    "url": "https://github.com/luocfprime/slidev-theme-ustc/issues"
+  },
+  "homepage": "https://github.com/luocfprime/slidev-theme-ustc#readme"
 }
