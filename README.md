@@ -37,8 +37,7 @@ This repository follows Slidev's conventional directories and keeps theme runtim
 |-- tests/               # Playwright smoke tests for rendered slides
 |-- skills/              # Claude Code skill for this theme
 |-- global-top.vue       # Global Slidev layer
-|-- example.md           # Symlink → skills/slidev-theme-ustc/references/example.md
-`-- vite.config.ts       # Vite extension config
+`-- example.md           # Symlink → skills/slidev-theme-ustc/references/example.md
 ```
 
 ## Published Files
@@ -46,7 +45,7 @@ This repository follows Slidev's conventional directories and keeps theme runtim
 The `files` field in `package.json` only publishes the theme runtime surface:
 
 - `components/`, `layouts/`, `public/`, `setup/`, `styles/`, `utils/`
-- `global-top.vue`, `vite.config.ts`
+- `global-top.vue`
 
 Local template decks, extra examples, tests, and generated build output are intentionally excluded from the npm package.
 

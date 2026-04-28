@@ -180,6 +180,7 @@
 .slidev-layout.cover .cover-affiliations {
   position: absolute;
   bottom: 1.3rem;
+  /* TODO(low): left/right mirrors cover padding 3.5rem — update both if cover padding changes */
   left: 3.5rem;
   right: 3.5rem;
   font-size: var(--ustc-fs-cover-aff);
