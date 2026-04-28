@@ -17,7 +17,7 @@ defineProps<{
 <style scoped>
 .block {
   background: #fff;
-  border: 1px solid rgba(30, 76, 144, 0.16);
+  border: 1px solid var(--ustc-blue-border);
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(17, 24, 39, 0.035);
   padding: 0 0.95rem 0.62rem;
@@ -36,7 +36,7 @@ defineProps<{
   margin: 0 -0.95rem 0.48rem;
   padding: 0.32rem 0.95rem 0.3rem;
   background: rgba(30, 76, 144, 0.035);
-  border-bottom: 1px solid rgba(30, 76, 144, 0.14);
+  border-bottom: 1px solid var(--ustc-blue-border);
   line-height: 1.28;
 }
 
