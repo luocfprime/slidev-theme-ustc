@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<{
 })
 
 const gridStyle = computed(() => {
-  const gapMap = { sm: '0.6rem', md: '1.2rem', lg: '2rem' }
+  const gapMap = { sm: '0.8rem', md: '1.4rem', lg: '2rem' }
   const alignMap = { top: 'start', center: 'center', bottom: 'end' }
 
   const trimmed = props.cols.trim()
