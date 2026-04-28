@@ -427,8 +427,6 @@
 
 .slidev-layout.content.dense h1 + p,
 .slidev-layout.split.dense h1 + p,
-.slidev-layout.content.compact-copy h1 + p,
-.slidev-layout.split.compact-copy h1 + p,
 .slidev-layout.content.dense h1 + ul,
 .slidev-layout.split.dense h1 + ul,
 .slidev-layout.content.dense h1 + ol,
@@ -520,11 +518,7 @@
 .slidev-layout.split.dense p,
 .slidev-layout.split.dense li,
 .slidev-layout.split .dense p,
-.slidev-layout.split .dense li,
-.slidev-layout.content.compact-copy p,
-.slidev-layout.content.compact-copy li,
-.slidev-layout.split.compact-copy p,
-.slidev-layout.split.compact-copy li {
+.slidev-layout.split .dense li {
   font-size: var(--ustc-fs-body-dense);
   line-height: var(--ustc-lh);
 }
