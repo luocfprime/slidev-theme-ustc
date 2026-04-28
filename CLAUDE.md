@@ -29,7 +29,7 @@ This is a Slidev theme package (`@luocfprime/slidev-theme-ustc`). The published 
 
 **`utils/`**: `layoutHelper.ts` — shared CSS-in-JS helpers for background, margin, and grid resolution; also exports `getLayout()` and `getSectionTitle()` used by `toc.vue`, `PageFooter.vue`, and `global-top.vue` — edit once here, not in each file. `numbering.ts` — figure/table auto-numbering. `markdown.ts` — markdown-it helpers. `defaults.ts` — shared prop defaults.
 
-**`global-top.vue`** is the single source of truth for figure/table auto-numbering state (`figureMapShared`, `tableMapShared`). It scans all slide sources on mount to build page→startNumber maps, and sets `--ustc-nav-h` on `<html>` based on section-bar visibility.
+**`global-top.vue`** is the single source of truth for figure/table auto-numbering state (`figureMapShared`, `tableMapShared`). It reactively rebuilds page→startNumber maps whenever the slide list changes (via `watchEffect`), and sets `--ustc-nav-h` on `<html>` based on section-bar visibility.
 
 **`example.md`** is the canonical demo deck and the dev/build entry point. `examples/` holds per-feature demo decks (math, layouts, components).
 

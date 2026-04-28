@@ -21,7 +21,7 @@ defineProps<{
   border-radius: 5px;
   box-shadow: 0 1px 2px rgba(17, 24, 39, 0.035);
   padding: 0 0.95rem 0.62rem;
-  margin: 0.55rem 0;
+  margin-bottom: 0.55rem;
 }
 
 .block-untitled {

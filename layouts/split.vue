@@ -48,7 +48,7 @@ const gridStyle = computed(() => {
   return {
     display: 'grid',
     gridTemplateColumns: cols,
-    gap: gapMap[props.gap],
+    gap: gapMap[props.gap] ?? gapMap.md,
     alignItems: 'start',
   }
 })
@@ -84,7 +84,7 @@ const gridStyle = computed(() => {
 
 <style scoped>
 .split-header {
-  margin-bottom: 0.2rem;
+  margin-bottom: var(--ustc-title-gap);
 }
 .split-col {
   min-width: 0;

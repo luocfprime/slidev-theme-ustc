@@ -10,7 +10,7 @@
   background: var(--ustc-blue-pale);
   border-radius: 0 6px 6px 0;
   padding: 0.55rem 1rem;
-  margin: 0.6rem 0;
+  margin-bottom: 0.6rem;
 }
 
 /* font-size intentionally unset — inherits from layout dense/normal cascade.

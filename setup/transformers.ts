@@ -27,7 +27,7 @@ const DEFAULT_PRELUDE = `
 
 const MAGIC_HUE = '-45.841deg'
 
-export function renderTypst(code: string, info: string, options: TypstOptions) {
+export function renderTypst(code: string, options: TypstOptions) {
   const colorNames: string[] = []
   code = code.replace(/var\(([\w-]+)\)/g, ($0, name: string) => {
     colorNames.push(name)
@@ -56,16 +56,13 @@ export function renderTypst(code: string, info: string, options: TypstOptions) {
 
 async function typstTransformer(ctx: MarkdownTransformContext) {
   const snippets: [info: string, code: string][] = []
-  ctx.s.replace(
-    /^```typst *(\{[^\n]*\})?\n([\s\S]+?)\n```/gm,
-    (full, info: string = '', code: string = '') => {
-      snippets.push([info, code])
-      return full
-    },
-  )
+  const scanRe = /^```typst *(\{[^\n]*\})?\n([\s\S]+?)\n```/gm
+  let m: RegExpExecArray | null
+  while ((m = scanRe.exec(ctx.s.original)) !== null)
+    snippets.push([m[1] ?? '', m[2] ?? ''])
   const typst = (ctx.options.data.headmatter.typst ??= {}) as TypstOptions
   const svgs = await Promise.all(snippets.map(async ([info, code]) => {
-    return renderTypst(code, info, typst)
+    return renderTypst(code, typst)
   }))
   let count = 0
   ctx.s.replace(

@@ -20,7 +20,7 @@ defineProps<{
   border-radius: 6px;
   background: var(--ustc-blue-pale);
   padding: 0.7rem 1rem;
-  margin: 0.7rem 0;
+  margin-bottom: 0.7rem;
 }
 
 .result-box-title {

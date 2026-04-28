@@ -23,16 +23,19 @@ export function resolveAssetUrl(url: string) {
   return url
 }
 
-export function handleBackground(background?: string, dim = false): CSSProperties {
-  const isColor = background && ['#', 'rgb', 'hsl'].some(v => background.indexOf(v) === 0)
+export function handleBackground(background?: string, coverOverlay = false): CSSProperties {
+  const isColor = background && (
+    ['#', 'rgb', 'hsl', 'oklch', 'lch', 'lab', 'hwb', 'color', 'transparent', 'currentColor', 'inherit'].some(v => background.startsWith(v))
+    || /^[a-z]+$/.test(background)
+  )
 
   const style: CSSProperties = {
     background: isColor ? background : undefined,
     backgroundImage: isColor
       ? undefined
       : background
-        ? dim
-          ? `linear-gradient(90deg,rgba(255,255,255,1),rgba(255,255,255,0.85)),url(${resolveAssetUrl(background)})`
+        ? coverOverlay
+          ? `linear-gradient(90deg,rgba(255,255,255,1),rgba(255,255,255,0.85)),url("${resolveAssetUrl(background)}")`
           : `url("${resolveAssetUrl(background)}")`
         : undefined,
     backgroundRepeat: 'no-repeat',

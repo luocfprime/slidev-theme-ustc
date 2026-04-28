@@ -25,7 +25,7 @@ const sections = computed((): SectionGroup[] => {
       const title = getSectionTitle(slide, `§${result.length + 1}`)
       cur = { title, sectionNo: no, slideNos: [] }
       result.push(cur)
-    } else if (layout !== 'cover' && layout !== 'end' && layout !== 'toc' && cur) {
+    } else if (layout !== 'cover' && layout !== 'end' && layout !== 'toc' && layout !== 'blank' && cur) {
       cur.slideNos.push(no)
     }
   }
@@ -45,10 +45,7 @@ const currentSlide = computed(() => {
   return slides[idx] as any
 })
 
-const currentLayout = computed(() => {
-  const s = currentSlide.value
-  return s?.frontmatter?.layout ?? s?.meta?.layout ?? s?.meta?.frontmatter?.layout ?? 'content'
-})
+const currentLayout = computed(() => getLayout(currentSlide.value) || 'content')
 
 const visible = computed(() => {
   const s = currentSlide.value
@@ -80,7 +77,7 @@ const barMode = computed(() => {
 })
 
 watchEffect(() => {
-  if (!enabled) {
+  if (!enabled || sections.value.length === 0) {
     document.documentElement.style.setProperty('--ustc-nav-h', '0px')
   } else if (barMode.value === 'minimal') {
     document.documentElement.style.setProperty('--ustc-nav-h', '1.5rem')

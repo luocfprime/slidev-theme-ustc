@@ -39,7 +39,7 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
   padding: 0.7rem 0.9rem;
   border-radius: 6px;
   border-left: 4px solid;
-  margin: 0.65rem 0;
+  margin-bottom: 0.65rem;
   line-height: 1.48;
 }
 

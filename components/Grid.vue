@@ -24,7 +24,7 @@ const gridStyle = computed(() => {
   return {
     display: 'grid',
     gridTemplateColumns: templateColumns,
-    gap: gapMap[props.gap],
+    gap: gapMap[props.gap as keyof typeof gapMap] ?? gapMap.md,
     alignItems: alignMap[props.alignY],
   }
 })
