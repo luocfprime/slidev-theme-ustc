@@ -27,7 +27,8 @@
   "scripts": {
     "dev": "slidev example.md --open",
     "build": "slidev build example.md",
-    "export": "slidev export example.md"
+    "export": "slidev export example.md",
+    "preview": "slidev build example.md --base /slidev-theme-ustc/ && python3 serve.py"
   },
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",
