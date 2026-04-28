@@ -18,10 +18,15 @@ const errorMessage = ref('')
 let renderRaf: number | null = null
 let plotlyConfig: any = null
 
+const base = import.meta.env.BASE_URL
+
 async function createPlot() {
   if (!props.filePath) return
   try {
-    const res = await fetch(props.filePath)
+    const resolvedPath = props.filePath.startsWith('/')
+      ? base.replace(/\/$/, '') + props.filePath
+      : props.filePath
+    const res = await fetch(resolvedPath)
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     plotlyConfig = await res.json()
     scheduleDraw()

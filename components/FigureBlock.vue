@@ -6,6 +6,8 @@ import { figureDefaults } from '../utils/defaults'
 import { figureMapShared, figurePrefixShared } from '../utils/numbering'
 import { useLocalIndex } from '../utils/useLocalIndex'
 
+const base = import.meta.env.BASE_URL
+
 const props = withDefaults(defineProps<{
   src: string
   alt?: string
@@ -54,7 +56,7 @@ const fullCaption = computed(() => {
 
 <template>
   <figure ref="el" class="figure-block" :style="{ width: props.width }">
-    <img :src="props.src" :alt="props.alt" class="figure-image" :style="imageStyle" />
+    <img :src="props.src.startsWith('/') ? base.replace(/\/$/, '') + props.src : props.src" :alt="props.alt" class="figure-image" :style="imageStyle" />
     <figcaption v-if="fullCaption" class="figure-caption" :style="captionStyle" v-html="renderInlineMd(fullCaption)" />
   </figure>
 </template>
