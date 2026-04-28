@@ -1,3 +1,5 @@
+import logoSvgUrl from '../public/ustc/logo.svg?url'
+
 // ── Centralised default prop values ──────────────────────────────────────────
 // Two categories of layout:
 //
@@ -25,7 +27,7 @@ export const bodyDefaults = {
 }
 
 export const logoDefaults = {
-  logoSrc: '/ustc/logo.svg',
+  logoSrc: logoSvgUrl,
   logoAlt: 'USTC logo',
 }
 
