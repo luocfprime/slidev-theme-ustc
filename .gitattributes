@@ -1,0 +1,18 @@
+# Line endings
+* text=auto eol=lf
+*.png binary
+*.svg binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.json text eol=lf
+
+# GitHub linguist — keep language stats focused on theme runtime
+pnpm-lock.yaml linguist-generated=true
+skills/**       linguist-documentation=true
+docs/**         linguist-documentation=true
+examples/**     linguist-documentation=true
+tests/**        linguist-detectable=false
+scripts/**      linguist-detectable=false
+public/**       linguist-detectable=false
