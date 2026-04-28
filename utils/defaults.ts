@@ -91,6 +91,19 @@ export const tableDefaults = {
   prefix: '',
 }
 
+export const videoDefaults = {
+  caption: '',
+  width: '100%',
+  videoWidth: '100%' as string | number,
+  captionAlign: 'center' as 'left' | 'center',
+  captionInsetLeft: 0 as string | number,
+  captionInsetRight: 0 as string | number,
+  controls: true,
+  autoplay: false,
+  loop: false,
+  muted: false,
+}
+
 export const qrcodeDefaults = {
   size: 160,
   color: '#000000',
