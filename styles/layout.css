@@ -358,25 +358,28 @@
 }
 
 /* Reorder subtitle to appear immediately after h1, before body.
-   Requires :has() — Chrome 105+ / modern Chromium for PDF export. */
+   Requires :has() — Chrome 105+ / modern Chromium for PDF export.
+   Split: guarded with :not(:has(.split-header)) so this only applies in
+   no-columns mode — in hasColumns mode the subtitle lives inside .split-header
+   and needs no flex reordering. */
 .slidev-layout.content:has(.content-subtitle),
-.slidev-layout.split:has(.content-subtitle) {
+.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) {
   display: flex;
   flex-direction: column;
 }
 
 .slidev-layout.content:has(.content-subtitle) > h1,
-.slidev-layout.split:has(.content-subtitle) > h1 {
+.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) > h1 {
   order: 1;
 }
 
 .slidev-layout.content:has(.content-subtitle) > .content-subtitle,
-.slidev-layout.split:has(.content-subtitle) > .content-subtitle {
+.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) > .content-subtitle {
   order: 2;
 }
 
 .slidev-layout.content:has(.content-subtitle) > *:not(h1):not(.content-subtitle),
-.slidev-layout.split:has(.content-subtitle) > *:not(h1):not(.content-subtitle) {
+.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) > *:not(h1):not(.content-subtitle) {
   order: 3;
 }
 
