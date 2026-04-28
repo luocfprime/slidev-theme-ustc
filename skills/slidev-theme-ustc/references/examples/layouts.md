@@ -72,7 +72,7 @@ talkTitle: "background 背景色"
 authors:
   - 演讲者: ["中国科学技术大学"]
 date: "2026 年 4 月"
-background: "/ATLAS/ATLAS-Detector.png"
+background: "/ATLAS/ATLAS-Detector.webp"
 showLogo: false
 ---
 
@@ -245,7 +245,7 @@ $$\mu_\text{sig} = 1.05^{+0.31}_{-0.29}$$
 
 ::right::
 
-<FigureBlock src="/ATLAS/ATLAS-Detector.png" alt="ATLAS" caption="探测器示意图。" />
+<FigureBlock src="/ATLAS/ATLAS-Detector.webp" alt="ATLAS" caption="探测器示意图。" />
 
 ---
 layout: split
@@ -289,7 +289,7 @@ ratio: "3:2"
 
 ::right::
 
-<FigureBlock src="/ATLAS/ATLAS-Detector.png" alt="ATLAS" caption="结果分布图。" />
+<FigureBlock src="/ATLAS/ATLAS-Detector.webp" alt="ATLAS" caption="结果分布图。" />
 
 ---
 layout: split
@@ -307,7 +307,7 @@ ratio: "1:2"
 
 ::right::
 
-<FigureBlock src="/ATLAS/ATLAS-Detector.png" alt="ATLAS" caption="探测器几何结构。" />
+<FigureBlock src="/ATLAS/ATLAS-Detector.webp" alt="ATLAS" caption="探测器几何结构。" />
 
 ---
 layout: split
@@ -322,7 +322,7 @@ ratio: "2:3"
 
 ::right::
 
-<FigureBlock src="/ATLAS/ATLAS-Detector.png" alt="ATLAS" caption="宽幅图示。" />
+<FigureBlock src="/ATLAS/ATLAS-Detector.webp" alt="ATLAS" caption="宽幅图示。" />
 
 ---
 layout: split
@@ -380,7 +380,7 @@ $$\mu = 1.05^{+0.31}_{-0.29}$$
 
 ::right::
 
-<FigureBlock src="/ATLAS/ATLAS-Detector.png" alt="ATLAS" caption="分析结果分布。" />
+<FigureBlock src="/ATLAS/ATLAS-Detector.webp" alt="ATLAS" caption="分析结果分布。" />
 
 ---
 layout: split

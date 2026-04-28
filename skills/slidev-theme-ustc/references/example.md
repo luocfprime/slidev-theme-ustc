@@ -106,7 +106,7 @@ layout: split
 ::right::
 
 <FigureBlock
-  src="/ATLAS/ATLAS-Detector.png"
+  src="/ATLAS/ATLAS-Detector.webp"
   alt="ATLAS 探测器横截面"
   caption="ATLAS 探测器横截面，展示内径迹探测器各子系统位置关系。"
 />
@@ -362,7 +362,7 @@ density: dense
 ::left::
 
 <FigureBlock
-  src="/ATLAS/ATLAS-Detector.png"
+  src="/ATLAS/ATLAS-Detector.webp"
   alt="效率 vs 堆积"
   caption="径迹效率随堆积增加的变化。本方法（红）在 $\langle\mu\rangle=200$ 时仍保持 97.1%。"
 />

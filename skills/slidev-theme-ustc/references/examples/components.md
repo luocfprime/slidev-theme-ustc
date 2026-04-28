@@ -151,7 +151,7 @@ layout: content
 # FigureBlock — 基础用法（自动编号）
 
 <FigureBlock
-  src="/ATLAS/ATLAS-Detector.png"
+  src="/ATLAS/ATLAS-Detector.webp"
   alt="ATLAS 探测器"
   caption="ATLAS 探测器横截面图，展示各子探测器从内到外的层级结构。"
   width="50%"
@@ -231,7 +231,7 @@ layout: content
 `width` 控制整体图块与图注宽度，`imageWidth` 可单独控制图片大小。内缩值接受像素值字符串或数字（单位 px）。
 
 <FigureBlock
-  src="/ATLAS/ATLAS-Detector.png"
+  src="/ATLAS/ATLAS-Detector.webp"
   alt="ATLAS 探测器"
   caption="图块宽 70%，图片宽 45%，标题内缩 60px：标题范围与图片内容区对齐。"
   width="70%"
@@ -724,7 +724,7 @@ density: dense
 
   </div>
   <FigureBlock
-    src="/ATLAS/ATLAS-Detector.png"
+    src="/ATLAS/ATLAS-Detector.webp"
     alt="架构示意"
     caption="架构示意图（此处用探测器图代替）。"
   />
