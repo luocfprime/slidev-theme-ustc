@@ -68,7 +68,7 @@ density: dense
 
 # 相关工作对比
 
-<TableBlock caption="主流端到端事例重建方法性能对比（ATLAS Run 2 条件，$\langle\mu\rangle=50$）。" captionAlign="left">
+<TableBlock caption="主流端到端事例重建方法性能对比（ATLAS Run 2 条件，$\langle\mu\rangle=50$）。">
 
 | 方法 | 主干网络 | 径迹效率 | 假径迹率 | 推理时间 |
 |------|---------|--------:|--------:|--------:|
@@ -337,7 +337,7 @@ density: dense
 </div>
 <div>
 
-<TableBlock caption="各堆积条件下数据集规模（单位：$10^3$）。" captionAlign="left">
+<TableBlock caption="各堆积条件下数据集规模（单位：$10^3$）。">
 
 | $\langle\mu\rangle$ | 节点数 | 边数 | 真实边 |
 |---:|---:|---:|---:|
@@ -418,7 +418,7 @@ sectionBarMode: minimal
 
 # 消融实验：各模块贡献
 
-<TableBlock caption="消融实验结果（$\langle\mu\rangle=140$）。逐步移除各模块，观察性能下降。" captionAlign="left">
+<TableBlock caption="消融实验结果（$\langle\mu\rangle=140$）。逐步移除各模块，观察性能下降。">
 
 | 配置 | 效率 | 假径迹率 | 推理时间 |
 |------|-----:|--------:|--------:|
@@ -569,7 +569,7 @@ layout: content
   src="/ATLAS/ATLAS-Logo.png"
   alt="超参数扫描结果"
   caption="图 A.1　效率（上）与推理时间（下）随 $k$ 和 $d$ 的变化热图。"
-  captionAlign="left"
+ 
 />
 
 </div>
@@ -608,7 +608,7 @@ density: dense
 
 # A.3　预训练方法对比（Typst 排版示例）
 
-<TableBlock caption="Comparison to the state-of-the-art pre-training methods on semantic tasks (ImageNet-1K linear probing, ADE segmentation) and 3D vision tasks (NYUv2, Taskonomy) with ViT-Base/16. Bold = best, underlined = second best." captionAlign="left" />
+<TableBlock caption="Comparison to the state-of-the-art pre-training methods on semantic tasks (ImageNet-1K linear probing, ADE segmentation) and 3D vision tasks (NYUv2, Taskonomy) with ViT-Base/16. Bold = best, underlined = second best." />
 
 ```typst
 #set text(size: 8.2pt)
