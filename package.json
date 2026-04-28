@@ -16,8 +16,7 @@
     "setup",
     "styles",
     "utils",
-    "global-top.vue",
-    "docs/configuration.md"
+    "global-top.vue"
   ],
   "engines": {
     "node": ">=18.0.0",

@@ -32,7 +32,7 @@ This repository follows Slidev's conventional directories and keeps theme runtim
 |-- styles/              # Global theme CSS entry
 |-- utils/               # Internal helpers shared by layouts/components
 |-- scripts/             # Local QA and maintenance scripts
-|-- docs/                # Theme usage and configuration docs
+|-- docs/                # Internal planning and design notes (not published)
 |-- examples/            # Additional demo decks
 |-- tests/               # Playwright smoke tests for rendered slides
 |-- skills/              # Claude Code skill for this theme
@@ -47,7 +47,6 @@ The `files` field in `package.json` only publishes the theme runtime surface:
 
 - `components/`, `layouts/`, `public/`, `setup/`, `styles/`, `utils/`
 - `global-top.vue`, `vite.config.ts`
-- `docs/configuration.md`
 
 Local template decks, extra examples, tests, and generated build output are intentionally excluded from the npm package.
 
@@ -59,7 +58,7 @@ theme: @luocfprime/slidev-theme-ustc
 ---
 ```
 
-See `docs/configuration.md` for supported frontmatter options, component props, and CSS variables.
+See the theme skill (`skills/slidev-theme-ustc/`) for frontmatter options, component props, and CSS variables.
 
 ## Typst Support
 
