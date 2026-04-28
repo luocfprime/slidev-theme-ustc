@@ -203,6 +203,7 @@ $k$ 轮消息传递的表达能力不超过 $k$ 阶 Weisfeiler-Leman 图同构�
 
 ---
 layout: content
+margin: tighter
 ---
 
 # 消息传递公式推导
@@ -581,7 +582,7 @@ density: dense
 
 # A.2　与标准 Kalman Filter 的误差分析
 
-<TableBlock caption="表 A.1　各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。" captionAlign="left">
+<TableBlock caption="表 A.1　各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。">
 
 | $p_T$ 区间 | KF 效率 | 本方法效率 | KF 假率 | 本方法假率 |
 |-----------|--------:|----------:|--------:|----------:|
