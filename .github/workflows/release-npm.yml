@@ -44,6 +44,9 @@ jobs:
             exit 1
           fi
 
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
       - name: Publish to npm
         run: npm publish --access public
 
