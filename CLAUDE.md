@@ -8,6 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pnpm dev      # Start dev server with example.md at http://localhost:3030
 pnpm build    # Build example.md as static SPA
 pnpm export   # Export to PDF (requires playwright-chromium installed separately)
+pnpm preview  # Build with GitHub Pages base URL and serve locally via serve.py
 ```
 
 **Tests** require the dev server to already be running on port 3030:
@@ -45,9 +46,12 @@ Bump `package.json` version, commit, then tag to trigger the npm release workflo
 # edit package.json version, then:
 git add package.json && git commit -m "chore: bump version to X.Y.Z"
 git tag vX.Y.Z && git push origin main --tags
+
+# create the GitHub Release:
+gh release create vX.Y.Z --generate-notes --title "vX.Y.Z"
 ```
 
-The workflow validates that the tag matches `package.json` version before publishing.
+The workflow validates that the tag matches `package.json` version before publishing. It uses **Node 24 + `npm publish`** (not pnpm) — required for npm Trusted Publisher OIDC. The `workflow_dispatch` trigger accepts a `version` input (e.g. `v0.1.1`) for manual re-runs.
 
 **Local pre-publish testing:**
 
@@ -57,4 +61,6 @@ cd /tmp/<test-dir> && npm install /tmp/luocfprime-slidev-theme-ustc-X.Y.Z.tgz
 npx slidev slides.md   # verify dev server, logo, no warnings
 ```
 
-**Published files:** `components/`, `layouts/`, `public/`, `setup/`, `styles/`, `utils/`, `global-top.vue`, `vite.config.ts`. Add new top-level files to the `files` field in `package.json`.
+**Published files:** `assets/`, `components/`, `layouts/`, `public/`, `setup/`, `styles/`, `utils/`, `global-top.vue`, `vite.config.ts`. Add new top-level files to the `files` field in `package.json`.
+
+**`assets/` vs `public/`:** Files needing Vite processing (hashed URLs, tree-shaking) go in `assets/` and are imported with `import ... from '../assets/...'`. Files served as-is at runtime (images, videos, JSON) go in `public/`.
