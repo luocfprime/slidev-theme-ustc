@@ -10,6 +10,7 @@
     "academic"
   ],
   "files": [
+    "assets",
     "components",
     "layouts",
     "public",

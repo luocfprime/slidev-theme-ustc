@@ -1,4 +1,4 @@
-import logoSvgUrl from '../public/ustc/logo.svg?url'
+import logoSvgUrl from '../assets/ustc/logo.svg?url'
 
 // ── Centralised default prop values ──────────────────────────────────────────
 // Two categories of layout:
