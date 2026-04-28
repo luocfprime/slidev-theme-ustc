@@ -102,8 +102,7 @@ Note: `#set page(...)` is not supported — page dimensions are controlled by th
 > /plugin install slidev-theme-ustc@slidev-theme-ustc
 > ```
 > Then run `/reload-plugins` to activate.
-
-> [!TIP]
+>
 > **Other agents (Copilot, Gemini CLI, Codex, …)** — install via [`npx skills`](https://github.com/vercel-labs/skills):
 > ```
 > npx skills add luocfprime/slidev-theme-ustc

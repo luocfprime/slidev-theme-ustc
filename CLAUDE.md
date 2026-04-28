@@ -36,3 +36,25 @@ This is a Slidev theme package (`@luocfprime/slidev-theme-ustc`). The published 
 ## Theme Usage
 
 `example.md` references the theme as `theme: ./`. CSS variables and frontmatter options are documented in `docs/configuration.md`.
+
+## Publishing
+
+Bump `package.json` version, commit, then tag to trigger the npm release workflow:
+
+```bash
+# edit package.json version, then:
+git add package.json && git commit -m "chore: bump version to X.Y.Z"
+git tag vX.Y.Z && git push origin main --tags
+```
+
+The workflow validates that the tag matches `package.json` version before publishing.
+
+**Local pre-publish testing:**
+
+```bash
+pnpm pack --pack-destination /tmp/
+cd /tmp/<test-dir> && npm install /tmp/luocfprime-slidev-theme-ustc-X.Y.Z.tgz
+npx slidev slides.md   # verify dev server, logo, no warnings
+```
+
+**Published files:** `components/`, `layouts/`, `public/`, `setup/`, `styles/`, `utils/`, `global-top.vue`, `vite.config.ts`. Add new top-level files to the `files` field in `package.json`.
