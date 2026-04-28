@@ -234,11 +234,11 @@ $$\hat{y}_{ij} = \sigma\!\left(W\bigl[h_i^{(L)} \,\|\, h_j^{(L)}\bigr]\right) \i
 
 </div>
 
-<div v-click>
+<div v-click="4">
 
 <Callout type="tip" title="三轮迭代的意义">
 
-每轮消息传递将感受野扩大一跳。<span v-mark="{ type: 'underline', color: '#c0392b' }">$k=3$ 轮已足够覆盖典型径迹段</span>，$k>3$ 反而导致节点表示过平滑（over-smoothing）。
+每轮消息传递将感受野扩大一跳。<span v-mark="{ at: 5, type: 'underline', color: '#c0392b' }">$k=3$ 轮已足够覆盖典型径迹段</span>，$k>3$ 反而导致节点表示过平滑（over-smoothing）。
 
 </Callout>
 
