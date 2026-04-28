@@ -3,6 +3,9 @@
 *.png binary
 *.svg binary
 *.pdf binary
+*.mp4 binary
+*.webm binary
+*.mov binary
 *.woff binary
 *.woff2 binary
 *.ttf binary
