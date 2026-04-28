@@ -18,7 +18,6 @@ Override in your slides.md style block or per-slide `<style>` tags:
 |----------|---------|------|
 | `--ustc-blue` | `#1E4C90` | primary brand |
 | `--ustc-blue-dark` | `#16396b` | headings |
-| `--ustc-blue-light` | `#2d5fa8` | hover |
 | `--ustc-blue-pale` | `rgba(30,76,144,0.07)` | light backgrounds |
 | `--ustc-blue-border` | `rgba(30,76,144,0.18)` | dividers |
 | `--ustc-blue-row` | `rgba(30,76,144,0.09)` | table row separator |

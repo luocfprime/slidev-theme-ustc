@@ -134,7 +134,7 @@ density: dense
 
 # 图构建与网络结构
 
-<Grid cols="2" gap="lg" align="top">
+<Grid cols="2" gap="lg" alignY="top">
 <div>
 
 **图构建**
@@ -318,7 +318,7 @@ density: dense
 
 # 实验设置
 
-<Grid cols="45 55" gap="lg" align="top">
+<Grid cols="45 55" gap="lg" alignY="top">
 <div>
 
 **数据集**
@@ -545,7 +545,7 @@ layout: content
 
 # A.1　超参数敏感性分析
 
-<Grid cols="45 55" gap="lg" align="top">
+<Grid cols="45 55" gap="lg" alignY="top">
 <div>
 
 网络深度（消息传递轮数）与隐层维度对性能的影响：

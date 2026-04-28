@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 import { useSlideContext } from '@slidev/client'
 import { renderInlineMd } from '../utils/markdown'
 import { tableDefaults } from '../utils/defaults'
 import { tableMapShared, tablePrefixShared } from '../utils/numbering'
+import { useLocalIndex } from '../utils/useLocalIndex'
 
 const props = withDefaults(defineProps<{
   caption?: string
@@ -16,15 +17,7 @@ const props = withDefaults(defineProps<{
 
 const { $page } = useSlideContext()
 
-const el = ref<HTMLElement>()
-const localIdx = ref(0)
-
-watch(el, (newEl) => {
-  if (!newEl) return
-  const slideEl = newEl.closest('.slidev-page') ?? newEl.closest('.slidev-layout')
-  const allTables = Array.from(slideEl?.querySelectorAll('.table-block') ?? [])
-  localIdx.value = Math.max(0, allTables.indexOf(newEl))
-}, { immediate: true })
+const { el, localIdx } = useLocalIndex('table-block')
 
 const autoNumber = computed(() => {
   const startNum = tableMapShared.value.get($page.value) ?? 0

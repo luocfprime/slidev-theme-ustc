@@ -9,7 +9,7 @@ All components are auto-imported by Slidev — no import needed.
 CSS grid container.
 
 ```vue
-<Grid cols="2" gap="md" align="top">
+<Grid cols="2" gap="md" alignY="top">
 
 Left cell
 

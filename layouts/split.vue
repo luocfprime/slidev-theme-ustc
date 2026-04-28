@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import { getPresenterName, resolveBodyMargin, handleBackground } from '../utils/layoutHelper'
+import { renderInlineMd } from '../utils/markdown'
 import { splitDefaults } from '../utils/defaults'
 
 const props = withDefaults(defineProps<{
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<{
   sectionBar?: boolean
   lineHeight?: number
   align?: 'left' | 'center' | 'right'
+  subtitle?: string
   background?: string
 }>(), {
   ...splitDefaults,
@@ -33,7 +35,7 @@ const pageStyle = computed(() => {
   const s: Record<string, string> = { ...resolveBodyMargin(props.margin) }
   if (props.lineHeight) s['--ustc-lh'] = String(props.lineHeight)
   if (props.align) s.textAlign = props.align
-  if (props.background) Object.assign(s, handleBackground(props.background, false, 1.0))
+  if (props.background) Object.assign(s, handleBackground(props.background))
   return s
 })
 
@@ -66,6 +68,8 @@ const gridStyle = computed(() => {
     <template v-else>
       <slot />
     </template>
+
+    <div v-if="props.subtitle" class="content-subtitle" v-html="renderInlineMd(props.subtitle)" />
 
     <PageFooter
       v-if="props.footer"

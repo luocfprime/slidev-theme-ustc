@@ -5,7 +5,7 @@ import { gridDefaults } from '../utils/defaults'
 const props = withDefaults(defineProps<{
   cols?: string
   gap?: 'sm' | 'md' | 'lg'
-  align?: 'top' | 'center' | 'bottom'
+  alignY?: 'top' | 'center' | 'bottom'
 }>(), {
   ...gridDefaults,
 })
@@ -25,19 +25,19 @@ const gridStyle = computed(() => {
     display: 'grid',
     gridTemplateColumns: templateColumns,
     gap: gapMap[props.gap],
-    alignItems: alignMap[props.align],
+    alignItems: alignMap[props.alignY],
   }
 })
 </script>
 
 <template>
-  <div class="prim-grid" :style="gridStyle">
+  <div class="grid" :style="gridStyle">
     <slot />
   </div>
 </template>
 
 <style scoped>
-.prim-grid {
+.grid {
   width: 100%;
 }
 </style>

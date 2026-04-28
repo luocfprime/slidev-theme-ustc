@@ -1,5 +1,14 @@
 // ── Centralised default prop values ──────────────────────────────────────────
-// Layouts and components both import from here.
+// Two categories of layout:
+//
+//   Structural layouts (cover, end, section, toc, backup): display-only frames.
+//   They extend footerDefaults or logoDefaults but NOT bodyDefaults — they don't
+//   expose density, margin, align, or footnote controls.
+//
+//   Content layouts (content, split, default): editable body slides.
+//   They extend bodyDefaults (which already includes footerDefaults).
+//
+// Component defaults (grid, callout, figure, table, qrcode) are independent.
 
 export const footerDefaults = {
   footer: true,
@@ -26,6 +35,7 @@ export const splitDefaults = {
   gap: 'md' as 'sm' | 'md' | 'lg',
 }
 
+// toc is structural: no density/margin/align — only footer + highlight index
 export const tocDefaults = {
   ...footerDefaults,
   highlight: 0,
@@ -43,6 +53,7 @@ export const coverDefaults = {
   showLogo: true,
 }
 
+// end is structural: no density/margin — only logo + footer
 export const endDefaults = {
   ...logoDefaults,
   ...footerDefaults,
@@ -52,7 +63,7 @@ export const endDefaults = {
 export const gridDefaults = {
   cols: '2',
   gap: 'md' as 'sm' | 'md' | 'lg',
-  align: 'top' as 'top' | 'center' | 'bottom',
+  alignY: 'top' as 'top' | 'center' | 'bottom',
 }
 
 export const calloutDefaults = {

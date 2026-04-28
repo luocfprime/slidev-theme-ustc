@@ -20,13 +20,13 @@ const style = computed(() => ({
 </script>
 
 <template>
-  <div class="prim-abs" :style="style">
+  <div class="abs" :style="style">
     <slot />
   </div>
 </template>
 
 <style scoped>
-.prim-abs {
+.abs {
   box-sizing: border-box;
 }
 </style>

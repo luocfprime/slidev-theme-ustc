@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<{
   ...coverDefaults,
 })
 
-const bgStyle = computed(() => handleBackground(props.background, true, 1.0))
+const bgStyle = computed(() => handleBackground(props.background, true))
 const presenterName = computed(() => getPresenterName(props.authors))
 const authorData = computed(() => handleAuthor(props.authors))
 const authorsDict = computed(() => authorData.value[0])
