@@ -47,6 +47,9 @@ Override in your slides.md style block or per-slide `<style>` tags:
 | `--ustc-fs-subtitle-dense` | `0.97rem` | content layout subtitle (dense density) |
 | `--ustc-fs-callout` | `1.15rem` | Callout body (normal density) |
 | `--ustc-fs-callout-dense` | `0.95rem` | Callout body (dense density) |
+| `--ustc-fs-callout-title` | `1.1rem` | Callout title |
+| `--ustc-fs-result-title` | `1.05rem` | ResultBox title |
+| `--ustc-fs-result-body` | `1.15rem` | ResultBox body text |
 | `--ustc-fs-footnote` | `0.67rem` | footnote items |
 | `--ustc-fs-footnote-ref` | `0.64em` | footnote superscript anchor (relative to parent) |
 
@@ -99,6 +102,9 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | `--ustc-py` | `1.75rem` | top padding |
 | `--ustc-pl` | `2.8rem` | left padding (also anchors footnote overlay) |
 | `--ustc-pb` | computed | bottom padding (footer-aware) |
+| `--ustc-title-gap` | `1.2rem` | gap between h1 and first content element (content/split layouts) |
+| `--ustc-fig-caption-gap` | `0.75rem` | gap between figure image and its caption (inside FigureBlock) |
+| `--ustc-tab-caption-gap` | `0.3rem` | gap between table caption and the table (inside TableBlock) |
 
 ### Margin presets
 

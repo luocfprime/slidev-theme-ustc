@@ -58,6 +58,7 @@
   --ustc-lh-blockquote:    1.5;      /* blockquote                          */
   --ustc-fig-caption-gap:  0.75rem;  /* gap between figure image and its caption  */
   --ustc-tab-caption-gap:  0.3rem;   /* gap between table caption and the table   */
+  --ustc-title-gap:        1.5rem;   /* gap between h1 and first content element  */
   --ustc-lh-heading:       1.1;      /* h1 across all layouts               */
   --ustc-lh-footnote:      1.28;     /* footnote list items                 */
   --ustc-fs-footnote-ref:  0.64em;   /* footnote superscript anchor         */
@@ -395,8 +396,63 @@
   color: var(--ustc-blue-dark);
   letter-spacing: -0.025em;
   line-height: var(--ustc-lh-heading);
-  margin: 0;
+  margin: 0 0 var(--ustc-title-gap);
   padding: 0.08rem 0;
+}
+
+/* Subtitle sits visually tight under h1; don't let --ustc-title-gap push it away */
+.slidev-layout.content:has(.content-subtitle) h1,
+.slidev-layout.split:has(.content-subtitle) h1 {
+  margin-bottom: 0;
+}
+
+/* In split-with-columns, h1 lives inside .split-header. The columns provide
+   their own visual separation, so the gap stays tight (scoped CSS: 0.2rem).
+   Just reset the h1 margin so --ustc-title-gap doesn't double-stack. */
+.slidev-layout.split .split-header h1 {
+  margin-bottom: 0;
+}
+
+/* Cancel half-leading on the first paragraph/list after h1, so text aligns
+   with component tops. Half-leading ≈ (lh - 1) / 2 × fs-body.
+   Dense / compact-copy override uses the smaller font-size. */
+.slidev-layout.content h1 + p,
+.slidev-layout.split h1 + p,
+.slidev-layout.content h1 + ul,
+.slidev-layout.split h1 + ul,
+.slidev-layout.content h1 + ol,
+.slidev-layout.split h1 + ol {
+  margin-top: calc((1 - var(--ustc-lh)) / 2 * var(--ustc-fs-body));
+}
+
+.slidev-layout.content.dense h1 + p,
+.slidev-layout.split.dense h1 + p,
+.slidev-layout.content.compact-copy h1 + p,
+.slidev-layout.split.compact-copy h1 + p,
+.slidev-layout.content.dense h1 + ul,
+.slidev-layout.split.dense h1 + ul,
+.slidev-layout.content.dense h1 + ol,
+.slidev-layout.split.dense h1 + ol {
+  margin-top: calc((1 - var(--ustc-lh)) / 2 * var(--ustc-fs-body-dense));
+}
+
+/* Block components: top margin zeroed so h1 { margin-bottom: --ustc-title-gap }
+   is the single control point. Bottom margins (from scoped CSS) handle
+   inter-component spacing. */
+.slidev-layout.content div.callout,
+.slidev-layout.split div.callout,
+.slidev-layout.content div.prim-block,
+.slidev-layout.split div.prim-block,
+.slidev-layout.content div.result-box,
+.slidev-layout.split div.result-box,
+.slidev-layout.content .typst-doc,
+.slidev-layout.split .typst-doc {
+  margin-top: 0;
+}
+
+.slidev-layout.content .typst-doc,
+.slidev-layout.split .typst-doc {
+  margin-bottom: 0.65rem;
 }
 
 
@@ -574,22 +630,25 @@
   margin: 0;
 }
 
-/* FigureBlock: needs explicit top margin since the bare figure reset above removes it */
+/* FigureBlock / TableBlock: top zeroed (h1 margin handles the gap);
+   bottom kept for spacing after the component. */
 .slidev-layout.content figure.figure-block,
 .slidev-layout.split figure.figure-block {
-  margin-top: 0.65rem;
+  margin-top: 0;
+  margin-bottom: 0.65rem;
 }
 
-/* TableBlock: add outer top margin to match other block components */
 .slidev-layout.content div.table-block,
 .slidev-layout.split div.table-block {
-  margin-top: 0.65rem;
+  margin-top: 0;
+  margin-bottom: 0.65rem;
 }
 
-/* Table inside TableBlock: wrapper handles outer spacing; caption margin handles caption→table gap */
+/* Table inside TableBlock: wrapper handles all outer spacing */
 .slidev-layout.content div.table-block table,
 .slidev-layout.split div.table-block table {
   margin-top: 0;
+  margin-bottom: 0;
 }
 
 .slidev-layout.content figcaption.figure-caption,
