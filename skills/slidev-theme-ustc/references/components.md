@@ -128,6 +128,37 @@ Global prefix set in deck frontmatter: `figurePrefix: Figure` (default).
 
 ---
 
+## `<VideoBlock>`
+
+Video with optional caption. Mirrors `FigureBlock` API (no auto-numbering).
+
+```vue
+<VideoBlock
+  src="/videos/demo.mp4"
+  caption="Description of the video"
+  width="80%"
+  :controls="true"
+/>
+```
+
+| Prop | Default | Notes |
+|------|---------|-------|
+| `src` | — | required; `/`-prefixed paths get `BASE_URL` prepended |
+| `caption` | `''` | supports markdown |
+| `width` | `'100%'` | outer container width |
+| `videoWidth` | `'100%'` | `<video>` element width |
+| `captionAlign` | `'center'` | `'left'` · `'center'` |
+| `captionInsetLeft` | `0` | padding-left on caption |
+| `captionInsetRight` | `0` | padding-right on caption |
+| `controls` | `true` | show browser video controls |
+| `autoplay` | `false` | autoplay (forces `muted`) |
+| `loop` | `false` | loop playback |
+| `muted` | `false` | mute audio |
+
+`playsinline` is always set (iOS compatibility). Place files under `public/videos/` and reference as `/videos/file.mp4`.
+
+---
+
 ## `<TableBlock>`
 
 Table wrapper with auto-numbered caption. Counter is global across the entire deck.

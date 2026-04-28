@@ -746,3 +746,19 @@ layout: content
   })
 }))
 ```
+
+---
+layout: content
+density: dense
+---
+
+# A.5　VideoBlock 示例
+
+<VideoBlock
+  src="/videos/sample_video.mp4"
+  caption="示例视频：使用 `VideoBlock` 组件嵌入本地视频文件。"
+  width="60%"
+  :controls="true"
+/>
+
+`VideoBlock` 组件支持以下属性：`src`（必填）、`caption`、`width`、`videoWidth`、`controls`、`autoplay`、`loop`、`muted`。路径以 `/` 开头时自动加 `BASE_URL` 前缀，兼容 GitHub Pages 子路径部署。
