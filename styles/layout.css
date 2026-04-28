@@ -34,7 +34,7 @@
   /* ── Typography scale (content / split slides) ───────────────────────── */
   /* Override any of these in your deck's <style> block to adjust globally */
   --ustc-fs-body:          1.4rem;   /* p, li — normal mode                */
-  --ustc-fs-body-dense:    1.05rem;  /* p, li — dense / compact-copy mode  */
+  --ustc-fs-body-dense:    1.05rem;  /* p, li — dense mode                 */
   --ustc-fs-h1:            2.75rem;  /* h1 in content, split, toc          */
   --ustc-fs-h2:            1.55rem;  /* h2                                  */
   --ustc-fs-h3:            1.3rem;   /* h3 (also used for dense h2)        */
@@ -417,7 +417,7 @@
 
 /* Cancel half-leading on the first paragraph/list after h1, so text aligns
    with component tops. Half-leading ≈ (lh - 1) / 2 × fs-body.
-   Dense / compact-copy override uses the smaller font-size. */
+   Dense mode override uses the smaller font-size. */
 .slidev-layout.content h1 + p,
 .slidev-layout.split h1 + p,
 .slidev-layout.content h1 + ul,
