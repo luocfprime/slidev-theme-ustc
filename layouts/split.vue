@@ -59,6 +59,7 @@ const gridStyle = computed(() => {
     <template v-if="hasColumns">
       <div class="split-header">
         <slot />
+        <div v-if="props.subtitle" class="content-subtitle" v-html="renderInlineMd(props.subtitle)" />
       </div>
       <div :style="gridStyle">
         <div class="split-col"><slot name="left" /></div>
@@ -67,9 +68,8 @@ const gridStyle = computed(() => {
     </template>
     <template v-else>
       <slot />
+      <div v-if="props.subtitle" class="content-subtitle" v-html="renderInlineMd(props.subtitle)" />
     </template>
-
-    <div v-if="props.subtitle" class="content-subtitle" v-html="renderInlineMd(props.subtitle)" />
 
     <PageFooter
       v-if="props.footer"
