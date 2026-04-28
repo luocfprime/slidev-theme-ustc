@@ -34,6 +34,10 @@ This is a Slidev theme package (`@luocfprime/slidev-theme-ustc`). The published 
 
 **`example.md`** is the canonical demo deck and the dev/build entry point. `examples/` holds per-feature demo decks (math, layouts, components).
 
+## Before Committing
+
+Always run `pnpm build` and confirm it exits with `✓ built` before creating any commit that touches `example.md`, layouts, components, or `setup/`. A build error that reaches a commit is harder to debug and blocks users.
+
 ## Theme Usage
 
 `example.md` references the theme as `theme: ./`. CSS variables and frontmatter options are documented in `docs/configuration.md`.

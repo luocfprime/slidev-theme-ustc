@@ -569,7 +569,6 @@ layout: content
   src="/ATLAS/ATLAS-Logo.png"
   alt="超参数扫描结果"
   caption="图 A.1　效率（上）与推理时间（下）随 $k$ 和 $d$ 的变化热图。"
- 
 />
 
 </div>
