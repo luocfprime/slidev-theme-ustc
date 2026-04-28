@@ -48,8 +48,10 @@ Override in your slides.md style block or per-slide `<style>` tags:
 | `--ustc-fs-callout` | `1.15rem` | Callout body (normal density) |
 | `--ustc-fs-callout-dense` | `0.95rem` | Callout body (dense density) |
 | `--ustc-fs-callout-title` | `1.1rem` | Callout title |
-| `--ustc-fs-result-title` | `1.05rem` | ResultBox title |
-| `--ustc-fs-result-body` | `1.15rem` | ResultBox body text |
+| `--ustc-fs-result-title` | `1.05rem` | ResultBox title / Block title (normal density) |
+| `--ustc-fs-result-title-dense` | `0.92rem` | ResultBox title / Block title (dense density) |
+| `--ustc-fs-result-body` | `1.15rem` | ResultBox body text (normal density) |
+| `--ustc-fs-result-body-dense` | `0.96rem` | ResultBox body text (dense density) |
 | `--ustc-fs-footnote` | `0.67rem` | footnote items |
 | `--ustc-fs-footnote-ref` | `0.64em` | footnote superscript anchor (relative to parent) |
 
@@ -78,7 +80,7 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | Variable | Default | Role |
 |----------|---------|------|
 | `--ustc-lh` | `2.0` | default line-height for body text (unitless) |
-| `--ustc-lh-heading` | `1.1` | h1 across all layouts |
+| `--ustc-lh-heading` | `1.1` | h1/h2/h3 heading line-height |
 | `--ustc-lh-caption` | `1.35` | figure/table captions |
 | `--ustc-lh-table` | `1.38` | td, th |
 | `--ustc-lh-blockquote` | `1.5` | blockquote |
@@ -102,7 +104,11 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | `--ustc-py` | `1.75rem` | top padding |
 | `--ustc-pl` | `2.8rem` | left padding (also anchors footnote overlay) |
 | `--ustc-pb` | computed | bottom padding (footer-aware) |
-| `--ustc-title-gap` | `1.2rem` | gap between h1 and first content element (content/split layouts) |
+| `--ustc-section-py` | `2.5rem` | top padding for section/backup layouts |
+| `--ustc-section-px` | `3.5rem` | right padding for section/backup layouts |
+| `--ustc-section-pl` | `4.8rem` | left padding for section/backup layouts |
+| `--ustc-title-gap` | `1.5rem` | gap between h1 and first content element (content/split layouts) |
+| `--ustc-title-gap-dense` | `0.9rem` | gap between h1 and first content element — dense mode |
 | `--ustc-fig-caption-gap` | `0.75rem` | gap between figure image and its caption (inside FigureBlock) |
 | `--ustc-tab-caption-gap` | `0.3rem` | gap between table caption and the table (inside TableBlock) |
 
@@ -125,6 +131,7 @@ Set via `margin:` frontmatter prop — these map to the spacing variables:
 |----------|---------|------|
 | `--ustc-max-w-h1` | `58rem` | h1 readable width (cover, section, backup) |
 | `--ustc-max-w-sub` | `48rem` | subtitle / body paragraph max width |
+| `--ustc-max-w-cover-slot` | `50rem` | cover slot / body text area max width |
 
 ---
 
