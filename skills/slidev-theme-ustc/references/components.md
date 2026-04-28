@@ -114,7 +114,7 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 
 | Prop | Default | Notes |
 |------|---------|-------|
-| `src` | — | required |
+| `src` | — | required unless `wip` is set |
 | `alt` | `''` | accessibility |
 | `caption` | `''` | — |
 | `width` | `'100%'` | outer container width |
@@ -123,8 +123,19 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 | `captionInsetLeft` | `0` | padding-left on caption |
 | `captionInsetRight` | `0` | padding-right on caption |
 | `prefix` | global `figurePrefix` | per-figure label override |
+| `wip` | `false` | mark figure as work-in-progress; shows amber WIP badge |
 
 Global prefix set in deck frontmatter: `figurePrefix: Figure` (default).
+
+**WIP mode:** Add `wip` to show an amber badge. Use a [placehold.co](https://placehold.co) URL as `src` to hold the correct aspect ratio while the real image is not ready.
+
+```vue
+<!-- placeholder — no image yet, holds 4:3 space -->
+<FigureBlock wip src="https://placehold.co/800x600" caption="Experiment results" />
+
+<!-- draft — image exists but not finalised -->
+<FigureBlock wip src="/fig-draft.png" caption="Experiment results" />
+```
 
 ---
 
@@ -179,8 +190,21 @@ Table wrapper with auto-numbered caption. Counter is global across the entire de
 | `captionAlign` | `'center'` | `'left'` · `'center'` |
 | `width` | `'100%'` | container width |
 | `prefix` | global `tablePrefix` | per-table label override |
+| `wip` | `false` | mark table as work-in-progress; shows amber WIP badge next to caption |
 
 Global prefix set in deck frontmatter: `tablePrefix: Table` (default).
+
+**WIP mode:** Add `wip` to show an amber WIP badge inline after the caption. Table content still renders normally.
+
+```vue
+<TableBlock wip caption="Ablation study">
+
+| Method | Acc |
+|--------|-----|
+| Ours   | ?   |
+
+</TableBlock>
+```
 
 ---
 

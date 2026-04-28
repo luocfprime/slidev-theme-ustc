@@ -142,7 +142,7 @@ layout: section
 ---
 
 # 二、FigureBlock
-`src` · `alt` · `caption` · `width` · `imageWidth` · `captionAlign` · `captionInsetLeft` · `captionInsetRight` · `prefix`
+`src` · `alt` · `caption` · `width` · `imageWidth` · `captionAlign` · `captionInsetLeft` · `captionInsetRight` · `prefix` · `wip`
 
 ---
 layout: content
@@ -257,11 +257,40 @@ layout: content
 />
 
 ---
+layout: split
+ratio: "1:1"
+---
+
+# FigureBlock — wip
+
+::left::
+
+无 `src`：用 placehold.co 占位，保留编号和 caption
+
+<FigureBlock
+  wip
+  src="https://placehold.co/800x450"
+  caption="实验结果示意图（待补）。"
+  width="90%"
+/>
+
+::right::
+
+有 `src`：图片正常渲染，加 WIP badge
+
+<FigureBlock
+  wip
+  src="/ATLAS/ATLAS-Logo.png"
+  caption="草稿图，布局待确认。"
+  width="60%"
+/>
+
+---
 layout: section
 ---
 
 # 三、TableBlock
-`caption` · `captionAlign` · `width` · `prefix`
+`caption` · `captionAlign` · `width` · `prefix` · `wip`
 
 ---
 layout: split
@@ -336,6 +365,35 @@ layout: content
 |------|------|
 | 值 1 | 值 2 |
 | 值 3 | 值 4 |
+
+</TableBlock>
+
+---
+layout: content
+density: dense
+---
+
+# TableBlock — wip
+
+`wip` 在 caption 旁显示 amber badge，表格内容正常渲染：
+
+<TableBlock wip caption="消融实验结果（数值待更新）。" width="70%">
+
+| 方法 | Acc | F1 |
+|------|-----|----|
+| Full model | 92.3% | ? |
+| w/o module A | 89.1% | ? |
+| Baseline | 85.7% | ? |
+
+</TableBlock>
+
+无 caption 时 badge 独立显示：
+
+<TableBlock wip width="50%">
+
+| 列 A | 列 B |
+|------|------|
+| ? | ? |
 
 </TableBlock>
 
