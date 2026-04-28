@@ -441,8 +441,8 @@
    inter-component spacing. */
 .slidev-layout.content div.callout,
 .slidev-layout.split div.callout,
-.slidev-layout.content div.prim-block,
-.slidev-layout.split div.prim-block,
+.slidev-layout.content div.block,
+.slidev-layout.split div.block,
 .slidev-layout.content div.result-box,
 .slidev-layout.split div.result-box,
 .slidev-layout.content .typst-doc,
@@ -566,8 +566,8 @@
   font-size: var(--ustc-fs-result-body);
 }
 
-.slidev-layout.content .prim-block-title,
-.slidev-layout.split .prim-block-title {
+.slidev-layout.content .block-title,
+.slidev-layout.split .block-title {
   font-size: var(--ustc-fs-result-title);
 }
 
