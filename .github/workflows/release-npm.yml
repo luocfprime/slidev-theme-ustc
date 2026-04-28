@@ -11,7 +11,6 @@ on:
         required: true
 
 permissions:
-  contents: write  # for creating GitHub Release
   id-token: write  # for npm provenance
 
 jobs:
