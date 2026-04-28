@@ -20,7 +20,7 @@
   --ustc-footer-text: rgba(255, 255, 255, 0.88);
   --ustc-footer-fs:   0.74rem;
 
-  /* Section progress bar (set to 2rem when sectionBar: true) */
+  /* Section bar height: 0px (disabled), 1.5rem (minimal), 2rem (full); set by global-top.vue */
   --ustc-nav-h: 0px;
 
   /* Slide padding
@@ -210,7 +210,7 @@
 
 .slidev-layout.toc h1 {
   font-size: var(--ustc-fs-h1);
-  font-weight: 650;
+  font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
   letter-spacing: -0.025em;
   line-height: var(--ustc-lh-heading);

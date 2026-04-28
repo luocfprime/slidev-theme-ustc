@@ -65,7 +65,7 @@ function buildSpec() {
     layout.annotations = layout.annotations.map((a: any) => {
       const cloned = { ...a }
       const cur = Number(cloned?.font?.size ?? 12)
-      cloned.font = { ...(cloned.font ?? {}), size: cur * props.annotationFontSizeScale! }
+      cloned.font = { ...(cloned.font ?? {}), size: cur * props.annotationFontSizeScale }
       return cloned
     })
   }

@@ -31,7 +31,7 @@ defineProps<{
 .block-title {
   font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-blue-dark);
-  font-size: 1.05rem;
+  font-size: var(--ustc-fs-result-title);
   letter-spacing: 0;
   margin: 0 -0.95rem 0.48rem;
   padding: 0.32rem 0.95rem 0.3rem;
