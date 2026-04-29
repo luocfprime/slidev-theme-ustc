@@ -1,6 +1,6 @@
 {
   "name": "@luocfprime/slidev-theme-ustc",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "type": "module",
   "description": "A clean academic Slidev theme for USTC presentations",
   "keywords": [
@@ -14,7 +14,6 @@
     "components",
     "layouts",
     "public",
-    "vite.config.ts",
     "setup",
     "styles",
     "utils",
