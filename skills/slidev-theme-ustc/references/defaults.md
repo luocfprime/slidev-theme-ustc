@@ -55,7 +55,9 @@ Extends `logoDefaults`.
 | `showLogo` | `true` |
 | `talkTitle` | `'Presentation Title'` |
 | `subtitle` | `''` |
+| `presenter` | `undefined` (falls back to first author name) |
 | `authors` | `[]` |
+| `authorMarks` | `{}` |
 | `conference` | `''` |
 | `date` | `''` |
 | `background` | `''` |

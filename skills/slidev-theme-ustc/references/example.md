@@ -1,10 +1,14 @@
 ---
 theme: ./
 layout: cover
+presenter: "张明远"
 authors:
-  - 张明远: ["中国科学技术大学", "ATLAS 合作组"]
-  - A. Müller: ["CERN"]
-  - 李晓彤: ["中国科学技术大学"]
+  - name: "张明远"
+    affiliations: ["中国科学技术大学", "ATLAS 合作组"]
+  - name: "A. Müller"
+    affiliations: ["CERN"]
+  - name: "李晓彤"
+    affiliations: ["中国科学技术大学"]
 conference: "第 22 届高能物理前沿研讨会"
 talkTitle: "基于图神经网络的对撞机事例重建"
 subtitle: "从稀疏点云到粒子流的端到端学习"
