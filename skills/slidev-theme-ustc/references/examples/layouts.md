@@ -131,6 +131,31 @@ date: "April 2026"
 机构列表使用 `flex-wrap: wrap`，单个机构项不断行，超出宽度自动折到下一行。
 
 ---
+layout: cover
+talkTitle: "超长标题：基于异构图神经网络的高亮度 LHC 事例重建与实时触发优化研究"
+authors:
+  - name: "张明远"
+    affiliations: ["中国科学技术大学"]
+date: "2026 年 4 月"
+showLogo: false
+---
+
+超长 `talkTitle` 测试。默认 `--ustc-max-w-cover-h1: var(--ustc-max-w-h1)`（即 58rem），可单独覆盖此 token 控制标题折行宽度而不影响其他幻灯片的 h1。
+
+---
+layout: cover
+talkTitle: "超长副标题测试"
+subtitle: "这是一段比较长的副标题，用于测试默认的 --ustc-max-w-cover-sub 在什么位置开始折行，以便决定是否需要调整默认值。副标题通常用于报告的子标题或引言性文字。"
+authors:
+  - name: "张明远"
+    affiliations: ["中国科学技术大学"]
+date: "2026 年 4 月"
+showLogo: false
+---
+
+超长 `subtitle` 测试。默认 `--ustc-max-w-cover-sub: var(--ustc-max-w-sub)`（即 48rem），可单独覆盖此 token 控制副标题折行宽度。
+
+---
 layout: section
 ---
 
