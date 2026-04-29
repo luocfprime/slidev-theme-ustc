@@ -44,11 +44,11 @@ Always run `pnpm build` and confirm it exits with `✓ built` before creating an
 
 ## Publishing
 
-Bump `package.json` version, commit, then tag to trigger the npm release workflow:
+Bump `package.json` version, commit, then tag to trigger the npm release workflow. If `skills/slidev-theme-ustc/SKILL.md` or any file under `skills/slidev-theme-ustc/references/` changed since the previous release, also bump the skill/plugin version in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` to the same `X.Y.Z` before committing.
 
 ```bash
-# edit package.json version, then:
-git add package.json && git commit -m "chore: bump version to X.Y.Z"
+# edit package.json version; also edit .claude-plugin versions if the skill changed, then:
+git add package.json .claude-plugin && git commit -m "chore: bump version to X.Y.Z"
 git tag vX.Y.Z && git push origin main --tags
 
 # create the GitHub Release:
