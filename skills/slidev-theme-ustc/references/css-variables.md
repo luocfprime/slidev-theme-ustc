@@ -63,7 +63,8 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 
 | Variable | Default | Role |
 |----------|---------|------|
-| `--ustc-fs-cover-h1` | `3.5rem` | cover & end h1 |
+| `--ustc-fs-cover-h1` | `3.5rem` | cover h1 |
+| `--ustc-fs-end-h1` | `var(--ustc-fs-cover-h1)` | end h1 (inherits cover by default) |
 | `--ustc-fs-cover-sub` | `1.9rem` | cover subtitle |
 | `--ustc-fs-cover-author` | `1.45rem` | author attribution line |
 | `--ustc-fs-cover-meta` | `1.35rem` | date & conference/meeting line |
