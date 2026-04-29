@@ -3,7 +3,6 @@
 // Modifications: wrap bare <tr> in <tbody> to satisfy HTML spec and avoid Vue hydration warnings.
 
 import { NodeCompiler } from '@myriaddreamin/typst-ts-node-compiler'
-import { defineTransformersSetup, MarkdownTransformContext } from '@slidev/types'
 
 
 const compiler = NodeCompiler.create()
@@ -55,7 +54,7 @@ export function renderTypst(code: string, options: TypstOptions) {
   })
 }
 
-async function typstTransformer(ctx: MarkdownTransformContext) {
+async function typstTransformer(ctx: any) {
   const snippets: [info: string, code: string][] = []
   const scanRe = /^```typst *(\{[^\n]*\})?\n([\s\S]+?)\n```/gm
   let m: RegExpExecArray | null
@@ -72,9 +71,9 @@ async function typstTransformer(ctx: MarkdownTransformContext) {
   )
 }
 
-export default defineTransformersSetup(() => ({
+export default () => ({
   pre: [],
   preCodeblock: [typstTransformer],
   postCodeblock: [],
   post: [],
-}))
+})
