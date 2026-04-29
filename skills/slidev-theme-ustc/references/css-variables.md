@@ -132,8 +132,8 @@ Set via `margin:` frontmatter prop — these map to the spacing variables:
 |----------|---------|------|
 | `--ustc-max-w-h1` | `58rem` | h1 readable width (section, backup) |
 | `--ustc-max-w-sub` | `48rem` | subtitle / body paragraph max width (section, backup) |
-| `--ustc-max-w-cover-h1` | `var(--ustc-max-w-h1)` | cover h1 max width (independent token) |
-| `--ustc-max-w-cover-sub` | `var(--ustc-max-w-sub)` | cover subtitle max width (independent token) |
+| `--ustc-max-w-cover-h1` | `48rem` | cover h1 max width (independent token) |
+| `--ustc-max-w-cover-sub` | `58rem` | cover subtitle max width (independent token) |
 | `--ustc-max-w-cover-slot` | `50rem` | cover slot / body text area max width |
 
 ---
