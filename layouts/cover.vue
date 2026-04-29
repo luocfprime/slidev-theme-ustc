@@ -17,13 +17,14 @@ const props = withDefaults(defineProps<{
   showLogo?: boolean
   logoSrc?: string
   logoAlt?: string
+  frontmatter?: Record<string, unknown>
 }>(), {
   ...coverDefaults,
   authorMarks: () => ({}),
 })
 
 const bgStyle = computed(() => handleBackground(props.background, true))
-const presenterName = computed(() => getPresenterName(props.authors, props.presenter))
+const presenterName = computed(() => getPresenterName(props.authors, props.presenter, props.frontmatter))
 const normalizedAuthors = computed(() => normalizeAuthors(props.authors ?? []))
 const authorData = computed(() => handleAuthor(props.authors))
 const authorsDict = computed(() => authorData.value[0])

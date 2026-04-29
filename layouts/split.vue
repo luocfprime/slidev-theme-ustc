@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
   ...splitDefaults,
 })
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
+const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
 const slots = useSlots()
 const hasColumns = computed(() => Boolean(slots.left || slots.right))
 

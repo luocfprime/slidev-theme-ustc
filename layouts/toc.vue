@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   ...tocDefaults,
 })
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
+const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
 
 interface TocEntry {
   title: string
