@@ -36,15 +36,18 @@ layout: section
 ---
 
 # 一、cover 布局
-`talkTitle` · `subtitle` · `authors` · `conference` · `date` · `showLogo` · `logoSrc` · `logoAlt` · `background`
+`talkTitle` · `subtitle` · `authors` · `presenter` · `authorMarks` · `conference` · `date` · `showLogo` · `logoSrc` · `logoAlt` · `background`
 
 ---
 layout: cover
 talkTitle: "showLogo: true（默认）"
 subtitle: "副标题（可选）"
+presenter: "演讲者"
 authors:
-  - 演讲者: ["中国科学技术大学"]
-  - 合作者: ["清华大学"]
+  - name: "演讲者"
+    affiliations: ["中国科学技术大学"]
+  - name: "合作者"
+    affiliations: ["清华大学"]
 conference: "Example Conference"
 date: "2026 年 4 月"
 showLogo: true
@@ -54,11 +57,14 @@ showLogo: true
 
 `logoSrc` 可替换图片路径（默认 `'/ustc/logo.svg'`），`logoAlt` 修改无障碍文字。
 
+`presenter` 指定汇报者姓名（下划线标注），不填默认取第一作者。
+
 ---
 layout: cover
 talkTitle: "showLogo: false"
 authors:
-  - 演讲者: ["中国科学技术大学"]
+  - name: "演讲者"
+    affiliations: ["中国科学技术大学"]
 conference: "Example Conference"
 date: "2026 年 4 月"
 showLogo: false
@@ -70,13 +76,59 @@ showLogo: false
 layout: cover
 talkTitle: "background 背景色"
 authors:
-  - 演讲者: ["中国科学技术大学"]
+  - name: "演讲者"
+    affiliations: ["中国科学技术大学"]
 date: "2026 年 4 月"
 background: "/ATLAS/ATLAS-Detector.webp"
 showLogo: false
 ---
 
 `background` 接受 CSS 颜色值或图片 URL，用于自定义封面背景。
+
+---
+layout: cover
+talkTitle: "authorMarks — marks + multi-affiliation wrapping"
+presenter: "Bob Chen"
+authors:
+  - name: "Alice Wang"
+    affiliations: ["University of Science and Technology of China", "Shanghai AI Laboratory"]
+    marks: ["†", "*"]
+  - name: "Bob Chen"
+    affiliations: ["University of Science and Technology of China", "Tsinghua University"]
+    marks: ["†"]
+  - name: "Carol Liu"
+    affiliations: ["Peking University", "Institute of Computing Technology, Chinese Academy of Sciences"]
+  - name: "David Zhang"
+    affiliations: ["Shanghai Jiao Tong University"]
+    marks: ["*"]
+authorMarks:
+  "†": "Equal contribution"
+  "*": "Corresponding author"
+date: "April 2026"
+---
+
+`marks` 作为上标显示在机构编号之后，各 mark 之间有逗号。`authorMarks` 图例显示在机构行下方。机构行使用 `flex-wrap: wrap`，超出宽度自动折行，不影响上方作者行的标注。
+
+`presenter: "Bob Chen"` 下划线只覆盖名字本身，不延伸到上标。
+
+---
+layout: cover
+talkTitle: "Multi-Institution Wrapping"
+authors:
+  - name: "Alice Wang"
+    affiliations: ["University of Science and Technology of China", "Shanghai AI Laboratory"]
+  - name: "Bob Chen"
+    affiliations: ["Tsinghua University", "Peking University"]
+  - name: "Carol Liu"
+    affiliations: ["Fudan University"]
+  - name: "David Zhang"
+    affiliations: ["Zhejiang University", "Shanghai Jiao Tong University"]
+  - name: "Eve Li"
+    affiliations: ["Institute of Computing Technology, Chinese Academy of Sciences"]
+date: "April 2026"
+---
+
+机构列表使用 `flex-wrap: wrap`，单个机构项不断行，超出宽度自动折到下一行。
 
 ---
 layout: section
