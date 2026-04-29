@@ -212,7 +212,9 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 <ResultBox title="Result">...</ResultBox>
 <FigureBlock src="/img.png" caption="Caption" width="80%" />
 <FigureBlock src="/img.png" caption="Scheme" prefix="Scheme" />  <!-- shows "Scheme 2" if global counter is at 2 — prefix changes the label text, the global number stays -->
+<FigureBlock wip src="https://placehold.co/800x600" caption="Not ready yet" />  <!-- amber WIP badge; use placehold.co to hold the correct aspect ratio -->
 <TableBlock caption="Table title">| col | ... |</TableBlock>
+<TableBlock wip caption="Table title">| col | ... |</TableBlock>  <!-- amber WIP badge inline after caption -->
 <Abs x="200" y="100" w="300" :z="10">...</Abs>  <!-- x/y/w are the prop names, NOT top/left/width -->
 <PlotlyGraph filePath="/chart.json" :graphWidth="600" :graphHeight="400" />
 <QRCode url="https://example.com" :size="160" caption="Scan" />
