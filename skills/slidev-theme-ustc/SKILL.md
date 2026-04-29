@@ -28,10 +28,17 @@ theme: ./
 talkTitle: "Your Presentation Title"
 conference: "CVPR 2025"
 date: "June 2025"
+presenter: "Alice Chen"     # name of the presenter (underlined on cover)
 authors:
-  - Alice Chen: [USTC]
-  - Bob Smith: [MIT, USTC]
-  - Carol Lee: []
+  - name: "Alice Chen"
+    affiliations: ["University of Science and Technology of China"]
+  - name: "Bob Smith"
+    affiliations: ["MIT", "USTC"]
+    marks: ["†"]
+  - name: "Carol Lee"
+    affiliations: ["Peking University"]
+authorMarks:
+  "†": "Equal contribution"
 
 sectionBar: true            # show section progress bar (default: true)
 sectionBarMode: full        # 'full' (labels+dots) | 'minimal' (dots only)
@@ -40,7 +47,9 @@ tablePrefix: Table          # auto-numbering prefix for TableBlock
 ---
 ```
 
-**Authors format:** array of `{ "Name": ["Inst1", "Inst2"] }` objects. First author = presenter (underlined on cover). Institutions get sequential superscript numbers in order of first appearance.
+**Authors format:** array of `{ name, affiliations, marks? }` objects. `presenter` sets who is underlined (defaults to first author). Institutions get sequential superscript numbers in order of first appearance. `marks` are per-author symbols (e.g. `†`, `*`) displayed as superscripts after the institute number; `authorMarks` maps each symbol to its legend text (rendered below the affiliations line).
+
+**Backward-compatible format** (still accepted): `{ "Name": ["Inst1", "Inst2"] }` dict objects — but the new format supports `marks` and `authorMarks`.
 
 ---
 
@@ -55,7 +64,11 @@ Title slide with author/affiliation display.
 layout: cover
 talkTitle: "..."           # overrides global
 subtitle: "..."
-authors: [...]             # overrides global
+presenter: "Alice Chen"    # who to underline (default: first author)
+authors: [...]             # overrides global; see structured format above
+authorMarks:               # symbol → legend text
+  "†": "Equal contribution"
+  "*": "Corresponding author"
 conference: "..."
 date: "..."
 showLogo: true             # default: true
@@ -212,9 +225,9 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 <ResultBox title="Result">...</ResultBox>
 <FigureBlock src="/img.png" caption="Caption" width="80%" />
 <FigureBlock src="/img.png" caption="Scheme" prefix="Scheme" />  <!-- shows "Scheme 2" if global counter is at 2 — prefix changes the label text, the global number stays -->
-<FigureBlock wip src="https://placehold.co/800x600" caption="Not ready yet" />  <!-- amber WIP badge; use placehold.co to hold the correct aspect ratio -->
+<FigureBlock wip src="https://placehold.co/800x600" caption="Not ready yet" />  <!-- red WIP badge; use placehold.co to hold the correct aspect ratio -->
 <TableBlock caption="Table title">| col | ... |</TableBlock>
-<TableBlock wip caption="Table title">| col | ... |</TableBlock>  <!-- amber WIP badge inline after caption -->
+<TableBlock wip caption="Table title">| col | ... |</TableBlock>  <!-- red WIP badge inline after caption -->
 <Abs x="200" y="100" w="300" :z="10">...</Abs>  <!-- x/y/w are the prop names, NOT top/left/width -->
 <PlotlyGraph filePath="/chart.json" :graphWidth="600" :graphHeight="400" />
 <QRCode url="https://example.com" :size="160" caption="Scan" />
