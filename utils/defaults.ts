@@ -47,7 +47,7 @@ export const tocDefaults = {
 export const coverDefaults = {
   ...logoDefaults,
   background: '',
-  authors: (): Record<string, string[]>[] => [],
+  authors: (): import('./layoutHelper').AuthorEntry[] => [],
   conference: '',
   talkTitle: 'Presentation Title',
   subtitle: '',

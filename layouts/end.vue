@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   ...endDefaults,
 })
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
+const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter as string | undefined))
 </script>
 
 <template>

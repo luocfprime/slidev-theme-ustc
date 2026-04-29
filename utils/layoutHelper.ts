@@ -63,35 +63,64 @@ export function resolveBodyMargin(margin?: 'normal' | 'tight' | 'tighter' | 'non
   }
 }
 
-interface Author { [key: string]: string[] }
+// New structured format
+export interface AuthorEntryNew {
+  name: string
+  affiliations: string[]
+  marks?: string[]
+}
+
+// Legacy format: { "Name": ["inst1", "inst2"] }
+type AuthorEntryOld = Record<string, string[]>
+
+export type AuthorEntry = AuthorEntryNew | AuthorEntryOld
+
+export interface NormalizedAuthor {
+  name: string
+  affiliations: string[]
+  marks: string[]
+}
+
+function normalizeAuthor(entry: AuthorEntry): NormalizedAuthor {
+  if ('name' in entry && typeof (entry as AuthorEntryNew).name === 'string') {
+    const e = entry as AuthorEntryNew
+    return { name: e.name, affiliations: e.affiliations ?? [], marks: e.marks ?? [] }
+  }
+  const name = Object.keys(entry)[0]
+  return { name, affiliations: (entry as AuthorEntryOld)[name] ?? [], marks: [] }
+}
+
+export function normalizeAuthors(authors: AuthorEntry[]): NormalizedAuthor[] {
+  return authors.map(normalizeAuthor)
+}
+
 interface InstitutionMap { [key: string]: number }
 interface AuthorInstitutions { instituteNum: number[]; instituteName: string[] }
 interface AuthorsDict { [key: string]: AuthorInstitutions }
 
 export interface FootnoteEntry { number: number; content: string }
 
-export function getPresenterName(authors: Author[] = []): string {
-  return authors.length ? (Object.keys(authors[0])[0] ?? '') : ''
+export function getPresenterName(authors: AuthorEntry[] = [], presenter?: string): string {
+  if (presenter) return presenter
+  return authors.length ? normalizeAuthor(authors[0]).name : ''
 }
 
-export function handleAuthor(authors: Author[] = []): [AuthorsDict, FootnoteEntry[]] {
+export function handleAuthor(authors: AuthorEntry[] = []): [AuthorsDict, FootnoteEntry[]] {
+  const normalized = normalizeAuthors(authors)
   const allInstitutions: InstitutionMap = {}
   let institutionIndex = 1
 
-  authors.forEach((authorObj) => {
-    const institutions = Object.values(authorObj)[0] ?? []
-    institutions.forEach((inst) => {
+  normalized.forEach(({ affiliations }) => {
+    affiliations.forEach((inst) => {
       if (!allInstitutions[inst])
         allInstitutions[inst] = institutionIndex++
     })
   })
 
-  const authorsDict: AuthorsDict = authors.reduce((acc: AuthorsDict, authorObj) => {
-    const name = Object.keys(authorObj)[0]
-    const institutions = authorObj[name] ?? []
+  const authorsDict: AuthorsDict = normalized.reduce((acc: AuthorsDict, { name, affiliations }) => {
     acc[name] = {
-      instituteNum: institutions.map(i => allInstitutions[i]),
-      instituteName: institutions,
+      instituteNum: affiliations.map(i => allInstitutions[i]),
+      instituteName: affiliations,
     }
     return acc
   }, {})

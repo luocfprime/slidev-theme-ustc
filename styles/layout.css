@@ -88,8 +88,10 @@
   --ustc-fs-end-contact:  1rem;     /* end slide contact info              */
 
   /* ── Max-width constraints ───────────────────────────────────────────────── */
-  --ustc-max-w-h1:        58rem;    /* h1 readable width (cover, section, backup) */
-  --ustc-max-w-sub:       48rem;    /* subtitle / body paragraph max width        */
+  --ustc-max-w-h1:        58rem;    /* h1 readable width (section, backup) */
+  --ustc-max-w-sub:       48rem;    /* subtitle / body paragraph max width (section, backup) */
+  --ustc-max-w-cover-h1:  var(--ustc-max-w-h1);  /* cover h1 max width          */
+  --ustc-max-w-cover-sub: var(--ustc-max-w-sub);  /* cover subtitle max width   */
   --ustc-max-w-cover-slot: 50rem;  /* cover slot / body text area               */
 }
 
@@ -121,7 +123,7 @@
   line-height: var(--ustc-lh-heading);
   color: var(--ustc-blue-dark);
   margin: 0 0 0.7rem;
-  max-width: var(--ustc-max-w-h1);
+  max-width: var(--ustc-max-w-cover-h1);
 }
 
 .slidev-layout.cover .cover-subtitle {
@@ -130,7 +132,7 @@
   color: var(--ustc-blue);
   margin: 0 0 0.6rem;
   line-height: 1.3;
-  max-width: var(--ustc-max-w-sub);
+  max-width: var(--ustc-max-w-cover-sub);
 }
 
 /* Attribution block — large top margin creates the primary visual break */
@@ -141,9 +143,17 @@
   margin: 2.0rem 0 1.35rem;
 }
 
-.slidev-layout.cover .cover-author-line .presenter {
-  text-decoration: underline;
-  text-underline-offset: 0.13em;
+.slidev-layout.cover .cover-author-line .author-name.presenter-wrap {
+  border-bottom: 1.5px solid currentColor;
+  padding-bottom: 0.05em;
+}
+
+.slidev-layout.cover .cover-author-line .author-marks {
+  color: var(--ustc-text-muted);
+}
+
+.slidev-layout.cover .cover-author-line .author-sup :not(.author-marks) {
+  color: var(--ustc-blue);
 }
 
 .slidev-layout.cover .cover-author-line sup {
@@ -200,6 +210,18 @@
 }
 
 .slidev-layout.cover .cover-affiliations span {
+  white-space: nowrap;
+}
+
+.slidev-layout.cover .cover-affiliations .cover-marks-legend {
+  width: 100%;
+  margin-top: 0.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.2rem;
+}
+
+.slidev-layout.cover .cover-affiliations .cover-marks-legend span {
   white-space: nowrap;
 }
 
