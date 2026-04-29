@@ -60,6 +60,7 @@
   --ustc-fs-result-body-dense: 0.96rem;  /* ResultBox body text — dense mode    */
   --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
   --ustc-lh:               2.0;      /* default line-height for body text   */
+  --ustc-lh-dense:         1.5;      /* line-height for body text in dense mode */
   --ustc-lh-caption:       1.35;     /* figure/table captions               */
   --ustc-lh-table:         1.38;     /* td, th                              */
   --ustc-lh-blockquote:    1.5;      /* blockquote                          */
@@ -555,7 +556,7 @@
 .slidev-layout.split .dense p,
 .slidev-layout.split .dense li {
   font-size: var(--ustc-fs-body-dense);
-  line-height: var(--ustc-lh);
+  line-height: var(--ustc-lh-dense);
 }
 
 .slidev-layout.content.dense td,
@@ -624,7 +625,7 @@
 .slidev-layout.split .dense .callout .callout-body p,
 .slidev-layout.split .dense .callout .callout-body li {
   font-size: var(--ustc-fs-callout-dense);
-  line-height: var(--ustc-lh);
+  line-height: var(--ustc-lh-dense);
 }
 
 .slidev-layout.content.dense .callout .callout-title,

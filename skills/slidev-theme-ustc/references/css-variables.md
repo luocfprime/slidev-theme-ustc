@@ -81,6 +81,7 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | Variable | Default | Role |
 |----------|---------|------|
 | `--ustc-lh` | `2.0` | default line-height for body text (unitless) |
+| `--ustc-lh-dense` | `1.5` | line-height for body text in dense mode |
 | `--ustc-lh-heading` | `1.1` | h1/h2/h3 heading line-height |
 | `--ustc-lh-caption` | `1.35` | figure/table captions |
 | `--ustc-lh-table` | `1.38` | td, th |
