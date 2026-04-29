@@ -10,7 +10,7 @@ const props = withDefaults(defineProps<{
   ...footerDefaults,
 })
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
+const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
 </script>
 
 <template>

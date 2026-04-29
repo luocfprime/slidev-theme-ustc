@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<{
   ...bodyDefaults,
 })
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? []))
+const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
 
 const pageClass = computed(() => ({
   dense: props.density === 'dense',

@@ -100,8 +100,14 @@ interface AuthorsDict { [key: string]: AuthorInstitutions }
 
 export interface FootnoteEntry { number: number; content: string }
 
-export function getPresenterName(authors: AuthorEntry[] = [], presenter?: string): string {
-  if (presenter) return presenter
+export function getPresenterName(
+  authors: AuthorEntry[] = [],
+  presenter?: unknown,
+  frontmatter?: Record<string, unknown>,
+): string {
+  if (typeof presenter === 'string' && presenter.trim()) return presenter
+  const frontmatterPresenter = frontmatter?.presenter
+  if (typeof frontmatterPresenter === 'string' && frontmatterPresenter.trim()) return frontmatterPresenter
   return authors.length ? normalizeAuthor(authors[0]).name : ''
 }
 
