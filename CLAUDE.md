@@ -1,70 +1,151 @@
-# CLAUDE.md
+# Repository Agent Instructions
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+`AGENTS.md` is a symlink to this file. Keep this file useful for any coding
+agent that works in the repository, not only Claude Code.
+
+## Project
+
+This repository publishes the Slidev theme package
+`@luocfprime/slidev-theme-ustc`, a clean academic presentation theme. The
+runtime package surface is defined by the `files` field in `package.json`:
+`assets/`, `components/`, `layouts/`, `public/`, `setup/`, `styles/`,
+`utils/`, and `global-top.vue`. Everything else is local development,
+documentation, tests, examples, or release tooling.
+
+`example.md` is the canonical local deck and the `pnpm dev`/`pnpm build` entry.
+It is a symlink to `skills/slidev-theme-ustc/references/example.md`. The
+`examples/` directory is also a symlink into the skill references. Editing these
+files changes both the local demos and the published agent skill references.
 
 ## Commands
 
 ```bash
-pnpm dev      # Start dev server with example.md at http://localhost:3030
-pnpm build    # Build example.md as static SPA
-pnpm export   # Export to PDF (requires playwright-chromium installed separately)
-pnpm preview  # Build with GitHub Pages base URL and serve locally via serve.py
+pnpm dev      # Start Slidev with example.md at http://localhost:3030
+pnpm build    # Build example.md as a static SPA
+pnpm export   # Export example.md to PDF; needs Playwright browser support
+pnpm preview  # Build with GitHub Pages base URL and serve via serve.py
 ```
 
-**Tests** require the dev server to already be running on port 3030:
+Playwright smoke tests expect the dev server to already be running on port 3030:
 
 ```bash
-pnpm dev &
+pnpm dev
 npx playwright test
 ```
 
+Use `pnpm` for local development. Release CI uses Node 24 and `npm publish`
+because npm Trusted Publisher OIDC requires npm.
+
 ## Architecture
 
-This is a Slidev theme package (`@luocfprime/slidev-theme-ustc`). The published surface is `components/`, `layouts/`, `public/`, `setup/`, `styles/`, `utils/`, and `global-top.vue`. Everything else (`example.md`, `examples/`, `tests/`, `docs/`) is local-only and excluded from npm.
+Slidev loads layouts from `layouts/`, auto-registers Vue components from
+`components/`, runs setup hooks from `setup/`, includes `global-top.vue` as the
+global layer, and imports `styles/index.ts` -> `styles/layout.css` for global
+theme CSS.
 
-**Runtime flow:** Slidev picks up layouts from `layouts/`, auto-registers components from `components/`, runs `setup/main.ts` once on app mount (KaTeX CSS + footnote tooltips), and loads `styles/index.ts` → `styles/layout.css` for global CSS. Shared helpers used by both layouts and components live in `utils/`.
+Layouts are `default`, `content`, `split`, `toc`, `section`, `cover`, `end`,
+`backup`, and `blank`. Layout props are frontmatter-driven through
+`defineProps`. Content layouts expose density, margin, alignment, footnote,
+line-height, footer, and section-bar controls. Structural layouts intentionally
+do not expose all body controls; check `utils/defaults.ts` before adding a prop.
 
-**Layouts** (`content`, `split`, `toc`, `section`, `cover`, `end`, `backup`, `blank`, `default`) accept frontmatter props via `defineProps`. Per-slide density, line-height, and section-bar overrides are all frontmatter-driven. The `toc` layout uses `highlight` (1-based section index) to highlight the active entry.
+Components are auto-imported by Slidev. Structural/layout helpers are `Grid`,
+`Block`, `Abs`, and `Takeaway`. Content and media components include `Callout`,
+`FigureBlock`, `TableBlock`, `ResultBox`, `PlotlyGraph`, `QRCode`, and
+`VideoBlock`. `PageFooter` is internal to layouts.
 
-**Components** are auto-imported by Slidev. Structural ones: `Grid`, `Block`, `Abs`, `Takeaway`. Content ones: `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `PlotlyGraph`, `QRCode`. `PageFooter` is used internally by layouts.
+Shared helpers live in `utils/`:
 
-**`utils/`**: `layoutHelper.ts` — shared CSS-in-JS helpers for background, margin, and grid resolution; also exports `getLayout()` and `getSectionTitle()` used by `toc.vue`, `PageFooter.vue`, and `global-top.vue` — edit once here, not in each file. `numbering.ts` — figure/table auto-numbering. `markdown.ts` — markdown-it helpers. `defaults.ts` — shared prop defaults.
+- `defaults.ts`: centralized prop defaults for layouts and components.
+- `layoutHelper.ts`: background, asset URL, body margin, section title, layout,
+  and author/affiliation helpers. Prefer editing here instead of duplicating
+  logic in layouts.
+- `useAutoNumbering.ts`, `numbering.ts`, and `useLocalIndex.ts`: figure/table
+  numbering and per-slide component indexing.
+- `markdown.ts`: markdown-it helper utilities.
 
-**`global-top.vue`** is the single source of truth for figure/table auto-numbering state (`figureMapShared`, `tableMapShared`). It reactively rebuilds page→startNumber maps whenever the slide list changes (via `watchEffect`), and sets `--ustc-nav-h` on `<html>` based on section-bar visibility.
+`global-top.vue` owns the shared figure/table numbering maps
+(`figureMapShared`, `tableMapShared`) and the section bar height CSS variable
+`--ustc-nav-h`. `setup/vite-plugins.ts` injects `_figureStart` and `_tableStart`
+into slide frontmatter before virtual frontmatter modules compile, so build
+mode keeps numbering stable even when slide content is stripped. Treat these as
+one system when changing numbering.
 
-**`example.md`** is the canonical demo deck and the dev/build entry point. `examples/` holds per-feature demo decks (math, layouts, components).
+`setup/main.ts` runs once on app mount. It imports KaTeX CSS and wires footnote
+tooltips. `setup/transformers.ts` registers the Typst code-block transformer.
+`vite.config.ts` is local Vite config and currently filters known dependency
+sourcemap noise.
 
-## Before Committing
+## Editing Guidelines
 
-Always run `pnpm build` and confirm it exits with `✓ built` before creating any commit that touches `example.md`, layouts, components, or `setup/`. A build error that reaches a commit is harder to debug and blocks users.
+Keep changes scoped to the published runtime surface unless the task is about
+demos, tests, docs, skills, or release metadata.
 
-## Theme Usage
+For layout behavior, start in `utils/defaults.ts`, `utils/layoutHelper.ts`, and
+the relevant layout file. Use existing CSS variables in `styles/layout.css`
+instead of hardcoding new values. Add a new CSS variable only when it is a real
+theme knob and document it in `skills/slidev-theme-ustc/references/css-variables.md`.
 
-`example.md` references the theme as `theme: ./`. CSS variables and frontmatter options are documented in `docs/configuration.md`.
+For component API changes, update the component, any shared defaults/helpers,
+the canonical example deck when useful, and
+`skills/slidev-theme-ustc/references/components.md`. The skill is the current
+source for frontmatter, component prop, and CSS variable usage documentation;
+there is no `docs/configuration.md`.
+
+For assets, put files that need Vite processing in `assets/` and import them
+from code. Put files that should be served as-is at runtime in `public/` and
+reference them with root-relative paths such as `/Graph/plotly1.json`.
+
+Avoid changing generated or local-only output directories: `dist/`, `.slidev/`,
+`test-results/`, `playwright-report/`, `node_modules/`, and `.worktrees/`.
+
+## Verification
+
+Always run `pnpm build` and confirm it exits with `built` before creating any
+commit that touches `example.md`, `layouts/`, `components/`, `setup/`,
+`styles/`, `utils/`, `global-top.vue`, or package configuration.
+
+Run `npx playwright test` when a change affects rendered slides, navigation,
+layout chrome, numbering, media loading, or browser setup behavior. Remember to
+start `pnpm dev` first and leave it running on port 3030.
+
+For documentation-only changes to this file, `README.md`, issue templates, or
+internal planning notes, a build is optional unless the docs describe behavior
+you also changed.
 
 ## Publishing
 
-Bump `package.json` version, commit, then tag to trigger the npm release workflow. If `skills/slidev-theme-ustc/SKILL.md` or any file under `skills/slidev-theme-ustc/references/` changed since the previous release, also bump the skill/plugin version in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` to the same `X.Y.Z` before committing.
+To publish, bump `package.json` version, commit, tag, and push the tag:
 
 ```bash
-# edit package.json version; also edit .claude-plugin versions if the skill changed, then:
-git add package.json .claude-plugin && git commit -m "chore: bump version to X.Y.Z"
-git tag vX.Y.Z && git push origin main --tags
+git add package.json
+git commit -m "chore: bump version to X.Y.Z"
+git tag vX.Y.Z
+git push origin main --tags
+```
 
-# create the GitHub Release:
+Then create the GitHub Release:
+
+```bash
 gh release create vX.Y.Z --generate-notes --title "vX.Y.Z"
 ```
 
-The workflow validates that the tag matches `package.json` version before publishing. It uses **Node 24 + `npm publish`** (not pnpm) — required for npm Trusted Publisher OIDC. The `workflow_dispatch` trigger accepts a `version` input (e.g. `v0.1.1`) for manual re-runs.
+If `skills/slidev-theme-ustc/SKILL.md` or any file under
+`skills/slidev-theme-ustc/references/` changed since the previous release, bump
+`.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json` to the same
+`X.Y.Z` version before committing.
 
-**Local pre-publish testing:**
+The release workflow validates that the tag matches `package.json` version. The
+manual `workflow_dispatch` input expects a tag-style version such as `v0.1.6`.
+
+Local pre-publish smoke test:
 
 ```bash
 pnpm pack --pack-destination /tmp/
-cd /tmp/<test-dir> && npm install /tmp/luocfprime-slidev-theme-ustc-X.Y.Z.tgz
-npx slidev slides.md   # verify dev server, logo, no warnings
+cd /tmp/<test-dir>
+npm install /tmp/luocfprime-slidev-theme-ustc-X.Y.Z.tgz
+npx slidev slides.md
 ```
 
-**Published files:** `assets/`, `components/`, `layouts/`, `public/`, `setup/`, `styles/`, `utils/`, `global-top.vue`, `vite.config.ts`. Add new top-level files to the `files` field in `package.json`.
-
-**`assets/` vs `public/`:** Files needing Vite processing (hashed URLs, tree-shaking) go in `assets/` and are imported with `import ... from '../assets/...'`. Files served as-is at runtime (images, videos, JSON) go in `public/`.
+When adding a new top-level runtime file or directory, update the `files` field
+in `package.json`; that field is the authoritative published-file list.
