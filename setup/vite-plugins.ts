@@ -1,5 +1,3 @@
-import { defineVitePluginsSetup } from '@slidev/types'
-
 function countComponents(content: string, pascal: string, kebab: string): number {
   const stripped = content.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '')
   return (stripped.match(new RegExp(`<(?:${pascal}|${kebab})\\b`, 'g')) ?? []).length
@@ -8,7 +6,7 @@ function countComponents(content: string, pascal: string, kebab: string): number
 // Injects _figureStart/_tableStart into each slide's frontmatter before the
 // ?frontmatter virtual modules are compiled so the numbers survive build-mode
 // content stripping.
-export default defineVitePluginsSetup((options) => ({
+export default (options: any) => ({
   name: 'ustc-numbering-inject',
   buildStart() {
     const slides = options.data.slides
@@ -27,4 +25,4 @@ export default defineVitePluginsSetup((options) => ({
       tableCount += tabs
     }
   },
-}))
+})
