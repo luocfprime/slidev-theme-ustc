@@ -717,18 +717,18 @@ subtitle: "（演示一）:numbered=false — 不显示前缀，也不消耗 cou
 layout: content
 density: dense
 clicks: 1
-subtitle: "（演示二）v-if 保留编号槽，点击触发渲染"
+subtitle: "（演示二）v-if 保留编号槽 — 进入此页后再点一下"
 ---
 
 <!--
-  features: layout: content, density: dense, click-driven v-if reveal. The middle figure is wrapped in `<div v-if="$clicks > 0">` so the slide mounts with figure M + gap + figure M+2; one click renders the middle figure with its compile-time-assigned number M+1. `clicks: 1` registers the click step.
+  features: layout: content, density: dense, click-driven v-if reveal. `clicks: 1` registers ONE click step on this slide so the first → / space click advances $clicks 0→1 (revealing the middle figure) instead of jumping to the next slide.
   not shown: :numbered="false" (previous slide)
   see: references/api/components.md → "Auto-numbering for FigureBlock and TableBlock"
 -->
 
 # 演示二：`v-if` 保留编号槽
 
-**点一下**：中间槽位 `v-if="$clicks > 0"`——点前不在 DOM 但**编号槽已预留**；点后凭空出现，自带编号 M+1。右侧那张始终是 M+2，不会因中间显隐而重排。
+进入本页后再按一次 → 或空格：中间槽位 `v-if="$clicks > 0"` 转为真，凭空出现编号 M+1。右侧那张始终是 M+2——v-if 只控渲染，编号槽源码位置已被编译期固定。
 
 <Grid cols="3" gap="md" alignY="top">
 
@@ -806,10 +806,9 @@ layout: content
 <div>
 
 <FigureBlock
-  :numbered="false"
   src="/ATLAS/ATLAS-Logo.png"
   alt="超参数扫描结果"
-  caption="图 A.1　效率（上）与推理时间（下）随 $k$ 和 $d$ 的变化热图。"
+  caption="效率（上）与推理时间（下）随 $k$ 和 $d$ 的变化热图。"
 />
 
 </div>
@@ -828,7 +827,7 @@ density: dense
 
 # A.2　与标准 Kalman Filter 的误差分析
 
-<TableBlock :numbered="false" caption="表 A.1　各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。">
+<TableBlock caption="各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。">
 
 | $p_T$ 区间 | KF 效率 | 本方法效率 | KF 假率 | 本方法假率 |
 |-----------|--------:|----------:|--------:|----------:|
@@ -860,7 +859,7 @@ density: dense
 
 # A.3　预训练方法对比（Typst 排版示例）
 
-<TableBlock :numbered="false" caption="表 A.2　Comparison to the state-of-the-art pre-training methods on semantic tasks (ImageNet-1K linear probing, ADE segmentation) and 3D vision tasks (NYUv2, Taskonomy) with ViT-Base/16. Bold = best, underlined = second best." />
+<TableBlock caption="Comparison to the state-of-the-art pre-training methods on semantic tasks (ImageNet-1K linear probing, ADE segmentation) and 3D vision tasks (NYUv2, Taskonomy) with ViT-Base/16. Bold = best, underlined = second best." />
 
 ```typst
 #set text(size: 8.2pt)

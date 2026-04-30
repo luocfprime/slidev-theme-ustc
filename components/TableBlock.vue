@@ -8,8 +8,9 @@ const props = withDefaults(defineProps<{
   captionAlign?: 'left' | 'center'
   width?: string
   prefix?: string
-  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time. */
-  number?: number
+  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
+   *  Numeric for body tables; string for appendix tables (e.g. "A.1"). */
+  number?: number | string
   /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
   numbered?: boolean
   wip?: boolean
