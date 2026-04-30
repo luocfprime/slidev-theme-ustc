@@ -91,17 +91,11 @@ export function resolveBodyMargin(margin?: 'normal' | 'tight' | 'tighter' | 'non
   }
 }
 
-// New structured format
-export interface AuthorEntryNew {
+export interface AuthorEntry {
   name: string
   affiliations: string[]
   marks?: string[]
 }
-
-// Legacy format: { "Name": ["inst1", "inst2"] }
-type AuthorEntryOld = Record<string, string[]>
-
-export type AuthorEntry = AuthorEntryNew | AuthorEntryOld
 
 export interface NormalizedAuthor {
   name: string
@@ -110,12 +104,7 @@ export interface NormalizedAuthor {
 }
 
 function normalizeAuthor(entry: AuthorEntry): NormalizedAuthor {
-  if ('name' in entry && typeof (entry as AuthorEntryNew).name === 'string') {
-    const e = entry as AuthorEntryNew
-    return { name: e.name, affiliations: e.affiliations ?? [], marks: e.marks ?? [] }
-  }
-  const name = Object.keys(entry)[0]
-  return { name, affiliations: (entry as AuthorEntryOld)[name] ?? [], marks: [] }
+  return { name: entry.name, affiliations: entry.affiliations ?? [], marks: entry.marks ?? [] }
 }
 
 export function normalizeAuthors(authors: AuthorEntry[]): NormalizedAuthor[] {
