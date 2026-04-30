@@ -7,3 +7,5 @@ playwright-report/
 docs/superpowers/
 .claude
 .worktrees/
+.preview/
+__pycache__
