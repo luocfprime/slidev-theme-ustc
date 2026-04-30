@@ -54,7 +54,7 @@ do not expose all body controls; check `utils/defaults.ts` before adding a prop.
 Components are auto-imported by Slidev. Structural/layout helpers are `Grid`,
 `Block`, `Abs`, and `Takeaway`. Content and media components include `Callout`,
 `FigureBlock`, `TableBlock`, `ResultBox`, `PlotlyGraph`, `QRCode`, and
-`VideoBlock`. `PageFooter` is internal to layouts.
+`VideoBlock`. `PageFooter` and `BodyLayout` are internal to layouts.
 
 Shared helpers live in `utils/`:
 
@@ -62,16 +62,16 @@ Shared helpers live in `utils/`:
 - `layoutHelper.ts`: background, asset URL, body margin, section title, layout,
   and author/affiliation helpers. Prefer editing here instead of duplicating
   logic in layouts.
-- `useAutoNumbering.ts`, `numbering.ts`, and `useLocalIndex.ts`: figure/table
-  numbering and per-slide component indexing.
+- `sectionModel.ts`: the single source of truth for section-bar and TOC section
+  grouping. Reuse it instead of re-scanning `$slidev.nav.slides`.
+- `blockNumberTransform.ts`: compile-time figure/table numbering injection for
+  static `<FigureBlock>` and `<TableBlock>` tags.
 - `markdown.ts`: markdown-it helper utilities.
 
-`global-top.vue` owns the shared figure/table numbering maps
-(`figureMapShared`, `tableMapShared`) and the section bar height CSS variable
-`--ustc-nav-h`. `setup/vite-plugins.ts` injects `_figureStart` and `_tableStart`
-into slide frontmatter before virtual frontmatter modules compile, so build
-mode keeps numbering stable even when slide content is stripped. Treat these as
-one system when changing numbering.
+`global-top.vue` owns only the section bar height CSS variable `--ustc-nav-h`.
+Figure/table numbering is injected at compile time by
+`setup/transformers.ts` using `utils/blockNumberTransform.ts`, so dev, build,
+and export share the same source-order numbering path.
 
 `setup/main.ts` runs once on app mount. It imports KaTeX CSS and wires footnote
 tooltips. `setup/transformers.ts` registers the Typst code-block transformer.
@@ -100,6 +100,73 @@ reference them with root-relative paths such as `/Graph/plotly1.json`.
 
 Avoid changing generated or local-only output directories: `dist/`, `.slidev/`,
 `test-results/`, `playwright-report/`, `node_modules/`, and `.worktrees/`.
+
+## Long-term Maintainability
+
+This theme is built to be maintained over time, not patched into a working state
+for a single use case. Prioritize clean, idiomatic solutions over workarounds.
+
+Treat AI coding agents as planning and design partners, not blind executors.
+When a requested feature reaches beyond Slidev's stable extension points or
+requires inferred runtime state, parsing compiled slide source, depending on
+dev-only metadata, or otherwise fighting the framework, stop and surface the
+constraint before implementing. Prefer a smaller explicit API that matches
+Slidev's model over a clever hidden linkage. For example, slide-level signals
+such as section-bar markers and watermarks should be driven by slide
+frontmatter; component props should affect only that component unless Slidev
+provides a clean, documented way to promote component state to slide metadata.
+When considering any new feature, explicitly check whether it works in both
+interactive runtime/dev mode and static build/export mode. The ideal design
+supports both. If the feature can only work in one mode, or would behave
+differently between dev and build/export, explain the limitation and get an
+explicit developer decision before continuing with implementation.
+
+If a feature cannot be implemented cleanly—for example, it requires reaching
+into Slidev internals, abusing CSS in ways that will break across Slidev
+versions, or duct-taping Vue reactivity—**stop and flag it** rather than
+implementing it silently. Explain to the developer:
+
+1. Why the clean approach is blocked (Slidev API limitation, framework
+   constraint, etc.).
+2. What the hack would look like and why it's fragile.
+3. What a better long-term path might be: a Slidev upstream issue, a different
+   API surface, a scoped workaround with a clear comment, or deferring the
+   feature entirely.
+
+A feature that ships as an undocumented hack becomes maintenance debt for every
+future contributor. It is better to ship nothing, or a limited but honest
+implementation, than to ship something that silently breaks later.
+
+The same principle applies to bug fixes. Before applying a minimal patch, ask
+whether the bug is a symptom of a deeper design problem. A one-line fix that
+papers over a structural flaw leaves the flaw intact and often causes the same
+class of bug to resurface elsewhere. If the root cause points to a design
+issue—wrong abstraction boundary, missing single source of truth, fragile
+coupling between subsystems—say so explicitly. Propose the architectural fix
+even if it is larger in scope, and let the developer decide whether to address
+it now or track it as known debt. Never silently treat the symptom while
+ignoring the cause.
+
+When the developer is explicitly asking for a root-cause solution, a
+fundamental redesign, or a thorough refactor, do not deflect into small
+incremental patches as a way to avoid the hard design question. Small fixes are
+appropriate only after the structural problem has been named and the tradeoff is
+made explicit. If the correct answer is a deeper redesign, present that design
+directly, including its cost and migration path, rather than circling around the
+issue with local cleanups.
+
+Before adding or expanding any feature, run an implementation-boundary check and
+state the answers in the plan or commit context:
+
+- Does it behave the same in interactive dev, static build, and export?
+- Does it rely on Slidev internals, virtual module names, or dev-only metadata?
+- Does it parse user markdown/Vue source directly? If yes, what syntax is
+  explicitly supported and what is out of scope?
+- Does it inspect or mutate rendered DOM after Vue has mounted?
+- Is there an explicit frontmatter/component/CSS-variable API, or is behavior
+  inferred from hidden runtime state?
+- If the implementation is intentionally limited or hacky, is that boundary
+  documented in the skill/reference docs?
 
 ## Verification
 

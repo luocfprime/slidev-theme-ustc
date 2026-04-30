@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getLayout, getSectionTitle, getSectionBarMode } from '../utils/layoutHelper'
-import { isSlideWip } from '../utils/slideWip'
+import { getSectionBarMode } from '../utils/layoutHelper'
+import { buildSectionGroups } from '../utils/sectionModel'
 
 const props = defineProps<{
   /** Override per-slide sectionBar visibility (false = force-hide) */
@@ -10,36 +10,9 @@ const props = defineProps<{
 
 const enabled = $slidev.configs.sectionBar === true
 
-interface SectionSlide {
-  no: number
-  wip: boolean
-}
-
-interface SectionGroup {
-  title: string
-  sectionNo: number
-  slides: SectionSlide[]
-}
-
-const sections = computed((): SectionGroup[] => {
+const sections = computed(() => {
   if (!enabled) return []
-  const slides = $slidev.nav.slides ?? []
-  const result: SectionGroup[] = []
-  let cur: SectionGroup | null = null
-
-  for (const slide of slides) {
-    const layout = getLayout(slide)
-    const no = slide.no ?? 0
-    if (layout === 'backup') break
-    if (layout === 'section') {
-      const title = getSectionTitle(slide, `§${result.length + 1}`)
-      cur = { title, sectionNo: no, slides: [] }
-      result.push(cur)
-    } else if (layout !== 'cover' && layout !== 'end' && layout !== 'toc' && layout !== 'blank' && cur) {
-      cur.slides.push({ no, wip: isSlideWip(slide) })
-    }
-  }
-  return result
+  return buildSectionGroups($slidev.nav.slides ?? [])
 })
 
 const currentPage = computed(() => $slidev.nav.currentPage)
@@ -159,11 +132,8 @@ const show = computed(() => {
 .ustc-dot.is-current { background: white; border-color: white; }
 .ustc-dot.is-past { background: rgba(255, 255, 255, 0.32); border-color: rgba(255, 255, 255, 0.55); }
 
-/* WIP slide marker — slide.frontmatter.wip OR any wip-flagged component on the slide.
-   Detection lives in utils/slideWip.isSlideWip. Auto-detection (via component scan)
-   only works in dev mode; build/preview needs explicit `wip: true` in frontmatter
-   because Slidev strips slide.content to "" in build. Pulse keeps the ring
-   eye-catching without being loud enough to disable. */
+/* WIP slide marker — frontmatter `wip: true` only. Component-level `wip` props
+   are local component badges/placeholders and do not affect section-bar dots. */
 .ustc-dot.is-wip {
   border-color: var(--ustc-wip);
   border-width: 2px;

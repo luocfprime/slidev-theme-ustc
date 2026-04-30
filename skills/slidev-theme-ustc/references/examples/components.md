@@ -1346,7 +1346,7 @@ density: dense
 
 # 组件 WIP 标注 — 全家桶（有src）
 
-四个组件都接受 `wip` prop，徽章统一用 `--ustc-wip`（#dc2626），叠在正常渲染的内容之上：
+四个组件都接受 `wip` prop，徽章统一用 `--ustc-wip`（#dc2626），叠在正常渲染的内容之上。组件级 `wip` 只影响组件自身，不会联动整页水印或 section bar：
 
 <Grid cols="2" gap="lg" alignY="top">
 
@@ -1372,7 +1372,7 @@ density: dense
 
 </Grid>
 
-本页 frontmatter 没写 `wip: true`，但 dev 模式下上方 section bar 的对应 dot 仍会变红——`isSlideWip()` 在 runtime 扫 `slide.meta.slide.content` 找组件级 `wip`。注意：build / preview 模式 Slidev 会 strip slide content 减小 bundle，auto-detection 失效；那种场景下要让整页变红需要显式打 `wip: true`。组件 badge 不受影响（组件级局部）。
+本页 frontmatter 没写 `wip: true`，所以上方 section bar 不会变红，也不会出现整页水印。需要整页标注时，在 slide frontmatter 显式写 `wip: true`。
 
 ---
 layout: content
@@ -1414,9 +1414,7 @@ frontmatter 加 `wip: true` 触发两个信号：
 1. **大字水印** — "WIP" 横铺在内容上层（opacity 0.10、`pointer-events: none`，不挡阅读和点击）
 2. **顶部 section bar 圆圈红化** — 当前页 dot 变红 + 脉冲动画，overview / 演讲提词器一眼能扫到
 
-适合标注"这页还没写完"——slide 里没有 wip 组件、但整页都是草稿时，直接打 `wip: true` 即可。
-
-slide 里有 wip 组件的情况在 dev 模式被 runtime auto-detection 覆盖（见前两页），不必再手动同步；build / preview 模式才需要补上显式 `wip: true`。
+适合标注"这页还没写完"。slide 级信号只看 frontmatter，不扫描组件内容；组件级 `wip` 只显示组件自己的 badge 或占位状态。
 
 ship 前记得清掉 `wip: true` 和组件级 `wip`。
 

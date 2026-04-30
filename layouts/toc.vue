@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getPresenterName, getLayout, getSectionTitle } from '../utils/layoutHelper'
+import { getPresenterName } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
 import { tocDefaults } from '../utils/defaults'
+import { buildSectionGroups } from '../utils/sectionModel'
 
 const props = withDefaults(defineProps<{
   highlight?: number
@@ -23,16 +24,8 @@ interface TocEntry {
 }
 
 const sections = computed((): TocEntry[] => {
-  const slides = $slidev.nav.slides ?? []
-  const result: TocEntry[] = []
-
-  slides.forEach((slide: any, i: number) => {
-    if (getLayout(slide) === 'section') {
-      const title = getSectionTitle(slide, `§${result.length + 1}`)
-      result.push({ title, no: slide.no ?? (i + 1), index: result.length + 1 })
-    }
-  })
-  return result
+  return buildSectionGroups($slidev.nav.slides ?? [], { stopAtBackup: false })
+    .map((section, i) => ({ title: section.title, no: section.sectionNo, index: i + 1 }))
 })
 
 const hasHighlight = computed(() => props.highlight > 0)
