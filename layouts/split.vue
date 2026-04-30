@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed, onMounted, onUpdated, ref, useSlots } from 'vue'
 import { getPresenterName, resolveBodyMargin, handleBackground } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
 import { splitDefaults } from '../utils/defaults'
@@ -54,10 +54,29 @@ const gridStyle = computed(() => {
     alignItems: 'start',
   }
 })
+
+const layoutEl = ref<HTMLElement>()
+
+// No-columns mode only: move .content-subtitle right after the h1 in the DOM
+// so we don't need flex+order CSS to reorder it. In hasColumns mode the
+// subtitle already lives inside .split-header next to the h1.
+function placeSubtitle() {
+  const root = layoutEl.value
+  if (!root) return
+  const subtitle = root.querySelector(':scope > .content-subtitle')
+  const h1 = root.querySelector(':scope > h1')
+  if (!subtitle || !h1) return
+  if (h1.nextElementSibling !== subtitle) {
+    h1.insertAdjacentElement('afterend', subtitle)
+  }
+}
+
+onMounted(placeSubtitle)
+onUpdated(placeSubtitle)
 </script>
 
 <template>
-  <div class="slidev-layout split" :class="pageClass" :style="pageStyle">
+  <div ref="layoutEl" class="slidev-layout split" :class="pageClass" :style="pageStyle">
     <SectionBar :visible="props.sectionBar === false ? false : undefined" />
 
     <template v-if="hasColumns">
