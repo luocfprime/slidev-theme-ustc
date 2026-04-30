@@ -1,1 +1,0 @@
-skills/slidev-theme-ustc/references/example.md

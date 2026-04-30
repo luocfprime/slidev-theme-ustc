@@ -1,6 +1,6 @@
 """Local preview server — serves every deck built by scripts/build_previews.py.
 
-Each subdir under dist/ (e.g. dist/example/, dist/components/) is mounted at
+Each subdir under dist/ (e.g. dist/full-deck/, dist/components/) is mounted at
 /slidev-theme-ustc/<name>/ to mirror the GitHub Pages base path. The root
 /slidev-theme-ustc/ shows an index page listing all decks. Each request also
 prints the active deck name to stdout so it's obvious which slides are being

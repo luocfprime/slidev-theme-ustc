@@ -1,5 +1,5 @@
 ---
-theme: ./
+theme: ../
 layout: cover
 presenter: "李晓彤"
 authors:
@@ -21,6 +21,12 @@ figurePrefix: "图"
 tablePrefix: "表"
 ---
 
+<!--
+  features: layout: cover, presenter, authors with marks + affiliations, authorMarks, conference, talkTitle, subtitle, date, sectionBar: true, figurePrefix, tablePrefix
+  not shown: background: image, showLogo: false
+  see: SKILL.md → Layouts → cover, references/api/prop-defaults.md
+-->
+
 大型强子对撞机产生的每次碰撞事例包含数千条粒子径迹。
 传统基于启发式的重建算法在高亮度 LHC 环境下面临严峻挑战——
 本报告提出一种端到端图神经网络框架，显著提升重建效率与精度。
@@ -31,6 +37,12 @@ columns: 2
 highlight: 0
 ---
 
+<!--
+  features: layout: toc, columns: 2, highlight: 0 (no item highlighted - opening agenda)
+  not shown: subtitle, custom toc filtering
+  see: SKILL.md → Layouts → toc, references/examples/layouts.md
+-->
+
 # 目录
 
 ---
@@ -39,11 +51,23 @@ columns: 2
 highlight: 1
 ---
 
+<!--
+  features: layout: toc, columns: 2, highlight: 1 (highlights first section before entering it)
+  not shown: columns: 1 single-column toc, highlight: 0
+  see: SKILL.md → Layouts → toc, references/examples/layouts.md
+-->
+
 # 目录
 
 ---
 layout: section
 ---
+
+<!--
+  features: layout: section, h1 + sub-paragraph as section description
+  not shown: sectionLabel override, background image
+  see: SKILL.md → Layouts → section, references/examples/layouts.md
+-->
 
 # 一、研究背景
 
@@ -53,6 +77,12 @@ layout: section
 layout: content
 subtitle: "为什么传统方法在 HL-LHC 不够用？"
 ---
+
+<!--
+  features: layout: content, subtitle on content slide, inline math $...$, display math $$...$$, Callout type=important with title
+  not shown: density: dense, Grid layout, multiple Callouts
+  see: SKILL.md → Components → Callout, references/api/components.md
+-->
 
 # 研究动机
 
@@ -72,6 +102,12 @@ $$t_\text{reco} \propto \langle\mu\rangle^2 \cdot n_\text{hits}$$
 layout: content
 density: dense
 ---
+
+<!--
+  features: layout: content, density: dense, TableBlock with caption, footnote refs [^kf] (auto-numbered), inline math
+  not shown: TableBlock wip flag, FigureBlock alongside table, subtitle
+  see: SKILL.md → Components → TableBlock, references/api/components.md
+-->
 
 # 相关工作对比
 
@@ -97,6 +133,12 @@ density: dense
 ---
 layout: split
 ---
+
+<!--
+  features: layout: split (default ratio), ::left:: / ::right:: slots, FigureBlock with src + caption, public/ asset path
+  not shown: ratio override, gap override, density: dense
+  see: SKILL.md → Layouts → split, references/api/components.md
+-->
 
 # ATLAS 探测器与输入数据
 
@@ -124,11 +166,23 @@ columns: 2
 highlight: 2
 ---
 
+<!--
+  features: layout: toc, columns: 2, highlight: 2 (transition between sections - highlights next section)
+  not shown: columns: 1, custom subtitle
+  see: SKILL.md → Layouts → toc, references/examples/layouts.md
+-->
+
 # 目录
 
 ---
 layout: section
 ---
+
+<!--
+  features: layout: section, h1 + sub-paragraph as section description
+  not shown: sectionLabel override, custom background
+  see: SKILL.md → Layouts → section, references/examples/layouts.md
+-->
 
 # 二、方法设计
 
@@ -138,6 +192,12 @@ layout: section
 layout: content
 density: dense
 ---
+
+<!--
+  features: layout: content, density: dense, Grid cols=2 gap=lg alignY=top, display math $$...$$, Callout type=tip with title
+  not shown: Block wrapper, FigureBlock, subtitle
+  see: SKILL.md → Components → Grid, references/api/components.md
+-->
 
 # 图构建与网络结构
 
@@ -188,6 +248,12 @@ density: dense
 lineHeight: 1.55
 ---
 
+<!--
+  features: layout: content, density: dense, lineHeight override (1.55), Block component (3x stacked, with title)
+  not shown: Block inside Grid, Callout, ResultBox
+  see: SKILL.md → Components → Block, references/api/prop-defaults.md
+-->
+
 # 核心理论性质
 
 <Block title="定义 1（异构图）">
@@ -212,6 +278,12 @@ $k$ 轮消息传递的表达能力不超过 $k$ 阶 Weisfeiler-Leman 图同构�
 layout: content
 margin: tighter
 ---
+
+<!--
+  features: layout: content, margin: tighter, v-click stepwise reveals, v-mark underline (Slidev primitive), Callout type=tip with title
+  not shown: density: dense, Grid wrapper, sectionBar overrides
+  see: SKILL.md → Common Patterns → click animations, references/examples/tweaks.md
+-->
 
 # 消息传递公式推导
 
@@ -256,6 +328,12 @@ layout: content
 density: dense
 ---
 
+<!--
+  features: layout: content, density: dense, python code fence with line-highlight steps {1-5|7-14|all} and {lines:true}
+  not shown: typst code fence, mermaid, Callout
+  see: SKILL.md → Common Patterns → code blocks, references/examples/tweaks.md
+-->
+
 # 模型训练与实现细节
 
 ```python {1-5|7-14|all} {lines:true}
@@ -284,6 +362,12 @@ layout: content
 density: dense
 ---
 
+<!--
+  features: layout: content, density: dense, mermaid flowchart with inline math nodes, custom node fill/stroke styles
+  not shown: typst code fence, FigureBlock with diagram, subtitle
+  see: SKILL.md → Common Patterns → diagrams, references/examples/tweaks.md
+-->
+
 # 端到端处理流程
 
 ```mermaid
@@ -309,11 +393,23 @@ columns: 2
 highlight: 3
 ---
 
+<!--
+  features: layout: toc, columns: 2, highlight: 3 (mid-deck transition between sections)
+  not shown: columns: 1, custom highlight color via theme tokens
+  see: SKILL.md → Layouts → toc, references/api/theme-tokens.md
+-->
+
 # 目录
 
 ---
 layout: section
 ---
+
+<!--
+  features: layout: section, h1 + sub-paragraph as section description
+  not shown: sectionLabel override, background image
+  see: SKILL.md → Layouts → section, references/examples/layouts.md
+-->
 
 # 三、实验验证
 
@@ -323,6 +419,12 @@ layout: section
 layout: content
 density: dense
 ---
+
+<!--
+  features: layout: content, density: dense, Grid cols="45 55" custom ratio + alignY=top, TableBlock with caption + math in caption
+  not shown: split layout, FigureBlock, Callout
+  see: SKILL.md → Components → Grid, references/api/components.md
+-->
 
 # 实验设置
 
@@ -364,6 +466,12 @@ ratio: "1:1"
 density: dense
 ---
 
+<!--
+  features: layout: split, ratio: "1:1", density: dense, ::left::/::right:: slots, FigureBlock with captionAlign=center, Callout type=tip and type=warning
+  not shown: gap override, subtitle, ResultBox
+  see: SKILL.md → Layouts → split, references/api/components.md
+-->
+
 # 径迹效率与假径迹率
 
 ::left::
@@ -399,6 +507,12 @@ $p_T < 0.5\,\text{GeV}$ 的径迹在 $\langle\mu\rangle = 200$ 时假径迹率�
 layout: content
 ---
 
+<!--
+  features: layout: content (default density), ResultBox with title, Grid cols=3 gap=md with inline style, inline Block elements with title
+  not shown: density: dense, Callout, Takeaway
+  see: SKILL.md → Components → ResultBox, references/api/components.md
+-->
+
 # 主要性能结果
 
 <ResultBox title="核心指标（$\langle\mu\rangle = 200$，$p_T > 1\,\text{GeV}$）">
@@ -422,6 +536,12 @@ layout: content
 density: dense
 sectionBarMode: minimal
 ---
+
+<!--
+  features: layout: content, density: dense, sectionBarMode: minimal (per-slide override), TableBlock with caption, Callout type=note
+  not shown: sectionBar: false (full hide), footerMode: minimal, footer: false
+  see: SKILL.md → Frontmatter → sectionBar, references/api/prop-defaults.md
+-->
 
 # 消融实验：各模块贡献
 
@@ -450,6 +570,12 @@ layout: content
 density: dense
 ---
 
+<!--
+  features: layout: content, density: dense, PlotlyGraph (filePath, tickFontSize, legendFontSize, graphHeight, graphWidth) x2 in inline grid div
+  not shown: FigureBlock with image, Grid component (using raw CSS grid here), Callout
+  see: SKILL.md → Components → PlotlyGraph, references/api/components.md
+-->
+
 # 推理速度随堆积的扩展性
 
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.2rem">
@@ -465,11 +591,23 @@ columns: 2
 highlight: 4
 ---
 
+<!--
+  features: layout: toc, columns: 2, highlight: 4 (final section transition)
+  not shown: columns: 1, custom subtitle
+  see: SKILL.md → Layouts → toc, references/examples/layouts.md
+-->
+
 # 目录
 
 ---
 layout: section
 ---
+
+<!--
+  features: layout: section, h1 + sub-paragraph as section description
+  not shown: sectionLabel override, custom background
+  see: SKILL.md → Layouts → section, references/examples/layouts.md
+-->
 
 # 四、结论
 
@@ -478,6 +616,12 @@ layout: section
 ---
 layout: content
 ---
+
+<!--
+  features: layout: content, Grid cols=3 gap=md with Block children (each with title), Takeaway component
+  not shown: density: dense, ResultBox, Callout
+  see: SKILL.md → Components → Takeaway, references/api/components.md
+-->
 
 # 主要贡献
 
@@ -511,6 +655,12 @@ dragPos:
   qr-repo: 1054,163,160,_
 ---
 
+<!--
+  features: layout: content, dragPos frontmatter, v-drag pos= (Slidev primitive), QRCode component (url, size, caption, color), Callout type=example with title
+  not shown: Abs absolute positioning, FigureBlock, density: dense
+  see: SKILL.md → Components → QRCode, references/examples/tweaks.md
+-->
+
 # 未来工作
 
 正文内容悬停标注演示：`<v-drag>` 用于在不打断行文的情况下添加补充信息或二维码；演示模式下双击可拖拽调整位置。
@@ -533,6 +683,12 @@ dragPos:
 layout: end
 ---
 
+<!--
+  features: layout: end, ::contact:: slot for contact info
+  not shown: custom background, showLogo override
+  see: SKILL.md → Layouts → end, references/examples/layouts.md
+-->
+
 # 感 谢 聆 听
 
 欢迎提问与讨论
@@ -545,11 +701,23 @@ layout: end
 layout: backup
 ---
 
+<!--
+  features: layout: backup (resets numbering for appendix slides)
+  not shown: subtitle, custom background
+  see: SKILL.md → Layouts → backup, references/examples/layouts.md
+-->
+
 # 附 录
 
 ---
 layout: content
 ---
+
+<!--
+  features: layout: content, Grid cols="45 55" custom ratio + alignY=top, FigureBlock with src + caption, Callout type=note
+  not shown: density: dense, TableBlock, ResultBox
+  see: SKILL.md → Components → Grid, references/api/components.md
+-->
 
 # A.1　超参数敏感性分析
 
@@ -586,6 +754,12 @@ layout: content
 density: dense
 ---
 
+<!--
+  features: layout: content, density: dense, TableBlock with caption, Takeaway component
+  not shown: Grid layout, FigureBlock alongside table, ResultBox
+  see: SKILL.md → Components → TableBlock, references/api/components.md
+-->
+
 # A.2　与标准 Kalman Filter 的误差分析
 
 <TableBlock caption="表 A.1　各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。">
@@ -611,6 +785,12 @@ GNN 方法在高动量高堆积的实验条件下展现出优势；低动量优�
 layout: content
 density: dense
 ---
+
+<!--
+  features: layout: content, density: dense, TableBlock self-closing (caption-only, body comes from typst block below), typst code fence rendered as table
+  not shown: markdown table, FigureBlock, Callout
+  see: SKILL.md → Common Patterns → typst, references/examples/tweaks.md
+-->
 
 # A.3　预训练方法对比（Typst 排版示例）
 
@@ -709,6 +889,12 @@ density: dense
 layout: content
 ---
 
+<!--
+  features: layout: content, typst code fence with CeTZ canvas drawing (3D ortho projection)
+  not shown: mermaid diagram, FigureBlock with rendered image, density: dense
+  see: SKILL.md → Common Patterns → typst, references/examples/tweaks.md
+-->
+
 # A.4　Typst 绘图示例（CeTZ）
 
 ```typst
@@ -757,6 +943,12 @@ layout: content
 layout: content
 density: dense
 ---
+
+<!--
+  features: layout: content, density: dense, VideoBlock (src, caption, width, controls), public/ asset path with BASE_URL handling
+  not shown: FigureBlock for static image, autoplay/loop/muted props, PlotlyGraph
+  see: SKILL.md → Components → VideoBlock, references/api/components.md
+-->
 
 # A.5　VideoBlock 示例
 

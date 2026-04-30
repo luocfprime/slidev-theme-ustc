@@ -36,7 +36,10 @@ jobs:
         run: pnpm install
 
       - name: Build slides
-        run: pnpm exec slidev build example.md --base /${{ github.event.repository.name }}/
+        run: |
+          mkdir -p .preview
+          cp examples/full-deck.md .preview/
+          pnpm exec slidev build .preview/full-deck.md --base /${{ github.event.repository.name }}/
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
