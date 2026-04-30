@@ -81,7 +81,7 @@ subtitle: "为什么传统方法在 HL-LHC 不够用？"
 <!--
   features: layout: content, subtitle on content slide, inline math $...$, display math $$...$$, Callout type=important with title
   not shown: density: dense, Grid layout, multiple Callouts
-  see: SKILL.md → Components → Callout, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (Callout prop table)
 -->
 
 # 研究动机
@@ -106,7 +106,7 @@ density: dense
 <!--
   features: layout: content, density: dense, TableBlock with caption, footnote refs [^kf] (auto-numbered), inline math
   not shown: TableBlock wip flag, FigureBlock alongside table, subtitle
-  see: SKILL.md → Components → TableBlock, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (TableBlock prop table)
 -->
 
 # 相关工作对比
@@ -196,7 +196,7 @@ density: dense
 <!--
   features: layout: content, density: dense, Grid cols=2 gap=lg alignY=top, display math $$...$$, Callout type=tip with title
   not shown: Block wrapper, FigureBlock, subtitle
-  see: SKILL.md → Components → Grid, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (Grid prop table)
 -->
 
 # 图构建与网络结构
@@ -251,7 +251,7 @@ lineHeight: 1.55
 <!--
   features: layout: content, density: dense, lineHeight override (1.55), Block component (3x stacked, with title)
   not shown: Block inside Grid, Callout, ResultBox
-  see: SKILL.md → Components → Block, references/api/prop-defaults.md
+  see: SKILL.md → Components, references/api/components.md (Block has only an optional `title` prop)
 -->
 
 # 核心理论性质
@@ -282,7 +282,7 @@ margin: tighter
 <!--
   features: layout: content, margin: tighter, v-click stepwise reveals, v-mark underline (Slidev primitive), Callout type=tip with title
   not shown: density: dense, Grid wrapper, sectionBar overrides
-  see: SKILL.md → Common Patterns → click animations, references/examples/tweaks.md
+  see: v-click, v-mark, click steppers are Slidev built-ins (not theme-specific) — Slidev official docs
 -->
 
 # 消息传递公式推导
@@ -331,7 +331,7 @@ density: dense
 <!--
   features: layout: content, density: dense, python code fence with line-highlight steps {1-5|7-14|all} and {lines:true}
   not shown: typst code fence, mermaid, Callout
-  see: SKILL.md → Common Patterns → code blocks, references/examples/tweaks.md
+  see: code-fence line-highlight syntax `{1-5|7-14|all}` is a Slidev built-in (not theme-specific)
 -->
 
 # 模型训练与实现细节
@@ -365,7 +365,7 @@ density: dense
 <!--
   features: layout: content, density: dense, mermaid flowchart with inline math nodes, custom node fill/stroke styles
   not shown: typst code fence, FigureBlock with diagram, subtitle
-  see: SKILL.md → Common Patterns → diagrams, references/examples/tweaks.md
+  see: ```mermaid``` code-fence support is a Slidev built-in (not theme-specific)
 -->
 
 # 端到端处理流程
@@ -396,7 +396,7 @@ highlight: 3
 <!--
   features: layout: toc, columns: 2, highlight: 3 (mid-deck transition between sections)
   not shown: columns: 1, custom highlight color via theme tokens
-  see: SKILL.md → Layouts → toc, references/api/theme-tokens.md
+  see: SKILL.md → Layouts → toc, SKILL.md → Common Patterns → "TOC with section highlight"
 -->
 
 # 目录
@@ -423,7 +423,7 @@ density: dense
 <!--
   features: layout: content, density: dense, Grid cols="45 55" custom ratio + alignY=top, TableBlock with caption + math in caption
   not shown: split layout, FigureBlock, Callout
-  see: SKILL.md → Components → Grid, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (Grid `cols` accepts space-separated numbers as fr-units)
 -->
 
 # 实验设置
@@ -510,7 +510,7 @@ layout: content
 <!--
   features: layout: content (default density), ResultBox with title, Grid cols=3 gap=md with inline style, inline Block elements with title
   not shown: density: dense, Callout, Takeaway
-  see: SKILL.md → Components → ResultBox, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (ResultBox prop table)
 -->
 
 # 主要性能结果
@@ -540,7 +540,7 @@ sectionBarMode: minimal
 <!--
   features: layout: content, density: dense, sectionBarMode: minimal (per-slide override), TableBlock with caption, Callout type=note
   not shown: sectionBar: false (full hide), footerMode: minimal, footer: false
-  see: SKILL.md → Frontmatter → sectionBar, references/api/prop-defaults.md
+  see: SKILL.md → Section Bar, references/api/prop-defaults.md
 -->
 
 # 消融实验：各模块贡献
@@ -573,7 +573,7 @@ density: dense
 <!--
   features: layout: content, density: dense, PlotlyGraph (filePath, tickFontSize, legendFontSize, graphHeight, graphWidth) x2 in inline grid div
   not shown: FigureBlock with image, Grid component (using raw CSS grid here), Callout
-  see: SKILL.md → Components → PlotlyGraph, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (PlotlyGraph prop table). NOTE: this slide uses raw `<div style="display:grid;…">` instead of `<Grid>` because two PlotlyGraph instances need explicit fixed pixel widths to render nicely; `<Grid>` would also work — this is just one alternative.
 -->
 
 # 推理速度随堆积的扩展性
@@ -620,7 +620,7 @@ layout: content
 <!--
   features: layout: content, Grid cols=3 gap=md with Block children (each with title), Takeaway component
   not shown: density: dense, ResultBox, Callout
-  see: SKILL.md → Components → Takeaway, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (Takeaway has no props — its constraint is "use at most one per slide")
 -->
 
 # 主要贡献
@@ -652,13 +652,13 @@ layout: content
 ---
 layout: content
 dragPos:
-  qr-repo: 1054,163,160,_
+  qr-repo: 1057,179,160,_
 ---
 
 <!--
   features: layout: content, dragPos frontmatter, v-drag pos= (Slidev primitive), QRCode component (url, size, caption, color), Callout type=example with title
   not shown: Abs absolute positioning, FigureBlock, density: dense
-  see: SKILL.md → Components → QRCode, references/examples/tweaks.md
+  see: SKILL.md → Components, references/examples/components.md (QRCode demo with prop variants). NOTE: shown here together with `<v-drag>` (Slidev primitive) for a "floating QR" pattern; use `<v-drag>` only for content that doesn't need to participate in document flow.
 -->
 
 # 未来工作
@@ -716,7 +716,7 @@ layout: content
 <!--
   features: layout: content, Grid cols="45 55" custom ratio + alignY=top, FigureBlock with src + caption, Callout type=note
   not shown: density: dense, TableBlock, ResultBox
-  see: SKILL.md → Components → Grid, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (Grid + FigureBlock prop tables)
 -->
 
 # A.1　超参数敏感性分析
@@ -757,7 +757,7 @@ density: dense
 <!--
   features: layout: content, density: dense, TableBlock with caption, Takeaway component
   not shown: Grid layout, FigureBlock alongside table, ResultBox
-  see: SKILL.md → Components → TableBlock, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (TableBlock + Takeaway prop tables)
 -->
 
 # A.2　与标准 Kalman Filter 的误差分析
@@ -789,7 +789,7 @@ density: dense
 <!--
   features: layout: content, density: dense, TableBlock self-closing (caption-only, body comes from typst block below), typst code fence rendered as table
   not shown: markdown table, FigureBlock, Callout
-  see: SKILL.md → Common Patterns → typst, references/examples/tweaks.md
+  see: typst code-fence transformer is registered in `setup/transformers.ts`; theme styles `.typst-doc` in styles/layout.css. No user-facing docs page — pattern: put `<TableBlock caption="..." />` self-closing above a ```typst block when the typst output IS the table body.
 -->
 
 # A.3　预训练方法对比（Typst 排版示例）
@@ -892,7 +892,7 @@ layout: content
 <!--
   features: layout: content, typst code fence with CeTZ canvas drawing (3D ortho projection)
   not shown: mermaid diagram, FigureBlock with rendered image, density: dense
-  see: SKILL.md → Common Patterns → typst, references/examples/tweaks.md
+  see: typst transformer (setup/transformers.ts) — supports CeTZ via `#html.frame(canvas({...}))` so the rendered SVG is embedded inline. No user-facing docs page.
 -->
 
 # A.4　Typst 绘图示例（CeTZ）
@@ -947,7 +947,7 @@ density: dense
 <!--
   features: layout: content, density: dense, VideoBlock (src, caption, width, controls), public/ asset path with BASE_URL handling
   not shown: FigureBlock for static image, autoplay/loop/muted props, PlotlyGraph
-  see: SKILL.md → Components → VideoBlock, references/api/components.md
+  see: SKILL.md → Components, references/api/components.md (VideoBlock prop table)
 -->
 
 # A.5　VideoBlock 示例
@@ -960,3 +960,159 @@ density: dense
 />
 
 `VideoBlock` 组件支持以下属性：`src`（必填）、`caption`、`width`、`videoWidth`、`controls`、`autoplay`、`loop`、`muted`。路径以 `/` 开头时自动加 `BASE_URL` 前缀，兼容 GitHub Pages 子路径部署。
+
+---
+layout: content
+density: dense
+---
+
+<!--
+  features: layout: content, wrapper-class CSS-variable override (--ustc-blue / --ustc-blue-dark / --ustc-blue-pale / --ustc-blue-border), Grid cols=2, Takeaway + Block as observable test elements
+  not shown: .slidev-layout { --var } slide-scope override (also reaches h1, footer, section bar), :root override in styles/index.css for deck-wide recolor, dense-coupled tokens (override --ustc-fs-body-dense / --ustc-lh-dense to affect dense slides)
+  see: references/api/theme-tokens.md (full token catalog + Override safety), references/design-guide.md ("precedence ladder" + "per-slide font-size tweak" recipes). NOTE: this slide demonstrates the override TECHNIQUE — the orange palette is just a visible test contrast, not a recommended brand color.
+-->
+
+# A.6　主题变量局部覆盖（Recolor Demo）
+
+`--ustc-*` token 在 `:root` 给默认值，可在任意 wrapper 上覆盖；子树通过 CSS 变量级联自动跟。下面右栏只在 `<div class="brand-warm">` 上写四行变量重映射，其内的 Takeaway / Block 即换色，左栏与本页其他元素（h1、footer、section bar）保持默认蓝。
+
+<Grid cols="2" gap="lg" alignY="top">
+
+<div>
+
+**默认调色板**
+
+<Takeaway>
+
+Takeaway 边框 = `--ustc-blue`，文字 = `--ustc-blue-dark`，淡背景 = `--ustc-blue-pale`。
+
+</Takeaway>
+
+<Block title="带边框的 Block">
+
+Block 边框 = `--ustc-blue-border`。
+
+</Block>
+
+</div>
+
+<div class="brand-warm">
+
+**局部 warm 调色板**（仅子树生效）
+
+<Takeaway>
+
+同样的 Takeaway，边框/文字/背景都跟着 wrapper 上重写的 4 个 token 走。
+
+</Takeaway>
+
+<Block title="同样的 Block">
+
+边框颜色由 `--ustc-blue-border` 接管。
+
+</Block>
+
+</div>
+
+</Grid>
+
+<Callout type="note" title="三档作用域 + dense 陷阱">
+
+- **wrapper class**（本页右栏写法）：只影响子树。
+- **`.slidev-layout { --var }`**（写在某张 slide 的 `<style>`）：本页 chrome 全跟（h1、footer、section bar）。
+- **`:root { --var }`** in `styles/index.css`：整 deck 全局覆盖。
+- `.dense` 类会把 `--ustc-fs-body` / `--ustc-lh` / 一系列字号变量重新指派为 `*-dense` 变体——要让 dense 幻灯片也跟，必须改 `--ustc-fs-body-dense`、`--ustc-lh-dense` 等。
+
+</Callout>
+
+<style>
+.brand-warm {
+  --ustc-blue:        #c2410c;
+  --ustc-blue-dark:   #7c2d12;
+  --ustc-blue-pale:   rgba(194, 65, 12, 0.10);
+  --ustc-blue-border: rgba(194, 65, 12, 0.32);
+}
+</style>
+
+---
+layout: content
+density: dense
+margin: tighter
+---
+
+<!--
+  features: layout: content, density: dense, Block grid as a coverage index
+  not shown: this slide IS the index — it lists what the deck does NOT demo and points at the focused decks
+  see: this slide is the cross-reference map; no other doc to consult
+-->
+
+# A.7　覆盖范围与专项 demo
+
+本 deck 演示的是「在一篇学术汇报里能自然出现」的 feature 子集。下面这些 feature 为完整性收录，塞进本 deck 会显得刻意，所以放在专项里查阅：
+
+<div class="coverage-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem 1.4rem">
+
+<Block title="layouts.md (布局完整选项)">
+
+- `layout: default`（`content` 的 alias）/ `layout: blank` 全幅画布
+- `align: center / right` 段落对齐
+- `footer: false`、`footerMode: minimal`
+- `sectionBar: false`、`footnote: flow`
+- `background:` 颜色或图片
+- `split` 的 `gap: sm / lg`、`ratio` 各种比例
+- `section` 的 `sectionLabel` 覆盖
+
+</Block>
+
+<Block title="components.md (组件 prop 全量)">
+
+- `<Abs>` 绝对定位（`x` / `y` / `w` / `:z`）
+- `<FigureBlock wip>` / `<TableBlock wip>` 占位红章
+- `<FigureBlock prefix="Scheme">` 自定义编号前缀
+- `<FigureBlock>` 的 `imageWidth` / `captionAlign` / `captionInsetLeft`
+- `<QRCode>` 的 `color` / `background` 配色
+- `<Callout>` 五种 type 的「无 title」形态
+
+</Block>
+
+<Block title="math.md (数学渲染)">
+
+- inline `$x$` / display `$$\,...\,$$` 公式
+- 公式在段落、列表、粗体 / 斜体 / code 混排
+- 多行对齐、矩阵、`cases`、积分求和
+- 公式在 Callout / Block / TableBlock / ResultBox 内
+- dense 模式下的数学排版
+- 块级公式的 `<v-click>` 逐行高亮
+
+</Block>
+
+<Block title="tweaks.md (可维护的局部 hack)">
+
+- wrapper 限宽 / gutter columns 版心
+- 原生 CSS Grid 等高（替代主题 `<Grid>`）
+- 局部小字块 / 整页缩字（`.slidev-layout` 作用域）
+- 段落节奏压缩 / 局部放大结果
+- `<div class="dense">` 局部 dense 子树
+- 局部 / 整页换肤（`--ustc-blue*` 覆盖）
+
+</Block>
+
+</div>
+
+<Callout type="note">
+
+需要 prop 的默认值、type、有效取值时，查 `references/api/prop-defaults.md`（layout / 组件 defaults）和 `references/api/components.md`（组件 prop 表）；CSS token 全名与 override safety 查 `references/api/theme-tokens.md`。
+
+</Callout>
+
+<style>
+/* Block 自带 margin-bottom: 0.55rem (硬编码，非 CSS 变量)，
+   叠加 grid row-gap 后让上下两行间隙偏大；本页 scoped 清零，让 row-gap 单独控制内部纵向密度。
+   再在 grid 容器自身上恢复一截 margin-bottom，给后面跟着的 Callout 留呼吸空间。 */
+.coverage-grid {
+  margin-bottom: 0.7rem;
+}
+.coverage-grid :deep(.block) {
+  margin-bottom: 0;
+}
+</style>
