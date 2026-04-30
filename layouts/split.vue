@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, onUpdated, ref, useSlots } from 'vue'
-import { getPresenterName, resolveBodyMargin, handleBackground } from '../utils/layoutHelper'
+import { computed, useSlots } from 'vue'
+import { useBodyLayout } from '../utils/useBodyLayout'
 import { renderInlineMd } from '../utils/markdown'
 import { splitDefaults } from '../utils/defaults'
 
@@ -22,24 +22,10 @@ const props = withDefaults(defineProps<{
   ...splitDefaults,
 })
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
+const { presenterName, pageClass, pageStyle, layoutEl } = useBodyLayout(props)
+
 const slots = useSlots()
 const hasColumns = computed(() => Boolean(slots.left || slots.right))
-
-const pageClass = computed(() => ({
-  dense: props.density === 'dense',
-  'footnotes-flow': props.footnote === 'flow',
-  'no-section-bar': props.sectionBar === false,
-  'is-wip': props.wip === true,
-}))
-
-const pageStyle = computed(() => {
-  const s: Record<string, string> = { ...resolveBodyMargin(props.margin) }
-  if (props.lineHeight) s['--ustc-lh'] = String(props.lineHeight)
-  if (props.align) s.textAlign = props.align
-  if (props.background) Object.assign(s, handleBackground(props.background))
-  return s
-})
 
 const gridStyle = computed(() => {
   const parts = (props.ratio ?? '2:1').split(':').map(Number)
@@ -54,25 +40,6 @@ const gridStyle = computed(() => {
     alignItems: 'start',
   }
 })
-
-const layoutEl = ref<HTMLElement>()
-
-// No-columns mode only: move .content-subtitle right after the h1 in the DOM
-// so we don't need flex+order CSS to reorder it. In hasColumns mode the
-// subtitle already lives inside .split-header next to the h1.
-function placeSubtitle() {
-  const root = layoutEl.value
-  if (!root) return
-  const subtitle = root.querySelector(':scope > .content-subtitle')
-  const h1 = root.querySelector(':scope > h1')
-  if (!subtitle || !h1) return
-  if (h1.nextElementSibling !== subtitle) {
-    h1.insertAdjacentElement('afterend', subtitle)
-  }
-}
-
-onMounted(placeSubtitle)
-onUpdated(placeSubtitle)
 </script>
 
 <template>

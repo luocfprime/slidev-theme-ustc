@@ -51,7 +51,6 @@ tableNumberSuffix: ": "     # suffix between TableBlock number and caption
 
 **Authors format:** array of `{ name, affiliations, marks? }` objects. `presenter` sets who is underlined (defaults to first author). Institutions get sequential superscript numbers in order of first appearance. `marks` are per-author symbols (e.g. `†`, `*`) displayed as superscripts after the institute number; `authorMarks` maps each symbol to its legend text (rendered below the affiliations line).
 
-**Backward-compatible format** (still accepted): `{ "Name": ["Inst1", "Inst2"] }` dict objects — but the new format supports `marks` and `authorMarks`.
 
 ---
 
