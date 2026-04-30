@@ -15,6 +15,7 @@ const props = withDefaults(defineProps<{
   align?: 'left' | 'center' | 'right'
   subtitle?: string
   background?: string
+  wip?: boolean
 }>(), {
   ...bodyDefaults,
 })
@@ -25,6 +26,7 @@ const pageClass = computed(() => ({
   dense: props.density === 'dense',
   'footnotes-flow': props.footnote === 'flow',
   'no-section-bar': props.sectionBar === false,
+  'is-wip': props.wip === true,
 }))
 
 const pageStyle = computed(() => {

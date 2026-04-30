@@ -6,7 +6,7 @@ import { videoDefaults } from '../utils/defaults'
 const base = import.meta.env.BASE_URL
 
 const props = withDefaults(defineProps<{
-  src: string
+  src?: string
   caption?: string
   width?: string
   videoWidth?: string | number
@@ -17,15 +17,21 @@ const props = withDefaults(defineProps<{
   autoplay?: boolean
   loop?: boolean
   muted?: boolean
+  wip?: boolean
 }>(), {
   ...videoDefaults,
 })
 
+if (import.meta.env.DEV && !props.src && !props.wip) {
+  console.warn('[VideoBlock] missing `src` and not flagged `wip`; this will render a broken <video>.')
+}
+
 const toCss = (v: string | number) => typeof v === 'number' ? `${v}px` : v
 
-const resolvedSrc = computed(() =>
-  props.src.startsWith('/') ? base.replace(/\/$/, '') + props.src : props.src
-)
+const resolvedSrc = computed(() => {
+  if (!props.src) return undefined
+  return props.src.startsWith('/') ? base.replace(/\/$/, '') + props.src : props.src
+})
 
 const videoStyle = computed(() => ({ width: toCss(props.videoWidth) }))
 
@@ -37,7 +43,7 @@ const captionStyle = computed(() => ({
 </script>
 
 <template>
-  <figure class="video-block" :style="{ width: props.width }">
+  <figure class="video-block" :class="{ 'is-wip': props.wip }" :style="{ width: props.width }">
     <video
       :src="resolvedSrc"
       class="video-element"
@@ -48,6 +54,7 @@ const captionStyle = computed(() => ({
       :muted="props.muted || props.autoplay"
       playsinline
     />
+    <span v-if="props.wip" class="wip-badge">WIP</span>
     <figcaption v-if="props.caption" class="figure-caption" :style="captionStyle" v-html="renderInlineMd(props.caption)" />
   </figure>
 </template>
@@ -68,5 +75,23 @@ const captionStyle = computed(() => ({
 
 .figure-caption {
   margin-top: var(--ustc-fig-caption-gap);
+}
+
+.video-block.is-wip {
+  position: relative;
+}
+
+.wip-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: var(--ustc-wip);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  line-height: 1.5;
 }
 </style>

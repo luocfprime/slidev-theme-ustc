@@ -8,6 +8,9 @@
   --ustc-blue-pale:   rgba(30, 76, 144, 0.07);
   --ustc-blue-border: rgba(30, 76, 144, 0.18);
 
+  /* Status */
+  --ustc-wip:         #dc2626;  /* WIP / draft markers (badges, watermark, section-bar dot) */
+
   /* Text */
   --ustc-text:        #111827;
   --ustc-text-muted:  #6b7280;
@@ -832,6 +835,30 @@
 .slidev-layout.end .end-contact a {
   color: var(--ustc-blue);
   text-decoration: none;
+}
+
+/* ─── WIP marker (slide-level) ─────────────────────────────────────────── */
+/* Apply by adding `wip: true` to a body slide's frontmatter, which the body
+   layouts translate into an `.is-wip` class on `.slidev-layout`. Renders a
+   diagonal "WIP" stamp across the slide; pointer-events disabled so content
+   stays interactive. The section bar dot for the slide is also tinted red
+   (see SectionBar.vue). */
+.slidev-layout.is-wip { position: relative; }
+.slidev-layout.is-wip::after {
+  content: 'WIP';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14rem;
+  font-weight: 900;
+  letter-spacing: 0.6rem;
+  color: var(--ustc-wip);
+  opacity: 0.10;
+  pointer-events: none;
+  user-select: none;
+  z-index: 999;
 }
 
 /* ─── Typst (vendored from slidev-addon-typst, MIT) ───────────────────── */

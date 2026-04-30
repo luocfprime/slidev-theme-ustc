@@ -90,6 +90,7 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-text-muted` | `#6b7280` | secondary text |
 | `--ustc-text-light` | `#9ca3af` | tertiary text |
 | `--ustc-footnote-ref` | `#7b8494` | footnote superscript color |
+| `--ustc-wip` | `#dc2626` | WIP/draft markers — component badges, slide watermark, section-bar dot ring |
 
 ---
 

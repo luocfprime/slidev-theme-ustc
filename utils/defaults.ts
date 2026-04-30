@@ -24,6 +24,7 @@ export const bodyDefaults = {
   footnote: 'overlay' as 'overlay' | 'flow',
   sectionBar: true,
   align: 'left' as 'left' | 'center' | 'right',
+  wip: false,
 }
 
 export const logoDefaults = {
@@ -42,6 +43,7 @@ export const tocDefaults = {
   ...footerDefaults,
   highlight: 0,
   columns: 1 as 1 | 2,
+  wip: false,
 }
 
 export const coverDefaults = {
@@ -53,6 +55,7 @@ export const coverDefaults = {
   subtitle: '',
   date: '',
   showLogo: true,
+  wip: false,
 }
 
 // end is structural: no density/margin — only logo + footer
@@ -60,6 +63,7 @@ export const endDefaults = {
   ...logoDefaults,
   ...footerDefaults,
   showLogo: false,
+  wip: false,
 }
 
 export const gridDefaults = {
@@ -106,6 +110,7 @@ export const videoDefaults = {
   autoplay: false,
   loop: false,
   muted: false,
+  wip: false,
 }
 
 export const qrcodeDefaults = {
@@ -113,4 +118,5 @@ export const qrcodeDefaults = {
   color: '#000000',
   background: '#ffffff',
   caption: '',
+  wip: false,
 }

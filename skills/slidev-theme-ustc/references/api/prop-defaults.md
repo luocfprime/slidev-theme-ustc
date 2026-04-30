@@ -17,6 +17,7 @@ Applies to `content` and `default` layouts. `split` extends this via `splitDefau
 | `align` | `'left'` | `'left'` · `'center'` · `'right'` |
 | `footer` | `true` | boolean |
 | `footerMode` | `'full'` | `'full'` · `'minimal'` |
+| `wip` | `false` | boolean — when `true`, renders a diagonal "WIP" stamp and tints the section-bar dot red |
 
 `lineHeight` and `background` have no default (omitted = unchanged).
 
@@ -117,6 +118,7 @@ Used by `cover` and `end` layouts.
 | `captionInsetRight` | `0` |
 | `prefix` | `''` (falls back to global `figurePrefix`) |
 | `numberSuffix` | `undefined` prop default; effective suffix is first-slide frontmatter `figureNumberSuffix`, then `'. '` |
+| `wip` | `false` — when `true`, renders a red WIP badge over the figure and `src` becomes optional |
 
 ---
 
@@ -129,6 +131,7 @@ Used by `cover` and `end` layouts.
 | `width` | `'100%'` |
 | `prefix` | `''` (falls back to global `tablePrefix`) |
 | `numberSuffix` | `undefined` prop default; effective suffix is first-slide frontmatter `tableNumberSuffix`, then `'. '` |
+| `wip` | `false` — when `true`, renders a red WIP badge inline with the caption |
 
 ---
 
@@ -146,6 +149,7 @@ Used by `cover` and `end` layouts.
 | `autoplay` | `false` (forces `muted` when true) |
 | `loop` | `false` |
 | `muted` | `false` |
+| `wip` | `false` — when `true`, renders a red WIP badge over the video and `src` becomes optional |
 
 ---
 
@@ -157,3 +161,4 @@ Used by `cover` and `end` layouts.
 | `color` | `'#000000'` |
 | `background` | `'#ffffff'` |
 | `caption` | `''` |
+| `wip` | `false` — when `true`, renders a hatched placeholder square + WIP badge instead of generating a QR; `url` becomes optional |

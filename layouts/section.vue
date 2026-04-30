@@ -6,15 +6,17 @@ import { footerDefaults } from '../utils/defaults'
 const props = withDefaults(defineProps<{
   footer?: boolean
   footerMode?: 'full' | 'minimal'
+  wip?: boolean
 }>(), {
   ...footerDefaults,
+  wip: false,
 })
 
 const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
 </script>
 
 <template>
-  <div class="slidev-layout section">
+  <div class="slidev-layout section" :class="{ 'is-wip': props.wip }">
     <slot />
 
     <PageFooter

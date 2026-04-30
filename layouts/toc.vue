@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<{
   footer?: boolean
   footerMode?: 'full' | 'minimal'
   columns?: 1 | 2
+  wip?: boolean
 }>(), {
   ...tocDefaults,
 })
@@ -45,7 +46,7 @@ const autoFontSize = computed(() => {
 </script>
 
 <template>
-  <div class="slidev-layout toc">
+  <div class="slidev-layout toc" :class="{ 'is-wip': props.wip }">
     <slot />
 
     <ol class="toc-list" :class="{ 'toc-two-col': columns === 2 }" :style="{ '--toc-fs': autoFontSize, '--toc-rows': tocRows }">
