@@ -38,6 +38,8 @@ const pageStyle = computed(() => {
 
 <template>
   <div class="slidev-layout content" :class="pageClass" :style="pageStyle">
+    <SectionBar :visible="props.sectionBar === false ? false : undefined" />
+
     <slot />
 
     <div v-if="props.subtitle" class="content-subtitle" v-html="renderInlineMd(props.subtitle)" />

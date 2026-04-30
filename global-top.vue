@@ -11,6 +11,11 @@ interface SectionGroup {
   slideNos: number[]
 }
 
+/**
+ * Compute section groups to determine the bar height.
+ * The SectionBar UI is rendered inside each body layout (content, default, split)
+ * so it lives within .slidev-layout and inherits per-slide CSS variable overrides.
+ */
 const sections = computed((): SectionGroup[] => {
   if (!enabled) return []
   const slides = $slidev.nav.slides ?? []
@@ -45,28 +50,6 @@ const currentSlide = computed(() => {
   return slides[idx] as any
 })
 
-const currentLayout = computed(() => getLayout(currentSlide.value) || 'content')
-
-const visible = computed(() => {
-  const s = currentSlide.value
-  const barVal =
-    s?.frontmatter?.sectionBar ??
-    s?.meta?.slide?.frontmatter?.sectionBar ??
-    s?.meta?.frontmatter?.sectionBar ??
-    s?.meta?.sectionBar
-  const locallyDisabled = barVal === false
-  return (
-    enabled &&
-    sections.value.length > 0 &&
-    !['cover', 'section', 'toc', 'backup', 'end', 'blank'].includes(currentLayout.value) &&
-    !locallyDisabled
-  )
-})
-
-const activeSectionIdx = computed(() =>
-  sections.value.findIndex(s => s.slideNos.includes(currentPage.value))
-)
-
 const barMode = computed(() => {
   const s = currentSlide.value
   const local =
@@ -76,6 +59,7 @@ const barMode = computed(() => {
   return (local ?? ($slidev.configs.sectionBarMode as string) ?? 'full') as string
 })
 
+/** Keep --ustc-nav-h on :root in sync so layout padding-top is always correct. */
 watchEffect(() => {
   if (!enabled || sections.value.length === 0) {
     document.documentElement.style.setProperty('--ustc-nav-h', '0px')
@@ -88,94 +72,6 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div v-if="visible" class="ustc-section-bar" :class="{ 'is-minimal': barMode === 'minimal' }">
-    <div
-      v-for="(section, i) in sections"
-      :key="i"
-      class="ustc-section-item"
-      :class="{ 'is-active': i === activeSectionIdx }"
-    >
-      <span
-        v-if="barMode !== 'minimal'"
-        class="ustc-section-label"
-        @click="$slidev.nav.go(section.sectionNo)"
-      >{{ section.title }}</span>
-      <div class="ustc-section-dots">
-        <span
-          v-for="no in section.slideNos"
-          :key="no"
-          class="ustc-dot"
-          :class="{
-            'is-current': no === currentPage,
-            'is-past': no < currentPage,
-          }"
-          @click="$slidev.nav.go(no)"
-        />
-      </div>
-    </div>
-  </div>
+  <!-- No DOM output: SectionBar is rendered inside each body layout so it
+       inherits per-slide CSS variable overrides from .slidev-layout. -->
 </template>
-
-<style scoped>
-.ustc-section-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: var(--ustc-nav-h);
-  background: var(--ustc-blue-dark);
-  display: flex;
-  align-items: stretch;
-  z-index: 50;
-  padding: 0 1.2rem;
-}
-
-.ustc-section-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.18rem;
-  padding: 0.1rem 0.5rem;
-  opacity: 0.5;
-  transition: opacity 0.15s;
-  min-width: 0;
-}
-
-.ustc-section-item.is-active { opacity: 1; }
-.ustc-section-item:not(.is-active):hover { opacity: 0.8; }
-
-.ustc-section-label {
-  font-size: 0.6rem;
-  color: rgba(255, 255, 255, 0.9);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
-  cursor: pointer;
-}
-
-.ustc-section-dots {
-  display: flex;
-  gap: 0.22rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.ustc-dot {
-  width: 0.42rem;
-  height: 0.42rem;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255, 255, 255, 0.55);
-  background: transparent;
-  flex-shrink: 0;
-  cursor: pointer;
-}
-
-.ustc-dot:hover { border-color: white; background: rgba(255, 255, 255, 0.5); }
-.ustc-dot.is-current { background: white; border-color: white; }
-.ustc-dot.is-past { background: rgba(255, 255, 255, 0.32); border-color: rgba(255, 255, 255, 0.55); }
-</style>
