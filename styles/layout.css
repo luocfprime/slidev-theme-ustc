@@ -667,6 +667,13 @@
   margin-bottom: 0.65rem;
 }
 
+.slidev-layout.content > div.table-block,
+.slidev-layout.split > div.table-block,
+.slidev-layout.split .split-col > div.table-block {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* Table inside TableBlock: wrapper handles all outer spacing */
 .slidev-layout.content div.table-block table,
 .slidev-layout.split div.table-block table {
