@@ -40,6 +40,7 @@ jobs:
           mkdir -p .preview
           cp examples/full-deck.md .preview/
           pnpm exec slidev build .preview/full-deck.md --base /${{ github.event.repository.name }}/ --out "${{ github.workspace }}/dist"
+          cp -r public/. "${{ github.workspace }}/dist/"
 
       - name: Setup Pages
         uses: actions/configure-pages@v6
