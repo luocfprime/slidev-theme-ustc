@@ -1,13 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
-import { tableDefaults } from '../utils/defaults'
+import { DEFAULT_NUMBER_SUFFIX, tableDefaults } from '../utils/defaults'
+import { formatNumberedCaption } from '../utils/captionFormat'
 
 const props = withDefaults(defineProps<{
   caption?: string
   captionAlign?: 'left' | 'center'
   width?: string
   prefix?: string
+  numberSuffix?: string
   /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
    *  Numeric for body tables; string for appendix tables (e.g. "A.1"). */
   number?: number | string
@@ -24,13 +26,17 @@ const displayPrefix = computed(
   () => props.prefix || ($slidev.configs.tablePrefix as string | undefined) || 'Table',
 )
 
-const fullCaption = computed(() => {
-  const showLabel = props.numbered !== false && props.number != null
-  if (!showLabel && !props.caption) return ''
-  if (!showLabel) return props.caption ?? ''
-  const label = `${displayPrefix.value} ${props.number}`
-  return props.caption ? `${label}. ${props.caption}` : label
-})
+const displayNumberSuffix = computed(
+  () => props.numberSuffix ?? ($slidev.configs.tableNumberSuffix as string | undefined) ?? DEFAULT_NUMBER_SUFFIX,
+)
+
+const fullCaption = computed(() => formatNumberedCaption({
+  prefix: displayPrefix.value,
+  number: props.number,
+  caption: props.caption,
+  numbered: props.numbered,
+  numberSuffix: displayNumberSuffix.value,
+}))
 </script>
 
 <template>

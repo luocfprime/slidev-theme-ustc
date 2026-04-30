@@ -116,6 +116,7 @@ Used by `cover` and `end` layouts.
 | `captionInsetLeft` | `0` |
 | `captionInsetRight` | `0` |
 | `prefix` | `''` (falls back to global `figurePrefix`) |
+| `numberSuffix` | `undefined` prop default; effective suffix is first-slide frontmatter `figureNumberSuffix`, then `'. '` |
 
 ---
 
@@ -127,6 +128,7 @@ Used by `cover` and `end` layouts.
 | `captionAlign` | `'center'` |
 | `width` | `'100%'` |
 | `prefix` | `''` (falls back to global `tablePrefix`) |
+| `numberSuffix` | `undefined` prop default; effective suffix is first-slide frontmatter `tableNumberSuffix`, then `'. '` |
 
 ---
 

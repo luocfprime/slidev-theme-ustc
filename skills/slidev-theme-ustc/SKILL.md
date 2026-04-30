@@ -44,6 +44,8 @@ sectionBar: true            # show section progress bar (default: true)
 sectionBarMode: full        # 'full' (labels+dots) | 'minimal' (dots only)
 figurePrefix: Figure        # auto-numbering prefix for FigureBlock
 tablePrefix: Table          # auto-numbering prefix for TableBlock
+figureNumberSuffix: ": "    # suffix between FigureBlock number and caption
+tableNumberSuffix: ": "     # suffix between TableBlock number and caption
 ---
 ```
 
@@ -444,6 +446,7 @@ The `--ustc-nav-h` CSS variable is set automatically to account for the bar heig
 | Hide section bar on one slide | `sectionBar: false` in frontmatter |
 | Dots-only section bar | `sectionBarMode: minimal` |
 | Custom figure/table prefix | `figurePrefix: "Fig."` / `tablePrefix: "Tab."` in global frontmatter |
+| Custom number suffix | `figureNumberSuffix: ": "` / `tableNumberSuffix: ": "` globally, or `numberSuffix=": "` per block |
 | Layer Abs elements | `:z="20"` on top, `:z="10"` behind |
 | Wider left column in split | `ratio: "3:1"` |
 | Inline footnotes | `footnote: flow` |

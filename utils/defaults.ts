@@ -73,6 +73,8 @@ export const calloutDefaults = {
   title: '',
 }
 
+export const DEFAULT_NUMBER_SUFFIX = '. '
+
 export const figureDefaults = {
   alt: '',
   caption: '',
@@ -82,6 +84,7 @@ export const figureDefaults = {
   captionInsetLeft: 0 as string | number,
   captionInsetRight: 0 as string | number,
   prefix: '',
+  numberSuffix: undefined as string | undefined,
 }
 
 export const tableDefaults = {
@@ -89,6 +92,7 @@ export const tableDefaults = {
   captionAlign: 'center' as 'left' | 'center',
   width: '100%',
   prefix: '',
+  numberSuffix: undefined as string | undefined,
 }
 
 export const videoDefaults = {
