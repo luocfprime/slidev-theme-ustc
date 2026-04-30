@@ -20,7 +20,7 @@ Applies to `content` and `default` layouts. `split` extends this via `splitDefau
 
 `lineHeight` and `background` have no default (omitted = unchanged).
 
-`subtitle` (`content` only) has no default — omit to render no subtitle.
+`subtitle` (also accepted by `split`) has no default — omit to render no subtitle.
 
 ---
 
@@ -90,8 +90,8 @@ Used by `cover` and `end` layouts.
 | Prop | Default | Valid values |
 |------|---------|-------------|
 | `cols` | `'2'` | see Grid docs |
-| `gap` | `'md'` | `'sm'` (0.6rem) · `'md'` (1.2rem) · `'lg'` (2rem) |
-| `align` | `'top'` | `'top'` · `'center'` · `'bottom'` |
+| `gap` | `'md'` | `'sm'` (0.8rem) · `'md'` (1.4rem) · `'lg'` (2rem) |
+| `alignY` | `'top'` | `'top'` · `'center'` · `'bottom'` |
 
 ---
 
@@ -127,6 +127,23 @@ Used by `cover` and `end` layouts.
 | `captionAlign` | `'center'` |
 | `width` | `'100%'` |
 | `prefix` | `''` (falls back to global `tablePrefix`) |
+
+---
+
+## `<VideoBlock>` defaults (`videoDefaults`)
+
+| Prop | Default |
+|------|---------|
+| `caption` | `''` (no caption rendered) |
+| `width` | `'100%'` |
+| `videoWidth` | `'100%'` |
+| `captionAlign` | `'center'` (`'left'` · `'center'`) |
+| `captionInsetLeft` | `0` |
+| `captionInsetRight` | `0` |
+| `controls` | `true` |
+| `autoplay` | `false` (forces `muted` when true) |
+| `loop` | `false` |
+| `muted` | `false` |
 
 ---
 

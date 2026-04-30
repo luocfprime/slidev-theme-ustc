@@ -78,29 +78,26 @@ background: "#1a2a4a"      # CSS color or image path
 ---
 ```
 
-### `default`
+### `default` / `content`
 
-Standard content slide (also the fallback when no `layout:` is specified).
+Standard body slide. `default` is the fallback when no `layout:` is specified; `content` is an identical alias commonly used to signal a body slide explicitly. Both accept the same props.
 
 ```yaml
 ---
-layout: default
+layout: default            # or 'content'
 density: normal            # 'normal' (default) | 'dense'
 margin: normal             # 'normal' | 'tight' | 'tighter' | 'none'
-lineHeight: 2.0           # override line-height for this slide
+lineHeight: 1.8            # optional override; matches default body line-height
 align: left                # 'left' | 'center' | 'right'
 footnote: overlay          # 'overlay' (default) | 'flow'
 footer: true
 footerMode: full           # 'full' (default) | 'minimal'
 sectionBar: true
 sectionBarMode: full
+subtitle: "..."            # optional, renders below h1 (supports markdown)
 background: "#f5f5f5"      # CSS color or image path
 ---
 ```
-
-### `content`
-
-Same as `default` plus a `subtitle` prop (rendered below h1, supports markdown). Use `content` when you want a subtitle; use `default` otherwise.
 
 ### `split`
 
@@ -110,7 +107,8 @@ Two-column layout.
 ---
 layout: split
 ratio: "2:1"               # column width ratio (default: "2:1")
-gap: md                    # 'sm' (0.8rem) | 'md' (1.4rem, default) | 'lg' (2rem) — different pixel values than Grid
+gap: md                    # 'sm' (0.8rem) | 'md' (1.4rem, default) | 'lg' (2rem)
+subtitle: "..."            # optional, renders below h1 — same as content layout
 # ...all default props also apply
 ---
 
@@ -200,7 +198,7 @@ layout: blank
 
 ## Components
 
-`Grid`, `Block`, `Abs` — layout helpers. `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `Takeaway` — content blocks. `PlotlyGraph`, `QRCode` — media.
+`Grid`, `Block`, `Abs` — layout helpers. `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `Takeaway` — content blocks. `VideoBlock`, `PlotlyGraph`, `QRCode` — media.
 
 All are auto-imported by Slidev. For full prop tables see [references/components.md](references/components.md).
 
@@ -229,9 +227,24 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 <TableBlock caption="Table title">| col | ... |</TableBlock>
 <TableBlock wip caption="Table title">| col | ... |</TableBlock>  <!-- red WIP badge inline after caption -->
 <Abs x="200" y="100" w="300" :z="10">...</Abs>  <!-- x/y/w are the prop names, NOT top/left/width -->
+<VideoBlock src="/videos/demo.mp4" caption="Demo" width="80%" :controls="true" />
 <PlotlyGraph filePath="/chart.json" :graphWidth="600" :graphHeight="400" />
 <QRCode url="https://example.com" :size="160" caption="Scan" />
 ```
+
+---
+
+## Design Principles
+
+The theme exposes many features (subtitle, dense mode, section bar, footnotes, Callout types, etc.) so a deck *can* match a specific need — not so every deck *must* use all of them. Plain markdown on a `default` layout is often the strongest slide.
+
+- **Subtitle is optional.** Add `subtitle:` only when the title is genuinely ambiguous. (`default`/`content` are aliases — both accept `subtitle:`; pick whichever name reads better in your frontmatter.)
+- **Don't stack components.** One `<Block>` *or* one `<Callout>` *or* one `<Takeaway>` reads better than all three. Reach for a component only when its semantic role fits — wrapping every paragraph in something is a smell.
+- **Dense mode is for content pressure, not aesthetics.** If the slide already fits in `density: normal`, don't switch to `dense`. If the problem is page padding rather than text size, try `margin: tight` first.
+- **Toggle, don't litter.** Disable `sectionBar`/`footer` per-slide for cover, end, blank, and full-bleed visuals — not casually elsewhere.
+- **Climb the precedence ladder for one-off styling**: frontmatter prop → CSS variable override in a slide `<style>` block → wrap the component in a plain `<div style="…">`. Two scoping levels for CSS variable overrides: (a) `.my-scope { --var }` on a wrapper `<div>` — only that subtree changes; (b) `.slidev-layout { --var }` — the entire slide including h1, footer, and section bar. For deck-wide overrides, put `:root { --var }` in `styles/index.css`. If none of these fit, **propose a feature request or PR against the theme repo** — **never edit the installed theme files** (e.g. `node_modules/@luocfprime/slidev-theme-ustc/…`). Those files are outside project scope: they get wiped on every reinstall, the change does not version-control with your deck, and the deck silently forks from upstream.
+
+See [references/guidelines.md](references/guidelines.md) for fine-tuning recipes (width limits, gutter columns, scoped overrides) and a "when NOT to use" table per feature.
 
 ---
 
@@ -246,8 +259,14 @@ Key overridable variables:
 | `--ustc-blue` | `#1E4C90` | primary brand color |
 | `--ustc-fs-body` | `1.4rem` | body text (normal density) |
 | `--ustc-fs-body-dense` | `1.05rem` | body text (dense density) |
-| `--ustc-lh` | `2.0` | line-height |
+| `--ustc-fs-callout` / `--ustc-fs-callout-title` | `1.15rem` / `1.15rem` | Callout body/title |
+| `--ustc-fs-result-title` / `--ustc-fs-result-body` | `1.15rem` / `1.15rem` | ResultBox title/body |
+| `--ustc-fs-block-title` / `--ustc-fs-block-body` | `1.15rem` / `1.15rem` | Block title/body |
+| `--ustc-fs-takeaway` | `1.4rem` | Takeaway text |
+| `--ustc-lh` | `1.8` | body text line-height |
+| `--ustc-title-gap` | `1.5rem` | h1 to first body element gap |
 | `--ustc-px` / `--ustc-py` | `2.8rem` / `1.75rem` | slide padding |
+| `--ustc-max-w-cover-h1` / `--ustc-max-w-cover-sub` | `48rem` / `58rem` | cover title/subtitle width |
 | `--ustc-footer-h` | `1.75rem` | footer bar height |
 
 ---
@@ -264,7 +283,32 @@ margin: tight
 ---
 ```
 
-`density: dense` is a coordinated scale-down — it simultaneously shrinks body text (`1.4rem` → `1.05rem`), Callout body (`1.15rem` → `0.95rem`), table cells, h2 (drops to h3 size `1.3rem`), and tightens line-height and list spacing. Use it instead of overriding font sizes in `<style>` because a `<style>` override changes one element in isolation and breaks the theme's internal proportions. Dense mode keeps the whole slide visually coherent at a smaller scale. Combine with `margin: tight` or `margin: tighter` to reclaim additional space.
+`density: dense` is a coordinated scale-down — it simultaneously shrinks body text (`1.4rem` → `1.05rem`), Callout body/title (`1.15rem` → `0.95rem`), ResultBox and Block text (`1.15rem` → `0.96rem`), table cells (`1.1rem` → `0.96rem`), h2 (drops to h3 size `1.3rem`), Takeaway text (`1.4rem` → `1.05rem`), and tightens line-height (`1.8` → `1.5`) plus list spacing. Use it instead of overriding font sizes in `<style>` because a `<style>` override changes one element in isolation and breaks the theme's internal proportions. Dense mode keeps the whole slide visually coherent at a smaller scale. Combine with `margin: tight` or `margin: tighter` to reclaim additional page padding.
+
+### Limit a component's width
+
+Wrap the component in a plain `<div style="…">` — inline `style` on a raw `<div>` is bulletproof. Don't try to pass `style` or `class` directly to a theme component in markdown: Slidev's `<style>` blocks are auto-scoped (so `.my-class` on the component root often doesn't match), and attribute passthrough on theme components in markdown is unreliable.
+
+```vue
+<Grid cols="2" gap="lg">
+  <Block title="A">…</Block>
+  <div style="justify-self: center; max-width: 26rem;">
+    <Block title="B">…</Block>
+  </div>
+</Grid>
+```
+
+For consistent inset width across slides, prefer gutter columns: `<Grid cols="1 8 8 1">` with empty `<div>`s on the edges.
+
+For equal-height items, replace the theme `<Grid>` with raw native CSS Grid — `<Grid>` defaults to `align-items: start`, native Grid defaults to `stretch`:
+
+```vue
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;">
+  <Block>…</Block>
+  <Callout type="tip">…</Callout>
+  <ResultBox>…</ResultBox>
+</div>
+```
 
 ### Two-column with unequal widths
 
@@ -367,7 +411,7 @@ footerMode: minimal
 
 ## Section Bar
 
-The section bar shows the presentation structure at the top of each slide.
+The section bar shows the presentation structure at the top of body slides. Only `content` / `default` / `split` slides render the bar; `cover`, `end`, `toc`, `section`, `blank`, and `backup` slides never show it (so `sectionBar: false` only matters on body layouts).
 
 - **Full mode:** section labels + dots per slide
 - **Minimal mode:** dots only
@@ -393,15 +437,17 @@ The `--ustc-nav-h` CSS variable is set automatically to account for the bar heig
 
 | Goal | How |
 |------|-----|
-| Smaller body text globally | `--ustc-fs-body: 1.2rem` in `<style>` |
+| Smaller body text globally | `:root { --ustc-fs-body: 1.2rem }` in `styles/index.css`, or `.slidev-layout { --ustc-fs-body: 1.2rem }` per slide |
 | Dense text on one slide | `density: dense` in frontmatter |
-| Change brand colour | `--ustc-blue` + `--ustc-blue-dark` in `<style>` |
+| Change brand colour per slide | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1, footer, and section bar |
 | Hide section bar on one slide | `sectionBar: false` in frontmatter |
 | Dots-only section bar | `sectionBarMode: minimal` |
 | Custom figure/table prefix | `figurePrefix: "Fig."` / `tablePrefix: "Tab."` in global frontmatter |
 | Layer Abs elements | `:z="20"` on top, `:z="10"` behind |
 | Wider left column in split | `ratio: "3:1"` |
 | Inline footnotes | `footnote: flow` |
+| One-off width / spacing tweak | Wrap the component in `<div style="…">`; don't passthrough to the theme component |
+| Equal-height items | Use raw native CSS Grid instead of `<Grid>` — see [guidelines.md](references/guidelines.md#force-equal-height-in-a-grid) |
 | Absolute positioning | Prefer `<v-drag>`, use `<Abs>` for `%` coords |
 | All valid prop values | See [references/components.md](references/components.md) |
 | All CSS variables | See [references/css-variables.md](references/css-variables.md) |
@@ -414,3 +460,11 @@ The `--ustc-nav-h` CSS variable is set automatically to account for the bar heig
 - [references/defaults.md](references/defaults.md) — all prop default values (source: `utils/defaults.ts`)
 - [references/css-variables.md](references/css-variables.md) — complete CSS variable reference
 - [references/example.md](references/example.md) — canonical demo deck showing all layouts and components in use
+- [references/guidelines.md](references/guidelines.md) — design principles, layout fine-tuning recipes, "when NOT to use" table per feature
+
+Runnable demo decks under `references/examples/` (each runs with `slidev examples/<name>.md`):
+
+- [references/examples/layouts.md](references/examples/layouts.md) — every layout's full frontmatter options
+- [references/examples/components.md](references/examples/components.md) — every component's prop demos
+- [references/examples/math.md](references/examples/math.md) — math rendering across positions and components
+- [references/examples/tweaks.md](references/examples/tweaks.md) — fine-tuning recipes (before/after pages, companion to `guidelines.md`)

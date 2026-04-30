@@ -1,14 +1,80 @@
 # CSS Variables Reference
 
-Override in your slides.md style block or per-slide `<style>` tags:
+For deck-wide overrides, put variables in a global stylesheet such as the deck's `styles/index.css`:
 
-```vue
-<style>
+```css
 :root {
   --ustc-blue: #1E4C90;
 }
+```
+
+For per-slide overrides, set variables on a wrapper element so they cascade into that slide's content:
+
+```vue
+<div class="tight-slide">
+
+Slide content...
+
+</div>
+
+<style>
+.tight-slide {
+  --ustc-lh: 1.65;
+}
 </style>
 ```
+
+---
+
+## Override safety — what's safe, what isn't
+
+Most tokens are plain knobs you can set anywhere (`:root`, `.slidev-layout`, or a wrapper `<div class="…">`). A few have non-obvious behavior. Read this once before overriding.
+
+### Don't override — internal or derived math
+
+These are managed by theme code or computed from other tokens. A direct override breaks an invariant.
+
+| Token | Why | Override what instead |
+|-------|-----|-----------------------|
+| `--ustc-nav-h` | Written by `global-top.vue` from `sectionBarMode` (0 / 1.5rem / 2rem). Manual values get clobbered on every render. | Toggle `sectionBar` / `sectionBarMode`. |
+| `--ustc-pb` | `calc(var(--ustc-footer-h) + 0.9rem)` — bottom padding tracks footer height. A direct override drops the footer-clearance and lets content overlap the bar. | Change `--ustc-footer-h`, or re-derive with the same `calc(…)` form. |
+
+### Override the dense variant, not the base
+
+In dense mode the `.dense` class **reassigns** the base tokens below to their `*-dense` counterparts. So `density: dense` slides ignore your override of the base value. To affect both modes, override the `*-dense` variant *instead of* (or *in addition to*) the base.
+
+| Base token (re-pointed by `.dense`) | The `*-dense` token to override for dense mode |
+|-------------------------------------|------------------------------------------------|
+| `--ustc-fs-body` | `--ustc-fs-body-dense` |
+| `--ustc-fs-h2` (becomes `--ustc-fs-h3` in dense — there is no `--ustc-fs-h2-dense`) | (override `--ustc-fs-h3`, or accept the auto-collapse) |
+| `--ustc-fs-table-cell` | `--ustc-fs-table-cell-dense` |
+| `--ustc-fs-blockquote` | `--ustc-fs-blockquote-dense` |
+| `--ustc-fs-caption` | `--ustc-fs-caption-dense` |
+| `--ustc-fs-subtitle` | `--ustc-fs-subtitle-dense` |
+| `--ustc-fs-callout` / `--ustc-fs-callout-title` | `--ustc-fs-callout-dense` / `--ustc-fs-callout-title-dense` |
+| `--ustc-fs-result-title` / `--ustc-fs-result-body` | `--ustc-fs-result-title-dense` / `--ustc-fs-result-body-dense` |
+| `--ustc-fs-block-title` / `--ustc-fs-block-body` | `--ustc-fs-block-title-dense` / `--ustc-fs-block-body-dense` |
+| `--ustc-fs-takeaway` | `--ustc-fs-takeaway-dense` |
+| `--ustc-lh` | `--ustc-lh-dense` |
+| `--ustc-title-gap` | `--ustc-title-gap-dense` |
+
+### Inheritance shortcuts — override freely
+
+These default to `var(--…)` for cohesion only. They are *not* derived math; overriding them is intentionally supported.
+
+| Token | Default | Override when |
+|-------|---------|---------------|
+| `--ustc-footer-bg` | `var(--ustc-blue)` | You want the footer to diverge from the brand color (e.g. neutral footer). |
+| `--ustc-fs-end-h1` | `var(--ustc-fs-cover-h1)` | You want the closing slide title at a different size from the cover title. |
+
+### Everything else — plain knobs
+
+All tokens not listed above are straightforward overrides. Common targets:
+
+- **Brand recolor** — override `--ustc-blue` and `--ustc-blue-dark` (and optionally `--ustc-blue-pale` / `--ustc-blue-border`) at `:root` in `styles/index.css`.
+- **Smaller body text** — override `--ustc-fs-body` (and `--ustc-fs-body-dense` if you want dense slides to follow).
+- **Tighter slides** — override `--ustc-py` / `--ustc-px` / `--ustc-pl` (or use the `margin:` frontmatter prop, which sets these for you).
+- **Footer height/colors** — override `--ustc-footer-h` (cascades to `--ustc-pb`), `--ustc-footer-text`, `--ustc-footer-fs`.
 
 ---
 
@@ -20,7 +86,6 @@ Override in your slides.md style block or per-slide `<style>` tags:
 | `--ustc-blue-dark` | `#16396b` | headings |
 | `--ustc-blue-pale` | `rgba(30,76,144,0.07)` | light backgrounds |
 | `--ustc-blue-border` | `rgba(30,76,144,0.18)` | dividers |
-| `--ustc-blue-row` | `rgba(30,76,144,0.09)` | table row separator |
 | `--ustc-text` | `#111827` | body text |
 | `--ustc-text-muted` | `#6b7280` | secondary text |
 | `--ustc-text-light` | `#9ca3af` | tertiary text |
@@ -47,11 +112,18 @@ Override in your slides.md style block or per-slide `<style>` tags:
 | `--ustc-fs-subtitle-dense` | `0.97rem` | content layout subtitle (dense density) |
 | `--ustc-fs-callout` | `1.15rem` | Callout body (normal density) |
 | `--ustc-fs-callout-dense` | `0.95rem` | Callout body (dense density) |
-| `--ustc-fs-callout-title` | `1.1rem` | Callout title |
-| `--ustc-fs-result-title` | `1.05rem` | ResultBox title / Block title (normal density) |
-| `--ustc-fs-result-title-dense` | `0.92rem` | ResultBox title / Block title (dense density) |
+| `--ustc-fs-callout-title` | `1.15rem` | Callout title (normal density) |
+| `--ustc-fs-callout-title-dense` | `0.95rem` | Callout title (dense density) |
+| `--ustc-fs-result-title` | `1.15rem` | ResultBox title (normal density) |
+| `--ustc-fs-result-title-dense` | `0.96rem` | ResultBox title (dense density) |
 | `--ustc-fs-result-body` | `1.15rem` | ResultBox body text (normal density) |
 | `--ustc-fs-result-body-dense` | `0.96rem` | ResultBox body text (dense density) |
+| `--ustc-fs-block-title` | `1.15rem` | Block title (normal density) |
+| `--ustc-fs-block-title-dense` | `0.96rem` | Block title (dense density) |
+| `--ustc-fs-block-body` | `1.15rem` | Block body text (normal density) |
+| `--ustc-fs-block-body-dense` | `0.96rem` | Block body text (dense density) |
+| `--ustc-fs-takeaway` | `1.4rem` | Takeaway text (normal density) |
+| `--ustc-fs-takeaway-dense` | `1.05rem` | Takeaway text (dense density) |
 | `--ustc-fs-footnote` | `0.67rem` | footnote items |
 | `--ustc-fs-footnote-ref` | `0.64em` | footnote superscript anchor (relative to parent) |
 
@@ -80,7 +152,7 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 
 | Variable | Default | Role |
 |----------|---------|------|
-| `--ustc-lh` | `2.0` | default line-height for body text (unitless) |
+| `--ustc-lh` | `1.8` | default line-height for body text (unitless) |
 | `--ustc-lh-dense` | `1.5` | line-height for body text in dense mode |
 | `--ustc-lh-heading` | `1.1` | h1/h2/h3 heading line-height |
 | `--ustc-lh-caption` | `1.35` | figure/table captions |
@@ -105,7 +177,7 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | `--ustc-px` | `2.8rem` | right padding (content/split/toc) |
 | `--ustc-py` | `1.75rem` | top padding |
 | `--ustc-pl` | `2.8rem` | left padding (also anchors footnote overlay) |
-| `--ustc-pb` | computed | bottom padding (footer-aware) |
+| `--ustc-pb` | `calc(var(--ustc-footer-h) + 0.9rem)` | bottom padding (footer-aware — see *Override safety* above) |
 | `--ustc-section-py` | `2.5rem` | top padding for section/backup layouts |
 | `--ustc-section-px` | `3.5rem` | right padding for section/backup layouts |
 | `--ustc-section-pl` | `4.8rem` | left padding for section/backup layouts |
@@ -118,12 +190,12 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 
 Set via `margin:` frontmatter prop — these map to the spacing variables:
 
-| `margin` | `--ustc-px` | `--ustc-py` |
-|----------|-------------|-------------|
-| `normal` (default) | 2.8rem | 1.75rem |
-| `tight` | 2.0rem | 1.25rem |
-| `tighter` | 1.2rem | 0.8rem |
-| `none` | 0rem | 0rem |
+| `margin` | `--ustc-px` | `--ustc-pl` | `--ustc-py` |
+|----------|-------------|-------------|-------------|
+| `normal` (default) | 2.8rem | 2.8rem | 1.75rem |
+| `tight` | 2.0rem | 2.0rem | 1.25rem |
+| `tighter` | 1.2rem | 1.2rem | 0.8rem |
+| `none` | 0rem | 0rem | 0rem |
 
 ---
 
@@ -162,7 +234,7 @@ Set via `margin:` frontmatter prop — these map to the spacing variables:
 
 | Variable | Default | Role |
 |----------|---------|------|
-| `--ustc-nav-h` | set automatically | section bar height — **do not override manually** |
+| `--ustc-nav-h` | `0px`, set automatically | section bar height — **do not override manually** |
 
 This variable is set by `global-top.vue` based on `sectionBarMode`:
 - `'minimal'` → `1.5rem`

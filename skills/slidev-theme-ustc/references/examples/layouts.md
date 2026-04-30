@@ -140,7 +140,7 @@ date: "2026 年 4 月"
 showLogo: false
 ---
 
-超长 `talkTitle` 测试。默认 `--ustc-max-w-cover-h1: var(--ustc-max-w-h1)`（即 58rem），可单独覆盖此 token 控制标题折行宽度而不影响其他幻灯片的 h1。
+超长 `talkTitle` 测试。默认 `--ustc-max-w-cover-h1: 48rem`，可单独覆盖此 token 控制封面标题折行宽度而不影响其他幻灯片的 h1。
 
 ---
 layout: cover
@@ -153,14 +153,14 @@ date: "2026 年 4 月"
 showLogo: false
 ---
 
-超长 `subtitle` 测试。默认 `--ustc-max-w-cover-sub: var(--ustc-max-w-sub)`（即 48rem），可单独覆盖此 token 控制副标题折行宽度。
+超长 `subtitle` 测试。默认 `--ustc-max-w-cover-sub: 58rem`，可单独覆盖此 token 控制封面副标题折行宽度。
 
 ---
 layout: section
 ---
 
 # 二、content 布局
-`density` · `margin` · `footer` · `footerMode` · `footnote` · `lineHeight` · `align` · `sectionBar` · `sectionBarMode`
+`density` · `margin` · `footer` · `footerMode` · `footnote` · `lineHeight` · `align` · `subtitle` · `background` · `sectionBar` · `sectionBarMode`
 
 ---
 layout: content
@@ -231,7 +231,9 @@ lineHeight: 2.5
 
 # lineHeight: 2.5
 
-`lineHeight` 覆盖默认行高（`2.0`）。
+`lineHeight` 覆盖默认正文行高（`1.8`）。
+
+它只调整段落内部的行距；段落之间的块间距仍由段落 margin 或外层 CSS 控制。
 
 设为 `2.5` 时正文行间距明显增大，适合：
 
@@ -305,7 +307,7 @@ layout: section
 ---
 
 # 三、split 布局
-`ratio` · `gap` · `density` · `margin` · `lineHeight` · `align` · `footnote`
+`ratio` · `gap` · `density` · `margin` · `lineHeight` · `align` · `footnote` · `subtitle` · `background` · `footer` · `footerMode` · `sectionBar` · `sectionBarMode`
 
 ---
 layout: split
@@ -568,7 +570,7 @@ sectionBarMode: minimal   # 仅此页使用 minimal 模式
 sectionBar: false         # 仅此页隐藏进度条
 ```
 
-注意：`section` / `cover` / `toc` / `end` / `blank` 页面不显示进度条。
+注意：进度条只在 `content` / `default` / `split` 页面渲染；`section` / `cover` / `toc` / `end` / `blank` / `backup` 页面均不显示。
 
 ---
 layout: content
@@ -593,6 +595,8 @@ sectionBar: false
 本页 frontmatter 设置了 `sectionBar: false`，顶部进度条完全隐藏。
 
 适合全图页、过渡页等不需要导航信息的场景。
+
+这是一行比较长的文本：这是一行比较长的文本：为了测试当前页面在 dense 模式下的排版效果，这里放置一段较长的连续说明文字，用于观察文本在 Slidev 页面中的换行、行距、字号、边距以及整体视觉密度。当 sectionBar 被关闭后，页面顶部不再显示进度条或章节提示，因此正文区域会显得更加干净，适合用于展示大图、关键结论、过渡页或需要弱化导航信息的内容场景。通过这段较长文本，可以更直观地判断当前主题在面对长句、说明性段落和高信息密度内容时，是否仍然保持良好的可读性和版面稳定性。
 
 ---
 layout: section

@@ -21,8 +21,8 @@ Left cell
 | Prop | Type | Default | Values |
 |------|------|---------|--------|
 | `cols` | string | `'2'` | `'3'`, `'1 2 1'`, `'1fr 2fr'`, `'300px 1fr'` |
-| `gap` | string | `'md'` | `'sm'` (0.6rem) · `'md'` (1.2rem) · `'lg'` (2rem) |
-| `align` | string | `'top'` | `'top'` · `'center'` · `'bottom'` |
+| `gap` | string | `'md'` | `'sm'` (0.8rem) · `'md'` (1.4rem) · `'lg'` (2rem) |
+| `alignY` | string | `'top'` | `'top'` · `'center'` · `'bottom'` |
 
 `cols` resolution: single digit → `repeat(n, 1fr)`; space-separated numbers → `Nfr` each; anything else → used verbatim.
 
@@ -118,7 +118,7 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 | `alt` | `''` | accessibility |
 | `caption` | `''` | — |
 | `width` | `'100%'` | outer container width |
-| `imageWidth` | `'100%'` | image element (max-height: 30rem) |
+| `imageWidth` | `'100%'` | image element (max-height: 38rem) |
 | `captionAlign` | `'center'` | `'left'` · `'center'` |
 | `captionInsetLeft` | `0` | padding-left on caption |
 | `captionInsetRight` | `0` | padding-right on caption |
