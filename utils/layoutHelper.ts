@@ -1,18 +1,26 @@
 import type { CSSProperties } from 'vue'
 
+export function getSlideFrontmatter(slide: any): Record<string, any> {
+  return (
+    slide?.frontmatter
+    ?? slide?.meta?.slide?.frontmatter
+    ?? slide?.meta?.frontmatter
+    ?? {}
+  )
+}
+
 export function getLayout(slide: any): string {
-  return slide?.frontmatter?.layout ?? slide?.meta?.layout ?? slide?.meta?.frontmatter?.layout ?? ''
+  return getSlideFrontmatter(slide).layout ?? slide?.meta?.layout ?? ''
 }
 
 export function getSectionTitle(slide: any, fallback: string): string {
+  const frontmatter = getSlideFrontmatter(slide)
   return (
-    slide.frontmatter?.sectionLabel ??
-    slide.meta?.slide?.frontmatter?.sectionLabel ??
-    slide.meta?.frontmatter?.sectionLabel ??
+    frontmatter.sectionLabel ??
     slide.meta?.slide?.title ??
     slide.meta?.title ??
     slide.title ??
-    slide.frontmatter?.title ??
+    frontmatter.title ??
     fallback
   )
 }
@@ -24,10 +32,7 @@ export function getSectionTitle(slide: any, fallback: string): string {
  * three-level frontmatter chain.
  */
 export function getSectionBarMode(slide: any, fallback: string = 'full'): string {
-  const local =
-    slide?.frontmatter?.sectionBarMode ??
-    slide?.meta?.slide?.frontmatter?.sectionBarMode ??
-    slide?.meta?.frontmatter?.sectionBarMode
+  const local = getSlideFrontmatter(slide).sectionBarMode
   return (local ?? fallback) as string
 }
 

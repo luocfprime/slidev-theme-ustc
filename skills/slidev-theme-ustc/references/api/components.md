@@ -18,7 +18,9 @@ Numbers are injected at compile time by the Slidev markdown transformer in `setu
 
 **Skip regions:** tags inside fenced code (``` and ~~~), inline code spans, and HTML comments are NOT counted. Tags inside attribute string values may falsely match — vanishingly rare in practice.
 
-**Out of scope:** `<component :is="'FigureBlock'" />` (dynamic rendering) is not recognized by the static transformer.
+**Supported syntax boundary:** auto-numbering is intentionally limited to static `<FigureBlock>`, `<figure-block>`, `<TableBlock>`, and `<table-block>` tags in slide source. It is a compile-time source transform, not a Vue runtime registry.
+
+**Out of scope:** `<component :is="'FigureBlock'" />` dynamic rendering, object spread such as `v-bind="{ number: 1 }"`, component aliases, and generated component names are not recognized by the static transformer. Set `:number` manually when using those patterns.
 
 Caption label format is `${prefix} ${number}${numberSuffix}${caption}` when a caption exists. The default suffix is `: `; set `figureNumberSuffix` / `tableNumberSuffix` in global frontmatter or `numberSuffix` on one block to use values such as `:`, `.`, or `. `.
 

@@ -17,7 +17,7 @@ Applies to `content` and `default` layouts. `split` extends this via `splitDefau
 | `align` | `'left'` | `'left'` · `'center'` · `'right'` |
 | `footer` | `true` | boolean |
 | `footerMode` | `'full'` | `'full'` · `'minimal'` |
-| `wip` | `false` | boolean — when `true`, renders a diagonal "WIP" stamp and tints the section-bar dot red |
+| `wip` | `false` | boolean — when `true` on slide frontmatter/layout props, renders a diagonal "WIP" stamp and tints the section-bar dot red |
 
 `lineHeight` and `background` have no default (omitted = unchanged).
 

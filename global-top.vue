@@ -1,39 +1,18 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
-import { getLayout, getSectionTitle, getSectionBarMode } from './utils/layoutHelper'
+import { getSectionBarMode } from './utils/layoutHelper'
+import { buildSectionGroups } from './utils/sectionModel'
 
 const enabled = $slidev.configs.sectionBar === true
-
-interface SectionGroup {
-  title: string
-  sectionNo: number
-  slideNos: number[]
-}
 
 /**
  * Compute section groups to determine the bar height.
  * The SectionBar UI is rendered inside each body layout (content, default, split)
  * so it lives within .slidev-layout and inherits per-slide CSS variable overrides.
  */
-const sections = computed((): SectionGroup[] => {
+const sections = computed(() => {
   if (!enabled) return []
-  const slides = $slidev.nav.slides ?? []
-  const result: SectionGroup[] = []
-  let cur: SectionGroup | null = null
-
-  for (const slide of slides) {
-    const layout = getLayout(slide)
-    const no = slide.no ?? 0
-    if (layout === 'backup') break
-    if (layout === 'section') {
-      const title = getSectionTitle(slide, `§${result.length + 1}`)
-      cur = { title, sectionNo: no, slideNos: [] }
-      result.push(cur)
-    } else if (layout !== 'cover' && layout !== 'end' && layout !== 'toc' && layout !== 'blank' && cur) {
-      cur.slideNos.push(no)
-    }
-  }
-  return result
+  return buildSectionGroups($slidev.nav.slides ?? [])
 })
 
 const currentPage = computed(() => $slidev.nav.currentPage)

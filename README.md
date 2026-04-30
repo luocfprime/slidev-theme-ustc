@@ -90,7 +90,10 @@ The theme bundles [Typst](https://typst.app) rendering support (vendored from [s
 ```
 ````
 
-Note: `#set page(...)` is not supported — page dimensions are controlled by the slide layout.
+Notes:
+
+- `#set page(...)` is not supported — page dimensions are controlled by the slide layout.
+- Typst support is an advanced, optional rendering path. Keep core slide content usable without relying on Typst-specific output structure; if you need broad Typst integration beyond inline rendered blocks, prefer a dedicated addon over expanding the theme's transformer.
 
 ## Agent Skill
 
