@@ -1,5 +1,13 @@
 import type { CSSProperties } from 'vue'
 
+// Three fallback paths reflect the two contexts where this is called:
+//   1. slide.frontmatter          — test stubs and Slidev's transformer context
+//                                   (ctx.options.data.slides[i].source is NOT used here;
+//                                    that context accesses .source.frontmatter directly)
+//   2. slide.meta?.slide?.frontmatter — primary runtime shape of $slidev.nav.slides
+//   3. slide.meta?.frontmatter    — fallback for alternative Slidev runtime shapes
+// If Slidev restructures its slide object, add the new path here rather than
+// scattering defensive access across call sites.
 export function getSlideFrontmatter(slide: any): Record<string, any> {
   return (
     slide?.frontmatter

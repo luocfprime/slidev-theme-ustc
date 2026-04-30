@@ -23,8 +23,12 @@
   --ustc-footer-text: rgba(255, 255, 255, 0.88);
   --ustc-footer-fs:   0.74rem;
 
-  /* Section bar height: 0px (disabled), 1.5rem (minimal), 2rem (full); set by global-top.vue */
+  /* Section bar height: 0px when disabled; otherwise set by global-top.vue to
+     var(--ustc-nav-h-full) or var(--ustc-nav-h-minimal). Override those two
+     variables to change the bar height; do not set --ustc-nav-h directly. */
   --ustc-nav-h: 0px;
+  --ustc-nav-h-full:    2rem;
+  --ustc-nav-h-minimal: 1.5rem;
 
   /* Slide padding
      TODO(low): --ustc-px (right) and --ustc-pl (left) share the same value but are kept

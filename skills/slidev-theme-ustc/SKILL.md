@@ -455,7 +455,39 @@ sectionBar: false
 ---
 ```
 
-The `--ustc-nav-h` CSS variable is set automatically to account for the bar height. Do not override it manually.
+The bar height is controlled by two overridable CSS variables (set these in your deck's `styles/index.css`):
+
+```css
+:root {
+  --ustc-nav-h-full:    2rem;    /* full mode (labels + dots) */
+  --ustc-nav-h-minimal: 1.5rem;  /* minimal mode (dots only) */
+}
+```
+
+`--ustc-nav-h` is computed automatically from these and must not be set manually.
+
+---
+
+## WIP Markers
+
+Two independent WIP signals exist; they do not interact:
+
+**Component-level `wip` prop** — on `<FigureBlock>`, `<TableBlock>`, `<VideoBlock>`, `<QRCode>`. Shows a red "WIP" badge on the component itself. No effect on section-bar dots.
+
+**Slide-level `wip: true` frontmatter** — on any body slide (`content`, `default`, `split`). Produces two effects:
+1. A large semi-transparent "WIP" watermark centered on the slide.
+2. The slide's dot in the section bar is tinted red with a pulsing glow.
+
+```yaml
+---
+layout: content
+wip: true
+---
+
+# Draft Slide
+```
+
+**Scope limitation:** `wip: true` on a `section` layout slide shows the watermark, but does **not** produce a red dot in the section bar. Section slides appear as section-group titles in the bar, not as body-slide dots. If you need a WIP signal on a section slide visible in the bar, add a placeholder body slide after it with `wip: true`.
 
 ---
 
@@ -469,6 +501,8 @@ The `--ustc-nav-h` CSS variable is set automatically to account for the bar heig
 | Recolor footer per slide | `.slidev-layout { --ustc-footer-bg: #... }` (or override `--ustc-blue`) in slide `<style>` |
 | Hide section bar on one slide | `sectionBar: false` in frontmatter |
 | Dots-only section bar | `sectionBarMode: minimal` |
+| Change section bar height | `--ustc-nav-h-full` / `--ustc-nav-h-minimal` in `:root` |
+| Mark a body slide as WIP | `wip: true` in frontmatter (watermark + red section-bar dot) |
 | Custom figure/table prefix | `figurePrefix: "Fig."` / `tablePrefix: "Tab."` in global frontmatter |
 | Custom number suffix | `figureNumberSuffix: ": "` / `tableNumberSuffix: ": "` globally, or `numberSuffix=": "` per block |
 | Layer Abs elements | `:z="20"` on top, `:z="10"` behind |
