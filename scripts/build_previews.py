@@ -125,6 +125,21 @@ def worker_count(deck_count: int) -> int:
     return deck_count
 
 
+def has_warning(text: str) -> bool:
+    lowered = text.lower()
+    return "warn" in lowered or "(!)" in text
+
+
+def print_success_diagnostics(results: list[BuildResult]) -> None:
+    for result in results:
+        if result.code != 0:
+            continue
+        if result.stderr.strip():
+            print(f"\n--- {result.name} stderr (successful build) ---\n{result.stderr}", file=sys.stderr, flush=True)
+        if result.stdout.strip() and has_warning(result.stdout):
+            print(f"\n--- {result.name} stdout (successful build) ---\n{result.stdout}", file=sys.stderr, flush=True)
+
+
 def main() -> int:
     print("[build-previews] cleaning dist/ and .preview/", flush=True)
     shutil.rmtree(ROOT / "dist", ignore_errors=True)
@@ -146,6 +161,8 @@ def main() -> int:
     for result in results:
         tag = "ok  " if result.code == 0 else "FAIL"
         print(f"[{tag}] {result.name}  (exit {result.code})", flush=True)
+
+    print_success_diagnostics(results)
 
     if failed:
         print(f"\n{len(failed)} deck(s) failed after {elapsed:.1f}s:", file=sys.stderr, flush=True)
