@@ -1,7 +1,7 @@
-function countComponents(content: string, pascal: string, kebab: string): number {
-  const stripped = content.replace(/```[\s\S]*?```/g, '').replace(/`[^`\n]*`/g, '')
-  return (stripped.match(new RegExp(`<(?:${pascal}|${kebab})\\b`, 'g')) ?? []).length
-}
+// Light-touch Vite plugin for the theme. Currently only exists to silence one
+// known noisy sourcemap warning from the `entities` dep. Auto-numbering used
+// to live here too; it has moved into the Slidev markdown transformer
+// (setup/transformers.ts) so dev/build/export all share one code path.
 
 function isEntitiesSourcemapNoise(msg: unknown): boolean {
   const text = String(msg)
@@ -28,29 +28,9 @@ function patchEntitiesSourcemapLogger(logger: any) {
   logger.__ustcEntitiesSourcemapPatched = true
 }
 
-// Injects _figureStart/_tableStart into each slide's frontmatter before the
-// ?frontmatter virtual modules are compiled so the numbers survive build-mode
-// content stripping.
-export default (options: any) => ({
-  name: 'ustc-numbering-inject',
+export default () => ({
+  name: 'ustc-vite-tweaks',
   configResolved(config: any) {
     patchEntitiesSourcemapLogger(config.logger)
-  },
-  buildStart() {
-    const slides = options.data.slides
-    let figureCount = 1
-    let tableCount = 1
-
-    for (const slide of slides) {
-      const content = slide.source.content
-      const figs = countComponents(content, 'FigureBlock', 'figure-block')
-      const tabs = countComponents(content, 'TableBlock', 'table-block')
-
-      if (figs > 0) slide.frontmatter._figureStart = figureCount
-      if (tabs > 0) slide.frontmatter._tableStart = tableCount
-
-      figureCount += figs
-      tableCount += tabs
-    }
   },
 })

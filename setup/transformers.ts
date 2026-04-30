@@ -3,6 +3,8 @@
 // Modifications: wrap bare <tr> in <tbody> to satisfy HTML spec and avoid Vue hydration warnings.
 
 import { NodeCompiler } from '@myriaddreamin/typst-ts-node-compiler'
+import { injectBlockNumbers, type NumberCounters } from '../utils/blockNumberTransform'
+import type { MarkdownTransformContext } from '@slidev/types'
 
 
 const compiler = NodeCompiler.create()
@@ -71,8 +73,32 @@ async function typstTransformer(ctx: any) {
   )
 }
 
+// Compile-time auto-numbering for <FigureBlock> / <TableBlock>. Runs in `pre`
+// so subsequent transformers (typst, markdown→Vue compile) see the injected
+// :number="N" props as if the user had typed them. Source of truth lives in
+// utils/blockNumberTransform.ts.
+//
+// Counter scope: global across the deck. To compute the starting counter for
+// the current slide we replay the transform on every prior slide's source
+// (O(N²); negligible for typical decks of <100 slides). This avoids any
+// closure-level state that would drift under HMR or out-of-order transformer
+// invocations.
+function numberingTransformer(ctx: MarkdownTransformContext) {
+  const slides = ctx.options.data.slides
+  const myIndex = ctx.slide.index
+
+  let counters: NumberCounters = { figure: 1, table: 1 }
+  for (let i = 0; i < myIndex; i++) {
+    counters = injectBlockNumbers(slides[i].source.content, counters).counters
+  }
+
+  const original = ctx.s.original
+  const { out } = injectBlockNumbers(original, counters)
+  if (out !== original) ctx.s.overwrite(0, original.length, out)
+}
+
 export default () => ({
-  pre: [],
+  pre: [numberingTransformer],
   preCodeblock: [typstTransformer],
   postCodeblock: [],
   post: [],

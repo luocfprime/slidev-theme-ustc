@@ -439,7 +439,8 @@ The `--ustc-nav-h` CSS variable is set automatically to account for the bar heig
 |------|-----|
 | Smaller body text globally | `:root { --ustc-fs-body: 1.2rem }` in `styles/index.css`, or `.slidev-layout { --ustc-fs-body: 1.2rem }` per slide |
 | Dense text on one slide | `density: dense` in frontmatter |
-| Change brand colour per slide | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1, footer, and section bar |
+| Change h1 / section-bar colour per slide | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1 and section bar |
+| Recolor footer per slide | `.slidev-layout { --ustc-footer-bg: #... }` (or override `--ustc-blue`) in slide `<style>` |
 | Hide section bar on one slide | `sectionBar: false` in frontmatter |
 | Dots-only section bar | `sectionBarMode: minimal` |
 | Custom figure/table prefix | `figurePrefix: "Fig."` / `tablePrefix: "Tab."` in global frontmatter |

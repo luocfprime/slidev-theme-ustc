@@ -27,6 +27,10 @@ tablePrefix: "表"
   see: SKILL.md → Layouts → cover, references/api/prop-defaults.md
 -->
 
+`examples/full-deck.md` — 完整集成 demo deck：所有 layout / 组件 / 数学 / 排版功能在一篇真实风格的学术汇报中协作演示。
+
+运行方式：`pnpm dev`（或 `slidev examples/full-deck.md`）
+
 大型强子对撞机产生的每次碰撞事例包含数千条粒子径迹。
 传统基于启发式的重建算法在高亮度 LHC 环境下面临严峻挑战——
 本报告提出一种端到端图神经网络框架，显著提升重建效率与精度。

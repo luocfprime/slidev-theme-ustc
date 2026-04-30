@@ -222,8 +222,8 @@ Content here
 
 | Prop | Notes |
 |------|-------|
-| `x` | left position; number → px, string → used as-is |
-| `y` | top position |
+| `x` | left position **(required)**; number → px, string → used as-is |
+| `y` | top position **(required)** |
 | `w` | width (optional) |
 | `z` | z-index within the slide content layer, default `10`. Cannot override the section bar or other global overlays — they are in a separate stacking context. |
 

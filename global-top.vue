@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
 import { getLayout, getSectionTitle } from './utils/layoutHelper'
-import { useAutoNumbering } from './utils/useAutoNumbering'
 
 const enabled = $slidev.configs.sectionBar === true
 
@@ -36,11 +35,6 @@ const sections = computed((): SectionGroup[] => {
   }
   return result
 })
-
-const allSlides = computed(() => $slidev.nav.slides ?? [])
-const configFigurePrefix = computed(() => ($slidev.configs.figurePrefix as string) ?? 'Figure')
-const configTablePrefix = computed(() => ($slidev.configs.tablePrefix as string) ?? 'Table')
-useAutoNumbering(allSlides, configFigurePrefix, configTablePrefix)
 
 const currentPage = computed(() => $slidev.nav.currentPage)
 
