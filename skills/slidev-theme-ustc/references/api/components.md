@@ -193,6 +193,7 @@ Video with optional caption. Mirrors `FigureBlock` API (no auto-numbering).
 ## `<TableBlock>`
 
 Table wrapper with auto-numbered caption. Counter is global across the entire deck.
+When `width` is narrower than the content area, a top-level TableBlock is centered by default.
 
 ```vue
 <TableBlock caption="Comparison results" captionAlign="center">
@@ -208,13 +209,15 @@ Table wrapper with auto-numbered caption. Counter is global across the entire de
 |------|---------|-------|
 | `caption` | `''` | — |
 | `captionAlign` | `'center'` | `'left'` · `'center'` |
-| `width` | `'100%'` | container width |
+| `width` | `'100%'` | container width; narrower top-level blocks center by default |
 | `prefix` | global `tablePrefix` | per-table label override |
 | `wip` | `false` | mark table as work-in-progress; shows red WIP badge next to caption |
 | `number` | injected | auto-numbered at compile time; set explicitly to override |
 | `numbered` | `true` | set to `false` to skip auto-numbering entirely |
 
 Global prefix set in deck frontmatter: `tablePrefix: Table` (default).
+
+`captionAlign` only controls caption text inside the TableBlock. To deliberately place a narrow table left or right, wrap it in a flex container with `justify-content:flex-start` or `justify-content:flex-end`.
 
 **WIP mode:** Add `wip` to show an red WIP badge inline after the caption. Table content still renders normally.
 

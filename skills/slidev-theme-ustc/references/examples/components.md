@@ -387,17 +387,27 @@ density: dense
 
 `width` 控制整个 TableBlock 容器的宽度（默认 `"100%"`）：
 
-<TableBlock caption="缩减至 70% 宽度，居中显示。" captionAlign="center" width="70%">
+<TableBlock caption="缩减至 70% 宽度，整体居中显示。" captionAlign="center" width="70%">
 
 | 过程 | 产额 | 误差 |
 |------|-----:|-----:|
 | $ZH$ | 18.4 | ±1.2 |
 | $WH$ | 12.7 | ±0.8 |
-| $ggH$ | 4.3 | ±0.5 |
 
 </TableBlock>
 
-宽度缩减后，表格在内容区中居左（`div` 默认左对齐）。若需居中，可用 `<div style="display:flex;justify-content:center">` 包裹。
+宽度缩减后，TableBlock 默认在内容区中居中；`captionAlign` 只控制标题在容器内的对齐。若需靠左，可用 `<div style="display:flex;justify-content:flex-start">` 包裹；靠右则用 `justify-content:flex-end`。
+
+<div style="display:flex;justify-content:flex-start">
+<TableBlock caption="同页靠左放置的 50% 宽表格。" captionAlign="center" width="50%">
+
+| 过程 | 产额 |
+|------|-----:|
+| $ttH$ | 3.1 |
+| $ggH$ | 4.3 |
+
+</TableBlock>
+</div>
 
 ---
 layout: content
