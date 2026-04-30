@@ -142,7 +142,7 @@ layout: section
 ---
 
 # 二、FigureBlock
-`src` · `alt` · `caption` · `width` · `imageWidth` · `captionAlign` · `captionInsetLeft` · `captionInsetRight` · `prefix` · `wip`
+`src` · `alt` · `caption` · `width` · `imageWidth` · `captionAlign` · `captionInsetLeft` · `captionInsetRight` · `prefix` · `numberSuffix` · `wip`
 
 ---
 layout: content
@@ -299,7 +299,7 @@ subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
 
 **默认：自动编号**
 
-<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动分配编号（接续 deck counter）" />
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动分配编号（接续 deck counter）" width="60%" />
 
 </div>
 
@@ -307,7 +307,7 @@ subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
 
 **`:numbered="false"`：跳过编号**
 
-<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" caption="无编号；后续 figure 也不消耗 counter（封面 / 装饰图常用）" />
+<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" caption="无编号；后续 figure 也不消耗 counter（封面 / 装饰图常用）" width="60%" />
 
 </div>
 
@@ -319,7 +319,7 @@ subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
 
 **`:number="42"`：手动钉编号**
 
-<FigureBlock :number="42" src="/ATLAS/ATLAS-Logo.png" caption="显示为 Figure 42；后续 auto counter 会跳到 43" />
+<FigureBlock :number="42" src="/ATLAS/ATLAS-Logo.png" caption="显示为 Figure 42；后续 auto counter 会跳到 43" width="60%" />
 
 </div>
 
@@ -327,7 +327,7 @@ subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
 
 **接下来的默认 figure**
 
-<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动取 max(counter, 43)，不会与上面撞号" />
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动取 max(counter, 43)，不会与上面撞号" width="60%" />
 
 </div>
 
@@ -338,7 +338,7 @@ layout: section
 ---
 
 # 三、TableBlock
-`caption` · `captionAlign` · `width` · `prefix` · `wip`
+`caption` · `captionAlign` · `width` · `prefix` · `numberSuffix` · `wip`
 
 ---
 layout: split
@@ -415,9 +415,9 @@ layout: content
 
 # TableBlock — prefix
 
-`prefix="Tab."` 覆盖全局前缀（headmatter `tablePrefix`）：
+`prefix="Tab."` 覆盖全局前缀（headmatter `tablePrefix`）；`numberSuffix=". "` 可把默认 `": "` 改回句点样式：
 
-<TableBlock caption="使用自定义前缀 Tab.。" prefix="Tab.">
+<TableBlock caption="使用自定义前缀 Tab.。" prefix="Tab." numberSuffix=". ">
 
 | 列 A | 列 B |
 |------|------|

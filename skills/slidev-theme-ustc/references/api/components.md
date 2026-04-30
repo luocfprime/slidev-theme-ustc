@@ -20,6 +20,8 @@ Numbers are injected at compile time by the Slidev markdown transformer in `setu
 
 **Out of scope:** `<component :is="'FigureBlock'" />` (dynamic rendering) is not recognized by the static transformer.
 
+Caption label format is `${prefix} ${number}${numberSuffix}${caption}` when a caption exists. The default suffix is `: `; set `figureNumberSuffix` / `tableNumberSuffix` in global frontmatter or `numberSuffix` on one block to use values such as `:`, `.`, or `. `.
+
 ---
 
 ## `<Grid>`
@@ -141,11 +143,12 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 | `captionInsetLeft` | `0` | padding-left on caption |
 | `captionInsetRight` | `0` | padding-right on caption |
 | `prefix` | global `figurePrefix` | per-figure label override |
+| `numberSuffix` | global `figureNumberSuffix` or `': '` | per-figure separator after the number |
 | `wip` | `false` | mark figure as work-in-progress; shows red WIP badge |
 | `number` | injected | auto-numbered at compile time; set explicitly to override |
 | `numbered` | `true` | set to `false` to skip auto-numbering entirely |
 
-Global prefix set in deck frontmatter: `figurePrefix: Figure` (default).
+Global prefix set in deck frontmatter: `figurePrefix: Figure` (default). Global suffix set in deck frontmatter: `figureNumberSuffix: ": "` (default).
 
 **WIP mode:** Add `wip` to show a red badge. Use a [placehold.co](https://placehold.co) URL as `src` to hold the correct aspect ratio while the real image is not ready.
 
@@ -211,11 +214,12 @@ When `width` is narrower than the content area, a top-level TableBlock is center
 | `captionAlign` | `'center'` | `'left'` · `'center'` |
 | `width` | `'100%'` | container width; narrower top-level blocks center by default |
 | `prefix` | global `tablePrefix` | per-table label override |
+| `numberSuffix` | global `tableNumberSuffix` or `': '` | per-table separator after the number |
 | `wip` | `false` | mark table as work-in-progress; shows red WIP badge next to caption |
 | `number` | injected | auto-numbered at compile time; set explicitly to override |
 | `numbered` | `true` | set to `false` to skip auto-numbering entirely |
 
-Global prefix set in deck frontmatter: `tablePrefix: Table` (default).
+Global prefix set in deck frontmatter: `tablePrefix: Table` (default). Global suffix set in deck frontmatter: `tableNumberSuffix: ": "` (default).
 
 `captionAlign` only controls caption text inside the TableBlock. To deliberately place a narrow table left or right, wrap it in a flex container with `justify-content:flex-start` or `justify-content:flex-end`.
 

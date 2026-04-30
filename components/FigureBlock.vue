@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
-import { figureDefaults } from '../utils/defaults'
+import { DEFAULT_NUMBER_SUFFIX, figureDefaults } from '../utils/defaults'
+import { formatNumberedCaption } from '../utils/captionFormat'
 
 const base = import.meta.env.BASE_URL
 
@@ -15,6 +16,7 @@ const props = withDefaults(defineProps<{
   captionInsetLeft?: string | number
   captionInsetRight?: string | number
   prefix?: string
+  numberSuffix?: string
   /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
    *  Numeric for body figures (1, 2, 3, ...); string for appendix figures
    *  with prefix (e.g. "A.1", "A.2"). */
@@ -53,13 +55,17 @@ const displayPrefix = computed(
   () => props.prefix || ($slidev.configs.figurePrefix as string | undefined) || 'Figure',
 )
 
-const fullCaption = computed(() => {
-  const showLabel = props.numbered !== false && props.number != null
-  if (!showLabel && !props.caption) return ''
-  if (!showLabel) return props.caption ?? ''
-  const label = `${displayPrefix.value} ${props.number}`
-  return props.caption ? `${label}. ${props.caption}` : label
-})
+const displayNumberSuffix = computed(
+  () => props.numberSuffix ?? ($slidev.configs.figureNumberSuffix as string | undefined) ?? DEFAULT_NUMBER_SUFFIX,
+)
+
+const fullCaption = computed(() => formatNumberedCaption({
+  prefix: displayPrefix.value,
+  number: props.number,
+  caption: props.caption,
+  numbered: props.numbered,
+  numberSuffix: displayNumberSuffix.value,
+}))
 </script>
 
 <template>
