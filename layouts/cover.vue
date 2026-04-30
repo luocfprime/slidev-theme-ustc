@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<{
   logoSrc?: string
   logoAlt?: string
   frontmatter?: Record<string, unknown>
+  wip?: boolean
 }>(), {
   ...coverDefaults,
   authorMarks: () => ({}),
@@ -35,7 +36,7 @@ const marksLegend = computed(() =>
 </script>
 
 <template>
-  <div class="slidev-layout cover" :style="bgStyle">
+  <div class="slidev-layout cover" :class="{ 'is-wip': props.wip }" :style="bgStyle">
     <img
       v-if="props.showLogo && props.logoSrc"
       :src="props.logoSrc"

@@ -70,7 +70,7 @@ const TAG_DEFS: TagDef[] = [
 
 // ─── Skip-region detection ────────────────────────────────────────────────
 
-type Range = [number, number]
+export type Range = [number, number]
 
 function findFencedCodeRanges(src: string): Range[] {
   // Fences (``` or ~~~) must be at line start (with up to 3 leading spaces
@@ -153,7 +153,7 @@ function mergeRanges(ranges: Range[]): Range[] {
   return merged
 }
 
-function findSkipRegions(src: string): Range[] {
+export function findSkipRegions(src: string): Range[] {
   const fences = findFencedCodeRanges(src)
   const comments = findHtmlCommentRanges(src)
   // Inline-code detection avoids overlap with fences (which start with `).

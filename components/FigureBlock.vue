@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
 import { DEFAULT_NUMBER_SUFFIX, figureDefaults } from '../utils/defaults'
-import { formatNumberedCaption } from '../utils/captionFormat'
 
 const base = import.meta.env.BASE_URL
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
   src?: string
@@ -59,13 +59,12 @@ const displayNumberSuffix = computed(
   () => props.numberSuffix ?? ($slidev.configs.figureNumberSuffix as string | undefined) ?? DEFAULT_NUMBER_SUFFIX,
 )
 
-const fullCaption = computed(() => formatNumberedCaption({
-  prefix: displayPrefix.value,
-  number: props.number,
-  caption: props.caption,
-  numbered: props.numbered,
-  numberSuffix: displayNumberSuffix.value,
-}))
+const showLabel = computed(() => props.numbered !== false && props.number != null)
+const hasCaptionContent = computed(() => !!slots.caption || !!props.caption)
+const labelText = computed(() => {
+  const base = `${displayPrefix.value} ${props.number}`
+  return hasCaptionContent.value ? `${base}${displayNumberSuffix.value}` : base
+})
 </script>
 
 <template>
@@ -77,7 +76,16 @@ const fullCaption = computed(() => formatNumberedCaption({
       :style="imageStyle"
     />
     <span v-if="props.wip" class="wip-badge">WIP</span>
-    <figcaption v-if="fullCaption" class="figure-caption" :style="captionStyle" v-html="renderInlineMd(fullCaption)" />
+    <figcaption
+      v-if="showLabel || hasCaptionContent"
+      class="figure-caption"
+      :style="captionStyle"
+    >
+      <span v-if="showLabel" class="figure-caption-label">{{ labelText }}</span>
+      <slot name="caption">
+        <span v-if="props.caption" v-html="renderInlineMd(props.caption)" />
+      </slot>
+    </figcaption>
   </figure>
 </template>
 
@@ -100,6 +108,17 @@ const fullCaption = computed(() => formatNumberedCaption({
   margin-top: var(--ustc-fig-caption-gap);
 }
 
+/* Slidev wraps slot markdown in <p>. Flatten so caption stays single-line-flow,
+   and force inherit so the global `:where(p)` body-size rule doesn't override the
+   caption's font-size / line-height / color. */
+.figure-caption :deep(p) {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
 .figure-block.is-wip {
   position: relative;
 }
@@ -108,7 +127,7 @@ const fullCaption = computed(() => formatNumberedCaption({
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  background: #dc2626;
+  background: var(--ustc-wip);
   color: white;
   font-size: 0.8rem;
   font-weight: 700;

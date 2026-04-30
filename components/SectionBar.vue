@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { getLayout, getSectionTitle, getSectionBarMode } from '../utils/layoutHelper'
+import { isSlideWip } from '../utils/slideWip'
 
 const props = defineProps<{
   /** Override per-slide sectionBar visibility (false = force-hide) */
@@ -9,10 +10,15 @@ const props = defineProps<{
 
 const enabled = $slidev.configs.sectionBar === true
 
+interface SectionSlide {
+  no: number
+  wip: boolean
+}
+
 interface SectionGroup {
   title: string
   sectionNo: number
-  slideNos: number[]
+  slides: SectionSlide[]
 }
 
 const sections = computed((): SectionGroup[] => {
@@ -27,10 +33,10 @@ const sections = computed((): SectionGroup[] => {
     if (layout === 'backup') break
     if (layout === 'section') {
       const title = getSectionTitle(slide, `§${result.length + 1}`)
-      cur = { title, sectionNo: no, slideNos: [] }
+      cur = { title, sectionNo: no, slides: [] }
       result.push(cur)
     } else if (layout !== 'cover' && layout !== 'end' && layout !== 'toc' && layout !== 'blank' && cur) {
-      cur.slideNos.push(no)
+      cur.slides.push({ no, wip: isSlideWip(slide) })
     }
   }
   return result
@@ -39,7 +45,7 @@ const sections = computed((): SectionGroup[] => {
 const currentPage = computed(() => $slidev.nav.currentPage)
 
 const activeSectionIdx = computed(() =>
-  sections.value.findIndex(s => s.slideNos.includes(currentPage.value))
+  sections.value.findIndex(s => s.slides.some(slide => slide.no === currentPage.value))
 )
 
 const barMode = computed(() => {
@@ -75,14 +81,15 @@ const show = computed(() => {
       >{{ section.title }}</span>
       <div class="ustc-section-dots">
         <span
-          v-for="no in section.slideNos"
-          :key="no"
+          v-for="slide in section.slides"
+          :key="slide.no"
           class="ustc-dot"
           :class="{
-            'is-current': no === currentPage,
-            'is-past': no < currentPage,
+            'is-current': slide.no === currentPage,
+            'is-past': slide.no < currentPage,
+            'is-wip': slide.wip,
           }"
-          @click="$slidev.nav.go(no)"
+          @click="$slidev.nav.go(slide.no)"
         />
       </div>
     </div>
@@ -151,4 +158,24 @@ const show = computed(() => {
 .ustc-dot:hover { border-color: white; background: rgba(255, 255, 255, 0.5); }
 .ustc-dot.is-current { background: white; border-color: white; }
 .ustc-dot.is-past { background: rgba(255, 255, 255, 0.32); border-color: rgba(255, 255, 255, 0.55); }
+
+/* WIP slide marker — slide.frontmatter.wip OR any wip-flagged component on the slide.
+   Detection lives in utils/slideWip.isSlideWip. Auto-detection (via component scan)
+   only works in dev mode; build/preview needs explicit `wip: true` in frontmatter
+   because Slidev strips slide.content to "" in build. Pulse keeps the ring
+   eye-catching without being loud enough to disable. */
+.ustc-dot.is-wip {
+  border-color: var(--ustc-wip);
+  border-width: 2px;
+}
+.ustc-dot.is-wip:hover { background: rgba(220, 38, 38, 0.45); border-color: var(--ustc-wip); }
+.ustc-dot.is-wip.is-current { background: var(--ustc-wip); border-color: var(--ustc-wip); }
+.ustc-dot.is-wip.is-past { background: rgba(220, 38, 38, 0.5); border-color: var(--ustc-wip); }
+.ustc-dot.is-wip:not(.is-current) {
+  animation: ustc-wip-dot-pulse 1.8s ease-in-out infinite;
+}
+@keyframes ustc-wip-dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55); }
+  50%      { box-shadow: 0 0 0 3px rgba(220, 38, 38, 0); }
+}
 </style>

@@ -334,6 +334,28 @@ subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
 </Grid>
 
 ---
+layout: content
+---
+
+# FigureBlock — caption slot（脚注 / 链接 / 富 markdown）
+
+`caption` prop 走组件内置的简化 markdown 渲染，**脚注引用、链接、自定义组件都不会生效**。需要这些时改用 `#caption` slot——内容由 Slidev 主管道处理。
+
+<FigureBlock src="/ATLAS/ATLAS-Detector.webp" alt="ATLAS 探测器" width="35%">
+
+<template #caption>
+
+ATLAS 探测器结构示意，详见 ATLAS Collaboration[^atlas-jinst]。
+
+</template>
+
+</FigureBlock>
+
+[^atlas-jinst]: ATLAS Collaboration, *The ATLAS Experiment at the CERN LHC*, *JINST* **3** (2008) S08003.
+
+`caption` prop 仍然保留作为兜底：slot 没填就走 prop（向后兼容，纯文字 caption 一行写完不用开 slot）。
+
+---
 layout: section
 ---
 
@@ -451,9 +473,36 @@ density: dense
 
 | 列 A | 列 B |
 |------|------|
-| ? | ? |
+| foo | bar |
 
 </TableBlock>
+
+---
+layout: content
+---
+
+# TableBlock — caption slot（脚注 / 链接 / 富 markdown）
+
+跟 FigureBlock 同样的 `#caption` slot：内容由 Slidev 主管道处理，**`<template>` 与内容之间必须用空行隔开**才会走 markdown：
+
+<TableBlock width="70%">
+
+<template #caption>
+
+模型在 ImageNet-1K 上的对比，基线数值取自 He et al.[^resnet]。
+
+</template>
+
+| 模型 | Top-1 Acc | 参数量 |
+|------|----------:|------:|
+| ResNet-50 | 76.1% | 25.6M |
+| Ours      | 79.3% | 23.8M |
+
+</TableBlock>
+
+[^resnet]: He et al. *Deep Residual Learning for Image Recognition*, CVPR 2016.
+
+默认 `<slot />` 仍然装表格 markdown，命名 slot `#caption` 装 caption——两者并存不冲突。
 
 ---
 layout: section
@@ -1282,6 +1331,94 @@ dragPos:
 <v-drag pos="vd-qr">
   <QRCode url="https://sli.dev" :size="90" caption="sli.dev" />
 </v-drag>
+
+---
+layout: section
+---
+
+# 十二、WIP 标注
+component 级 `wip` prop · slide 级 `wip` frontmatter
+
+---
+layout: content
+density: dense
+---
+
+# 组件 WIP 标注 — 全家桶（有src）
+
+四个组件都接受 `wip` prop，徽章统一用 `--ustc-wip`（#dc2626），叠在正常渲染的内容之上：
+
+<Grid cols="2" gap="lg" alignY="top">
+
+
+<FigureBlock wip src="https://placehold.co/600x400" caption="待补：实验装置示意。" width="45%" />
+
+
+<VideoBlock wip caption="待补：方法演示视频。" src="/videos/sample_video.mp4" width="45%" />
+
+
+
+<TableBlock wip caption="待补：消融实验结果。" width="85%">
+
+| 方法 | Acc | F1 |
+|------|-----|----|
+| Full model | ? | ? |
+| Baseline | ? | ? |
+
+</TableBlock>
+
+<QRCode wip url="https://github.com" :size="140" caption="待补：项目主页 QR。" />
+
+
+</Grid>
+
+本页 frontmatter 没写 `wip: true`，但 dev 模式下上方 section bar 的对应 dot 仍会变红——`isSlideWip()` 在 runtime 扫 `slide.meta.slide.content` 找组件级 `wip`。注意：build / preview 模式 Slidev 会 strip slide content 减小 bundle，auto-detection 失效；那种场景下要让整页变红需要显式打 `wip: true`。组件 badge 不受影响（组件级局部）。
+
+---
+layout: content
+density: dense
+---
+
+# 组件 WIP 标注 — 全家桶（无src）
+
+`src` / `url` 完全省略：FigureBlock / VideoBlock 渲染空 `<img>` / `<video>`（浏览器自带的 broken-icon）+ WIP badge；TableBlock 不写 markdown 内容就只剩 caption 行；QRCode 走内置斜纹占位方块。
+
+<Grid cols="2" gap="lg" alignY="top">
+
+
+<FigureBlock wip caption="待补：实验装置示意。" width="45%" />
+
+
+<VideoBlock wip caption="待补：方法演示视频。" width="45%" />
+
+
+
+<TableBlock wip caption="待补：消融实验结果。" width="85%" />
+
+<QRCode wip :size="140" caption="待补：项目主页 QR。" />
+
+
+</Grid>
+
+适合"我连占位图都还没找"的真·草稿状态——broken-icon 本身就是"这里啥都没有"的最强信号。
+
+---
+layout: content
+wip: true
+---
+
+# Slide 级 WIP 标注
+
+frontmatter 加 `wip: true` 触发两个信号：
+
+1. **大字水印** — "WIP" 横铺在内容上层（opacity 0.10、`pointer-events: none`，不挡阅读和点击）
+2. **顶部 section bar 圆圈红化** — 当前页 dot 变红 + 脉冲动画，overview / 演讲提词器一眼能扫到
+
+适合标注"这页还没写完"——slide 里没有 wip 组件、但整页都是草稿时，直接打 `wip: true` 即可。
+
+slide 里有 wip 组件的情况在 dev 模式被 runtime auto-detection 覆盖（见前两页），不必再手动同步；build / preview 模式才需要补上显式 `wip: true`。
+
+ship 前记得清掉 `wip: true` 和组件级 `wip`。
 
 ---
 layout: end

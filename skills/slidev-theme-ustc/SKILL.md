@@ -226,8 +226,30 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 <FigureBlock src="/img.png" caption="Caption" width="80%" />
 <FigureBlock src="/img.png" caption="Scheme" prefix="Scheme" />  <!-- shows "Scheme 2" if global counter is at 2 — prefix changes the label text, the global number stays -->
 <FigureBlock wip src="https://placehold.co/800x600" caption="Not ready yet" />  <!-- red WIP badge; use placehold.co to hold the correct aspect ratio -->
+<!-- #caption slot for footnote refs / links / Vue components — REQUIRES blank lines around <template> and its content for Slidev to process inside as markdown -->
+<FigureBlock src="/img.png" width="60%">
+
+<template #caption>
+
+Caption with [^1] footnote ref
+
+</template>
+
+</FigureBlock>
 <TableBlock caption="Table title">| col | ... |</TableBlock>
 <TableBlock wip caption="Table title">| col | ... |</TableBlock>  <!-- red WIP badge inline after caption -->
+<!-- TableBlock #caption slot — same blank-line requirement; default slot still holds the table markdown -->
+<TableBlock width="70%">
+
+<template #caption>
+
+Cite[^1] in caption
+
+</template>
+
+| col | ... |
+
+</TableBlock>
 <Abs x="200" y="100" w="300" :z="10">...</Abs>  <!-- x/y/w are the prop names, NOT top/left/width -->
 <VideoBlock src="/videos/demo.mp4" caption="Demo" width="80%" :controls="true" />
 <PlotlyGraph filePath="/chart.json" :graphWidth="600" :graphHeight="400" />

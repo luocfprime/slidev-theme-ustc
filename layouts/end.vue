@@ -9,6 +9,7 @@ const props = withDefaults(defineProps<{
   logoAlt?: string
   footer?: boolean
   footerMode?: 'full' | 'minimal'
+  wip?: boolean
 }>(), {
   ...endDefaults,
 })
@@ -17,7 +18,7 @@ const presenterName = computed(() => getPresenterName($slidev.configs.authors ??
 </script>
 
 <template>
-  <div class="slidev-layout end">
+  <div class="slidev-layout end" :class="{ 'is-wip': props.wip }">
     <img
       v-if="props.showLogo && props.logoSrc"
       :src="props.logoSrc"

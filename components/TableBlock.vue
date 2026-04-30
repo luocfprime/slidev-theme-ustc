@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
 import { DEFAULT_NUMBER_SUFFIX, tableDefaults } from '../utils/defaults'
-import { formatNumberedCaption } from '../utils/captionFormat'
+
+const slots = useSlots()
 
 const props = withDefaults(defineProps<{
   caption?: string
@@ -30,19 +31,27 @@ const displayNumberSuffix = computed(
   () => props.numberSuffix ?? ($slidev.configs.tableNumberSuffix as string | undefined) ?? DEFAULT_NUMBER_SUFFIX,
 )
 
-const fullCaption = computed(() => formatNumberedCaption({
-  prefix: displayPrefix.value,
-  number: props.number,
-  caption: props.caption,
-  numbered: props.numbered,
-  numberSuffix: displayNumberSuffix.value,
-}))
+const showLabel = computed(() => props.numbered !== false && props.number != null)
+const hasCaptionContent = computed(() => !!slots.caption || !!props.caption)
+const labelText = computed(() => {
+  const base = `${displayPrefix.value} ${props.number}`
+  return hasCaptionContent.value ? `${base}${displayNumberSuffix.value}` : base
+})
 </script>
 
 <template>
   <div class="table-block" :style="{ width: props.width }">
-    <div v-if="fullCaption || props.wip" class="table-block-caption" :style="{ justifyContent: captionAlign === 'left' ? 'flex-start' : 'center' }">
-      <span v-if="fullCaption" v-html="renderInlineMd(fullCaption)" />
+    <div
+      v-if="showLabel || hasCaptionContent || props.wip"
+      class="table-block-caption"
+      :style="{ justifyContent: captionAlign === 'left' ? 'flex-start' : 'center' }"
+    >
+      <span v-if="showLabel || hasCaptionContent" class="table-block-caption-text">
+        <span v-if="showLabel" class="table-caption-label">{{ labelText }}</span>
+        <slot name="caption">
+          <span v-if="props.caption" v-html="renderInlineMd(props.caption)" />
+        </slot>
+      </span>
       <span v-if="props.wip" class="wip-badge">WIP</span>
     </div>
     <slot />
@@ -61,9 +70,20 @@ const fullCaption = computed(() => formatNumberedCaption({
   margin: 0 0 var(--ustc-tab-caption-gap);
 }
 
+/* Slidev wraps slot markdown in <p>. Flatten so caption stays inline within the flex row,
+   and force inherit so the global `:where(p)` body-size rule doesn't override the
+   caption's font-size / line-height / color. */
+.table-block-caption :deep(p) {
+  display: inline;
+  margin: 0;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
 .wip-badge {
   display: inline-block;
-  background: #dc2626;
+  background: var(--ustc-wip);
   color: white;
   font-size: 0.8rem;
   font-weight: 700;
