@@ -286,6 +286,54 @@ ratio: "1:1"
 />
 
 ---
+layout: content
+density: dense
+subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
+---
+
+# FigureBlock — 自动编号的手动覆盖与跳过
+
+<Grid cols="2" gap="lg" alignY="top">
+
+<div>
+
+**默认：自动编号**
+
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动分配编号（接续 deck counter）" />
+
+</div>
+
+<div>
+
+**`:numbered="false"`：跳过编号**
+
+<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" caption="无编号；后续 figure 也不消耗 counter（封面 / 装饰图常用）" />
+
+</div>
+
+</Grid>
+
+<Grid cols="2" gap="lg" alignY="top">
+
+<div>
+
+**`:number="42"`：手动钉编号**
+
+<FigureBlock :number="42" src="/ATLAS/ATLAS-Logo.png" caption="显示为 Figure 42；后续 auto counter 会跳到 43" />
+
+</div>
+
+<div>
+
+**接下来的默认 figure**
+
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动取 max(counter, 43)，不会与上面撞号" />
+
+</div>
+
+</Grid>
+
+---
 layout: section
 ---
 
