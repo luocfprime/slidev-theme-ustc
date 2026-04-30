@@ -629,23 +629,27 @@ layout: content
 
 # 主要贡献
 
-<Grid cols="3" gap="md">
-  <Block title="算法贡献">
+<div class="contribution-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:1rem">
 
-  提出异构消息传递框架，首次在统一架构中同时处理 Pixel / SCT / TRT 三种探测器几何。
+<Block title="算法贡献">
 
-  </Block>
-  <Block title="工程贡献">
+提出异构消息传递框架，首次在统一架构中同时处理 Pixel / SCT / TRT 三种探测器几何。
 
-  推理时间降至 18 ms/event，比最优基线快 1.6×，满足 HL-LHC 在线触发预算。
+</Block>
 
-  </Block>
-  <Block title="科学价值">
+<Block title="工程贡献">
 
-  在 $\langle\mu\rangle = 200$ 高堆积条件下保持 97.1% 效率，为未来 ATLAS Run 4 分析奠定基础。
+推理时间降至 18 ms/event，比最优基线快 1.6×，满足 HL-LHC 在线触发预算。
 
-  </Block>
-</Grid>
+</Block>
+
+<Block title="科学价值">
+
+在 $\langle\mu\rangle = 200$ 高堆积条件下保持 97.1% 效率，为未来 ATLAS Run 4 分析奠定基础。
+
+</Block>
+
+</div>
 
 <Takeaway>
 
@@ -682,6 +686,36 @@ dragPos:
 <v-drag pos="qr-repo">
   <QRCode url="https://github.com" :size="120" caption="代码仓库" color="#16396b" />
 </v-drag>
+
+---
+layout: content
+density: dense
+subtitle: "（演示页）正文里 :numbered=false 与 v-if 对自动编号的影响"
+---
+
+<!--
+  features: layout: content, density: dense, FigureBlock with :numbered="false" (decorative, no caption prefix), `<div v-if="false">` wrapping a FigureBlock to demonstrate that v-if hides rendering but preserves the number slot
+  not shown: TableBlock equivalents (same prop semantics)
+  see: references/api/components.md → "Auto-numbering for FigureBlock and TableBlock"
+-->
+
+# 演示：自动编号 prop 行为
+
+<Grid cols="3" gap="md" alignY="top">
+
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动编号正常 — 应显示 图 N 前缀" />
+
+<div v-if="false">
+
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="被 v-if=false 永久隐藏；编号位仍被消耗。" />
+
+</div>
+
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="上一张被 v-if 隐藏；这里的编号比上方多 2，可见 v-if 保留编号槽。" />
+
+</Grid>
+
+<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" width="40%" caption="numbered=false 装饰图 — 无 图 N 前缀，counter 完全不增；后续 figure 号不被消耗。" />
 
 ---
 layout: end
