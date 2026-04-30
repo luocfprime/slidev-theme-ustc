@@ -53,13 +53,20 @@
   --ustc-fs-subtitle-dense: 0.97rem; /* content layout subtitle — dense    */
   --ustc-fs-callout:       1.15rem;  /* Callout body text                   */
   --ustc-fs-callout-dense: 0.95rem;  /* Callout body text in dense mode     */
-  --ustc-fs-callout-title: 1.1rem;   /* Callout title                       */
-  --ustc-fs-result-title:  1.05rem;  /* ResultBox title / Block title       */
-  --ustc-fs-result-title-dense: 0.92rem; /* ResultBox title / Block title — dense mode */
+  --ustc-fs-callout-title: 1.15rem;  /* Callout title                       */
+  --ustc-fs-callout-title-dense: 0.95rem; /* Callout title — dense mode     */
+  --ustc-fs-result-title:  1.15rem;  /* ResultBox title                     */
+  --ustc-fs-result-title-dense: 0.96rem; /* ResultBox title — dense mode    */
   --ustc-fs-result-body:   1.15rem;  /* ResultBox body text                 */
   --ustc-fs-result-body-dense: 0.96rem;  /* ResultBox body text — dense mode    */
+  --ustc-fs-block-title:   1.15rem;  /* Block title                         */
+  --ustc-fs-block-title-dense: 0.96rem; /* Block title — dense mode         */
+  --ustc-fs-block-body:    1.15rem;  /* Block body text                     */
+  --ustc-fs-block-body-dense: 0.96rem;  /* Block body text — dense mode     */
+  --ustc-fs-takeaway:      1.4rem;   /* Takeaway text                       */
+  --ustc-fs-takeaway-dense: 1.05rem; /* Takeaway text — dense mode          */
   --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
-  --ustc-lh:               2.0;      /* default line-height for body text   */
+  --ustc-lh:               1.8;      /* default line-height for body text   */
   --ustc-lh-dense:         1.5;      /* line-height for body text in dense mode */
   --ustc-lh-caption:       1.35;     /* figure/table captions               */
   --ustc-lh-table:         1.38;     /* td, th                              */
@@ -383,11 +390,6 @@
   line-height: inherit;
 }
 
-.slidev-layout.content.dense .content-subtitle,
-.slidev-layout.split.dense .content-subtitle {
-  font-size: var(--ustc-fs-subtitle-dense);
-}
-
 /* Reorder subtitle to appear immediately after h1, before body.
    Requires :has() — Chrome 105+ / modern Chromium for PDF export.
    Split: guarded with :not(:has(.split-header)) so this only applies in
@@ -460,15 +462,6 @@
   margin-top: calc((1 - var(--ustc-lh)) / 2 * var(--ustc-fs-body));
 }
 
-.slidev-layout.content.dense h1 + p,
-.slidev-layout.split.dense h1 + p,
-.slidev-layout.content.dense h1 + ul,
-.slidev-layout.split.dense h1 + ul,
-.slidev-layout.content.dense h1 + ol,
-.slidev-layout.split.dense h1 + ol {
-  margin-top: calc((1 - var(--ustc-lh)) / 2 * var(--ustc-fs-body-dense));
-}
-
 /* Block components: top margin zeroed so h1 { margin-bottom: --ustc-title-gap }
    is the single control point. Bottom margins (from scoped CSS) handle
    inter-component spacing. */
@@ -501,13 +494,20 @@
   margin: 0.6rem 0 0.15rem;
 }
 
-.slidev-layout.content p,
-.slidev-layout.content li,
-.slidev-layout.split p,
-.slidev-layout.split li {
+/* Wrapped in :where() so specificity drops to 0,0,1 — component scoped CSS
+   (e.g. Block.vue's .block-title { color: var(--ustc-blue-dark) }) wins on
+   color/typography that the component owns. */
+:where(.slidev-layout.content, .slidev-layout.split) :where(p, li) {
   font-size: var(--ustc-fs-body);
   line-height: var(--ustc-lh);
   color: var(--ustc-text);
+}
+
+/* Beat Slidev's default p/li line-height without taking over component
+   colors or font sizes. Component title paragraphs keep their own rhythm. */
+.slidev-layout:is(.content, .split)
+  :where(p:not(.block-title):not(.result-box-title), li) {
+  line-height: var(--ustc-lh);
 }
 
 .slidev-layout.content td,
@@ -541,45 +541,42 @@
   margin-top: 0.25rem;
 }
 
-/* Dense mode */
-.slidev-layout.content.dense,
-.slidev-layout.split.dense {
-  --ustc-title-gap: var(--ustc-title-gap-dense);
+/* ─── Dense mode — variable swap ──────────────────────────────────────────
+   Anywhere with `.dense` (on the layout root or a wrapper inside a slide)
+   resolves typography vars to their *-dense variants automatically. New
+   components/elements that use the same vars need NO parallel dense rule —
+   they pick up dense values via CSS variable cascade.
+
+   Only non-variable adjustments (e.g. margin tweaks) need explicit rules. */
+.dense {
+  --ustc-fs-body:          var(--ustc-fs-body-dense);
+  --ustc-lh:               var(--ustc-lh-dense);
+  --ustc-fs-h2:            var(--ustc-fs-h3);
+  --ustc-fs-table-cell:    var(--ustc-fs-table-cell-dense);
+  --ustc-fs-blockquote:    var(--ustc-fs-blockquote-dense);
+  --ustc-fs-caption:       var(--ustc-fs-caption-dense);
+  --ustc-fs-subtitle:      var(--ustc-fs-subtitle-dense);
+  --ustc-fs-callout:       var(--ustc-fs-callout-dense);
+  --ustc-fs-callout-title: var(--ustc-fs-callout-title-dense);
+  --ustc-fs-result-title:  var(--ustc-fs-result-title-dense);
+  --ustc-fs-result-body:   var(--ustc-fs-result-body-dense);
+  --ustc-fs-block-title:   var(--ustc-fs-block-title-dense);
+  --ustc-fs-block-body:    var(--ustc-fs-block-body-dense);
+  --ustc-fs-takeaway:      var(--ustc-fs-takeaway-dense);
+  --ustc-title-gap:        var(--ustc-title-gap-dense);
 }
 
-.slidev-layout.content.dense p,
-.slidev-layout.content.dense li,
-.slidev-layout.content .dense p,
-.slidev-layout.content .dense li,
-.slidev-layout.split.dense p,
-.slidev-layout.split.dense li,
-.slidev-layout.split .dense p,
-.slidev-layout.split .dense li {
-  font-size: var(--ustc-fs-body-dense);
-  line-height: var(--ustc-lh-dense);
-}
-
-.slidev-layout.content.dense td,
-.slidev-layout.content.dense th,
-.slidev-layout.split.dense td,
-.slidev-layout.split.dense th {
-  font-size: var(--ustc-fs-table-cell-dense);
-}
-
+/* Dense mode — non-variable adjustments (cannot be expressed via var swap) */
 .slidev-layout.content.dense h2,
 .slidev-layout.split.dense h2 {
-  font-size: var(--ustc-fs-h3);
   margin-top: 0.5rem;
 }
 
 .slidev-layout.content.dense li + li,
-.slidev-layout.split.dense li + li {
+.slidev-layout.split.dense li + li,
+.slidev-layout.content .dense li + li,
+.slidev-layout.split .dense li + li {
   margin-top: 0.12rem;
-}
-
-.slidev-layout.content.dense blockquote,
-.slidev-layout.split.dense blockquote {
-  font-size: var(--ustc-fs-blockquote-dense);
 }
 
 /* Component body text — font-size managed here so dense overrides apply uniformly */
@@ -588,6 +585,7 @@
 .slidev-layout.content .callout .callout-body li,
 .slidev-layout.split .callout .callout-body li {
   font-size: var(--ustc-fs-callout);
+  line-height: var(--ustc-lh);
 }
 
 .slidev-layout.content .result-box-body p,
@@ -595,55 +593,28 @@
 .slidev-layout.content .result-box-body li,
 .slidev-layout.split .result-box-body li {
   font-size: var(--ustc-fs-result-body);
+  line-height: var(--ustc-lh);
 }
 
 .slidev-layout.content .block-title,
 .slidev-layout.split .block-title {
-  font-size: var(--ustc-fs-result-title);
+  font-size: var(--ustc-fs-block-title);
 }
 
-.slidev-layout.content.dense .block-title,
-.slidev-layout.content .dense .block-title,
-.slidev-layout.split.dense .block-title,
-.slidev-layout.split .dense .block-title {
-  font-size: var(--ustc-fs-result-title-dense);
+.slidev-layout.content .block-body p,
+.slidev-layout.split .block-body p,
+.slidev-layout.content .block-body li,
+.slidev-layout.split .block-body li {
+  font-size: var(--ustc-fs-block-body);
+  line-height: var(--ustc-lh);
 }
 
-.slidev-layout.content.dense .result-box-title,
-.slidev-layout.content .dense .result-box-title,
-.slidev-layout.split.dense .result-box-title,
-.slidev-layout.split .dense .result-box-title {
-  font-size: var(--ustc-fs-result-title-dense);
-}
-
-.slidev-layout.content.dense .callout .callout-body p,
-.slidev-layout.content.dense .callout .callout-body li,
-.slidev-layout.content .dense .callout .callout-body p,
-.slidev-layout.content .dense .callout .callout-body li,
-.slidev-layout.split.dense .callout .callout-body p,
-.slidev-layout.split.dense .callout .callout-body li,
-.slidev-layout.split .dense .callout .callout-body p,
-.slidev-layout.split .dense .callout .callout-body li {
-  font-size: var(--ustc-fs-callout-dense);
-  line-height: var(--ustc-lh-dense);
-}
-
-.slidev-layout.content.dense .callout .callout-title,
-.slidev-layout.content .dense .callout .callout-title,
-.slidev-layout.split.dense .callout .callout-title,
-.slidev-layout.split .dense .callout .callout-title {
-  font-size: var(--ustc-fs-callout-dense);
-}
-
-.slidev-layout.content.dense .result-box-body p,
-.slidev-layout.content.dense .result-box-body li,
-.slidev-layout.content .dense .result-box-body p,
-.slidev-layout.content .dense .result-box-body li,
-.slidev-layout.split.dense .result-box-body p,
-.slidev-layout.split.dense .result-box-body li,
-.slidev-layout.split .dense .result-box-body p,
-.slidev-layout.split .dense .result-box-body li {
-  font-size: var(--ustc-fs-result-body-dense);
+.slidev-layout.content .takeaway p,
+.slidev-layout.split .takeaway p,
+.slidev-layout.content .takeaway li,
+.slidev-layout.split .takeaway li {
+  font-size: var(--ustc-fs-takeaway);
+  line-height: var(--ustc-lh);
 }
 
 /* Tables */
@@ -705,8 +676,8 @@
 
 .slidev-layout.content figcaption.figure-caption,
 .slidev-layout.split figcaption.figure-caption,
-.slidev-layout.content p.table-block-caption,
-.slidev-layout.split p.table-block-caption {
+.slidev-layout.content .table-block-caption,
+.slidev-layout.split .table-block-caption {
   color: var(--ustc-text-muted);
   font-size: var(--ustc-fs-caption);
   line-height: var(--ustc-lh-caption);
@@ -718,16 +689,9 @@
   margin: var(--ustc-fig-caption-gap) 0 0;
 }
 
-.slidev-layout.content p.table-block-caption,
-.slidev-layout.split p.table-block-caption {
+.slidev-layout.content .table-block-caption,
+.slidev-layout.split .table-block-caption {
   margin: 0 0 var(--ustc-tab-caption-gap);
-}
-
-.slidev-layout.content.dense figcaption.figure-caption,
-.slidev-layout.split.dense figcaption.figure-caption,
-.slidev-layout.content.dense p.table-block-caption,
-.slidev-layout.split.dense p.table-block-caption {
-  font-size: var(--ustc-fs-caption-dense);
 }
 
 /* Footnotes — overlay (content, split, end) */
