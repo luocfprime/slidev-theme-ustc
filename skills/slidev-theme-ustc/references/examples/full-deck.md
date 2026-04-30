@@ -690,32 +690,37 @@ dragPos:
 ---
 layout: content
 density: dense
+clicks: 1
 subtitle: "（演示页）正文里 :numbered=false 与 v-if 对自动编号的影响"
 ---
 
 <!--
-  features: layout: content, density: dense, FigureBlock with :numbered="false" (decorative, no caption prefix), `<div v-if="false">` wrapping a FigureBlock to demonstrate that v-if hides rendering but preserves the number slot
+  features: layout: content, density: dense, click-driven v-if reveal, FigureBlock with :numbered="false" (decorative, no caption prefix). The middle figure is hidden by v-if="$clicks > 0" so the deck mounts with figure 1 + gap + figure 3; on click the gap fills with figure 2 (its compile-time-injected number stays put). `clicks: 1` in frontmatter registers one click step so the v-if has something to react to.
   not shown: TableBlock equivalents (same prop semantics)
   see: references/api/components.md → "Auto-numbering for FigureBlock and TableBlock"
 -->
 
 # 演示：自动编号 prop 行为
 
+**点一下页面**：中间那张 figure 用 `v-if="$clicks > 0"` 控制——点击前不在 DOM 里，但编号槽已经被预留。点击后凭空出现，自带编号"图 X+1"，前后两张照常分到 X 和 X+2。
+
 <Grid cols="3" gap="md" alignY="top">
 
-<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动编号正常 — 应显示 图 N 前缀" />
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="始终可见" />
 
-<div v-if="false">
+<div v-if="$clicks > 0">
 
-<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="被 v-if=false 永久隐藏；编号位仍被消耗。" />
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="点击后才渲染" />
 
 </div>
 
-<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="上一张被 v-if 隐藏；这里的编号比上方多 2，可见 v-if 保留编号槽。" />
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="始终可见；编号比第一张大 2" />
 
 </Grid>
 
-<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" width="40%" caption="numbered=false 装饰图 — 无 图 N 前缀，counter 完全不增；后续 figure 号不被消耗。" />
+下方是 `:numbered="false"` 装饰图——无前缀、不消耗 counter：
+
+<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" width="32%" caption="装饰图，无 图 N 前缀" />
 
 ---
 layout: end
