@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useSlideContext } from '@slidev/client'
 import { renderInlineMd } from '../utils/markdown'
 import { figureDefaults } from '../utils/defaults'
-import { figureMapShared, figurePrefixShared } from '../utils/numbering'
-import { useLocalIndex } from '../utils/useLocalIndex'
 
 const base = import.meta.env.BASE_URL
 
@@ -18,11 +15,20 @@ const props = withDefaults(defineProps<{
   captionInsetLeft?: string | number
   captionInsetRight?: string | number
   prefix?: string
+  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time. */
+  number?: number
+  /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
+  numbered?: boolean
   wip?: boolean
 }>(), {
   ...figureDefaults,
+  numbered: true,
   wip: false,
 })
+
+if (import.meta.env.DEV && !props.src && !props.wip) {
+  console.warn('[FigureBlock] missing `src` and not flagged `wip`; this will render a broken <img>.')
+}
 
 const toCss = (v: string | number) => typeof v === 'number' ? `${v}px` : v
 
@@ -41,28 +47,21 @@ const imageStyle = computed(() => ({
   width: toCss(props.imageWidth),
 }))
 
-const { $page } = useSlideContext()
-
-const { el, localIdx } = useLocalIndex('figure-block')
-
-const autoNumber = computed(() => {
-  const startNum = figureMapShared.value.get($page.value) ?? 0
-  return startNum ? startNum + localIdx.value : 0
-})
-
-const displayPrefix = computed(() => props.prefix || figurePrefixShared.value)
+const displayPrefix = computed(
+  () => props.prefix || ($slidev.configs.figurePrefix as string | undefined) || 'Figure',
+)
 
 const fullCaption = computed(() => {
-  const num = autoNumber.value
-  if (!num && !props.caption) return ''
-  if (!num) return props.caption
-  const label = `${displayPrefix.value} ${num}`
+  const showLabel = props.numbered !== false && props.number != null
+  if (!showLabel && !props.caption) return ''
+  if (!showLabel) return props.caption ?? ''
+  const label = `${displayPrefix.value} ${props.number}`
   return props.caption ? `${label}. ${props.caption}` : label
 })
 </script>
 
 <template>
-  <figure ref="el" class="figure-block" :class="{ 'is-wip': props.wip }" :style="{ width: props.width }">
+  <figure class="figure-block" :class="{ 'is-wip': props.wip }" :style="{ width: props.width }">
     <img
       :src="resolvedSrc"
       :alt="props.alt"

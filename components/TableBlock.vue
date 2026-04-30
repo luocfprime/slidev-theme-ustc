@@ -1,44 +1,39 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { useSlideContext } from '@slidev/client'
 import { renderInlineMd } from '../utils/markdown'
 import { tableDefaults } from '../utils/defaults'
-import { tableMapShared, tablePrefixShared } from '../utils/numbering'
-import { useLocalIndex } from '../utils/useLocalIndex'
 
 const props = withDefaults(defineProps<{
   caption?: string
   captionAlign?: 'left' | 'center'
   width?: string
   prefix?: string
+  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time. */
+  number?: number
+  /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
+  numbered?: boolean
   wip?: boolean
 }>(), {
   ...tableDefaults,
+  numbered: true,
   wip: false,
 })
 
-const { $page } = useSlideContext()
-
-const { el, localIdx } = useLocalIndex('table-block')
-
-const autoNumber = computed(() => {
-  const startNum = tableMapShared.value.get($page.value) ?? 0
-  return startNum ? startNum + localIdx.value : 0
-})
-
-const displayPrefix = computed(() => props.prefix || tablePrefixShared.value)
+const displayPrefix = computed(
+  () => props.prefix || ($slidev.configs.tablePrefix as string | undefined) || 'Table',
+)
 
 const fullCaption = computed(() => {
-  const num = autoNumber.value
-  if (!num && !props.caption) return ''
-  if (!num) return props.caption
-  const label = `${displayPrefix.value} ${num}`
+  const showLabel = props.numbered !== false && props.number != null
+  if (!showLabel && !props.caption) return ''
+  if (!showLabel) return props.caption ?? ''
+  const label = `${displayPrefix.value} ${props.number}`
   return props.caption ? `${label}. ${props.caption}` : label
 })
 </script>
 
 <template>
-  <div ref="el" class="table-block" :style="{ width }">
+  <div class="table-block" :style="{ width: props.width }">
     <div v-if="fullCaption || props.wip" class="table-block-caption" :style="{ justifyContent: captionAlign === 'left' ? 'flex-start' : 'center' }">
       <span v-if="fullCaption" v-html="renderInlineMd(fullCaption)" />
       <span v-if="props.wip" class="wip-badge">WIP</span>
