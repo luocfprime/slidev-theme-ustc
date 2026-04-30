@@ -4,6 +4,24 @@ All components are auto-imported by Slidev — no import needed.
 
 ---
 
+## Auto-numbering for `<FigureBlock>` and `<TableBlock>`
+
+Numbers are injected at compile time by the Slidev markdown transformer in `setup/transformers.ts` (single source of truth: `utils/blockNumberTransform.ts`). The number is bound to the tag's source-code position, NOT its rendered DOM presence.
+
+| Override | Behavior |
+|----------|----------|
+| Bare `<FigureBlock>` | Auto-injected `:number="N"`, counter `+1` |
+| `<FigureBlock :number="7">` | Manual override; auto counter resumes from `max(c, 8)` |
+| `<FigureBlock :numbered="false">` | No number rendered AND counter unchanged |
+
+**v-if / v-show semantics:** these only affect rendering. The figure still occupies a number from its source-code position. Show/hide a figure via reactive state and its number stays stable across toggles. To exclude a tag entirely (no slot, no number), use `:numbered="false"` or wrap it in an HTML comment.
+
+**Skip regions:** tags inside fenced code (``` and ~~~), inline code spans, and HTML comments are NOT counted. Tags inside attribute string values may falsely match — vanishingly rare in practice.
+
+**Out of scope:** `<component :is="'FigureBlock'" />` (dynamic rendering) is not recognized by the static transformer.
+
+---
+
 ## `<Grid>`
 
 CSS grid container.
@@ -124,6 +142,8 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 | `captionInsetRight` | `0` | padding-right on caption |
 | `prefix` | global `figurePrefix` | per-figure label override |
 | `wip` | `false` | mark figure as work-in-progress; shows red WIP badge |
+| `number` | injected | auto-numbered at compile time; set explicitly to override |
+| `numbered` | `true` | set to `false` to skip auto-numbering entirely |
 
 Global prefix set in deck frontmatter: `figurePrefix: Figure` (default).
 
@@ -191,6 +211,8 @@ Table wrapper with auto-numbered caption. Counter is global across the entire de
 | `width` | `'100%'` | container width |
 | `prefix` | global `tablePrefix` | per-table label override |
 | `wip` | `false` | mark table as work-in-progress; shows red WIP badge next to caption |
+| `number` | injected | auto-numbered at compile time; set explicitly to override |
+| `numbered` | `true` | set to `false` to skip auto-numbering entirely |
 
 Global prefix set in deck frontmatter: `tablePrefix: Table` (default).
 
