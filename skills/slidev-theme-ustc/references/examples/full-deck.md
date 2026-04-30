@@ -745,6 +745,7 @@ layout: content
 <div>
 
 <FigureBlock
+  :numbered="false"
   src="/ATLAS/ATLAS-Logo.png"
   alt="超参数扫描结果"
   caption="图 A.1　效率（上）与推理时间（下）随 $k$ 和 $d$ 的变化热图。"
@@ -766,7 +767,7 @@ density: dense
 
 # A.2　与标准 Kalman Filter 的误差分析
 
-<TableBlock caption="表 A.1　各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。">
+<TableBlock :numbered="false" caption="表 A.1　各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。">
 
 | $p_T$ 区间 | KF 效率 | 本方法效率 | KF 假率 | 本方法假率 |
 |-----------|--------:|----------:|--------:|----------:|
