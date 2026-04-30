@@ -38,6 +38,18 @@ export interface NumberCounters {
   table: number
 }
 
+export interface InjectionOptions {
+  /**
+   * Optional per-kind label prefixes. When set, the injected attribute becomes
+   * a string-typed Vue expression (e.g. `:number="'A.1'"`) instead of the
+   * default numeric form (`:number="1"`). Used by the appendix-numbering pass
+   * in `setup/transformers.ts` to produce labels like "A.1", "A.2".
+   * The internal counter still increments as integers; the prefix is purely a
+   * display formatter.
+   */
+  prefixes?: { figure?: string; table?: string }
+}
+
 export interface InjectionResult {
   out: string
   counters: NumberCounters
@@ -225,9 +237,15 @@ function inspectAttrs(attrSpan: string): AttrInspection {
 
 // ─── Main entry ───────────────────────────────────────────────────────────
 
-export function injectBlockNumbers(src: string, start: NumberCounters): InjectionResult {
+export function injectBlockNumbers(
+  src: string,
+  start: NumberCounters,
+  options?: InjectionOptions,
+): InjectionResult {
   const regions = findSkipRegions(src)
   const counters: NumberCounters = { figure: start.figure, table: start.table }
+  const figurePrefix = options?.prefixes?.figure ?? ''
+  const tablePrefix = options?.prefixes?.table ?? ''
   const out: string[] = []
   let i = 0
   let regionIdx = 0
@@ -239,6 +257,11 @@ export function injectBlockNumbers(src: string, start: NumberCounters): Injectio
   const setIfHigher = (kind: TagKind, value: number) => {
     if (kind === 'figure') counters.figure = Math.max(counters.figure, value)
     else counters.table = Math.max(counters.table, value)
+  }
+  const buildInjection = (kind: TagKind, num: number) => {
+    const prefix = kind === 'figure' ? figurePrefix : tablePrefix
+    if (prefix) return ` :number="'${prefix}${num}'"`  // Vue expr → string literal
+    return ` :number="${num}"`                          // Vue expr → numeric literal
   }
 
   while (i < src.length) {
@@ -272,11 +295,12 @@ export function injectBlockNumbers(src: string, start: NumberCounters): Injectio
           }
         }
         else {
-          // Auto-inject :number="N" right after the tag name, then keep the
-          // rest of the open tag (including its leading whitespace) verbatim.
+          // Auto-inject :number="N" (or `'<prefix>N'`) right after the tag
+          // name, then keep the rest of the open tag (including its leading
+          // whitespace) verbatim.
           const num = m.kind === 'figure' ? counters.figure : counters.table
           out.push(src.slice(i, m.nameEnd))
-          out.push(` :number="${num}"`)
+          out.push(buildInjection(m.kind, num))
           out.push(src.slice(m.nameEnd, tagEndExclusive))
           advance(m.kind)
         }

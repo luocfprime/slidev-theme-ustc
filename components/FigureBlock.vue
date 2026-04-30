@@ -15,8 +15,10 @@ const props = withDefaults(defineProps<{
   captionInsetLeft?: string | number
   captionInsetRight?: string | number
   prefix?: string
-  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time. */
-  number?: number
+  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
+   *  Numeric for body figures (1, 2, 3, ...); string for appendix figures
+   *  with prefix (e.g. "A.1", "A.2"). */
+  number?: number | string
   /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
   numbered?: boolean
   wip?: boolean

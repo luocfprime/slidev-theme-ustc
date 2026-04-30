@@ -83,17 +83,47 @@ async function typstTransformer(ctx: any) {
 // (O(N²); negligible for typical decks of <100 slides). This avoids any
 // closure-level state that would drift under HMR or out-of-order transformer
 // invocations.
+// Appendix convention: any slide with `layout: backup`, AND every slide
+// after it, get their own counter starting from 1, with labels formatted as
+// "A.N" instead of bare "N". This matches academic-talk style where appendix
+// figures are numbered A.1, A.2, ... separately from body figures 1, 2, 3.
+const APPENDIX_PREFIX = 'A.'
+
+function isBackupSlide(slide: any): boolean {
+  return slide?.source?.frontmatter?.layout === 'backup'
+}
+
 function numberingTransformer(ctx: MarkdownTransformContext) {
   const slides = ctx.options.data.slides
   const myIndex = ctx.slide.index
 
   let counters: NumberCounters = { figure: 1, table: 1 }
+  let inAppendix = false
+
+  // Replay all prior slides to reach the correct starting counters AND
+  // appendix mode for the current slide.
   for (let i = 0; i < myIndex; i++) {
-    counters = injectBlockNumbers(slides[i].source.content, counters).counters
+    if (isBackupSlide(slides[i])) {
+      counters = { figure: 1, table: 1 }
+      inAppendix = true
+    }
+    const opts = inAppendix
+      ? { prefixes: { figure: APPENDIX_PREFIX, table: APPENDIX_PREFIX } }
+      : undefined
+    counters = injectBlockNumbers(slides[i].source.content, counters, opts).counters
   }
 
+  // The current slide may itself be the appendix-boundary slide.
+  if (isBackupSlide(slides[myIndex])) {
+    counters = { figure: 1, table: 1 }
+    inAppendix = true
+  }
+  const opts = inAppendix
+    ? { prefixes: { figure: APPENDIX_PREFIX, table: APPENDIX_PREFIX } }
+    : undefined
+
   const original = ctx.s.original
-  const { out } = injectBlockNumbers(original, counters)
+  const { out } = injectBlockNumbers(original, counters, opts)
   if (out !== original) ctx.s.overwrite(0, original.length, out)
 }
 
