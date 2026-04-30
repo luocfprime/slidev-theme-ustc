@@ -1,29 +1,20 @@
 import { test, expect } from '@playwright/test'
 
-const BASE = 'http://localhost:3030'
+// Smoke-level checks against the numbering fixture deck (port 13031).
+// Exhaustive counter logic is tested in numbering.fixture.spec.mjs.
 
 test('figure and table numbering renders correctly', async ({ page }) => {
-  // Test first TableBlock on slide 13
-  await page.goto(`${BASE}/13`, { waitUntil: 'networkidle' })
-  const tableCaption = page.locator('.table-block-caption').first()
-  const tableCaptionText = await tableCaption.textContent()
-  expect(tableCaptionText).toMatch(/^表\s*1/)
+  // Slide 2: first figure and table — basic independent counters
+  await page.goto('/2', { waitUntil: 'networkidle' })
+  const figLabel = page.locator('.figure-caption-label').first()
+  expect(await figLabel.textContent()).toMatch(/^Fig\s*1/)
+  const tabLabel = page.locator('.table-caption-label').first()
+  expect(await tabLabel.textContent()).toMatch(/^Tab\s*1/)
 
-  // Test first FigureBlock on slide 15
-  await page.goto(`${BASE}/15`, { waitUntil: 'networkidle' })
-  const figureCaption = page.locator('figcaption.figure-caption').first()
-  const figureCaptionText = await figureCaption.textContent()
-  expect(figureCaptionText).toMatch(/^图\s*1/)
-
-  // Test second TableBlock on slide 35
-  await page.goto(`${BASE}/35`, { waitUntil: 'networkidle' })
-  const tableCaption2 = page.locator('.table-block-caption').first()
-  const tableCaptionText2 = await tableCaption2.textContent()
-  expect(tableCaptionText2).toMatch(/^表\s*2/)
-
-  // Test second FigureBlock on slide 37
-  await page.goto(`${BASE}/37`, { waitUntil: 'networkidle' })
-  const figureCaption2 = page.locator('figcaption.figure-caption').first()
-  const figureCaptionText2 = await figureCaption2.textContent()
-  expect(figureCaptionText2).toMatch(/^图\s*2/)
+  // Slide 9: appendix counters reset and gain A. prefix
+  await page.goto('/9', { waitUntil: 'networkidle' })
+  const figLabelApp = page.locator('.figure-caption-label').first()
+  expect(await figLabelApp.textContent()).toMatch(/^Fig\s*A\.1/)
+  const tabLabelApp = page.locator('.table-caption-label').first()
+  expect(await tabLabelApp.textContent()).toMatch(/^Tab\s*A\.1/)
 })

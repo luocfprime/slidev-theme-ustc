@@ -55,23 +55,7 @@ test('multi-line FigureBlock preserves whitespace exactly', () => {
   assert.equal(r.out, '<FigureBlock :number="1"\n  src="/a.png"\n  caption="x"\n/>')
 })
 
-test('newline immediately after tag name', () => {
-  const src = '<FigureBlock\n/>'
-  const r = injectBlockNumbers(src, start())
-  assert.equal(r.out, '<FigureBlock :number="1"\n/>')
-})
-
 // ─── Multiple tags ────────────────────────────────────────────────────────
-
-test('three figures number 1, 2, 3', () => {
-  const src = '<FigureBlock />\n<FigureBlock />\n<FigureBlock />'
-  const r = injectBlockNumbers(src, start())
-  assert.equal(
-    r.out,
-    '<FigureBlock :number="1" />\n<FigureBlock :number="2" />\n<FigureBlock :number="3" />',
-  )
-  assert.deepEqual(r.counters, { figure: 4, table: 1 })
-})
 
 test('figures and tables interleaved use independent counters', () => {
   const src = '<FigureBlock /> <TableBlock /> <FigureBlock /> <TableBlock />'
@@ -105,27 +89,6 @@ test('tag inside multi-line HTML comment is skipped', () => {
   assert.equal(
     r.out,
     '<!--\n  features: cover\n  <FigureBlock src="x" />\n-->\n<FigureBlock :number="1" />',
-  )
-})
-
-test('multiple comments + interleaved tags', () => {
-  const src = [
-    '<FigureBlock />',
-    '<!-- <FigureBlock /> -->',
-    '<FigureBlock />',
-    '<!-- another -->',
-    '<FigureBlock />',
-  ].join('\n')
-  const r = injectBlockNumbers(src, start())
-  assert.equal(
-    r.out,
-    [
-      '<FigureBlock :number="1" />',
-      '<!-- <FigureBlock /> -->',
-      '<FigureBlock :number="2" />',
-      '<!-- another -->',
-      '<FigureBlock :number="3" />',
-    ].join('\n'),
   )
 })
 

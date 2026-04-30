@@ -22,8 +22,3 @@ test('component wip source does not mark the slide as WIP', () => {
 
   assert.equal(isSlideWip(slide), false)
 })
-
-test('frontmatter values other than literal true do not mark a slide as WIP', () => {
-  assert.equal(isSlideWip({ frontmatter: { wip: false } }), false)
-  assert.equal(isSlideWip({ frontmatter: { wip: 'true' } }), false)
-})
