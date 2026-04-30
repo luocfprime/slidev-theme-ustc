@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Intentionally identical to layouts/content.vue — changes must be mirrored there.
-import { computed } from 'vue'
+import { computed, onMounted, onUpdated, ref } from 'vue'
 import { getPresenterName, resolveBodyMargin, handleBackground } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
 import { bodyDefaults } from '../utils/defaults'
@@ -37,10 +37,26 @@ const pageStyle = computed(() => {
   if (props.background) Object.assign(s, handleBackground(props.background))
   return s
 })
+
+const layoutEl = ref<HTMLElement>()
+
+function placeSubtitle() {
+  const root = layoutEl.value
+  if (!root) return
+  const subtitle = root.querySelector(':scope > .content-subtitle')
+  const h1 = root.querySelector(':scope > h1')
+  if (!subtitle || !h1) return
+  if (h1.nextElementSibling !== subtitle) {
+    h1.insertAdjacentElement('afterend', subtitle)
+  }
+}
+
+onMounted(placeSubtitle)
+onUpdated(placeSubtitle)
 </script>
 
 <template>
-  <div class="slidev-layout content" :class="pageClass" :style="pageStyle">
+  <div ref="layoutEl" class="slidev-layout content" :class="pageClass" :style="pageStyle">
     <SectionBar :visible="props.sectionBar === false ? false : undefined" />
 
     <slot />

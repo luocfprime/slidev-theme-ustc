@@ -393,31 +393,10 @@
   line-height: inherit;
 }
 
-/* Reorder subtitle to appear immediately after h1, before body.
-   Requires :has() — Chrome 105+ / modern Chromium for PDF export.
-   Split: guarded with :not(:has(.split-header)) so this only applies in
-   no-columns mode — in hasColumns mode the subtitle lives inside .split-header
-   and needs no flex reordering. */
-.slidev-layout.content:has(.content-subtitle),
-.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) {
-  display: flex;
-  flex-direction: column;
-}
-
-.slidev-layout.content:has(.content-subtitle) > h1,
-.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) > h1 {
-  order: 1;
-}
-
-.slidev-layout.content:has(.content-subtitle) > .content-subtitle,
-.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) > .content-subtitle {
-  order: 2;
-}
-
-.slidev-layout.content:has(.content-subtitle) > *:not(h1):not(.content-subtitle),
-.slidev-layout.split:not(:has(.split-header)):has(.content-subtitle) > *:not(h1):not(.content-subtitle) {
-  order: 3;
-}
+/* Subtitle is moved into source position right after h1 by the layout's
+   onMounted hook (see content.vue / default.vue / split.vue). No flex+order
+   reorder is needed — and avoids quirks where blockified flex items like
+   <br> ignore the `order` property in Chrome and push the h1 down. */
 
 /* ─── Shared: content + split ────────────────────────────────────────────── */
 .slidev-layout.content.footnotes-flow .footnotes,
@@ -441,9 +420,11 @@
   padding: 0.08rem 0;
 }
 
-/* Subtitle sits visually tight under h1; don't let --ustc-title-gap push it away */
-.slidev-layout.content:has(.content-subtitle) h1,
-.slidev-layout.split:has(.content-subtitle) h1 {
+/* Subtitle sits visually tight under h1; don't let --ustc-title-gap push it
+   away. Adjacent-sibling :has() works because the layout hook places
+   .content-subtitle directly after the h1. */
+.slidev-layout.content h1:has(+ .content-subtitle),
+.slidev-layout.split h1:has(+ .content-subtitle) {
   margin-bottom: 0;
 }
 
