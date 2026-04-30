@@ -27,7 +27,9 @@
     "dev": "slidev examples/full-deck.md --open",
     "build": "mkdir -p .preview && cp examples/full-deck.md .preview/ && slidev build .preview/full-deck.md && cp -r public/. dist/",
     "export": "mkdir -p .preview && cp examples/full-deck.md .preview/ && slidev export .preview/full-deck.md",
-    "preview": "python3 scripts/build_previews.py && uv run --script serve.py"
+    "preview": "python3 scripts/build_previews.py && uv run --script serve.py",
+    "test": "pnpm test:unit && playwright test",
+    "test:unit": "pnpm exec tsx --test tests/*.test.mjs"
   },
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",

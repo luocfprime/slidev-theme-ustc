@@ -22,18 +22,17 @@ references.
 ## Commands
 
 ```bash
-pnpm dev      # Start Slidev with examples/full-deck.md at http://localhost:3030
-pnpm build    # Build examples/full-deck.md as a static SPA
-pnpm export   # Export examples/full-deck.md to PDF; needs Playwright browser support
-pnpm preview  # Build with GitHub Pages base URL and serve via serve.py
+pnpm dev        # Start Slidev with examples/full-deck.md at http://localhost:3030
+pnpm build      # Build examples/full-deck.md as a static SPA
+pnpm export     # Export examples/full-deck.md to PDF; needs Playwright browser support
+pnpm preview    # Build with GitHub Pages base URL and serve via serve.py
+pnpm test       # Run all tests: unit tests then Playwright DOM assertions
+pnpm test:unit  # Unit tests only (fast, no browser)
 ```
 
-Playwright smoke tests expect the dev server to already be running on port 3030:
-
-```bash
-pnpm dev
-npx playwright test
-```
+`pnpm test` starts the fixture Slidev servers automatically — no need to run `pnpm dev`
+first. Playwright tests use isolated fixture decks under `tests/fixtures/`, not
+`examples/full-deck.md`.
 
 Use `pnpm` for local development. Release CI uses Node 24 and `npm publish`
 because npm Trusted Publisher OIDC requires npm.
@@ -168,15 +167,56 @@ state the answers in the plan or commit context:
 - If the implementation is intentionally limited or hacky, is that boundary
   documented in the skill/reference docs?
 
+## Testing
+
+### When to run tests
+
+Run `pnpm test` before committing any change to the runtime surface (`layouts/`,
+`components/`, `setup/`, `styles/`, `utils/`, `global-top.vue`). It runs unit
+tests first, then Playwright DOM assertions against fixture decks — no manual
+server startup needed.
+
+### Adding tests for new features
+
+Global features — anything that affects numbering, section-bar state, layout
+chrome, or cross-slide behavior — should get a Playwright DOM assertion test:
+
+1. Add or extend a fixture deck under `tests/fixtures/` (keep it minimal; only
+   the slides needed to exercise the feature).
+2. Write a spec file named `<feature>*.spec.mjs` in `tests/`. Playwright routes
+   it to the right fixture server based on the filename prefix (see
+   `playwright.config.mjs`).
+3. Scope every locator through `page.locator('.slidev-layout:visible').first()`
+   — Slidev renders all slides in DOM simultaneously, so unscoped locators
+   silently match hidden slides.
+
+Pure logic in `utils/` should get a `*.test.mjs` unit test instead; it is
+auto-collected by `pnpm test:unit` without configuration changes.
+
+### What not to test
+
+Tests should verify real behavioral boundaries, not pad coverage:
+
+- Do not test trivially obvious outcomes (e.g., `wip: false` returns false).
+- Do not test the absence of UI elements on structural layouts (cover, toc) that
+  never rendered that element to begin with.
+- Do not write two assertions that are logical consequences of each other (if
+  the first passes, the second cannot fail independently).
+- Do not depend on `examples/full-deck.md` for tests — it is actively edited and
+  not a stable fixture. Use `tests/fixtures/` instead.
+
+### Fixture deck discipline
+
+Each fixture deck under `tests/fixtures/` should be the smallest deck that
+exercises the feature under test. Annotate the slide layout in a header comment
+inside the spec file. New fixture servers need a matching entry in
+`playwright.config.mjs` (`webServer` + `projects`).
+
 ## Verification
 
 Always run `pnpm build` and confirm it exits with `built` before creating any
 commit that touches `examples/full-deck.md`, `layouts/`, `components/`, `setup/`,
 `styles/`, `utils/`, `global-top.vue`, or package configuration.
-
-Run `npx playwright test` when a change affects rendered slides, navigation,
-layout chrome, numbering, media loading, or browser setup behavior. Remember to
-start `pnpm dev` first and leave it running on port 3030.
 
 For documentation-only changes to this file, `README.md`, issue templates, or
 internal planning notes, a build is optional unless the docs describe behavior
