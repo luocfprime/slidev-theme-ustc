@@ -200,7 +200,7 @@ layout: blank
 
 `Grid`, `Block`, `Abs` — layout helpers. `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `Takeaway` — content blocks. `VideoBlock`, `PlotlyGraph`, `QRCode` — media.
 
-All are auto-imported by Slidev. For full prop tables see [references/components.md](references/components.md).
+All are auto-imported by Slidev. For full prop tables see [references/api/components.md](references/api/components.md).
 
 ### When to use which content component
 
@@ -244,13 +244,13 @@ The theme exposes many features (subtitle, dense mode, section bar, footnotes, C
 - **Toggle, don't litter.** Disable `sectionBar`/`footer` per-slide for cover, end, blank, and full-bleed visuals — not casually elsewhere.
 - **Climb the precedence ladder for one-off styling**: frontmatter prop → CSS variable override in a slide `<style>` block → wrap the component in a plain `<div style="…">`. Two scoping levels for CSS variable overrides: (a) `.my-scope { --var }` on a wrapper `<div>` — only that subtree changes; (b) `.slidev-layout { --var }` — the entire slide including h1, footer, and section bar. For deck-wide overrides, put `:root { --var }` in `styles/index.css`. If none of these fit, **propose a feature request or PR against the theme repo** — **never edit the installed theme files** (e.g. `node_modules/@luocfprime/slidev-theme-ustc/…`). Those files are outside project scope: they get wiped on every reinstall, the change does not version-control with your deck, and the deck silently forks from upstream.
 
-See [references/guidelines.md](references/guidelines.md) for fine-tuning recipes (width limits, gutter columns, scoped overrides) and a "when NOT to use" table per feature.
+See [references/design-guide.md](references/design-guide.md) for fine-tuning recipes (width limits, gutter columns, scoped overrides) and a "when NOT to use" table per feature.
 
 ---
 
 ## CSS Variables
 
-Full variable reference: [references/css-variables.md](references/css-variables.md).
+Full variable reference: [references/api/theme-tokens.md](references/api/theme-tokens.md).
 
 Key overridable variables:
 
@@ -447,24 +447,24 @@ The `--ustc-nav-h` CSS variable is set automatically to account for the bar heig
 | Wider left column in split | `ratio: "3:1"` |
 | Inline footnotes | `footnote: flow` |
 | One-off width / spacing tweak | Wrap the component in `<div style="…">`; don't passthrough to the theme component |
-| Equal-height items | Use raw native CSS Grid instead of `<Grid>` — see [guidelines.md](references/guidelines.md#force-equal-height-in-a-grid) |
+| Equal-height items | Use raw native CSS Grid instead of `<Grid>` — see [design-guide.md](references/design-guide.md#force-equal-height-in-a-grid) |
 | Absolute positioning | Prefer `<v-drag>`, use `<Abs>` for `%` coords |
-| All valid prop values | See [references/components.md](references/components.md) |
-| All CSS variables | See [references/css-variables.md](references/css-variables.md) |
+| All valid prop values | See [references/api/components.md](references/api/components.md) |
+| All CSS variables | See [references/api/theme-tokens.md](references/api/theme-tokens.md) |
 
 ---
 
 ## Additional Resources
 
-- [references/components.md](references/components.md) — full prop tables for all components
-- [references/defaults.md](references/defaults.md) — all prop default values (source: `utils/defaults.ts`)
-- [references/css-variables.md](references/css-variables.md) — complete CSS variable reference
-- [references/example.md](references/example.md) — canonical demo deck showing all layouts and components in use
-- [references/guidelines.md](references/guidelines.md) — design principles, layout fine-tuning recipes, "when NOT to use" table per feature
+- [references/api/components.md](references/api/components.md) — full prop tables for all components
+- [references/api/prop-defaults.md](references/api/prop-defaults.md) — all prop default values (source: `utils/defaults.ts`)
+- [references/api/theme-tokens.md](references/api/theme-tokens.md) — complete CSS variable reference
+- [references/examples/full-deck.md](references/examples/full-deck.md) — canonical demo deck showing all layouts and components in use
+- [references/design-guide.md](references/design-guide.md) — design principles, layout fine-tuning recipes, "when NOT to use" table per feature
 
 Runnable demo decks under `references/examples/` (each runs with `slidev examples/<name>.md`):
 
 - [references/examples/layouts.md](references/examples/layouts.md) — every layout's full frontmatter options
 - [references/examples/components.md](references/examples/components.md) — every component's prop demos
 - [references/examples/math.md](references/examples/math.md) — math rendering across positions and components
-- [references/examples/tweaks.md](references/examples/tweaks.md) — fine-tuning recipes (before/after pages, companion to `guidelines.md`)
+- [references/examples/tweaks.md](references/examples/tweaks.md) — fine-tuning recipes (before/after pages, companion to `design-guide.md`)

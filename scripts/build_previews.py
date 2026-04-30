@@ -41,7 +41,14 @@ class BuildResult:
 
 
 def discover_decks() -> list[Deck]:
-    decks = [Deck("example", "example.md")]
+    """Discover every deck under examples/, including the canonical full-deck demo.
+
+    All decks are staged under .preview/ to keep Vite's symlink path resolution
+    happy (examples/ is itself a symlink into the skill references). Frontmatter
+    in each deck uses `theme: ../`, which from .preview/<file>.md resolves back
+    to the project root where the theme lives.
+    """
+    decks: list[Deck] = []
     examples_dir = ROOT / "examples"
     if not examples_dir.exists():
         return decks

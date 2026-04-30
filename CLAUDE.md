@@ -12,17 +12,19 @@ runtime package surface is defined by the `files` field in `package.json`:
 `utils/`, and `global-top.vue`. Everything else is local development,
 documentation, tests, examples, or release tooling.
 
-`example.md` is the canonical local deck and the `pnpm dev`/`pnpm build` entry.
-It is a symlink to `skills/slidev-theme-ustc/references/example.md`. The
-`examples/` directory is also a symlink into the skill references. Editing these
-files changes both the local demos and the published agent skill references.
+The canonical local deck is `examples/full-deck.md`, accessed via the `examples/`
+directory (a symlink into `skills/slidev-theme-ustc/references/examples/`). All
+runnable demo decks—the full deck plus focused decks like `layouts.md`,
+`components.md`, `math.md`, and `tweaks.md`—live together under `examples/`.
+Editing these files changes both the local demos and the published agent skill
+references.
 
 ## Commands
 
 ```bash
-pnpm dev      # Start Slidev with example.md at http://localhost:3030
-pnpm build    # Build example.md as a static SPA
-pnpm export   # Export example.md to PDF; needs Playwright browser support
+pnpm dev      # Start Slidev with examples/full-deck.md at http://localhost:3030
+pnpm build    # Build examples/full-deck.md as a static SPA
+pnpm export   # Export examples/full-deck.md to PDF; needs Playwright browser support
 pnpm preview  # Build with GitHub Pages base URL and serve via serve.py
 ```
 
@@ -84,11 +86,11 @@ demos, tests, docs, skills, or release metadata.
 For layout behavior, start in `utils/defaults.ts`, `utils/layoutHelper.ts`, and
 the relevant layout file. Use existing CSS variables in `styles/layout.css`
 instead of hardcoding new values. Add a new CSS variable only when it is a real
-theme knob and document it in `skills/slidev-theme-ustc/references/css-variables.md`.
+theme knob and document it in `skills/slidev-theme-ustc/references/api/theme-tokens.md`.
 
 For component API changes, update the component, any shared defaults/helpers,
-the canonical example deck when useful, and
-`skills/slidev-theme-ustc/references/components.md`. The skill is the current
+the canonical full-deck demo when useful, and
+`skills/slidev-theme-ustc/references/api/components.md`. The skill is the current
 source for frontmatter, component prop, and CSS variable usage documentation;
 there is no `docs/configuration.md`.
 
@@ -102,7 +104,7 @@ Avoid changing generated or local-only output directories: `dist/`, `.slidev/`,
 ## Verification
 
 Always run `pnpm build` and confirm it exits with `built` before creating any
-commit that touches `example.md`, `layouts/`, `components/`, `setup/`,
+commit that touches `examples/full-deck.md`, `layouts/`, `components/`, `setup/`,
 `styles/`, `utils/`, `global-top.vue`, or package configuration.
 
 Run `npx playwright test` when a change affects rendered slides, navigation,

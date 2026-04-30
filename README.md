@@ -13,11 +13,11 @@ pnpm dev
 pnpm build
 ```
 
-`pnpm dev` opens `example.md`, which is the canonical local template deck for this theme.
+`pnpm dev` opens `examples/full-deck.md`, which is the canonical local template deck for this theme.
 
 ## Template Entry
 
-This theme keeps `example.md` as the template entry so users can copy or inspect one complete starter deck.
+This theme keeps `examples/full-deck.md` as the template entry so users can copy or inspect one complete starter deck.
 
 ## Project Structure
 
@@ -37,7 +37,6 @@ This repository follows Slidev's conventional directories and keeps theme runtim
 |-- tests/               # Playwright smoke tests for rendered slides
 |-- skills/              # Claude Code skill for this theme
 |-- global-top.vue       # Global Slidev layer
-`-- example.md           # Symlink → skills/slidev-theme-ustc/references/example.md
 ```
 
 ## Published Files
