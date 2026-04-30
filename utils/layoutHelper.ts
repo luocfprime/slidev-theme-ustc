@@ -17,6 +17,20 @@ export function getSectionTitle(slide: any, fallback: string): string {
   )
 }
 
+/**
+ * Read a slide's per-page sectionBarMode frontmatter override, falling back
+ * to a default. Each call site still owns its `currentSlide` reactive
+ * lookup and `barMode` computed wrapper — this only deduplicates the
+ * three-level frontmatter chain.
+ */
+export function getSectionBarMode(slide: any, fallback: string = 'full'): string {
+  const local =
+    slide?.frontmatter?.sectionBarMode ??
+    slide?.meta?.slide?.frontmatter?.sectionBarMode ??
+    slide?.meta?.frontmatter?.sectionBarMode
+  return (local ?? fallback) as string
+}
+
 export function resolveAssetUrl(url: string) {
   if (url.startsWith('/'))
     return import.meta.env.BASE_URL + url.slice(1)

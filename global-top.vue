@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
-import { getLayout, getSectionTitle } from './utils/layoutHelper'
+import { getLayout, getSectionTitle, getSectionBarMode } from './utils/layoutHelper'
 
 const enabled = $slidev.configs.sectionBar === true
 
@@ -44,14 +44,9 @@ const currentSlide = computed(() => {
   return slides[idx] as any
 })
 
-const barMode = computed(() => {
-  const s = currentSlide.value
-  const local =
-    s?.frontmatter?.sectionBarMode ??
-    s?.meta?.slide?.frontmatter?.sectionBarMode ??
-    s?.meta?.frontmatter?.sectionBarMode
-  return (local ?? ($slidev.configs.sectionBarMode as string) ?? 'full') as string
-})
+const barMode = computed(() =>
+  getSectionBarMode(currentSlide.value, ($slidev.configs.sectionBarMode as string) ?? 'full'),
+)
 
 /** Keep --ustc-nav-h on :root in sync so layout padding-top is always correct. */
 watchEffect(() => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getLayout, getSectionTitle } from '../utils/layoutHelper'
+import { getLayout, getSectionTitle, getSectionBarMode } from '../utils/layoutHelper'
 
 const props = defineProps<{
   /** Override per-slide sectionBar visibility (false = force-hide) */
@@ -46,11 +46,7 @@ const barMode = computed(() => {
   const slides = $slidev.nav.slides ?? []
   const idx = (currentPage.value ?? 1) - 1
   const s = slides[idx] as any
-  const local =
-    s?.frontmatter?.sectionBarMode ??
-    s?.meta?.slide?.frontmatter?.sectionBarMode ??
-    s?.meta?.frontmatter?.sectionBarMode
-  return (local ?? ($slidev.configs.sectionBarMode as string) ?? 'full') as string
+  return getSectionBarMode(s, ($slidev.configs.sectionBarMode as string) ?? 'full')
 })
 
 /** Whether the bar should be shown in the current slide. */
