@@ -56,6 +56,8 @@ const gridStyle = computed(() => {
 
 <template>
   <div class="slidev-layout split" :class="pageClass" :style="pageStyle">
+    <SectionBar :visible="props.sectionBar === false ? false : undefined" />
+
     <template v-if="hasColumns">
       <div class="split-header">
         <slot />
