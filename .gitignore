@@ -9,3 +9,4 @@ docs/superpowers/
 .worktrees/
 .preview/
 __pycache__
+.gstack/
