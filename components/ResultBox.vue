@@ -25,7 +25,7 @@ defineProps<{
 
 .result-box-title {
   font-weight: var(--ustc-fw-semibold);
-  color: var(--ustc-blue-dark);
+  color: var(--ustc-text);
   font-size: var(--ustc-fs-result-title);
   margin: 0 0 0.4rem;
 }
