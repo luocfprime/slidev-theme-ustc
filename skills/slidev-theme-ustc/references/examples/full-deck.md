@@ -690,19 +690,45 @@ dragPos:
 ---
 layout: content
 density: dense
-clicks: 1
-subtitle: "（演示页）正文里 :numbered=false 与 v-if 对自动编号的影响"
+subtitle: "（演示一）:numbered=false — 不显示前缀，也不消耗 counter"
 ---
 
 <!--
-  features: layout: content, density: dense, click-driven v-if reveal, FigureBlock with :numbered="false" (decorative, no caption prefix). The middle figure is hidden by v-if="$clicks > 0" so the deck mounts with figure 1 + gap + figure 3; on click the gap fills with figure 2 (its compile-time-injected number stays put). `clicks: 1` in frontmatter registers one click step so the v-if has something to react to.
-  not shown: TableBlock equivalents (same prop semantics)
+  features: layout: content, density: dense, three FigureBlock with the middle one carrying :numbered="false". Demonstrates the prop both suppresses the prefix AND skips the counter — the third figure's auto-number is N+1, not N+2.
+  not shown: v-if behavior (next slide)
   see: references/api/components.md → "Auto-numbering for FigureBlock and TableBlock"
 -->
 
-# 演示：自动编号 prop 行为
+# 演示一：`:numbered="false"` 跳过计数
 
-**点一下页面**：中间那张 figure 用 `v-if="$clicks > 0"` 控制——点击前不在 DOM 里，但编号槽已经被预留。点击后凭空出现，自带编号"图 X+1"，前后两张照常分到 X 和 X+2。
+中间那张装饰图既不显示"图 N"前缀，也不让 counter 自增。结果：右侧编号 = 左侧 + **1**，不是 + 2。
+
+<Grid cols="3" gap="md" alignY="top">
+
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="自动编号" />
+
+<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" caption="装饰图，无前缀" />
+
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="编号 = 左侧 + 1" />
+
+</Grid>
+
+---
+layout: content
+density: dense
+clicks: 1
+subtitle: "（演示二）v-if 保留编号槽，点击触发渲染"
+---
+
+<!--
+  features: layout: content, density: dense, click-driven v-if reveal. The middle figure is wrapped in `<div v-if="$clicks > 0">` so the slide mounts with figure M + gap + figure M+2; one click renders the middle figure with its compile-time-assigned number M+1. `clicks: 1` registers the click step.
+  not shown: :numbered="false" (previous slide)
+  see: references/api/components.md → "Auto-numbering for FigureBlock and TableBlock"
+-->
+
+# 演示二：`v-if` 保留编号槽
+
+**点一下**：中间槽位 `v-if="$clicks > 0"`——点前不在 DOM 但**编号槽已预留**；点后凭空出现，自带编号 M+1。右侧那张始终是 M+2，不会因中间显隐而重排。
 
 <Grid cols="3" gap="md" alignY="top">
 
@@ -714,13 +740,9 @@ subtitle: "（演示页）正文里 :numbered=false 与 v-if 对自动编号的�
 
 </div>
 
-<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="始终可见；编号比第一张大 2" />
+<FigureBlock src="/ATLAS/ATLAS-Logo.png" caption="始终可见；编号 = 左侧 + 2" />
 
 </Grid>
-
-下方是 `:numbered="false"` 装饰图——无前缀、不消耗 counter：
-
-<FigureBlock :numbered="false" src="/ATLAS/ATLAS-Logo.png" width="32%" caption="装饰图，无 图 N 前缀" />
 
 ---
 layout: end
@@ -838,7 +860,7 @@ density: dense
 
 # A.3　预训练方法对比（Typst 排版示例）
 
-<TableBlock caption="Comparison to the state-of-the-art pre-training methods on semantic tasks (ImageNet-1K linear probing, ADE segmentation) and 3D vision tasks (NYUv2, Taskonomy) with ViT-Base/16. Bold = best, underlined = second best." />
+<TableBlock :numbered="false" caption="表 A.2　Comparison to the state-of-the-art pre-training methods on semantic tasks (ImageNet-1K linear probing, ADE segmentation) and 3D vision tasks (NYUv2, Taskonomy) with ViT-Base/16. Bold = best, underlined = second best." />
 
 ```typst
 #set text(size: 8.2pt)
