@@ -36,7 +36,7 @@ These are managed by theme code or computed from other tokens. A direct override
 
 | Token | Why | Override what instead |
 |-------|-----|-----------------------|
-| `--ustc-nav-h` | Written by `global-top.vue` from `sectionBarMode` (0 / 1.5rem / 2rem). Manual values get clobbered on every render. | Toggle `sectionBar` / `sectionBarMode`. |
+| `--ustc-nav-h` | Written by `global-top.vue` as `var(--ustc-nav-h-full)` or `var(--ustc-nav-h-minimal)` (or `0px`). Manual values get clobbered on every render. | Override `--ustc-nav-h-full` / `--ustc-nav-h-minimal` instead. |
 | `--ustc-pb` | `calc(var(--ustc-footer-h) + 0.9rem)` — bottom padding tracks footer height. A direct override drops the footer-clearance and lets content overlap the bar. | Change `--ustc-footer-h`, or re-derive with the same `calc(…)` form. |
 
 ### Override the dense variant, not the base
@@ -235,9 +235,14 @@ Set via `margin:` frontmatter prop — these map to the spacing variables:
 
 | Variable | Default | Role |
 |----------|---------|------|
-| `--ustc-nav-h` | `0px`, set automatically | section bar height — **do not override manually** |
+| `--ustc-nav-h` | `0px`, set automatically | resolved height — **do not override manually**; override the two variables below instead |
+| `--ustc-nav-h-full` | `2rem` | bar height in full mode (labels + dots) |
+| `--ustc-nav-h-minimal` | `1.5rem` | bar height in minimal mode (dots only) |
 
-This variable is set by `global-top.vue` based on `sectionBarMode`:
-- `'minimal'` → `1.5rem`
-- `'full'` → `2rem`
-- bar hidden → `0px`
+`--ustc-nav-h` is written by `global-top.vue` as `var(--ustc-nav-h-full)`, `var(--ustc-nav-h-minimal)`, or `0px` depending on `sectionBar` / `sectionBarMode`. To change the bar height, override the appropriate size variable in `:root`:
+
+```css
+:root {
+  --ustc-nav-h-full: 2.5rem;
+}
+```

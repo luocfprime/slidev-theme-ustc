@@ -32,9 +32,9 @@ watchEffect(() => {
   if (!enabled || sections.value.length === 0) {
     document.documentElement.style.setProperty('--ustc-nav-h', '0px')
   } else if (barMode.value === 'minimal') {
-    document.documentElement.style.setProperty('--ustc-nav-h', '1.5rem')
+    document.documentElement.style.setProperty('--ustc-nav-h', 'var(--ustc-nav-h-minimal)')
   } else {
-    document.documentElement.style.setProperty('--ustc-nav-h', '2rem')
+    document.documentElement.style.setProperty('--ustc-nav-h', 'var(--ustc-nav-h-full)')
   }
 })
 </script>
