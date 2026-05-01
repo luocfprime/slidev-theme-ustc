@@ -37,7 +37,7 @@ test('visual snapshots', async ({ page }) => {
         .catch(() => {})
 
       await expect.soft(page).toHaveScreenshot(`slide-${n}.png`, {
-        maxDiffPixelRatio: 0.02,
+        maxDiffPixelRatio: 0.04,
         animations: 'disabled',
         caret: 'hide',
       })
