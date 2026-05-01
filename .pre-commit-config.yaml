@@ -2,6 +2,10 @@ ci:
   autofix_prs: true
   autofix_commit_msg: 'style: auto-fix prettier/eslint [pre-commit.ci]'
   autoupdate_schedule: monthly
+  # ESLint uses flat ESM config; pre-commit.ci installs additional_dependencies in its
+  # own cache dir which is not on Node.js module resolution path from /code/eslint.config.js.
+  # Run ESLint in GitHub Actions (where pnpm install has run) instead.
+  skip: [eslint]
 
 repos:
   - repo: local

@@ -25,6 +25,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Lint
+        run: pnpm exec eslint .
+
       - name: Unit tests
         run: pnpm test:unit
 
@@ -35,15 +38,15 @@ jobs:
         run: pnpm exec playwright test
 
       - name: Playwright tests (examples scan)
-        run: pnpm exec playwright test --config playwright.examples.config.mjs
+        run: pnpm exec playwright test --config playwright.examples.config.mjs --grep-invert visual
 
       - name: Playwright visual regression
         id: visual
         run: pnpm test:visual
         continue-on-error: true
 
-      - name: Upload visual snapshot diffs
-        if: steps.visual.outcome == 'failure'
+      - name: Upload visual snapshots
+        if: always()
         uses: actions/upload-artifact@v7
         with:
           name: visual-snapshots-actual
