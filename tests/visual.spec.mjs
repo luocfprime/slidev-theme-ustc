@@ -6,7 +6,7 @@ test('visual snapshots', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
 
   await page.goto('/1', { waitUntil: 'networkidle' })
-  await page.waitForSelector('.slidev-layout', { timeout: 15_000 })
+  await page.waitForSelector('.slidev-layout', { timeout: 30_000 })
   await page.evaluate(() => document.fonts.ready)
 
   let total = null

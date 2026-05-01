@@ -41,9 +41,7 @@ jobs:
         run: pnpm exec playwright test --config playwright.examples.config.mjs --grep-invert visual
 
       - name: Playwright visual regression
-        id: visual
-        run: pnpm test:visual
-        continue-on-error: true
+        run: pnpm exec playwright test --config playwright.examples.config.mjs --grep visual --project full-deck --project layouts --project math --project tweaks
 
       - name: Upload visual snapshots
         if: always()
