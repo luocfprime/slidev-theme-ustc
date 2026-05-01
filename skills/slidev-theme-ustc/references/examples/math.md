@@ -1,8 +1,6 @@
 ---
 theme: ../
 layout: cover
-authors:
-  - 演讲者: ["中国科学技术大学"]
 conference: '$\LaTeX$ 数学公式示例'
 talkTitle: '数学公式完整参考 $\int e^{-x^2}dx$'
 subtitle: '行内公式 $\alpha_s(Q)$ · 块级公式 $\int e^{-x^2}dx$ · 组件内数学'

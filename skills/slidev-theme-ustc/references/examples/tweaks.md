@@ -1,8 +1,6 @@
 ---
 theme: ../
 layout: cover
-authors:
-  - 演讲者: ["中国科学技术大学"]
 conference: "USTC Slidev 主题"
 talkTitle: "Hacky Tweaks"
 subtitle: "可维护的局部 hack：wrapper、变量、作用域"

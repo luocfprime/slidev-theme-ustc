@@ -1,8 +1,6 @@
 ---
 theme: ../
 layout: cover
-authors:
-  - 演讲者: ["中国科学技术大学"]
 conference: "USTC Slidev 主题"
 talkTitle: "组件与布局原语完整参考"
 subtitle: "Callout · FigureBlock · TableBlock · ResultBox · QRCode · PlotlyGraph · Grid · Block · Takeaway · Abs"

@@ -1,8 +1,6 @@
 ---
 theme: ../
 layout: cover
-authors:
-  - 演讲者: ["中国科学技术大学"]
 conference: "USTC Slidev 主题"
 talkTitle: "布局系统完整参考"
 subtitle: "所有布局的全部 frontmatter 选项"
