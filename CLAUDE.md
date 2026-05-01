@@ -239,6 +239,25 @@ For documentation-only changes to this file, `README.md`, issue templates, or
 internal planning notes, a build is optional unless the docs describe behavior
 you also changed.
 
+## Post-Implementation Quality Check
+
+After completing any code change — new feature or bug fix — before declaring the
+task done:
+
+1. Re-read this `CLAUDE.md` to refresh the rules in full context.
+2. Launch a subagent via the `Agent` tool (`subagent_type: "superpowers:code-reviewer"`)
+   to perform an objective quality check. Brief it with:
+   - The specific files changed and what the change was intended to do.
+   - A pointer to this `CLAUDE.md` as the authoritative ruleset.
+   - An explicit ask: does the implementation satisfy every relevant rule in
+     `CLAUDE.md`? Flag any violation, even if minor.
+3. If the subagent surfaces a real finding, fix it before proceeding. If it
+   finds nothing, state that clearly so the developer knows the check ran.
+
+The subagent must not be the same context that wrote the code — its value comes
+from a fresh, neutral read. Do not skip this step on the grounds that the change
+was "small" or "obvious."
+
 ## Publishing
 
 To publish, bump `package.json` version, commit, tag, and push the tag:
