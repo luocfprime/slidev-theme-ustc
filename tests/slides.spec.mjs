@@ -25,12 +25,15 @@ test('all slides load without errors', async ({ page }) => {
   await page.goto('/1', { waitUntil: 'networkidle' })
   await page.waitForSelector('.slidev-layout', { timeout: 15_000 })
 
-  // Read exact slide count from Slidev's runtime — avoids URL-redirect guessing.
-  const total = await page.evaluate(() => {
-    const app = document.querySelector('#app')?.__vue_app__
-    return app?.config?.globalProperties?.$slidev?.nav?.total ?? null
-  })
-  if (!total) throw new Error('Could not read $slidev.nav.total — is the Slidev server running?')
+  // Read exact slide count from Slidev's runtime. In Slidev v52+ $slidev is
+  // exposed on window.__slidev__ rather than Vue globalProperties.
+  // Poll up to 15 s — the value settles after slide data is fully parsed.
+  let total = null
+  for (let attempt = 0; attempt < 15 && !total; attempt++) {
+    total = await page.evaluate(() => window.__slidev__?.nav?.total ?? null)
+    if (!total) await page.waitForTimeout(1000)
+  }
+  if (!total) throw new Error('Could not read window.__slidev__.nav.total — is the Slidev server running?')
 
   expect(
     await page.locator('.slidev-layout').count(),

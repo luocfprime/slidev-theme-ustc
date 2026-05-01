@@ -2,14 +2,14 @@
 theme: ../
 layout: cover
 authors:
-  - 演讲者: ['中国科学技术大学']
+  - 演讲者: ["中国科学技术大学"]
 conference: '$\LaTeX$ 数学公式示例'
 talkTitle: '数学公式完整参考 $\int e^{-x^2}dx$'
 subtitle: '行内公式 $\alpha_s(Q)$ · 块级公式 $\int e^{-x^2}dx$ · 组件内数学'
-date: '2026 年 4 月 27 日'
+date: "2026 年 4 月 27 日"
 sectionBar: true
-figurePrefix: '图'
-tablePrefix: '表'
+figurePrefix: "图"
+tablePrefix: "表"
 ---
 
 `examples/math.md` — 系统展示数学公式在各种位置与组件中的渲染效果。
@@ -17,36 +17,31 @@ tablePrefix: '表'
 运行方式：`slidev examples/math.md`
 
 ---
-
 layout: toc
 columns: 2
 highlight: 0
-
 ---
 
 # 目录
 
 ---
-
 layout: toc
 columns: 2
 highlight: 1
-
 ---
 
 # 目录
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 一、行内公式（Inline Math）
-
 段落 $p_T=p\sin\theta$ · 列表 $\sigma_E/E$ · 粗体 / 斜体混排
 
 ---
-
-## layout: content
+layout: content
+---
 
 # 行内公式 — 段落中
 
@@ -59,8 +54,8 @@ highlight: 1
 希格斯玻色子质量 $m_H = 125.09 \pm 0.24\,\text{GeV}$，衰变宽度 $\Gamma_H \approx 4.07\,\text{MeV}$，对应寿命 $\tau_H = \hbar/\Gamma_H \approx 1.6 \times 10^{-22}\,\text{s}$。
 
 ---
-
-## layout: content
+layout: content
+---
 
 # 行内公式 — 列表中
 
@@ -72,15 +67,15 @@ highlight: 1
 - 不确定性来源：喷注能量刻度（JES $\pm 1.5\%$）、喷注能量分辨率（JER $\pm 0.8\%$）、$b$-tag SF（$\pm 2\%$）
 
 ---
-
-## layout: content
+layout: content
+---
 
 # 行内公式 — 粗体 / 斜体 / 代码混排
 
 在 Markdown 强调语法中嵌入数学：
 
 - 使用 **$k$ 轮消息传递**，表达能力上界为 $k$ 阶 WL 图同构测试
-- _自旋_ $s = 1/2$ 的费米子满足 Dirac 方程 $( i \gamma^\mu \partial_\mu - m )\psi = 0$
+- *自旋* $s = 1/2$ 的费米子满足 Dirac 方程 $( i \gamma^\mu \partial_\mu - m )\psi = 0$
 - 传播子 $\Delta_F(x-y) = \langle 0 | T\phi(x)\phi(y) | 0 \rangle$ 在动量空间为 $\tilde{\Delta}_F(k) = i/(k^2 - m^2 + i\epsilon)$
 - 矩阵元 $\mathcal{M}$ 通过 `FeynArts` 自动生成，截面 $\sigma = \frac{1}{2s}\int |\mathcal{M}|^2 d\Phi_n$
 - `eta` 变量对应 $\eta$，`pT` 对应 $p_T$，`dR` 对应 $\Delta R = \sqrt{(\Delta\eta)^2 + (\Delta\phi)^2}$
@@ -90,16 +85,15 @@ highlight: 1
 [^fn1]: 脚注标题也可带数学：**共振截面 $\sigma(E)$**。Breit-Wigner 公式 $\sigma(E) = \frac{4\pi}{k^2} \frac{\Gamma^2/4}{(E-E_0)^2 + \Gamma^2/4}$，其中 $\Gamma$ 为共振宽度，半高全宽满足 $\Delta E=\Gamma$。
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 二、块级公式（Display Math $\displaystyle \int_a^b f(x)\,dx$）
-
 单行 $\mathcal{L}_\text{SM}$ · 多行对齐 · 矩阵与分段函数
 
 ---
-
-## layout: content
+layout: content
+---
 
 # 块级公式 — 单行
 
@@ -120,8 +114,8 @@ $$
 费米子质量由 Yukawa 耦合产生，$m_f = y_f v/\sqrt{2}$，顶夸克 $m_t \approx 173\,\text{GeV}$ 对应 $y_t \approx 1$。
 
 ---
-
-## layout: content
+layout: content
+---
 
 # 块级公式 — 多行对齐
 
@@ -146,10 +140,8 @@ Z[J] &= \int \mathcal{D}\phi\; e^{i\int d^4x\,[\mathcal{L}(\phi) + J\phi]} \\
 $$
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # 块级公式 — 矩阵
@@ -172,10 +164,8 @@ $$
 行列式 $|\det V_\text{CKM}| = 1$（幺正性），CP 破坏由 Jarlskog 不变量 $J = \text{Im}(V_{us}V_{cb}V_{ub}^*V_{cs}^*) \approx 3 \times 10^{-5}$ 表征。
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # 块级公式 — cases 与 piecewise
@@ -203,10 +193,8 @@ $$
 $$
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # 块级公式 — 求和、积分、极限
@@ -234,18 +222,15 @@ d\Phi_n = (2\pi)^4\delta^4\!\left(p_\text{in} - \sum_{i=1}^n k_i\right) \prod_{i
 $$
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # 块级公式 — 行点击高亮
 
 `$$` 后紧跟 `{行号|行号|all}` 即可开启逐行点击高亮，语法与代码块一致：
 
-$$
-{1|2|3|4|all}
+$$ {1|2|3|4|all}
 \begin{aligned}
 \nabla \times \vec{\mathbf{B}} -\, \frac{1}{c}\,\frac{\partial\vec{\mathbf{E}}}{\partial t} &= \frac{4\pi}{c}\vec{\mathbf{j}} \\[8pt]
 \nabla \cdot \vec{\mathbf{E}} &= 4 \pi \rho \\[8pt]
@@ -257,16 +242,15 @@ $$
 点击顺序：**第 1 行**（Ampère 定律）→ **第 3 行**（Faraday 定律）→ **all**（完整 Maxwell 方程组）。
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 三、公式在 Callout 中
-
 五种类型 $\Delta R$ · 行内 $q/p$ · 块级 $|\mathcal{M}|^2$
 
 ---
-
-## layout: content
+layout: content
+---
 
 # Callout — 行内公式
 
@@ -289,10 +273,8 @@ $$
 </Callout>
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # Callout — 块级公式（dense 模式）
@@ -322,16 +304,15 @@ NLO QCD 修正引入 $K$-因子 $K \approx 1.3$（CTEQ6L1 PDF，$\mu_R = \mu_F =
 </Callout>
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 四、公式在 Block 中 $W_p(\mu,\nu)$
-
 定义 $W_p(\mu,\nu)$ · 定理 $\sup_{\|f\|_L\le1}$ · 证明
 
 ---
-
-## layout: content
+layout: content
+---
 
 # Block — 定义、定理、命题
 
@@ -358,10 +339,8 @@ $$
 </Block>
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # Block — dense 模式中的数学
@@ -389,10 +368,8 @@ Cramér-Rao 下界：$\text{Cov}(\hat\theta) \geq \mathcal{I}^{-1}(\theta)$，�
 </Block>
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # Block — Grid 中的多列数学
@@ -400,22 +377,22 @@ density: dense
 <Grid cols="2" gap="md">
   <Block title="Maxwell 方程组（微分形式）">
 
-$$\nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}$$
+  $$\nabla \cdot \mathbf{E} = \frac{\rho}{\varepsilon_0}$$
 
-$$\nabla \times \mathbf{B} = \mu_0\mathbf{J} + \mu_0\varepsilon_0\frac{\partial\mathbf{E}}{\partial t}$$
+  $$\nabla \times \mathbf{B} = \mu_0\mathbf{J} + \mu_0\varepsilon_0\frac{\partial\mathbf{E}}{\partial t}$$
 
-$$\nabla \cdot \mathbf{B} = 0, \quad \nabla\times\mathbf{E} = -\frac{\partial\mathbf{B}}{\partial t}$$
+  $$\nabla \cdot \mathbf{B} = 0, \quad \nabla\times\mathbf{E} = -\frac{\partial\mathbf{B}}{\partial t}$$
 
   </Block>
   <Block title="Maxwell 方程组（协变形式）">
 
-$$\partial_\mu F^{\mu\nu} = \mu_0 J^\nu$$
+  $$\partial_\mu F^{\mu\nu} = \mu_0 J^\nu$$
 
-$$\partial_{[\mu}F_{\nu\rho]} = 0$$
+  $$\partial_{[\mu}F_{\nu\rho]} = 0$$
 
-场强张量：$F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu$
+  场强张量：$F^{\mu\nu} = \partial^\mu A^\nu - \partial^\nu A^\mu$
 
-规范不变性：$A^\mu \to A^\mu + \partial^\mu\chi$
+  规范不变性：$A^\mu \to A^\mu + \partial^\mu\chi$
 
   </Block>
 </Grid>
@@ -427,71 +404,65 @@ $$\partial_{[\mu}F_{\nu\rho]} = 0$$
 </Block>
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 五、公式在 TableBlock 中
-
 表头 $Q/e,T_3$ · 表格单元 $m_f$ · 数学列 $\int f(x)\,dx$
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # TableBlock — 数学在单元格中
 
 <TableBlock caption="标准模型基本费米子质量（$\overline{\text{MS}}$ 方案，$\mu = 2\,\text{GeV}$）。" captionAlign="left">
 
-| 粒子   | 符号     |                                  质量 | 电荷 $Q/e$ | 弱同位旋 $T_3$ |
-| ------ | -------- | ------------------------------------: | ---------: | -------------: |
-| 上夸克 | $u$      |    $2.16^{+0.49}_{-0.26}\,\text{MeV}$ |     $+2/3$ |         $+1/2$ |
-| 下夸克 | $d$      |    $4.67^{+0.48}_{-0.17}\,\text{MeV}$ |     $-1/3$ |         $-1/2$ |
-| 奇夸克 | $s$      |      $93.4^{+8.6}_{-3.4}\,\text{MeV}$ |     $-1/3$ |         $-1/2$ |
-| 魅夸克 | $c$      |         $1.273 \pm 0.046\,\text{GeV}$ |     $+2/3$ |         $+1/2$ |
-| 底夸克 | $b$      | $4.183^{+0.017}_{-0.020}\,\text{GeV}$ |     $-1/3$ |         $-1/2$ |
-| 顶夸克 | $t$      |         $172.69 \pm 0.30\,\text{GeV}$ |     $+2/3$ |         $+1/2$ |
-| 电子   | $e^-$    |                 $0.51100\,\text{MeV}$ |       $-1$ |         $-1/2$ |
-| μ 子   | $\mu^-$  |                  $105.66\,\text{MeV}$ |       $-1$ |         $-1/2$ |
-| τ 轻子 | $\tau^-$ |        $1776.86 \pm 0.12\,\text{MeV}$ |       $-1$ |         $-1/2$ |
+| 粒子 | 符号 | 质量 | 电荷 $Q/e$ | 弱同位旋 $T_3$ |
+|------|------|-----:|----------:|-------------:|
+| 上夸克 | $u$ | $2.16^{+0.49}_{-0.26}\,\text{MeV}$ | $+2/3$ | $+1/2$ |
+| 下夸克 | $d$ | $4.67^{+0.48}_{-0.17}\,\text{MeV}$ | $-1/3$ | $-1/2$ |
+| 奇夸克 | $s$ | $93.4^{+8.6}_{-3.4}\,\text{MeV}$ | $-1/3$ | $-1/2$ |
+| 魅夸克 | $c$ | $1.273 \pm 0.046\,\text{GeV}$ | $+2/3$ | $+1/2$ |
+| 底夸克 | $b$ | $4.183^{+0.017}_{-0.020}\,\text{GeV}$ | $-1/3$ | $-1/2$ |
+| 顶夸克 | $t$ | $172.69 \pm 0.30\,\text{GeV}$ | $+2/3$ | $+1/2$ |
+| 电子 | $e^-$ | $0.51100\,\text{MeV}$ | $-1$ | $-1/2$ |
+| μ 子 | $\mu^-$ | $105.66\,\text{MeV}$ | $-1$ | $-1/2$ |
+| τ 轻子 | $\tau^-$ | $1776.86 \pm 0.12\,\text{MeV}$ | $-1$ | $-1/2$ |
 
 </TableBlock>
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # TableBlock — 数学公式作为列内容
 
 <TableBlock caption="常用积分公式速查（$n \neq -1$，$a > 0$）。" captionAlign="left">
 
-|         被积函数 $f(x)$         |       不定积分 $\int f(x)\,dx$        | 备注                        |
-| :-----------------------------: | :-----------------------------------: | :-------------------------- | ---- | ---- |
-|              $x^n$              |      $\dfrac{x^{n+1}}{n+1} + C$       | $n \neq -1$                 |
-|            $e^{ax}$             |       $\dfrac{1}{a}e^{ax} + C$        | $a \neq 0$                  |
-|           $\sin(ax)$            |      $-\dfrac{1}{a}\cos(ax) + C$      | —                           |
-|   $\dfrac{1}{\sqrt{a^2-x^2}}$   |       $\arcsin\dfrac{x}{a} + C$       | $                           | x    | < a$ |
-|      $\dfrac{1}{x^2+a^2}$       | $\dfrac{1}{a}\arctan\dfrac{x}{a} + C$ | —                           |
-| $\dfrac{1}{\sqrt{x^2 \pm a^2}}$ |              $\ln\!\left              | x + \sqrt{x^2\pm a^2}\right | + C$ | —    |
+| 被积函数 $f(x)$ | 不定积分 $\int f(x)\,dx$ | 备注 |
+|:---:|:---:|:---|
+| $x^n$ | $\dfrac{x^{n+1}}{n+1} + C$ | $n \neq -1$ |
+| $e^{ax}$ | $\dfrac{1}{a}e^{ax} + C$ | $a \neq 0$ |
+| $\sin(ax)$ | $-\dfrac{1}{a}\cos(ax) + C$ | — |
+| $\dfrac{1}{\sqrt{a^2-x^2}}$ | $\arcsin\dfrac{x}{a} + C$ | $|x| < a$ |
+| $\dfrac{1}{x^2+a^2}$ | $\dfrac{1}{a}\arctan\dfrac{x}{a} + C$ | — |
+| $\dfrac{1}{\sqrt{x^2 \pm a^2}}$ | $\ln\!\left|x + \sqrt{x^2\pm a^2}\right| + C$ | — |
 
 </TableBlock>
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 六、公式在 ResultBox 中
-
 测量值 $\hat{\theta}\pm\sigma$ · 非对称误差 $x^{+a}_{-b}$ · 显著性 $Z$
 
 ---
-
-## layout: content
+layout: content
+---
 
 # ResultBox — 测量结果
 
@@ -516,10 +487,8 @@ $$
 </ResultBox>
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # ResultBox — dense 模式 + 复杂公式
@@ -545,18 +514,15 @@ $$
 </ResultBox>
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 七、公式在 Split 布局中
-
 左右推导 $\psi(x,t)$ · 侧栏参数 $G=(V,E)$ · 公式参考
 
 ---
-
 layout: split
 ratio: "1:1"
-
 ---
 
 # Split — 两栏数学推导
@@ -602,11 +568,9 @@ $$
 $$
 
 ---
-
 layout: split
 ratio: "2:1"
 density: dense
-
 ---
 
 # Split — 主内容 + 侧边公式参考
@@ -639,13 +603,13 @@ $$
 
 **参数汇总**
 
-| 符号            | 含义         |
-| --------------- | ------------ |
-| $N_v \sim 10^4$ | 节点数       |
-| $N_e \sim 10^6$ | 边数         |
-| $d = 128$       | 隐层维度     |
-| $k = 3$         | 消息传递轮数 |
-| $w_+ = 50$      | 正边权重     |
+| 符号 | 含义 |
+|------|------|
+| $N_v \sim 10^4$ | 节点数 |
+| $N_e \sim 10^6$ | 边数 |
+| $d = 128$ | 隐层维度 |
+| $k = 3$ | 消息传递轮数 |
+| $w_+ = 50$ | 正边权重 |
 
 <Callout type="note">
 
@@ -654,16 +618,15 @@ $$
 </Callout>
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 八、公式在 Takeaway 中
-
 行内数学 $\varepsilon=97.1\%$ · dense 模式 · Cramér-Rao 下界
 
 ---
-
-## layout: content
+layout: content
+---
 
 # Takeaway — 含行内公式
 
@@ -684,10 +647,8 @@ Cramér-Rao 下界 $\text{Var}(\hat\theta) \geq \mathcal{I}^{-1}(\theta)$ 表明
 </Takeaway>
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # Takeaway — dense 模式下含公式
@@ -705,16 +666,15 @@ density: dense
 </Takeaway>
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 九、引用中的公式
-
 Markdown blockquote $F=ma$ · 引用来源 · 引文脚注 $\delta S=0$
 
 ---
-
-## layout: content
+layout: content
+---
 
 # 引用 — 行内公式与引文来源
 
@@ -735,10 +695,8 @@ Markdown blockquote $F=ma$ · 引用来源 · 引文脚注 $\delta S=0$
 > 若 $\frac{dQ}{dt}=0$，则相空间流保持辛形式 $\omega = \sum_i dp_i\wedge dq_i$。
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # 引用 — 公式、脚注与嵌套语义
@@ -761,16 +719,15 @@ density: dense
 [^quote-path]: 引用脚注中的公式：作用量 $S[x]=\int_{t_i}^{t_f}L(x,\dot{x},t)\,dt$，传播核满足半群性质 $K(t_3,t_1)=\int dx_2\,K(t_3,t_2)K(t_2,t_1)$。
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 十、脚注中的公式 $\chi^2=\mathbf{r}^\top V^{-1}\mathbf{r}$
-
 overlay $P_{k|k-1}$ · flow $\overline{\text{MS}}$ · 悬停预览
 
 ---
-
-## layout: content
+layout: content
+---
 
 # 脚注 — overlay 模式
 
@@ -782,18 +739,14 @@ Kalman Filter 的最优性由 Bellman 方程保证[^kf]：在线性高斯假设�
 
 GNN 边分类精度 $\text{AUC} = 0.987$，在 $\langle\mu\rangle = 140$ 时假边率 $f_e < 0.3\%$[^gnn]。
 
-[^kf]: **Kalman 预测 $\hat{x}_{k|k-1}$**：Frühwirth, R. "Application of Kalman filtering to track and vertex fitting." _NIM A_ **262** (1987) 444–450. 状态向量 $\mathbf{x}_k = (x, y, z, p_x, p_y, p_z)^\top$，预测协方差 $P_{k|k-1} = F_k P_{k-1} F_k^\top + Q_k$。
-
-[^acts]: **拟合质量 $\chi^2$**：Ai, X. et al. "A Common Tracking Software Project." _Front. Phys._ **10** (2022) 817828. ACTS 使用 $\chi^2 = \mathbf{r}^\top V^{-1} \mathbf{r}$ 检验拟合质量，$\mathbf{r}$ 为残差向量。
-
-[^gnn]: **消息传递 $h_i^{(l+1)}$**：Ju, X. et al. "Graph Neural Networks for Particle Reconstruction in HEP." _EPJ Web Conf._ **245** (2020) 09013. 消息传递 $k=3$ 轮，$d=128$ 维隐层，更新式 $h_i^{(l+1)}=\phi_h(h_i^{(l)},\oplus_j m_{ij}^{(l)})$。
+[^kf]: **Kalman 预测 $\hat{x}_{k|k-1}$**：Frühwirth, R. "Application of Kalman filtering to track and vertex fitting." *NIM A* **262** (1987) 444–450. 状态向量 $\mathbf{x}_k = (x, y, z, p_x, p_y, p_z)^\top$，预测协方差 $P_{k|k-1} = F_k P_{k-1} F_k^\top + Q_k$。
+[^acts]: **拟合质量 $\chi^2$**：Ai, X. et al. "A Common Tracking Software Project." *Front. Phys.* **10** (2022) 817828. ACTS 使用 $\chi^2 = \mathbf{r}^\top V^{-1} \mathbf{r}$ 检验拟合质量，$\mathbf{r}$ 为残差向量。
+[^gnn]: **消息传递 $h_i^{(l+1)}$**：Ju, X. et al. "Graph Neural Networks for Particle Reconstruction in HEP." *EPJ Web Conf.* **245** (2020) 09013. 消息传递 $k=3$ 轮，$d=128$ 维隐层，更新式 $h_i^{(l+1)}=\phi_h(h_i^{(l)},\oplus_j m_{ij}^{(l)})$。
 
 ---
-
 layout: content
 density: dense
 footnote: flow
-
 ---
 
 # 脚注 — flow 模式
@@ -807,23 +760,19 @@ $$
 $$
 
 [^deriv]: 维度正规化：将时空维度从 $d=4$ 解析延拓至 $d=4-\epsilon$，消除紫外发散。自能积分 $\int d^dk\, k^{-2n}$ 在 $d=4-\epsilon$ 下收敛，极点 $1/\epsilon$ 对应对数发散。
-
 [^renorm]: $\overline{\text{MS}}$ 方案：减去 $2/\epsilon - \gamma_E + \ln(4\pi)$。重整化群方程 $\mu\,d g/d\mu = \beta(g)$，对 QCD $\beta_0 = 11 - 2n_f/3$，$\alpha_s(\mu) = \alpha_s(M_Z)/[1 + \alpha_s(M_Z)\beta_0\ln(\mu/M_Z)/(2\pi)]$。
 
 ---
-
-## layout: section
+layout: section
+---
 
 # 十一、综合演示
-
 长公式 $\mathcal{A}_n$ · 公式密集页 · 跑动耦合 $\alpha_s(Q^2)$
 
 ---
-
 layout: content
 density: dense
 lineHeight: 1.45
-
 ---
 
 # 综合 — 公式密集页（dense + lineHeight）
@@ -855,10 +804,8 @@ $$
 $$
 
 ---
-
 layout: content
 density: dense
-
 ---
 
 # 综合 — 公式 + Callout + Takeaway
@@ -888,7 +835,7 @@ $\alpha_s(m_Z) = 0.1179 \pm 0.0010$ 是目前精度最高的 QCD 参数之一，
 </Takeaway>
 
 ---
-
-## layout: end
+layout: end
+---
 
 # 数学公式参考结束

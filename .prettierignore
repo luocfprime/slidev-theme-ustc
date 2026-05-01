@@ -7,3 +7,5 @@ playwright-report
 .worktrees
 pnpm-lock.yaml
 public
+# Slidev markdown files use --- as frontmatter delimiters; Prettier misformats them
+*.md

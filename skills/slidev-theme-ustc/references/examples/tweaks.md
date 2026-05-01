@@ -2,11 +2,11 @@
 theme: ../
 layout: cover
 authors:
-  - 演讲者: ['中国科学技术大学']
-conference: 'USTC Slidev 主题'
-talkTitle: 'Hacky Tweaks'
-subtitle: '可维护的局部 hack：wrapper、变量、作用域'
-date: '2026 年 4 月 26 日'
+  - 演讲者: ["中国科学技术大学"]
+conference: "USTC Slidev 主题"
+talkTitle: "Hacky Tweaks"
+subtitle: "可维护的局部 hack：wrapper、变量、作用域"
+date: "2026 年 4 月 26 日"
 sectionBar: true
 sectionBarMode: full
 ---
@@ -16,28 +16,23 @@ sectionBarMode: full
 运行方式：`slidev examples/tweaks.md`
 
 ---
-
 layout: toc
 columns: 1
 highlight: 0
-
 ---
 
 # 目录
 
 ---
-
-## layout: section
+layout: section
+---
 
 # §1. Wrapper Hack
-
 把主题组件包进普通 `<div>`，让 wrapper 变成布局控制点。
 
 ---
-
 layout: content
 subtitle: "两个 Block 同内容，右侧由 wrapper 控制宽度"
-
 ---
 
 # Wrapper 限宽
@@ -71,10 +66,8 @@ subtitle: "两个 Block 同内容，右侧由 wrapper 控制宽度"
 为什么这是推荐 hack：wrapper 是普通 DOM，也是 Grid item；`justify-self` / `max-width` 一定落到正确元素上，不依赖主题组件的 attribute passthrough。
 
 ---
-
 layout: content
 subtitle: "用 gutter columns 做稳定版心"
-
 ---
 
 # Gutter Columns
@@ -108,10 +101,8 @@ subtitle: "用 gutter columns 做稳定版心"
 为什么这是推荐 hack：当多页都需要同一版心时，gutter columns 比散落的 `max-width` 更稳定。
 
 ---
-
 layout: content
 subtitle: "不用覆盖 Grid 的 inline style"
-
 ---
 
 # 原生 Grid 等高
@@ -147,18 +138,15 @@ subtitle: "不用覆盖 Grid 的 inline style"
 为什么这是推荐 hack：主题 `<Grid>` 默认顶对齐；需要 stretch 时直接用原生 CSS Grid，不用 `!important` 去打架。
 
 ---
-
-## layout: section
+layout: section
+---
 
 # §2. Typography Hacks
-
 局部 dense、局部字号、subtitle、段落节奏、重点放大。
 
 ---
-
 layout: split
 ratio: "1:1"
-
 ---
 
 # Split 局部 dense
@@ -175,10 +163,10 @@ ratio: "1:1"
 - 信号区间：$m_{bb} \in [100, 140]\,\text{GeV}$
 - 系统误差：JES $3\%$, JER $2\%$, $b$-tag $5\%$
 
-| metric   | value |
-| -------- | ----: |
+| metric | value |
+| --- | ---: |
 | Accuracy | 97.1% |
-| Latency  | 18 ms |
+| Latency | 18 ms |
 
 ::right::
 
@@ -190,18 +178,16 @@ ratio: "1:1"
 - 信号区间：$m_{bb} \in [100, 140]\,\text{GeV}$
 - 系统误差：JES $3\%$, JER $2\%$, $b$-tag $5\%$
 
-| metric   | value |
-| -------- | ----: |
+| metric | value |
+| --- | ---: |
 | Accuracy | 97.1% |
-| Latency  | 18 ms |
+| Latency | 18 ms |
 
 </div>
 
 ---
-
 layout: content
 subtitle: "右侧 block 标题、正文、表格一起缩小"
-
 ---
 
 # 局部小字块
@@ -214,10 +200,10 @@ subtitle: "右侧 block 标题、正文、表格一起缩小"
 
 主体结论保持正常字号，适合直接讲给听众。
 
-| metric   | value |
-| -------- | ----: |
+| metric | value |
+| --- | ---: |
 | Accuracy | 97.1% |
-| Latency  | 18 ms |
+| Latency | 18 ms |
 
 </Block>
 
@@ -227,10 +213,10 @@ subtitle: "右侧 block 标题、正文、表格一起缩小"
 
 补充说明、参数列表、实验设置可以局部压缩。
 
-| metric   | value |
-| -------- | ----: |
+| metric | value |
+| --- | ---: |
 | Accuracy | 97.1% |
-| Latency  | 18 ms |
+| Latency | 18 ms |
 
 </Block>
 
@@ -250,10 +236,8 @@ subtitle: "右侧 block 标题、正文、表格一起缩小"
 </style>
 
 ---
-
 layout: content
 subtitle: "本页 subtitle 也被一起缩小"
-
 ---
 
 # 整页小字模式
@@ -268,10 +252,10 @@ subtitle: "本页 subtitle 也被一起缩小"
 - auxiliary evidence
 - slide-level appendix details
 
-| key    | value |
-| ------ | ----- |
-| batch  | 256   |
-| warmup | 1k    |
+| key | value |
+| --- | --- |
+| batch | 256 |
+| warmup | 1k |
 
 </Block>
 
@@ -299,10 +283,8 @@ This slide uses `.slidev-layout` variables, so all body-level theme text follows
 </style>
 
 ---
-
 layout: content
 subtitle: "line-height 管行内；段落 gap 另外写"
-
 ---
 
 # 段落节奏压缩
@@ -352,10 +334,8 @@ subtitle: "line-height 管行内；段落 gap 另外写"
 </style>
 
 ---
-
 layout: content
 subtitle: "只放大一个结果框"
-
 ---
 
 # 局部放大结果
@@ -399,18 +379,15 @@ $$
 </style>
 
 ---
-
-## layout: section
+layout: section
+---
 
 # §3. Color Hacks
-
 局部换肤、整页换肤、作用域优先级。
 
 ---
-
 layout: content
 subtitle: "只让一块内容换色"
-
 ---
 
 # 局部换色
@@ -423,10 +400,10 @@ subtitle: "只让一块内容换色"
 
 **默认主题色**
 
-| metric   | value |
-| -------- | ----: |
+| metric | value |
+| --- | ---: |
 | Accuracy | 97.1% |
-| Latency  | 18 ms |
+| Latency | 18 ms |
 
 </div>
 
@@ -434,10 +411,10 @@ subtitle: "只让一块内容换色"
 
 **局部橙色作用域**
 
-| metric   | value |
-| -------- | ----: |
+| metric | value |
+| --- | ---: |
 | Accuracy | 97.1% |
-| Latency  | 18 ms |
+| Latency | 18 ms |
 
 </div>
 
@@ -455,10 +432,8 @@ subtitle: "只让一块内容换色"
 </style>
 
 ---
-
 layout: content
 subtitle: "整页变量覆盖：chrome 也一起变"
-
 ---
 
 # 整页换肤
