@@ -19,7 +19,7 @@ test('all slides load without errors', async ({ page }) => {
   })
 
   await page.goto('/1', { waitUntil: 'networkidle' })
-  await page.waitForTimeout(500)
+  await page.waitForSelector('.slidev-layout', { timeout: 15_000 })
 
   const hasLayout1 = await page.locator('.slidev-layout').count()
   expect(hasLayout1, 'Slide 1 should render a layout').toBeGreaterThan(0)
