@@ -10,3 +10,4 @@ docs/superpowers/
 .preview/
 __pycache__
 .gstack/
+.DS_Store
