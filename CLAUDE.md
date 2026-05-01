@@ -260,6 +260,8 @@ was "small" or "obvious."
 
 ## Publishing
 
+Before bumping the version, run `pnpm test:visual` to catch any unintended visual regressions. If tests fail, review the diffs with `playwright show-report` and either fix the regression or update baselines with `pnpm test:visual:update`.
+
 To publish, bump `package.json` version, commit, tag, and push the tag:
 
 ```bash

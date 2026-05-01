@@ -37,6 +37,19 @@ jobs:
       - name: Playwright tests (examples scan)
         run: pnpm exec playwright test --config playwright.examples.config.mjs
 
+      - name: Playwright visual regression
+        id: visual
+        run: pnpm test:visual
+        continue-on-error: true
+
+      - name: Upload visual snapshot diffs
+        if: steps.visual.outcome == 'failure'
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-snapshots-actual
+          path: test-results/
+          retention-days: 7
+
       - name: Upload test report
         if: failure()
         uses: actions/upload-artifact@v7
