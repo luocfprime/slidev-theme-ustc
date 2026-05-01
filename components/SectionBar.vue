@@ -118,6 +118,7 @@ const show = computed(() => {
   gap: 0.22rem;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
 }
 
 .ustc-dot {
