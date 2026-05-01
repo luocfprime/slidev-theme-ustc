@@ -22,7 +22,7 @@ Numbers are injected at compile time by the Slidev markdown transformer in `setu
 
 **Out of scope:** `<component :is="'FigureBlock'" />` dynamic rendering, object spread such as `v-bind="{ number: 1 }"`, component aliases, and generated component names are not recognized by the static transformer. Set `:number` manually when using those patterns.
 
-Caption label format is `${prefix} ${number}${numberSuffix}${caption}` when a caption exists. The default suffix is `: `; set `figureNumberSuffix` / `tableNumberSuffix` in global frontmatter or `numberSuffix` on one block to use values such as `:`, `.`, or `. `.
+Caption label format is `${prefix} ${number}${numberSuffix}${caption}` when a caption exists. The default suffix is `. `; set `figureNumberSuffix` / `tableNumberSuffix` in global frontmatter or `numberSuffix` on one block to use values such as `:`, `.`, or `. `.
 
 ---
 
@@ -145,12 +145,12 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 | `captionInsetLeft` | `0` | padding-left on caption |
 | `captionInsetRight` | `0` | padding-right on caption |
 | `prefix` | global `figurePrefix` | per-figure label override |
-| `numberSuffix` | global `figureNumberSuffix` or `': '` | per-figure separator after the number |
+| `numberSuffix` | global `figureNumberSuffix` or `'. '` | per-figure separator after the number |
 | `wip` | `false` | mark figure as work-in-progress; shows red WIP badge |
 | `number` | injected | auto-numbered at compile time; set explicitly to override |
 | `numbered` | `true` | set to `false` to skip auto-numbering entirely |
 
-Global prefix set in deck frontmatter: `figurePrefix: Figure` (default). Global suffix set in deck frontmatter: `figureNumberSuffix: ": "` (default).
+Global prefix set in deck frontmatter: `figurePrefix: Figure` (default). Global suffix set in deck frontmatter: `figureNumberSuffix: ". "` (default).
 
 **Caption slot — required for footnotes, links, or rich markdown.** The `caption` prop runs through a stripped-down inline markdown renderer (math + inline HTML only); footnote refs (`[^x]`), reference-style links, and Vue components inside it render as literal text. To use those, write the caption as the `#caption` slot — its content goes through Slidev's slide-level markdown pipeline, so footnote refs wire up to definitions placed elsewhere in the slide.
 
@@ -170,7 +170,7 @@ Comparison against ProlificDreamer[^pd] and others.
 [^pd]: Wang et al. NeurIPS 2023.
 ```
 
-The auto-numbered label (`Figure N: `) still renders before the slot content. Slot wins when both slot and `caption` prop are provided.
+The auto-numbered label (`Figure N. `) still renders before the slot content. Slot wins when both slot and `caption` prop are provided.
 
 **WIP mode:** Add `wip` to show a red badge. Use a [placehold.co](https://placehold.co) URL as `src` to hold the correct aspect ratio while the real image is not ready.
 
@@ -186,7 +186,7 @@ The auto-numbered label (`Figure N: `) still renders before the slot content. Sl
 
 ## `<VideoBlock>`
 
-Video with optional caption. Mirrors `FigureBlock` API (no auto-numbering).
+Video with optional caption. Similar prop set to `FigureBlock` (no auto-numbering, no `#caption` slot — caption is prop-only).
 
 ```vue
 <VideoBlock
@@ -236,12 +236,12 @@ When `width` is narrower than the content area, a top-level TableBlock is center
 | `captionAlign` | `'center'` | `'left'` · `'center'` |
 | `width` | `'100%'` | container width; narrower top-level blocks center by default |
 | `prefix` | global `tablePrefix` | per-table label override |
-| `numberSuffix` | global `tableNumberSuffix` or `': '` | per-table separator after the number |
+| `numberSuffix` | global `tableNumberSuffix` or `'. '` | per-table separator after the number |
 | `wip` | `false` | mark table as work-in-progress; shows red WIP badge next to caption |
 | `number` | injected | auto-numbered at compile time; set explicitly to override |
 | `numbered` | `true` | set to `false` to skip auto-numbering entirely |
 
-Global prefix set in deck frontmatter: `tablePrefix: Table` (default). Global suffix set in deck frontmatter: `tableNumberSuffix: ": "` (default).
+Global prefix set in deck frontmatter: `tablePrefix: Table` (default). Global suffix set in deck frontmatter: `tableNumberSuffix: ". "` (default).
 
 `captionAlign` only controls caption text inside the TableBlock. To deliberately place a narrow table left or right, wrap it in a flex container with `justify-content:flex-start` or `justify-content:flex-end`.
 
@@ -347,3 +347,4 @@ SVG QR code with optional caption.
 | `color` | `'#000000'` | foreground color |
 | `background` | `'#ffffff'` | background color |
 | `caption` | `''` | text below QR code |
+| `wip` | `false` | show WIP badge; renders placeholder when `url` is omitted |
