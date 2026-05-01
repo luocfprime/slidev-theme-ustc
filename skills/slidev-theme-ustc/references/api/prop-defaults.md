@@ -56,12 +56,13 @@ Extends `logoDefaults`.
 | `showLogo` | `true` |
 | `talkTitle` | `'Presentation Title'` |
 | `subtitle` | `''` |
-| `presenter` | `undefined` (falls back to first author name) |
 | `authors` | `[]` |
-| `authorMarks` | `{}` |
 | `conference` | `''` |
 | `date` | `''` |
 | `background` | `''` |
+| `wip` | `false` |
+
+`presenter` (default `undefined`, falls back to first author name) and `authorMarks` (default `{}`) are defined via `withDefaults` in `cover.vue` rather than in the `coverDefaults` object, but behave the same way.
 
 ---
 
