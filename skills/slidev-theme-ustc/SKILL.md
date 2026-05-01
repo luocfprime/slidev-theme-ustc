@@ -517,6 +517,38 @@ wip: true
 | Absolute positioning                     | Prefer `<v-drag>`, use `<Abs>` for `%` coords                                                                                |
 | All valid prop values                    | See [references/api/components.md](references/api/components.md)                                                             |
 | All CSS variables                        | See [references/api/theme-tokens.md](references/api/theme-tokens.md)                                                         |
+| Re-enable typographic replacements       | `slidev: { markdown: { markdownOptions: { typographer: true } } }` in deck's `vite.config.js`                                |
+| Allow external network access to dev server | `server: { allowedHosts: true }` in deck's `vite.config.ts`                                                              |
+
+---
+
+## Vite Configuration
+
+The theme sets defaults in its own `vite.config.ts`; users can override in their deck's `vite.config.js` (user config is merged last and wins).
+
+A deck only ever has **one** `export default` — merge everything into a single object:
+
+```js
+// vite.config.js in your deck
+// Don't import defineConfig from 'vite' — user decks don't have vite as a
+// direct dependency; Slidev bundles it internally.
+export default {
+  // Allow access from other devices on the network (disabled by default)
+  server: {
+    allowedHosts: true,
+  },
+
+  // Re-enable typographic replacements: (c)→©, (r)→®, --→– etc.
+  // (the theme disables these by default for academic decks)
+  slidev: {
+    markdown: {
+      markdownOptions: { typographer: true },
+    },
+  },
+}
+```
+
+Include only the keys you actually need — the two blocks above are independent and can be used separately.
 
 ---
 

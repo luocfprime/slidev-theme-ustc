@@ -17,4 +17,15 @@ logger.warnOnce = (msg, opts) => {
 
 export default defineConfig({
   customLogger: logger,
+  slidev: {
+    markdown: {
+      markdownOptions: {
+        // unplugin-vue-markdown defaults typographer to true, enabling (c)→©,
+        // (r)→®, --→– etc. Academic decks often need these as literal text,
+        // so the theme opts out. Override in your deck's vite.config.js with
+        // slidev: { markdown: { markdownOptions: { typographer: true } } }.
+        typographer: false,
+      },
+    },
+  },
 })
