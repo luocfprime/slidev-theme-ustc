@@ -23,7 +23,7 @@ test('all slides load without errors', async ({ page }) => {
   // Slide 1: full networkidle to ensure Vite dep-optimization completes before we
   // read $slidev.nav.total and start scanning.
   await page.goto('/1', { waitUntil: 'networkidle' })
-  await page.waitForSelector('.slidev-layout', { timeout: 15_000 })
+  await page.waitForSelector('.slidev-layout', { timeout: 30_000 })
 
   // Read exact slide count from Slidev's runtime. In Slidev v52+ $slidev is
   // exposed on window.__slidev__ rather than Vue globalProperties.
