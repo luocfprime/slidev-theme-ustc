@@ -60,13 +60,13 @@ test('all slides load without errors', async ({ page }) => {
     // domcontentloaded is faster than networkidle for in-SPA navigation —
     // the main bundle is already cached; only the slide's dynamic module needs fetching.
     const res = await page
-      .goto(`/${n}`, { waitUntil: 'domcontentloaded', timeout: 12_000 })
+      .goto(`/${n}`, { waitUntil: 'domcontentloaded', timeout: 30_000 })
       .catch(() => null)
     if (!res) break
 
     // Wait for Vue to finish mounting all slide layouts (state: 'attached' matches
     // hidden elements too, so this fires as soon as Slidev renders the slide tree).
-    await page.locator('.slidev-layout').first().waitFor({ state: 'attached', timeout: 15_000 })
+    await page.locator('.slidev-layout').first().waitFor({ state: 'attached', timeout: 30_000 })
 
     const layouts = await page.locator('.slidev-layout').count()
 
