@@ -1,12 +1,10 @@
-// Separate config for scanning all examples/ decks for JS errors.
-// Run via: pnpm exec playwright test --config playwright.examples.config.mjs
-// In CI this runs after the main playwright.config.mjs suite.
-
 const isCI = !!process.env.CI
 
 export default {
   testDir: './tests',
+  snapshotDir: './tests/snapshots',
   timeout: 300_000,
+  snapshotPathTemplate: '{snapshotDir}/{projectName}/{arg}-{platform}{ext}',
 
   webServer: [
     {
@@ -45,30 +43,33 @@ export default {
     {
       name: 'full-deck',
       use: { baseURL: 'http://localhost:13033' },
-      testMatch: ['slides.spec.mjs'],
+      testMatch: ['slides.spec.mjs', 'visual.spec.mjs'],
     },
     {
       name: 'components',
       use: { baseURL: 'http://localhost:13034' },
-      testMatch: ['slides.spec.mjs'],
+      testMatch: ['slides.spec.mjs', 'visual.spec.mjs'],
     },
     {
       name: 'layouts',
       use: { baseURL: 'http://localhost:13035' },
-      testMatch: ['slides.spec.mjs'],
+      testMatch: ['slides.spec.mjs', 'visual.spec.mjs'],
     },
     {
       name: 'math',
       use: { baseURL: 'http://localhost:13036' },
-      testMatch: ['slides.spec.mjs'],
+      testMatch: ['slides.spec.mjs', 'visual.spec.mjs'],
     },
     {
       name: 'tweaks',
       use: { baseURL: 'http://localhost:13037' },
-      testMatch: ['slides.spec.mjs'],
+      testMatch: ['slides.spec.mjs', 'visual.spec.mjs'],
     },
   ],
 
   reporter: [['list']],
-  use: { headless: true },
+  use: {
+    headless: true,
+    viewport: { width: 1280, height: 720 },
+  },
 }

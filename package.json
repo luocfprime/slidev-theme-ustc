@@ -28,7 +28,7 @@
     "build": "mkdir -p .preview && cp examples/full-deck.md .preview/ && slidev build .preview/full-deck.md && cp -r public/. dist/",
     "export": "mkdir -p .preview && cp examples/full-deck.md .preview/ && slidev export .preview/full-deck.md",
     "preview": "python3 scripts/build_previews.py && uv run --script serve.py",
-    "test": "pnpm test:unit && playwright test && playwright test --config playwright.examples.config.mjs",
+    "test": "pnpm test:unit && playwright test && playwright test --config playwright.examples.config.mjs --grep-invert visual",
     "test:unit": "pnpm exec tsx --test tests/*.test.mjs",
     "test:visual": "playwright test --config playwright.examples.config.mjs --grep visual",
     "test:visual:update": "playwright test --config playwright.examples.config.mjs --grep visual --update-snapshots=all",
