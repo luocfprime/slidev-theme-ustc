@@ -14,7 +14,8 @@ test('visual snapshots', async ({ page }) => {
     total = await page.evaluate(() => window.__slidev__?.nav?.total ?? null)
     if (!total) await page.waitForTimeout(1000)
   }
-  if (!total) throw new Error('Could not read window.__slidev__.nav.total')
+  if (!total)
+    throw new Error('Could not read window.__slidev__.nav.total — is the Slidev server running?')
 
   for (let n = 1; n <= total; n++) {
     await test.step(`slide ${n}`, async () => {
