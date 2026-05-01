@@ -33,7 +33,8 @@ test('all slides load without errors', async ({ page }) => {
     total = await page.evaluate(() => window.__slidev__?.nav?.total ?? null)
     if (!total) await page.waitForTimeout(1000)
   }
-  if (!total) throw new Error('Could not read window.__slidev__.nav.total — is the Slidev server running?')
+  if (!total)
+    throw new Error('Could not read window.__slidev__.nav.total — is the Slidev server running?')
 
   expect(
     await page.locator('.slidev-layout').count(),
