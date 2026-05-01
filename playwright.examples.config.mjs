@@ -1,3 +1,8 @@
+// Playwright config for the five examples/ decks.
+// Runs JS error scanning (slides.spec.mjs) and visual regression (visual.spec.mjs).
+// Use: pnpm exec playwright test --config playwright.examples.config.mjs
+//      pnpm test:visual          (visual regression only)
+//      pnpm test:visual:update   (regenerate baselines)
 const isCI = !!process.env.CI
 
 export default {
