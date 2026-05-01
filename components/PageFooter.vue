@@ -14,7 +14,8 @@ defineProps<{
 
 const { slides, currentPage, total } = useNav()
 
-const backupStartNo = computed((): number => {
+// First backup slide — determines main-section total and appendix entry point.
+const firstBackupNo = computed((): number => {
   for (const slide of slides.value ?? []) {
     if (getLayout(slide) === 'backup') return slide.no ?? 0
   }
@@ -22,13 +23,20 @@ const backupStartNo = computed((): number => {
 })
 
 const pageLabel = computed(() => {
-  const bsn = backupStartNo.value
   const cur = currentPage.value
-  if (bsn > 0 && cur >= bsn) {
-    // backup slide itself → A.0; first content slide → A.1, etc.
-    return `A.${cur - bsn}`
+  const fbno = firstBackupNo.value
+  if (fbno > 0 && cur >= fbno) {
+    // Find the most-recent backup boundary at or before cur so that each
+    // backup section resets to A.0, matching the block-numbering transformer.
+    let base = fbno
+    for (const slide of slides.value ?? []) {
+      const no = slide.no ?? 0
+      if (no > cur) break
+      if (getLayout(slide) === 'backup') base = no
+    }
+    return `A.${cur - base}`
   }
-  const mainTotal = bsn > 0 ? bsn - 1 : total.value
+  const mainTotal = fbno > 0 ? fbno - 1 : total.value
   return `${cur} / ${mainTotal}`
 })
 </script>
