@@ -40,6 +40,11 @@ jobs:
       - name: Playwright tests (examples scan)
         run: pnpm exec playwright test --config playwright.examples.config.mjs --grep-invert visual
 
+      # TODO: components is excluded because its 50-slide deck exceeds the 10-minute
+      # test timeout (and the 15-minute job limit) before all screenshots are taken.
+      # To re-include: raise timeout-minutes to ≥30 and test.setTimeout in
+      # visual.spec.mjs to ≥20 min, then generate linux baselines with
+      # pnpm test:visual:update --project components and commit them.
       - name: Playwright visual regression
         run: pnpm exec playwright test --config playwright.examples.config.mjs --grep visual --project full-deck --project layouts --project math --project tweaks
 
