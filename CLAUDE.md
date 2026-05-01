@@ -100,6 +100,23 @@ reference them with root-relative paths such as `/Graph/plotly1.json`.
 Avoid changing generated or local-only output directories: `dist/`, `.slidev/`,
 `test-results/`, `playwright-report/`, `node_modules/`, and `.worktrees/`.
 
+## Code Review Style
+
+When reviewing code for this project, self-reflect multiple rounds before
+presenting findings. Do not surface a finding until you have:
+
+1. Verified it is real (read the actual code, not a summary).
+2. Traced the actual consequence — not a theoretical one. If the consequence
+   is "zero today, possible future confusion," say that plainly.
+3. Checked whether fixing it is consistent with the project's taste (see
+   Long-term Maintainability below) or would introduce more churn than value.
+
+Present findings honestly: if there are no serious problems, say so directly
+rather than padding with minor issues at inflated severity. For each finding,
+state: what it is → when it actually causes visible harm → the recommended
+action → whether that action is worth taking or better left alone. Let the
+developer decide based on real information, not alarming framing.
+
 ## Long-term Maintainability
 
 This theme is built to be maintained over time, not patched into a working state

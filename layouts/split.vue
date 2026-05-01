@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed, onMounted, onUpdated, useSlots } from 'vue'
 import { useBodyLayout } from '../utils/useBodyLayout'
 import { renderInlineMd } from '../utils/markdown'
 import { splitDefaults } from '../utils/defaults'
@@ -26,6 +26,22 @@ const { presenterName, pageClass, pageStyle, layoutEl } = useBodyLayout(props)
 
 const slots = useSlots()
 const hasColumns = computed(() => Boolean(slots.left || slots.right))
+
+// In hasColumns mode, h1 and subtitle are inside .split-header (not direct
+// children of root), so useBodyLayout's placeSubtitle() can't find them.
+// Mirror the same logic scoped to .split-header instead.
+function placeSubtitleInHeader() {
+  if (!hasColumns.value) return
+  const header = layoutEl.value?.querySelector<HTMLElement>('.split-header')
+  if (!header) return
+  const subtitle = header.querySelector<HTMLElement>(':scope > .content-subtitle')
+  const h1 = header.querySelector<HTMLElement>(':scope > h1')
+  if (!subtitle || !h1 || h1.nextElementSibling === subtitle) return
+  h1.insertAdjacentElement('afterend', subtitle)
+}
+
+onMounted(placeSubtitleInHeader)
+onUpdated(placeSubtitleInHeader)
 
 const gridStyle = computed(() => {
   const parts = (props.ratio ?? '2:1').split(':').map(Number)
