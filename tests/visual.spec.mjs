@@ -8,6 +8,10 @@ test('visual snapshots', async ({ page }) => {
   await page.goto('/1', { waitUntil: 'networkidle' })
   await page.waitForSelector('.slidev-layout', { timeout: 30_000 })
   await page.evaluate(() => document.fonts.ready)
+  await page
+    .locator('text=Loading slide...')
+    .waitFor({ state: 'detached', timeout: 30_000 })
+    .catch(() => {})
 
   let total = null
   for (let attempt = 0; attempt < 15 && !total; attempt++) {
@@ -24,6 +28,13 @@ test('visual snapshots', async ({ page }) => {
         await page.locator('.slidev-layout').first().waitFor({ state: 'attached' })
         await page.evaluate(() => document.fonts.ready)
       }
+
+      // Wait for lazy-loaded components (e.g. PlotlyGraph) to finish mounting.
+      // Slidev shows a "Loading slide..." spinner while async components resolve.
+      await page
+        .locator('text=Loading slide...')
+        .waitFor({ state: 'detached', timeout: 30_000 })
+        .catch(() => {})
 
       await expect.soft(page).toHaveScreenshot(`slide-${n}.png`, {
         maxDiffPixelRatio: 0.02,
