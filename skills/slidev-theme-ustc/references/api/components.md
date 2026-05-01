@@ -8,6 +8,14 @@ All components are auto-imported by Slidev — no import needed.
 
 Numbers are injected at compile time by the Slidev markdown transformer in `setup/transformers.ts` (single source of truth: `utils/blockNumberTransform.ts`). The number is bound to the tag's source-code position, NOT its rendered DOM presence.
 
+**`autoNumber` headmatter key (default `true`):** set `autoNumber: false` in the deck's global frontmatter to disable the transformer. When disabled, `FigureBlock` and `TableBlock` render without number labels, and Vite can hot-update individual slides without a full page reload — useful when editing with `dragPos` or the slide editor. Re-enable before build/export to restore sequential numbering.
+
+```yaml
+---
+autoNumber: false   # smooth HMR during editing; re-enable before publishing
+---
+```
+
 | Override                          | Behavior                                               |
 | --------------------------------- | ------------------------------------------------------ |
 | Bare `<FigureBlock>`              | Auto-injected `:number="N"`, counter `+1`              |

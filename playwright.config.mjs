@@ -23,6 +23,12 @@ export default {
       reuseExistingServer: !isCI,
       timeout: 120_000,
     },
+    {
+      command: 'pnpm exec slidev tests/fixtures/auto-number-disabled.md --port 13034',
+      port: 13034,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
   ],
 
   projects: [
@@ -40,6 +46,11 @@ export default {
       name: 'footnote',
       use: { baseURL: 'http://localhost:13033' },
       testMatch: ['footnote.spec.mjs'],
+    },
+    {
+      name: 'auto-number-disabled',
+      use: { baseURL: 'http://localhost:13034' },
+      testMatch: ['auto-number-disabled.spec.mjs'],
     },
   ],
 

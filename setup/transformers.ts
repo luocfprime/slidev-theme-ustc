@@ -210,6 +210,12 @@ function isBackupSlide(slide: any): boolean {
 }
 
 function numberingTransformer(ctx: MarkdownTransformContext) {
+  // Set autoNumber: false in the deck headmatter to skip this transformer.
+  // Skipping removes the cross-slide HMR dependency that causes full page
+  // reloads on every edit, enabling smooth dragPos and slide-editor usage.
+  // FigureBlock / TableBlock will render without number labels when skipped.
+  if (ctx.options.data.headmatter.autoNumber === false) return
+
   const slides = ctx.options.data.slides
   const myIndex = ctx.slide.index
 
