@@ -1,4 +1,5 @@
-import { computed, getCurrentInstance, onMounted, onUpdated, ref } from 'vue'
+import { computed, onMounted, onUpdated, ref } from 'vue'
+import { configs } from '@slidev/client'
 import { getPresenterName, resolveBodyMargin, handleBackground } from './layoutHelper'
 
 export interface BodyLayoutProps {
@@ -13,14 +14,9 @@ export interface BodyLayoutProps {
 }
 
 export function useBodyLayout(props: BodyLayoutProps) {
-  const instance = getCurrentInstance()
-  const presenterName = computed(() => {
-    const slidev = instance?.appContext.config.globalProperties.$slidev
-    return getPresenterName(
-      (slidev?.configs.authors as unknown[]) ?? [],
-      slidev?.configs.presenter as string | undefined,
-    )
-  })
+  const presenterName = computed(() =>
+    getPresenterName((configs.authors as unknown[]) ?? [], configs.presenter as string | undefined),
+  )
 
   const pageClass = computed(() => ({
     dense: props.density === 'dense',
