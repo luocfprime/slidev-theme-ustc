@@ -44,7 +44,7 @@ jobs:
 
       - name: Upload visual snapshot diffs
         if: steps.visual.outcome == 'failure'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: visual-snapshots-actual
           path: test-results/
