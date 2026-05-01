@@ -6,7 +6,7 @@ export default async function setup({ router }: AppContext) {
   const applyTooltips = () => {
     const normalizeText = (el: HTMLElement) => {
       const clone = el.cloneNode(true) as HTMLElement
-      clone.querySelectorAll('.footnote-backref').forEach(n => n.remove())
+      clone.querySelectorAll('.footnote-backref').forEach((n) => n.remove())
       return clone.textContent?.replace(/\s+/g, ' ').trim() ?? ''
     }
 

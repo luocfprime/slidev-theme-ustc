@@ -16,7 +16,7 @@ const props = defineProps<{
 const plotDiv = ref<HTMLElement>()
 const errorMessage = ref('')
 let renderRaf: number | null = null
-let plotlyConfig: any = null
+let plotlyConfig: Record<string, unknown> | null = null
 
 const base = import.meta.env.BASE_URL
 
@@ -30,8 +30,8 @@ async function createPlot() {
     if (!res.ok) throw new Error(`HTTP ${res.status}`)
     plotlyConfig = await res.json()
     scheduleDraw()
-  } catch (err: any) {
-    errorMessage.value = `Load failed: ${err?.message ?? err}`
+  } catch (err) {
+    errorMessage.value = `Load failed: ${err instanceof Error ? err.message : String(err)}`
   }
 }
 
@@ -43,7 +43,9 @@ function scheduleDraw() {
 function buildSpec() {
   const base = plotlyConfig ?? {}
   const data = Array.isArray(base.data) ? base.data : []
-  const layout: any = { ...(base.layout ?? {}) }
+  const layout: Record<string, unknown> = {
+    ...((base.layout as Record<string, unknown> | undefined) ?? {}),
+  }
 
   if (props.graphWidth !== undefined) {
     layout.width = props.graphWidth
@@ -53,7 +55,10 @@ function buildSpec() {
   if (props.graphHeight !== undefined) layout.height = props.graphHeight
 
   if (props.legendFontSize !== undefined && layout.legend) {
-    layout.legend = { ...layout.legend, font: { ...(layout.legend.font ?? {}), size: props.legendFontSize } }
+    layout.legend = {
+      ...layout.legend,
+      font: { ...(layout.legend.font ?? {}), size: props.legendFontSize },
+    }
   }
 
   layout.xaxis = { ...(layout.xaxis ?? {}) }
@@ -67,7 +72,7 @@ function buildSpec() {
   }
 
   if (props.annotationFontSizeScale !== undefined && Array.isArray(layout.annotations)) {
-    layout.annotations = layout.annotations.map((a: any) => {
+    layout.annotations = (layout.annotations as Record<string, unknown>[]).map((a) => {
       const cloned = { ...a }
       const cur = Number(cloned?.font?.size ?? 12)
       cloned.font = { ...(cloned.font ?? {}), size: cur * props.annotationFontSizeScale }
@@ -81,11 +86,16 @@ function buildSpec() {
 function drawPlot() {
   if (!plotlyConfig || !plotDiv.value) return
   const el = plotDiv.value
-  if (!el.offsetParent || el.clientWidth === 0) { scheduleDraw(); return }
+  if (!el.offsetParent || el.clientWidth === 0) {
+    scheduleDraw()
+    return
+  }
   const { data, layout } = buildSpec()
   Plotly.react(el, data, layout, { displayModeBar: false, responsive: true })
     .then(() => resizePlot())
-    .catch((err: any) => { errorMessage.value = `Render failed: ${err?.message ?? err}` })
+    .catch((err: unknown) => {
+      errorMessage.value = `Render failed: ${err instanceof Error ? err.message : String(err)}`
+    })
 }
 
 function resizePlot() {
@@ -112,8 +122,12 @@ onBeforeUnmount(() => {
 </template>
 
 <style scoped>
-.plotly-wrap  { width: 100%; }
-.plotly-canvas { width: 100%; }
+.plotly-wrap {
+  width: 100%;
+}
+.plotly-canvas {
+  width: 100%;
+}
 .plotly-error {
   margin-top: 0.4rem;
   font-size: 0.8rem;

@@ -1,24 +1,24 @@
 ---
 theme: ../
 layout: cover
-presenter: "李晓彤"
+presenter: '李晓彤'
 authors:
-  - name: "张明远"
-    affiliations: ["中国科学技术大学", "ATLAS 合作组"]
-  - name: "A. Müller"
-    affiliations: ["CERN"]
-  - name: "李晓彤"
-    marks: ["†"]
-    affiliations: ["中国科学技术大学"]
+  - name: '张明远'
+    affiliations: ['中国科学技术大学', 'ATLAS 合作组']
+  - name: 'A. Müller'
+    affiliations: ['CERN']
+  - name: '李晓彤'
+    marks: ['†']
+    affiliations: ['中国科学技术大学']
 authorMarks:
-  "†": "Corresponding author"
-conference: "第 22 届高能物理前沿研讨会"
-talkTitle: "基于图神经网络的对撞机事例重建"
-subtitle: "从稀疏点云到粒子流的端到端学习"
-date: "2026 年 4 月"
+  '†': 'Corresponding author'
+conference: '第 22 届高能物理前沿研讨会'
+talkTitle: '基于图神经网络的对撞机事例重建'
+subtitle: '从稀疏点云到粒子流的端到端学习'
+date: '2026 年 4 月'
 sectionBar: true
-figurePrefix: "图"
-tablePrefix: "表"
+figurePrefix: '图'
+tablePrefix: '表'
 ---
 
 <!--
@@ -36,9 +36,11 @@ tablePrefix: "表"
 本报告提出一种端到端图神经网络框架，显著提升重建效率与精度。
 
 ---
+
 layout: toc
 columns: 2
 highlight: 0
+
 ---
 
 <!--
@@ -50,9 +52,11 @@ highlight: 0
 # 目录
 
 ---
+
 layout: toc
 columns: 2
 highlight: 1
+
 ---
 
 <!--
@@ -64,8 +68,8 @@ highlight: 1
 # 目录
 
 ---
-layout: section
----
+
+## layout: section
 
 <!--
   features: layout: section, h1 + sub-paragraph as section description
@@ -78,8 +82,10 @@ layout: section
 高亮度 LHC 下的事例重建挑战
 
 ---
+
 layout: content
 subtitle: "为什么传统方法在 HL-LHC 不够用？"
+
 ---
 
 <!--
@@ -103,8 +109,10 @@ $$t_\text{reco} \propto \langle\mu\rangle^2 \cdot n_\text{hits}$$
 </Callout>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -117,26 +125,29 @@ density: dense
 
 <TableBlock caption="主流端到端事例重建方法性能对比（ATLAS Run 2 条件，$\langle\mu\rangle=50$）。">
 
-| 方法 | 主干网络 | 径迹效率 | 假径迹率 | 推理时间 |
-|------|---------|--------:|--------:|--------:|
-| Kalman Filter [^kf] | — | 98.1% | 0.3% | 820 ms |
-| ACTS [^acts] | — | 97.8% | 0.4% | 310 ms |
-| GNN-Tracking [^gnn1] | GravNet | 96.2% | 1.1% | 42 ms |
-| Exa.TrkX [^exa] | GNN | 97.1% | 0.8% | 28 ms |
-| **本工作** | **HeteroGNN** | **97.9%** | **0.5%** | **18 ms** |
+| 方法                 | 主干网络      |  径迹效率 | 假径迹率 |  推理时间 |
+| -------------------- | ------------- | --------: | -------: | --------: |
+| Kalman Filter [^kf]  | —             |     98.1% |     0.3% |    820 ms |
+| ACTS [^acts]         | —             |     97.8% |     0.4% |    310 ms |
+| GNN-Tracking [^gnn1] | GravNet       |     96.2% |     1.1% |     42 ms |
+| Exa.TrkX [^exa]      | GNN           |     97.1% |     0.8% |     28 ms |
+| **本工作**           | **HeteroGNN** | **97.9%** | **0.5%** | **18 ms** |
 
 </TableBlock>
 
 效率与速度同时优于现有深度学习方案，同时保持与经典算法相当的假径迹率。
 
-[^kf]: Frühwirth, *NIM A* **262** (1987) 444.
-[^acts]: Ai et al., *Front. Phys.* **10** (2022) 817828.
-[^gnn1]: Ju et al., *EPJ Web Conf.* **245** (2020) 09013.
-[^exa]: Choma et al., *arXiv:2012.01563* (2020).
+[^kf]: Frühwirth, _NIM A_ **262** (1987) 444.
+
+[^acts]: Ai et al., _Front. Phys._ **10** (2022) 817828.
+
+[^gnn1]: Ju et al., _EPJ Web Conf._ **245** (2020) 09013.
+
+[^exa]: Choma et al., _arXiv:2012.01563_ (2020).
 
 ---
-layout: split
----
+
+## layout: split
 
 <!--
   features: layout: split (default ratio), ::left:: / ::right:: slots, FigureBlock with src + caption, public/ asset path
@@ -165,9 +176,11 @@ layout: split
 />
 
 ---
+
 layout: toc
 columns: 2
 highlight: 2
+
 ---
 
 <!--
@@ -179,8 +192,8 @@ highlight: 2
 # 目录
 
 ---
-layout: section
----
+
+## layout: section
 
 <!--
   features: layout: section, h1 + sub-paragraph as section description
@@ -193,8 +206,10 @@ layout: section
 异构图神经网络框架
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -247,9 +262,11 @@ $$
 </Grid>
 
 ---
+
 layout: content
 density: dense
 lineHeight: 1.55
+
 ---
 
 <!--
@@ -279,8 +296,10 @@ $k$ 轮消息传递的表达能力不超过 $k$ 阶 Weisfeiler-Leman 图同构�
 </Block>
 
 ---
+
 layout: content
 margin: tighter
+
 ---
 
 <!--
@@ -328,8 +347,10 @@ $$\hat{y}_{ij} = \sigma\!\left(W\bigl[h_i^{(L)} \,\|\, h_j^{(L)}\bigr]\right) \i
 </div>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -362,8 +383,10 @@ class HeteroGNN(torch.nn.Module):
 训练数据：ATLAS MC 模拟（$t\bar{t}$ 事例）$10^5$ 次，验证集 $2 \times 10^4$ 次；GPU：NVIDIA A100 80 GB × 8，批训练耗时约 6 小时。
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -392,9 +415,11 @@ flowchart LR
 整个流程从原始探测器击中点出发，经图构建、三轮 GNN 消息传递与边分类，最终输出重建径迹，推理延迟仅 **18 ms/event**。
 
 ---
+
 layout: toc
 columns: 2
 highlight: 3
+
 ---
 
 <!--
@@ -406,8 +431,8 @@ highlight: 3
 # 目录
 
 ---
-layout: section
----
+
+## layout: section
 
 <!--
   features: layout: section, h1 + sub-paragraph as section description
@@ -420,8 +445,10 @@ layout: section
 基准测试与消融分析
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -452,12 +479,12 @@ density: dense
 
 <TableBlock caption="各堆积条件下数据集规模（单位：$10^3$）。">
 
-| $\langle\mu\rangle$ | 节点数 | 边数 | 真实边 |
-|---:|---:|---:|---:|
-| 50 | 38 | 820 | 15 |
-| 100 | 71 | 3 100 | 29 |
-| 140 | 98 | 6 000 | 40 |
-| 200 | 139 | 12 200 | 57 |
+| $\langle\mu\rangle$ | 节点数 |   边数 | 真实边 |
+| ------------------: | -----: | -----: | -----: |
+|                  50 |     38 |    820 |     15 |
+|                 100 |     71 |  3 100 |     29 |
+|                 140 |     98 |  6 000 |     40 |
+|                 200 |    139 | 12 200 |     57 |
 
 </TableBlock>
 
@@ -465,9 +492,11 @@ density: dense
 </Grid>
 
 ---
+
 layout: split
 ratio: "1:1"
 density: dense
+
 ---
 
 <!--
@@ -508,8 +537,8 @@ $p_T < 0.5\,\text{GeV}$ 的径迹在 $\langle\mu\rangle = 200$ 时假径迹率�
 </Callout>
 
 ---
-layout: content
----
+
+## layout: content
 
 <!--
   features: layout: content (default density), ResultBox with title, Grid cols=3 gap=md with inline style, inline Block elements with title
@@ -536,9 +565,11 @@ $$
 </Grid>
 
 ---
+
 layout: content
 density: dense
 sectionBarMode: minimal
+
 ---
 
 <!--
@@ -551,13 +582,13 @@ sectionBarMode: minimal
 
 <TableBlock caption="消融实验结果（$\langle\mu\rangle=140$）。逐步移除各模块，观察性能下降。">
 
-| 配置 | 效率 | 假径迹率 | 推理时间 |
-|------|-----:|--------:|--------:|
-| 完整模型 | **97.5%** | **0.5%** | **21 ms** |
-| −异构边类型 | 96.8% | 0.7% | 19 ms |
-| −3 轮迭代（→ 2 轮） | 96.1% | 0.9% | 14 ms |
-| −类权重 | 94.3% | 2.1% | 21 ms |
-| −几何特征 | 93.7% | 2.4% | 18 ms |
+| 配置                |      效率 | 假径迹率 |  推理时间 |
+| ------------------- | --------: | -------: | --------: |
+| 完整模型            | **97.5%** | **0.5%** | **21 ms** |
+| −异构边类型         |     96.8% |     0.7% |     19 ms |
+| −3 轮迭代（→ 2 轮） |     96.1% |     0.9% |     14 ms |
+| −类权重             |     94.3% |     2.1% |     21 ms |
+| −几何特征           |     93.7% |     2.4% |     18 ms |
 
 </TableBlock>
 
@@ -570,8 +601,10 @@ sectionBarMode: minimal
 </Callout>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -590,9 +623,11 @@ density: dense
 左图：推理时间与 $\langle\mu\rangle$ 的关系（本方法近线性，基线近二次）。右图：吞吐量（事例/秒）随 GPU 并行度的扩展。
 
 ---
+
 layout: toc
 columns: 2
 highlight: 4
+
 ---
 
 <!--
@@ -604,8 +639,8 @@ highlight: 4
 # 目录
 
 ---
-layout: section
----
+
+## layout: section
 
 <!--
   features: layout: section, h1 + sub-paragraph as section description
@@ -618,8 +653,8 @@ layout: section
 主要贡献与未来工作
 
 ---
-layout: content
----
+
+## layout: content
 
 <!--
   features: layout: content, Grid cols=3 gap=md with Block children (each with title), Takeaway component
@@ -658,9 +693,11 @@ layout: content
 </Takeaway>
 
 ---
+
 layout: content
 dragPos:
-  qr-repo: 1057,179,160,_
+qr-repo: 1057,179,160,\_
+
 ---
 
 <!--
@@ -688,9 +725,11 @@ dragPos:
 </v-drag>
 
 ---
+
 layout: content
 density: dense
 subtitle: "（演示一）:numbered=false — 不显示前缀，也不消耗 counter"
+
 ---
 
 <!--
@@ -714,10 +753,12 @@ subtitle: "（演示一）:numbered=false — 不显示前缀，也不消耗 cou
 </Grid>
 
 ---
+
 layout: content
 density: dense
 clicks: 1
 subtitle: "（演示二）v-if 保留编号槽 — 进入此页后再点一下"
+
 ---
 
 <!--
@@ -745,8 +786,8 @@ subtitle: "（演示二）v-if 保留编号槽 — 进入此页后再点一下"
 </Grid>
 
 ---
-layout: end
----
+
+## layout: end
 
 <!--
   features: layout: end, ::contact:: slot for contact info
@@ -763,8 +804,8 @@ layout: end
 张明远 · zmy@ustc.edu.cn · github.com/ustc-hep/heterognn
 
 ---
-layout: backup
----
+
+## layout: backup
 
 <!--
   features: layout: backup (resets numbering for appendix slides)
@@ -775,8 +816,8 @@ layout: backup
 # 附 录
 
 ---
-layout: content
----
+
+## layout: content
 
 <!--
   features: layout: content, Grid cols="45 55" custom ratio + alignY=top, FigureBlock with src + caption, Callout type=note
@@ -815,8 +856,10 @@ layout: content
 </Grid>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -829,12 +872,12 @@ density: dense
 
 <TableBlock caption="各动量区间径迹重建精度对比（$\langle\mu\rangle=50$，ATLAS 全模拟）。">
 
-| $p_T$ 区间 | KF 效率 | 本方法效率 | KF 假率 | 本方法假率 |
-|-----------|--------:|----------:|--------:|----------:|
-| $0.5$–$1\,\text{GeV}$ | 91.2% | 89.4% | 0.8% | 1.2% |
-| $1$–$5\,\text{GeV}$ | 97.8% | 97.9% | 0.3% | 0.5% |
-| $5$–$20\,\text{GeV}$ | 98.9% | 98.7% | 0.2% | 0.4% |
-| $> 20\,\text{GeV}$ | 99.1% | 99.2% | 0.1% | 0.2% |
+| $p_T$ 区间            | KF 效率 | 本方法效率 | KF 假率 | 本方法假率 |
+| --------------------- | ------: | ---------: | ------: | ---------: |
+| $0.5$–$1\,\text{GeV}$ |   91.2% |      89.4% |    0.8% |       1.2% |
+| $1$–$5\,\text{GeV}$   |   97.8% |      97.9% |    0.3% |       0.5% |
+| $5$–$20\,\text{GeV}$  |   98.9% |      98.7% |    0.2% |       0.4% |
+| $> 20\,\text{GeV}$    |   99.1% |      99.2% |    0.1% |       0.2% |
 
 </TableBlock>
 
@@ -847,8 +890,10 @@ GNN 方法在高动量高堆积的实验条件下展现出优势；低动量优�
 </Takeaway>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -951,8 +996,8 @@ density: dense
 ```
 
 ---
-layout: content
----
+
+## layout: content
 
 <!--
   features: layout: content, typst code fence with CeTZ canvas drawing (3D ortho projection)
@@ -1005,8 +1050,10 @@ layout: content
 ```
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -1027,8 +1074,10 @@ density: dense
 `VideoBlock` 组件支持以下属性：`src`（必填）、`caption`、`width`、`videoWidth`、`controls`、`autoplay`、`loop`、`muted`。路径以 `/` 开头时自动加 `BASE_URL` 前缀，兼容 GitHub Pages 子路径部署。
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 <!--
@@ -1100,9 +1149,11 @@ Block 边框 = `--ustc-blue-border`。
 </style>
 
 ---
+
 layout: content
 density: dense
 margin: tighter
+
 ---
 
 <!--

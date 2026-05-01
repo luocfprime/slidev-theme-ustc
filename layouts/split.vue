@@ -4,23 +4,26 @@ import { useBodyLayout } from '../utils/useBodyLayout'
 import { renderInlineMd } from '../utils/markdown'
 import { splitDefaults } from '../utils/defaults'
 
-const props = withDefaults(defineProps<{
-  density?: 'normal' | 'dense'
-  margin?: 'normal' | 'tight' | 'tighter' | 'none'
-  footer?: boolean
-  footerMode?: 'full' | 'minimal'
-  ratio?: string
-  footnote?: 'overlay' | 'flow'
-  gap?: 'sm' | 'md' | 'lg'
-  sectionBar?: boolean
-  lineHeight?: number
-  align?: 'left' | 'center' | 'right'
-  subtitle?: string
-  background?: string
-  wip?: boolean
-}>(), {
-  ...splitDefaults,
-})
+const props = withDefaults(
+  defineProps<{
+    density?: 'normal' | 'dense'
+    margin?: 'normal' | 'tight' | 'tighter' | 'none'
+    footer?: boolean
+    footerMode?: 'full' | 'minimal'
+    ratio?: string
+    footnote?: 'overlay' | 'flow'
+    gap?: 'sm' | 'md' | 'lg'
+    sectionBar?: boolean
+    lineHeight?: number
+    align?: 'left' | 'center' | 'right'
+    subtitle?: string
+    background?: string
+    wip?: boolean
+  }>(),
+  {
+    ...splitDefaults,
+  },
+)
 
 const { presenterName, pageClass, pageStyle, layoutEl } = useBodyLayout(props)
 
@@ -45,9 +48,8 @@ onUpdated(placeSubtitleInHeader)
 
 const gridStyle = computed(() => {
   const parts = (props.ratio ?? '2:1').split(':').map(Number)
-  const cols = parts.length === 2 && parts.every(n => n > 0)
-    ? `${parts[0]}fr ${parts[1]}fr`
-    : '2fr 1fr'
+  const cols =
+    parts.length === 2 && parts.every((n) => n > 0) ? `${parts[0]}fr ${parts[1]}fr` : '2fr 1fr'
   const gapMap: Record<string, string> = { sm: '0.8rem', md: '1.4rem', lg: '2rem' }
   return {
     display: 'grid',
@@ -65,7 +67,11 @@ const gridStyle = computed(() => {
     <template v-if="hasColumns">
       <div class="split-header">
         <slot />
-        <div v-if="props.subtitle" class="content-subtitle" v-html="renderInlineMd(props.subtitle)" />
+        <div
+          v-if="props.subtitle"
+          class="content-subtitle"
+          v-html="renderInlineMd(props.subtitle)"
+        />
       </div>
       <div :style="gridStyle">
         <div class="split-col"><slot name="left" /></div>

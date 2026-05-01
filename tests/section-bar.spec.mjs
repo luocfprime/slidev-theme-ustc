@@ -124,7 +124,6 @@ test.describe('section bar — per-slide overrides', () => {
   })
 })
 
-
 test.describe('section bar — post-backup behavior', () => {
   test('bar still renders on a content slide after backup', async ({ page }) => {
     await gotoSlide(page, 13)
@@ -144,7 +143,9 @@ test.describe('section bar — post-backup behavior', () => {
 })
 
 test.describe('toc layout', () => {
-  test('lists all sections in order (stopAtBackup=false includes After-Backup)', async ({ page }) => {
+  test('lists all sections in order (stopAtBackup=false includes After-Backup)', async ({
+    page,
+  }) => {
     await gotoSlide(page, 10)
     const items = slide(page).locator('.toc-item')
     await expect(items).toHaveCount(3)

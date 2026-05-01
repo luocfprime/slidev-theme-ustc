@@ -3,18 +3,23 @@ import { computed } from 'vue'
 import { getPresenterName } from '../utils/layoutHelper'
 import { endDefaults } from '../utils/defaults'
 
-const props = withDefaults(defineProps<{
-  showLogo?: boolean
-  logoSrc?: string
-  logoAlt?: string
-  footer?: boolean
-  footerMode?: 'full' | 'minimal'
-  wip?: boolean
-}>(), {
-  ...endDefaults,
-})
+const props = withDefaults(
+  defineProps<{
+    showLogo?: boolean
+    logoSrc?: string
+    logoAlt?: string
+    footer?: boolean
+    footerMode?: 'full' | 'minimal'
+    wip?: boolean
+  }>(),
+  {
+    ...endDefaults,
+  },
+)
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter as string | undefined))
+const presenterName = computed(() =>
+  getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter as string | undefined),
+)
 </script>
 
 <template>

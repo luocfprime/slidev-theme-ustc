@@ -20,6 +20,7 @@ const currentPage = computed(() => $slidev.nav.currentPage)
 const currentSlide = computed(() => {
   const slides = $slidev.nav.slides ?? []
   const idx = (currentPage.value ?? 1) - 1
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return slides[idx] as any
 })
 

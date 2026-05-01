@@ -8,11 +8,11 @@ All components are auto-imported by Slidev — no import needed.
 
 Numbers are injected at compile time by the Slidev markdown transformer in `setup/transformers.ts` (single source of truth: `utils/blockNumberTransform.ts`). The number is bound to the tag's source-code position, NOT its rendered DOM presence.
 
-| Override | Behavior |
-|----------|----------|
-| Bare `<FigureBlock>` | Auto-injected `:number="N"`, counter `+1` |
-| `<FigureBlock :number="7">` | Manual override; auto counter resumes from `max(c, 8)` |
-| `<FigureBlock :numbered="false">` | No number rendered AND counter unchanged |
+| Override                          | Behavior                                               |
+| --------------------------------- | ------------------------------------------------------ |
+| Bare `<FigureBlock>`              | Auto-injected `:number="N"`, counter `+1`              |
+| `<FigureBlock :number="7">`       | Manual override; auto counter resumes from `max(c, 8)` |
+| `<FigureBlock :numbered="false">` | No number rendered AND counter unchanged               |
 
 **v-if / v-show semantics:** these only affect rendering. The figure still occupies a number from its source-code position. Show/hide a figure via reactive state and its number stays stable across toggles. To exclude a tag entirely (no slot, no number), use `:numbered="false"` or wrap it in an HTML comment.
 
@@ -40,11 +40,11 @@ Left cell
 </Grid>
 ```
 
-| Prop | Type | Default | Values |
-|------|------|---------|--------|
-| `cols` | string | `'2'` | `'3'`, `'1 2 1'`, `'1fr 2fr'`, `'300px 1fr'` |
-| `gap` | string | `'md'` | `'sm'` (0.8rem) · `'md'` (1.4rem) · `'lg'` (2rem) |
-| `alignY` | string | `'top'` | `'top'` · `'center'` · `'bottom'` |
+| Prop     | Type   | Default | Values                                            |
+| -------- | ------ | ------- | ------------------------------------------------- |
+| `cols`   | string | `'2'`   | `'3'`, `'1 2 1'`, `'1fr 2fr'`, `'300px 1fr'`      |
+| `gap`    | string | `'md'`  | `'sm'` (0.8rem) · `'md'` (1.4rem) · `'lg'` (2rem) |
+| `alignY` | string | `'top'` | `'top'` · `'center'` · `'bottom'`                 |
 
 `cols` resolution: single digit → `repeat(n, 1fr)`; space-separated numbers → `Nfr` each; anything else → used verbatim.
 
@@ -78,13 +78,13 @@ Body text here.
 </Callout>
 ```
 
-| `type` | Icon | Color |
-|--------|------|-------|
-| `note` (default) | info | blue |
-| `tip` | lightbulb | teal |
-| `warning` | alert | amber |
-| `important` | alert-circle | red |
-| `example` | beaker | purple |
+| `type`           | Icon         | Color  |
+| ---------------- | ------------ | ------ |
+| `note` (default) | info         | blue   |
+| `tip`            | lightbulb    | teal   |
+| `warning`        | alert        | amber  |
+| `important`      | alert-circle | red    |
+| `example`        | beaker       | purple |
 
 Both `type` and `title` are optional.
 
@@ -134,21 +134,21 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 />
 ```
 
-| Prop | Default | Notes |
-|------|---------|-------|
-| `src` | — | required unless `wip` is set |
-| `alt` | `''` | accessibility |
-| `caption` | `''` | plain-text fallback when `#caption` slot is empty |
-| `width` | `'100%'` | outer container width |
-| `imageWidth` | `'100%'` | image element (max-height: 38rem) |
-| `captionAlign` | `'center'` | `'left'` · `'center'` |
-| `captionInsetLeft` | `0` | padding-left on caption |
-| `captionInsetRight` | `0` | padding-right on caption |
-| `prefix` | global `figurePrefix` | per-figure label override |
-| `numberSuffix` | global `figureNumberSuffix` or `'. '` | per-figure separator after the number |
-| `wip` | `false` | mark figure as work-in-progress; shows red WIP badge |
-| `number` | injected | auto-numbered at compile time; set explicitly to override |
-| `numbered` | `true` | set to `false` to skip auto-numbering entirely |
+| Prop                | Default                               | Notes                                                     |
+| ------------------- | ------------------------------------- | --------------------------------------------------------- |
+| `src`               | —                                     | required unless `wip` is set                              |
+| `alt`               | `''`                                  | accessibility                                             |
+| `caption`           | `''`                                  | plain-text fallback when `#caption` slot is empty         |
+| `width`             | `'100%'`                              | outer container width                                     |
+| `imageWidth`        | `'100%'`                              | image element (max-height: 38rem)                         |
+| `captionAlign`      | `'center'`                            | `'left'` · `'center'`                                     |
+| `captionInsetLeft`  | `0`                                   | padding-left on caption                                   |
+| `captionInsetRight` | `0`                                   | padding-right on caption                                  |
+| `prefix`            | global `figurePrefix`                 | per-figure label override                                 |
+| `numberSuffix`      | global `figureNumberSuffix` or `'. '` | per-figure separator after the number                     |
+| `wip`               | `false`                               | mark figure as work-in-progress; shows red WIP badge      |
+| `number`            | injected                              | auto-numbered at compile time; set explicitly to override |
+| `numbered`          | `true`                                | set to `false` to skip auto-numbering entirely            |
 
 Global prefix set in deck frontmatter: `figurePrefix: Figure` (default). Global suffix set in deck frontmatter: `figureNumberSuffix: ". "` (default).
 
@@ -197,19 +197,19 @@ Video with optional caption. Similar prop set to `FigureBlock` (no auto-numberin
 />
 ```
 
-| Prop | Default | Notes |
-|------|---------|-------|
-| `src` | — | required; `/`-prefixed paths get `BASE_URL` prepended |
-| `caption` | `''` | supports markdown |
-| `width` | `'100%'` | outer container width |
-| `videoWidth` | `'100%'` | `<video>` element width |
-| `captionAlign` | `'center'` | `'left'` · `'center'` |
-| `captionInsetLeft` | `0` | padding-left on caption |
-| `captionInsetRight` | `0` | padding-right on caption |
-| `controls` | `true` | show browser video controls |
-| `autoplay` | `false` | autoplay (forces `muted`) |
-| `loop` | `false` | loop playback |
-| `muted` | `false` | mute audio |
+| Prop                | Default    | Notes                                                 |
+| ------------------- | ---------- | ----------------------------------------------------- |
+| `src`               | —          | required; `/`-prefixed paths get `BASE_URL` prepended |
+| `caption`           | `''`       | supports markdown                                     |
+| `width`             | `'100%'`   | outer container width                                 |
+| `videoWidth`        | `'100%'`   | `<video>` element width                               |
+| `captionAlign`      | `'center'` | `'left'` · `'center'`                                 |
+| `captionInsetLeft`  | `0`        | padding-left on caption                               |
+| `captionInsetRight` | `0`        | padding-right on caption                              |
+| `controls`          | `true`     | show browser video controls                           |
+| `autoplay`          | `false`    | autoplay (forces `muted`)                             |
+| `loop`              | `false`    | loop playback                                         |
+| `muted`             | `false`    | mute audio                                            |
 
 `playsinline` is always set (iOS compatibility). Place files under `public/videos/` and reference as `/videos/file.mp4`.
 
@@ -230,16 +230,16 @@ When `width` is narrower than the content area, a top-level TableBlock is center
 </TableBlock>
 ```
 
-| Prop | Default | Notes |
-|------|---------|-------|
-| `caption` | `''` | plain-text fallback when `#caption` slot is empty |
-| `captionAlign` | `'center'` | `'left'` · `'center'` |
-| `width` | `'100%'` | container width; narrower top-level blocks center by default |
-| `prefix` | global `tablePrefix` | per-table label override |
-| `numberSuffix` | global `tableNumberSuffix` or `'. '` | per-table separator after the number |
-| `wip` | `false` | mark table as work-in-progress; shows red WIP badge next to caption |
-| `number` | injected | auto-numbered at compile time; set explicitly to override |
-| `numbered` | `true` | set to `false` to skip auto-numbering entirely |
+| Prop           | Default                              | Notes                                                               |
+| -------------- | ------------------------------------ | ------------------------------------------------------------------- |
+| `caption`      | `''`                                 | plain-text fallback when `#caption` slot is empty                   |
+| `captionAlign` | `'center'`                           | `'left'` · `'center'`                                               |
+| `width`        | `'100%'`                             | container width; narrower top-level blocks center by default        |
+| `prefix`       | global `tablePrefix`                 | per-table label override                                            |
+| `numberSuffix` | global `tableNumberSuffix` or `'. '` | per-table separator after the number                                |
+| `wip`          | `false`                              | mark table as work-in-progress; shows red WIP badge next to caption |
+| `number`       | injected                             | auto-numbered at compile time; set explicitly to override           |
+| `numbered`     | `true`                               | set to `false` to skip auto-numbering entirely                      |
 
 Global prefix set in deck frontmatter: `tablePrefix: Table` (default). Global suffix set in deck frontmatter: `tableNumberSuffix: ". "` (default).
 
@@ -293,12 +293,12 @@ Content here
 </Abs>
 ```
 
-| Prop | Notes |
-|------|-------|
-| `x` | left position **(required)**; number → px, string → used as-is |
-| `y` | top position **(required)** |
-| `w` | width (optional) |
-| `z` | z-index within the slide content layer, default `10`. Cannot override the section bar or other global overlays — they are in a separate stacking context. |
+| Prop | Notes                                                                                                                                                     |
+| ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `x`  | left position **(required)**; number → px, string → used as-is                                                                                            |
+| `y`  | top position **(required)**                                                                                                                               |
+| `w`  | width (optional)                                                                                                                                          |
+| `z`  | z-index within the slide content layer, default `10`. Cannot override the section bar or other global overlays — they are in a separate stacking context. |
 
 ---
 
@@ -315,14 +315,14 @@ Renders an interactive Plotly.js chart from a JSON config file.
 />
 ```
 
-| Prop | Notes |
-|------|-------|
-| `filePath` | path to Plotly JSON spec |
-| `graphWidth` / `graphHeight` | override layout dimensions |
-| `xTitleFontSize` / `yTitleFontSize` | axis title font size |
-| `tickFontSize` | tick label font size |
-| `legendFontSize` | legend font size |
-| `annotationFontSizeScale` | multiplier for all annotation font sizes |
+| Prop                                | Notes                                    |
+| ----------------------------------- | ---------------------------------------- |
+| `filePath`                          | path to Plotly JSON spec                 |
+| `graphWidth` / `graphHeight`        | override layout dimensions               |
+| `xTitleFontSize` / `yTitleFontSize` | axis title font size                     |
+| `tickFontSize`                      | tick label font size                     |
+| `legendFontSize`                    | legend font size                         |
+| `annotationFontSizeScale`           | multiplier for all annotation font sizes |
 
 ---
 
@@ -340,11 +340,11 @@ SVG QR code with optional caption.
 />
 ```
 
-| Prop | Default | Notes |
-|------|---------|-------|
-| `url` | — | required; URL to encode |
-| `size` | `160` | QR code size in pixels |
-| `color` | `'#000000'` | foreground color |
-| `background` | `'#ffffff'` | background color |
-| `caption` | `''` | text below QR code |
-| `wip` | `false` | show WIP badge; renders placeholder when `url` is omitted |
+| Prop         | Default     | Notes                                                     |
+| ------------ | ----------- | --------------------------------------------------------- |
+| `url`        | —           | required; URL to encode                                   |
+| `size`       | `160`       | QR code size in pixels                                    |
+| `color`      | `'#000000'` | foreground color                                          |
+| `background` | `'#ffffff'` | background color                                          |
+| `caption`    | `''`        | text below QR code                                        |
+| `wip`        | `false`     | show WIP badge; renders placeholder when `url` is omitted |

@@ -31,8 +31,11 @@ jobs:
       - name: Install Playwright browsers
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Playwright tests
+      - name: Playwright tests (fixtures)
         run: pnpm exec playwright test
+
+      - name: Playwright tests (examples scan)
+        run: pnpm exec playwright test --config playwright.examples.config.mjs
 
       - name: Upload test report
         if: failure()

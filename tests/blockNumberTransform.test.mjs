@@ -149,10 +149,7 @@ test(':number with non-literal expression is preserved, counter unchanged', () =
   const src = '<FigureBlock :number="someVar + 1" />\n<FigureBlock />'
   const r = injectBlockNumbers(src, start())
   // Counter unchanged because we cannot evaluate the expression at compile time.
-  assert.equal(
-    r.out,
-    '<FigureBlock :number="someVar + 1" />\n<FigureBlock :number="1" />',
-  )
+  assert.equal(r.out, '<FigureBlock :number="someVar + 1" />\n<FigureBlock :number="1" />')
 })
 
 // ─── Opt-out: :numbered="false" ───────────────────────────────────────────

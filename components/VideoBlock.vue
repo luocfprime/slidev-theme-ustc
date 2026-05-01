@@ -5,28 +5,33 @@ import { videoDefaults } from '../utils/defaults'
 
 const base = import.meta.env.BASE_URL
 
-const props = withDefaults(defineProps<{
-  src?: string
-  caption?: string
-  width?: string
-  videoWidth?: string | number
-  captionAlign?: 'left' | 'center'
-  captionInsetLeft?: string | number
-  captionInsetRight?: string | number
-  controls?: boolean
-  autoplay?: boolean
-  loop?: boolean
-  muted?: boolean
-  wip?: boolean
-}>(), {
-  ...videoDefaults,
-})
+const props = withDefaults(
+  defineProps<{
+    src?: string
+    caption?: string
+    width?: string
+    videoWidth?: string | number
+    captionAlign?: 'left' | 'center'
+    captionInsetLeft?: string | number
+    captionInsetRight?: string | number
+    controls?: boolean
+    autoplay?: boolean
+    loop?: boolean
+    muted?: boolean
+    wip?: boolean
+  }>(),
+  {
+    ...videoDefaults,
+  },
+)
 
 if (import.meta.env.DEV && !props.src && !props.wip) {
-  console.warn('[VideoBlock] missing `src` and not flagged `wip`; this will render a broken <video>.')
+  console.warn(
+    '[VideoBlock] missing `src` and not flagged `wip`; this will render a broken <video>.',
+  )
 }
 
-const toCss = (v: string | number) => typeof v === 'number' ? `${v}px` : v
+const toCss = (v: string | number) => (typeof v === 'number' ? `${v}px` : v)
 
 const resolvedSrc = computed(() => {
   if (!props.src) return undefined
@@ -55,7 +60,12 @@ const captionStyle = computed(() => ({
       playsinline
     />
     <span v-if="props.wip" class="wip-badge">WIP</span>
-    <figcaption v-if="props.caption" class="figure-caption" :style="captionStyle" v-html="renderInlineMd(props.caption)" />
+    <figcaption
+      v-if="props.caption"
+      class="figure-caption"
+      :style="captionStyle"
+      v-html="renderInlineMd(props.caption)"
+    />
   </figure>
 </template>
 

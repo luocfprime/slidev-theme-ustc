@@ -6,7 +6,6 @@ import { NodeCompiler } from '@myriaddreamin/typst-ts-node-compiler'
 import { injectBlockNumbers, type NumberCounters } from '../utils/blockNumberTransform.ts'
 import type { MarkdownTransformContext } from '@slidev/types'
 
-
 const compiler = NodeCompiler.create()
 
 interface TypstOptions {
@@ -40,15 +39,13 @@ function findTagOpenEnd(src: string, start: number): number {
   let i = start
   while (i < src.length) {
     const ch = src[i]
-    if (ch === '"' || ch === '\'') {
+    if (ch === '"' || ch === "'") {
       const close = src.indexOf(ch, i + 1)
       if (close === -1) return src.length
       i = close + 1
-    }
-    else if (ch === '>') {
+    } else if (ch === '>') {
       return i
-    }
-    else {
+    } else {
       i++
     }
   }
@@ -81,7 +78,7 @@ export function extractTypstFences(src: string): TypstFence[] {
 
     const fenceChar = fence[0]
     const fenceLen = fence.length
-    let bodyStart = lineEnd < src.length ? lineEnd + 1 : lineEnd
+    const bodyStart = lineEnd < src.length ? lineEnd + 1 : lineEnd
     let scan = bodyStart
     let closeStart = src.length
     let closeEnd = src.length
@@ -100,9 +97,8 @@ export function extractTypstFences(src: string): TypstFence[] {
       scan = closeLineEnd + 1
     }
 
-    const codeEnd = closeStart > bodyStart && src[closeStart - 1] === '\n'
-      ? closeStart - 1
-      : closeStart
+    const codeEnd =
+      closeStart > bodyStart && src[closeStart - 1] === '\n' ? closeStart - 1 : closeStart
     fences.push({
       info: infoMatch[1] ?? '',
       code: src.slice(bodyStart, codeEnd),
@@ -145,8 +141,7 @@ export function patchTypstTableHtml(html: string): string {
 
     if (inner.includes('<tbody') || inner.includes('<thead') || inner.includes('<tfoot')) {
       out += html.slice(tableStart, closeEnd)
-    }
-    else {
+    } else {
       out += `${openTag}<tbody>${inner}</tbody></table>`
     }
     pos = closeEnd
@@ -171,9 +166,11 @@ export function renderTypst(code: string, options: TypstOptions) {
     result.printDiagnostics()
     return ''
   }
-  const html = result.result.body().replace(/"hsl\(-45\.841deg ([\d.]+)% ([\d.]+)%\)"/g, ($0, $1, num: string) => {
-    return `"var(--${colorNames[+num - 1]})"`
-  })
+  const html = result.result
+    .body()
+    .replace(/"hsl\(-45\.841deg ([\d.]+)% ([\d.]+)%\)"/g, ($0, $1, num: string) => {
+      return `"var(--${colorNames[+num - 1]})"`
+    })
   // Typst HTML output emits <tr> as direct children of <table>, which is
   // invalid HTML and triggers Vue hydration warnings. Wrap bare rows in <tbody>.
   return patchTypstTableHtml(html)
@@ -182,9 +179,11 @@ export function renderTypst(code: string, options: TypstOptions) {
 async function typstTransformer(ctx: any) {
   const snippets = extractTypstFences(ctx.s.original)
   const typst = (ctx.options.data.headmatter.typst ??= {}) as TypstOptions
-  const svgs = await Promise.all(snippets.map(async ({ code }) => {
-    return renderTypst(code, typst)
-  }))
+  const svgs = await Promise.all(
+    snippets.map(async ({ code }) => {
+      return renderTypst(code, typst)
+    }),
+  )
   for (let i = snippets.length - 1; i >= 0; i--) {
     ctx.s.overwrite(snippets[i].start, snippets[i].end, svgs[i])
   }

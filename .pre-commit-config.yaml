@@ -1,0 +1,27 @@
+ci:
+  autofix_prs: true
+  autofix_commit_msg: 'style: auto-fix prettier/eslint [pre-commit.ci]'
+  autoupdate_schedule: monthly
+
+repos:
+  - repo: local
+    hooks:
+      - id: prettier
+        name: prettier
+        entry: prettier --write --ignore-unknown
+        language: node
+        additional_dependencies:
+          - prettier@3.8.3
+        files: \.(ts|mjs|vue|css|md|json|ya?ml)$
+
+      - id: eslint
+        name: eslint
+        entry: eslint --fix
+        language: node
+        additional_dependencies:
+          - eslint@10.2.1
+          - eslint-config-prettier@10.1.8
+          - eslint-plugin-vue@10.9.0
+          - typescript-eslint@8.59.1
+          - vue-eslint-parser@10.4.0
+        files: \.(ts|mjs|vue)$

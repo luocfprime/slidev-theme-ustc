@@ -3,16 +3,19 @@ import QrcodeVue from 'qrcode.vue'
 import { renderInlineMd } from '../utils/markdown'
 import { qrcodeDefaults } from '../utils/defaults'
 
-const props = withDefaults(defineProps<{
-  url?: string
-  size?: number
-  color?: string
-  background?: string
-  caption?: string
-  wip?: boolean
-}>(), {
-  ...qrcodeDefaults,
-})
+const props = withDefaults(
+  defineProps<{
+    url?: string
+    size?: number
+    color?: string
+    background?: string
+    caption?: string
+    wip?: boolean
+  }>(),
+  {
+    ...qrcodeDefaults,
+  },
+)
 
 if (import.meta.env.DEV && !props.url && !props.wip) {
   console.warn('[QRCode] missing `url` and not flagged `wip`; QR will be empty.')
@@ -34,7 +37,11 @@ if (import.meta.env.DEV && !props.url && !props.wip) {
       <div v-else-if="props.wip" class="ustc-qrcode-placeholder" />
       <span v-if="props.wip" class="wip-badge">WIP</span>
     </div>
-    <figcaption v-if="props.caption" class="ustc-qrcode-caption" v-html="renderInlineMd(props.caption)" />
+    <figcaption
+      v-if="props.caption"
+      class="ustc-qrcode-caption"
+      v-html="renderInlineMd(props.caption)"
+    />
   </figure>
 </template>
 

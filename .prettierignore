@@ -1,0 +1,9 @@
+node_modules
+dist
+.slidev
+test-results
+playwright-report
+.preview
+.worktrees
+pnpm-lock.yaml
+public

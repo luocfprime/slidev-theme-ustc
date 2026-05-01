@@ -95,8 +95,7 @@ function findFencedCodeRanges(src: string): Range[] {
         fenceChar = m[1][0]
         fenceLen = m[1].length
       }
-    }
-    else if (m && m[1][0] === fenceChar && m[1].length >= fenceLen) {
+    } else if (m && m[1][0] === fenceChar && m[1].length >= fenceLen) {
       // closing fence; the line itself is part of the skip region
       ranges.push([fenceStart, lineEnd])
       inFence = false
@@ -165,7 +164,7 @@ export function findSkipRegions(src: string): Range[] {
 
 interface TagMatch {
   kind: TagKind
-  nameEnd: number  // index of first char AFTER the tag name
+  nameEnd: number // index of first char AFTER the tag name
 }
 
 function matchTagOpener(src: string, pos: number): TagMatch | null {
@@ -178,7 +177,14 @@ function matchTagOpener(src: string, pos: number): TagMatch | null {
       // Tag name must be followed by whitespace, `/`, or `>`.
       // Anything else (e.g. `<FigureBlocks`) means it's a different identifier.
       if (after === undefined) continue
-      if (after === ' ' || after === '\t' || after === '\n' || after === '\r' || after === '/' || after === '>') {
+      if (
+        after === ' ' ||
+        after === '\t' ||
+        after === '\n' ||
+        after === '\r' ||
+        after === '/' ||
+        after === '>'
+      ) {
         return { kind: def.kind, nameEnd: pos + fullPrefix.length }
       }
     }
@@ -192,15 +198,13 @@ function findOpenTagEnd(src: string, start: number): number {
   let i = start
   while (i < src.length) {
     const ch = src[i]
-    if (ch === '"' || ch === '\'') {
+    if (ch === '"' || ch === "'") {
       const close = src.indexOf(ch, i + 1)
       if (close === -1) return src.length
       i = close + 1
-    }
-    else if (ch === '>') {
+    } else if (ch === '>') {
       return i
-    }
-    else {
+    } else {
       i++
     }
   }
@@ -210,9 +214,9 @@ function findOpenTagEnd(src: string, start: number): number {
 // ─── Attribute inspection ─────────────────────────────────────────────────
 
 interface AttrInspection {
-  numberedFalse: boolean       // explicit opt-out: no inject, no increment
-  hasNumberAttr: boolean       // user already set :number=... in any form
-  literalNumberValue: number | null  // :number="<int literal>" → use to advance counter
+  numberedFalse: boolean // explicit opt-out: no inject, no increment
+  hasNumberAttr: boolean // user already set :number=... in any form
+  literalNumberValue: number | null // :number="<int literal>" → use to advance counter
 }
 
 function inspectAttrs(attrSpan: string): AttrInspection {
@@ -260,8 +264,8 @@ export function injectBlockNumbers(
   }
   const buildInjection = (kind: TagKind, num: number) => {
     const prefix = kind === 'figure' ? figurePrefix : tablePrefix
-    if (prefix) return ` :number="'${prefix}${num}'"`  // Vue expr → string literal
-    return ` :number="${num}"`                          // Vue expr → numeric literal
+    if (prefix) return ` :number="'${prefix}${num}'"` // Vue expr → string literal
+    return ` :number="${num}"` // Vue expr → numeric literal
   }
 
   while (i < src.length) {
@@ -286,15 +290,13 @@ export function injectBlockNumbers(
         if (inspection.numberedFalse) {
           // No injection, no counter change.
           out.push(src.slice(i, tagEndExclusive))
-        }
-        else if (inspection.hasNumberAttr) {
+        } else if (inspection.hasNumberAttr) {
           // User-managed; skip injection, advance counter only if literal int.
           out.push(src.slice(i, tagEndExclusive))
           if (inspection.literalNumberValue !== null) {
             setIfHigher(m.kind, inspection.literalNumberValue + 1)
           }
-        }
-        else {
+        } else {
           // Auto-inject :number="N" (or `'<prefix>N'`) right after the tag
           // name, then keep the rest of the open tag (including its leading
           // whitespace) verbatim.

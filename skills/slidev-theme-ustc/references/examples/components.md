@@ -2,14 +2,14 @@
 theme: ../
 layout: cover
 authors:
-  - 演讲者: ["中国科学技术大学"]
-conference: "USTC Slidev 主题"
-talkTitle: "组件与布局原语完整参考"
-subtitle: "Callout · FigureBlock · TableBlock · ResultBox · QRCode · PlotlyGraph · Grid · Block · Takeaway · Abs"
-date: "2026 年 4 月 27 日"
+  - 演讲者: ['中国科学技术大学']
+conference: 'USTC Slidev 主题'
+talkTitle: '组件与布局原语完整参考'
+subtitle: 'Callout · FigureBlock · TableBlock · ResultBox · QRCode · PlotlyGraph · Grid · Block · Takeaway · Abs'
+date: '2026 年 4 月 27 日'
 sectionBar: true
-figurePrefix: "图"
-tablePrefix: "表"
+figurePrefix: '图'
+tablePrefix: '表'
 ---
 
 `examples/components.md` — 涵盖所有组件和布局原语的完整 Props 演示。
@@ -17,31 +17,36 @@ tablePrefix: "表"
 运行方式：`slidev examples/components.md`
 
 ---
+
 layout: toc
 columns: 2
 highlight: 0
+
 ---
 
 # 目录
 
 ---
+
 layout: toc
 columns: 2
 highlight: 1
+
 ---
 
 # 目录
 
 ---
-layout: section
----
+
+## layout: section
 
 # 一、Callout
+
 `type` · `title`
 
 ---
-layout: content
----
+
+## layout: content
 
 # Callout — 全部类型（有 title）
 
@@ -76,8 +81,10 @@ layout: content
 </Callout>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Callout — 无 title 属性
@@ -113,8 +120,10 @@ density: dense
 </Callout>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Callout — dense 模式下
@@ -138,15 +147,16 @@ JES 和 JER 不确定性对该分析影响最大（约 **8%**），建议在最�
 </Callout>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 二、FigureBlock
+
 `src` · `alt` · `caption` · `width` · `imageWidth` · `captionAlign` · `captionInsetLeft` · `captionInsetRight` · `prefix` · `numberSuffix` · `wip`
 
 ---
-layout: content
----
+
+## layout: content
 
 # FigureBlock — 基础用法（自动编号）
 
@@ -159,10 +169,11 @@ layout: content
 
 编号由组件全局自动生成，`caption` 只填描述文字，前缀来自 headmatter `figurePrefix`。
 
-
 ---
+
 layout: split
 ratio: "1:1"
+
 ---
 
 # FigureBlock — width
@@ -190,8 +201,10 @@ ratio: "1:1"
 />
 
 ---
+
 layout: split
 ratio: "1:1"
+
 ---
 
 # FigureBlock — captionAlign
@@ -221,8 +234,8 @@ ratio: "1:1"
 />
 
 ---
-layout: content
----
+
+## layout: content
 
 # FigureBlock — captionInsetLeft / captionInsetRight
 
@@ -241,8 +254,8 @@ layout: content
 />
 
 ---
-layout: content
----
+
+## layout: content
 
 # FigureBlock — prefix
 
@@ -257,8 +270,10 @@ layout: content
 />
 
 ---
+
 layout: split
 ratio: "1:1"
+
 ---
 
 # FigureBlock — wip
@@ -286,9 +301,11 @@ ratio: "1:1"
 />
 
 ---
+
 layout: content
 density: dense
 subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
+
 ---
 
 # FigureBlock — 自动编号的手动覆盖与跳过
@@ -334,8 +351,8 @@ subtitle: ":number 手动覆盖 / :numbered=false 跳过编号"
 </Grid>
 
 ---
-layout: content
----
+
+## layout: content
 
 # FigureBlock — caption slot（脚注 / 链接 / 富 markdown）
 
@@ -351,20 +368,23 @@ ATLAS 探测器结构示意，详见 ATLAS Collaboration[^atlas-jinst]。
 
 </FigureBlock>
 
-[^atlas-jinst]: ATLAS Collaboration, *The ATLAS Experiment at the CERN LHC*, *JINST* **3** (2008) S08003.
+[^atlas-jinst]: ATLAS Collaboration, _The ATLAS Experiment at the CERN LHC_, _JINST_ **3** (2008) S08003.
 
 `caption` prop 仍然保留作为兜底：slot 没填就走 prop（向后兼容，纯文字 caption 一行写完不用开 slot）。
 
 ---
-layout: section
----
+
+## layout: section
 
 # 三、TableBlock
+
 `caption` · `captionAlign` · `width` · `prefix` · `numberSuffix` · `wip`
 
 ---
+
 layout: split
 ratio: "1:1"
+
 ---
 
 # TableBlock — captionAlign
@@ -375,12 +395,12 @@ ratio: "1:1"
 
 <TableBlock caption="探测器性能参数。" captionAlign="left">
 
-| 探测器 | $\eta$ 覆盖 | 分辨率 |
-|--------|------------|--------|
-| ID | $< 2.5$ | $\sim 0.05\%$ |
-| EMCal | $< 3.2$ | $\sim 10\%/\sqrt{E}$ |
-| HCal | $< 4.9$ | $\sim 50\%/\sqrt{E}$ |
-| MS | $< 2.7$ | $\sim 10\%$ |
+| 探测器 | $\eta$ 覆盖 | 分辨率               |
+| ------ | ----------- | -------------------- |
+| ID     | $< 2.5$     | $\sim 0.05\%$        |
+| EMCal  | $< 3.2$     | $\sim 10\%/\sqrt{E}$ |
+| HCal   | $< 4.9$     | $\sim 50\%/\sqrt{E}$ |
+| MS     | $< 2.7$     | $\sim 10\%$          |
 
 </TableBlock>
 
@@ -390,19 +410,21 @@ ratio: "1:1"
 
 <TableBlock caption="系统误差汇总。">
 
-| 来源 | 影响 |
-|------|-----:|
-| JES | $3.2\%$ |
-| JER | $1.8\%$ |
+| 来源       |    影响 |
+| ---------- | ------: |
+| JES        | $3.2\%$ |
+| JER        | $1.8\%$ |
 | $b$-tag SF | $5.1\%$ |
-| 亮度 | $1.7\%$ |
-| 总计 | $7.0\%$ |
+| 亮度       | $1.7\%$ |
+| 总计       | $7.0\%$ |
 
 </TableBlock>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # TableBlock — width
@@ -412,7 +434,7 @@ density: dense
 <TableBlock caption="缩减至 70% 宽度，整体居中显示。" captionAlign="center" width="70%">
 
 | 过程 | 产额 | 误差 |
-|------|-----:|-----:|
+| ---- | ---: | ---: |
 | $ZH$ | 18.4 | ±1.2 |
 | $WH$ | 12.7 | ±0.8 |
 
@@ -423,17 +445,17 @@ density: dense
 <div style="display:flex;justify-content:flex-start">
 <TableBlock caption="同页靠左放置的 50% 宽表格。" captionAlign="center" width="50%">
 
-| 过程 | 产额 |
-|------|-----:|
-| $ttH$ | 3.1 |
-| $ggH$ | 4.3 |
+| 过程  | 产额 |
+| ----- | ---: |
+| $ttH$ |  3.1 |
+| $ggH$ |  4.3 |
 
 </TableBlock>
 </div>
 
 ---
-layout: content
----
+
+## layout: content
 
 # TableBlock — prefix
 
@@ -442,15 +464,17 @@ layout: content
 <TableBlock caption="使用自定义前缀 Tab.。" prefix="Tab." numberSuffix=". ">
 
 | 列 A | 列 B |
-|------|------|
+| ---- | ---- |
 | 值 1 | 值 2 |
 | 值 3 | 值 4 |
 
 </TableBlock>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # TableBlock — wip
@@ -459,11 +483,11 @@ density: dense
 
 <TableBlock wip caption="消融实验结果（数值待更新）。" width="70%">
 
-| 方法 | Acc | F1 |
-|------|-----|----|
-| Full model | 92.3% | ? |
-| w/o module A | 89.1% | ? |
-| Baseline | 85.7% | ? |
+| 方法         | Acc   | F1  |
+| ------------ | ----- | --- |
+| Full model   | 92.3% | ?   |
+| w/o module A | 89.1% | ?   |
+| Baseline     | 85.7% | ?   |
 
 </TableBlock>
 
@@ -472,14 +496,14 @@ density: dense
 <TableBlock wip width="50%">
 
 | 列 A | 列 B |
-|------|------|
-| foo | bar |
+| ---- | ---- |
+| foo  | bar  |
 
 </TableBlock>
 
 ---
-layout: content
----
+
+## layout: content
 
 # TableBlock — caption slot（脚注 / 链接 / 富 markdown）
 
@@ -493,27 +517,28 @@ layout: content
 
 </template>
 
-| 模型 | Top-1 Acc | 参数量 |
-|------|----------:|------:|
-| ResNet-50 | 76.1% | 25.6M |
-| Ours      | 79.3% | 23.8M |
+| 模型      | Top-1 Acc | 参数量 |
+| --------- | --------: | -----: |
+| ResNet-50 |     76.1% |  25.6M |
+| Ours      |     79.3% |  23.8M |
 
 </TableBlock>
 
-[^resnet]: He et al. *Deep Residual Learning for Image Recognition*, CVPR 2016.
+[^resnet]: He et al. _Deep Residual Learning for Image Recognition_, CVPR 2016.
 
 默认 `<slot />` 仍然装表格 markdown，命名 slot `#caption` 装 caption——两者并存不冲突。
 
 ---
-layout: section
----
+
+## layout: section
 
 # 四、ResultBox
+
 `title`
 
 ---
-layout: content
----
+
+## layout: content
 
 # ResultBox — 有 / 无 title
 
@@ -536,15 +561,18 @@ $$\sigma \times \text{BR}(H \to \gamma\gamma) < 0.12\,\text{pb} \quad (95\%\,\te
 </ResultBox>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 五、QRCode
+
 `url` · `size` · `color` · `background` · `caption`
 
 ---
+
 layout: split
 ratio: "1:1"
+
 ---
 
 # QRCode — 默认与自定义配色
@@ -566,8 +594,10 @@ ratio: "1:1"
 </div>
 
 ---
+
 layout: split
 ratio: "1:1"
+
 ---
 
 # QRCode — size
@@ -589,8 +619,10 @@ ratio: "1:1"
 </div>
 
 ---
+
 layout: split
 ratio: "1:1"
+
 ---
 
 # QRCode — caption
@@ -612,15 +644,16 @@ ratio: "1:1"
 </div>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 六、PlotlyGraph
+
 `filePath` · `graphWidth` · `graphHeight` · 字体大小 Props · `Transform`
 
 ---
-layout: content
----
+
+## layout: content
 
 # PlotlyGraph — 2D 示例
 
@@ -632,8 +665,8 @@ layout: content
 </div>
 
 ---
-layout: content
----
+
+## layout: content
 
 # PlotlyGraph — 3D 示例
 
@@ -645,21 +678,23 @@ layout: content
 </div>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # PlotlyGraph — 字体大小 Props
 
 所有字体 Props 均接受数字，单位为 px：
 
-| Prop | 作用 | 默认 |
-|------|------|------|
-| `:tickFontSize` | 坐标轴刻度标签 | Plotly 默认 |
-| `:legendFontSize` | 图例文字 | Plotly 默认 |
-| `:xTitleFontSize` | X 轴标题 | Plotly 默认 |
-| `:yTitleFontSize` | Y 轴标题 | Plotly 默认 |
-| `:annotationFontSizeScale` | 标注字号缩放倍数 | `1.0` |
+| Prop                       | 作用             | 默认        |
+| -------------------------- | ---------------- | ----------- |
+| `:tickFontSize`            | 坐标轴刻度标签   | Plotly 默认 |
+| `:legendFontSize`          | 图例文字         | Plotly 默认 |
+| `:xTitleFontSize`          | X 轴标题         | Plotly 默认 |
+| `:yTitleFontSize`          | Y 轴标题         | Plotly 默认 |
+| `:annotationFontSizeScale` | 标注字号缩放倍数 | `1.0`       |
 
 ```md
 <PlotlyGraph
@@ -674,8 +709,10 @@ density: dense
 ```
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # PlotlyGraph — graphWidth / graphHeight 与 Transform
@@ -698,15 +735,16 @@ density: dense
 `Transform` 以 CSS `scale` 缩放整个渲染结果，适合图表尺寸与幻灯片不匹配时的快速调整。
 
 ---
-layout: section
----
+
+## layout: section
 
 # 七、Grid
+
 `cols` · `gap` · `align`
 
 ---
-layout: content
----
+
+## layout: content
 
 # Grid — cols：等宽列
 
@@ -737,8 +775,8 @@ layout: content
 </Grid>
 
 ---
-layout: content
----
+
+## layout: content
 
 # Grid — cols：比例列
 
@@ -767,8 +805,8 @@ layout: content
 </Grid>
 
 ---
-layout: content
----
+
+## layout: content
 
 # Grid — cols：多行（自动换行）
 
@@ -789,8 +827,8 @@ layout: content
 </Grid>
 
 ---
-layout: content
----
+
+## layout: content
 
 # Grid — gap
 
@@ -815,8 +853,8 @@ layout: content
 </Grid>
 
 ---
-layout: content
----
+
+## layout: content
 
 # Grid — align
 
@@ -841,8 +879,10 @@ layout: content
 </Grid>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Grid — 实际用法：contributions 页
@@ -852,24 +892,26 @@ density: dense
 <Grid cols="3" gap="md">
   <Block title="Hardness">
 
-  NP-hard in the general case; reduction from 3-SAT.
+NP-hard in the general case; reduction from 3-SAT.
 
   </Block>
   <Block title="Tractability">
 
-  Polynomial-time algorithm under bounded treewidth $k$.
+Polynomial-time algorithm under bounded treewidth $k$.
 
   </Block>
   <Block title="Practical Solver">
 
-  Dynamic programming on tree decomposition, $O(n \cdot 2^k)$.
+Dynamic programming on tree decomposition, $O(n \cdot 2^k)$.
 
   </Block>
 </Grid>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Grid — 实际用法：文字配图
@@ -879,13 +921,13 @@ density: dense
 <Grid cols="45 55" gap="lg" alignY="top">
   <div>
 
-  **方法概述**
+**方法概述**
 
-  - 将全局问题分解为局部子问题
-  - 在树分解上做动态规划
-  - 时间复杂度 $O(n \cdot 2^k)$
+- 将全局问题分解为局部子问题
+- 在树分解上做动态规划
+- 时间复杂度 $O(n \cdot 2^k)$
 
-  其中 $k$ 为树宽（bounded treewidth）。
+其中 $k$ 为树宽（bounded treewidth）。
 
   </div>
   <FigureBlock
@@ -896,8 +938,10 @@ density: dense
 </Grid>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Grid — 实际用法：图表混排
@@ -916,8 +960,10 @@ density: dense
 </Grid>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Grid — 实际用法：图表 + 说明
@@ -928,27 +974,28 @@ density: dense
   <PlotlyGraph filePath="/Graph/plotly1.json" :tickFontSize="12" :legendFontSize="11" :graphHeight="340" />
   <div>
 
-  **观测结果**
+**观测结果**
 
-  - 信号区间 $m_{jj} \in [1.0, 3.5]\,\text{TeV}$
-  - 本底估计采用 ABCD 方法
-  - 系统误差 $< 5\%$
+- 信号区间 $m_{jj} \in [1.0, 3.5]\,\text{TeV}$
+- 本底估计采用 ABCD 方法
+- 系统误差 $< 5\%$
 
-  <Takeaway>结果与标准模型预期一致。</Takeaway>
+<Takeaway>结果与标准模型预期一致。</Takeaway>
 
   </div>
 </Grid>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 八、Block
+
 `title`
 
 ---
-layout: content
----
+
+## layout: content
 
 # Block — 有 / 无 title
 
@@ -975,8 +1022,10 @@ layout: content
 </Block>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Block — dense 模式
@@ -1006,8 +1055,10 @@ dense 模式下，Block 标题行保持紧凑，正文字号随布局缩小。
 </Block>
 
 ---
+
 layout: content
 lineHeight: 1.5
+
 ---
 
 # Block — 内容多样性
@@ -1019,6 +1070,7 @@ Block 的 slot 支持任意 Markdown 内容。
 **输入：** 树分解 $(T, \{X_t\})$，图 $G$，整数 $k$
 
 **步骤：**
+
 - 叶节点：直接计算 $O(2^k)$ 种赋值
 - 引入节点：扩展表
 - 遗忘节点：投影（求和）
@@ -1035,8 +1087,10 @@ Block 的 slot 支持任意 Markdown 内容。
 </Block>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Block — 在 Grid 中使用
@@ -1046,12 +1100,12 @@ Block 是 Grid 最常见的子元素。
 <Grid cols="2" gap="md">
   <Block title="Definition: Treewidth">
 
-  图 $G$ 的树宽 $\text{tw}(G)$ 是其所有树分解中最小的宽度。
+图 $G$ 的树宽 $\text{tw}(G)$ 是其所有树分解中最小的宽度。
 
   </Block>
   <Block title="Definition: Branchwidth">
 
-  图 $G$ 的分支宽度 $\text{bw}(G)$ 满足 $\text{tw}(G) \leq \frac{3}{2}\text{bw}(G) - 1$。
+图 $G$ 的分支宽度 $\text{bw}(G)$ 满足 $\text{tw}(G) \leq \frac{3}{2}\text{bw}(G) - 1$。
 
   </Block>
 </Grid>
@@ -1063,15 +1117,16 @@ Block 是 Grid 最常见的子元素。
 </Grid>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 九、Takeaway
+
 无 Props
 
 ---
-layout: content
----
+
+## layout: content
 
 # Takeaway — 基础用法
 
@@ -1096,8 +1151,10 @@ $$\mu = 1.05^{+0.31}_{-0.29}\,(\text{stat.})^{+0.18}_{-0.15}\,(\text{syst.})$$
 </ResultBox>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Takeaway — dense 模式
@@ -1115,8 +1172,8 @@ The method scales linearly with dataset size and requires no additional supervis
 </Takeaway>
 
 ---
-layout: content
----
+
+## layout: content
 
 # Takeaway — 多条结论
 
@@ -1141,15 +1198,16 @@ Empirical results on three benchmarks confirm the theoretical prediction.
 </Takeaway>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 十、Abs
+
 `x` · `y` · `w` · `z`
 
 ---
-layout: content
----
+
+## layout: content
 
 # Abs — content 页中悬浮 box
 
@@ -1168,14 +1226,14 @@ $$
 <Abs x="58%" y="62%" w="36%">
   <Callout type="note" title="符号说明">
 
-  $F_{\mu\nu}$：场强张量；$\psi$：费米子场；$\phi$：Higgs 场。
+$F_{\mu\nu}$：场强张量；$\psi$：费米子场；$\phi$：Higgs 场。
 
   </Callout>
 </Abs>
 
 ---
-layout: content
----
+
+## layout: content
 
 # Abs — 悬浮 ResultBox 标注关键结论
 
@@ -1192,16 +1250,18 @@ $$
 <Abs x="55%" y="55%" w="40%">
   <ResultBox title="拟合结果">
 
-  $$\mu = 1.05^{+0.31}_{-0.29}$$
+$$\mu = 1.05^{+0.31}_{-0.29}$$
 
-  观测显著性 $4.2\sigma$，与 SM 一致。
+观测显著性 $4.2\sigma$，与 SM 一致。
 
   </ResultBox>
 </Abs>
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # Abs — 悬浮 Block 作为边注
@@ -1221,18 +1281,18 @@ dense 布局，正文较满，用 `<Abs>` 在右上角放一个 `Block` 作为�
 <Abs x="62%" y="12%" w="34%">
   <Block title="关键参数">
 
-  $k = \text{tw}(G)$：树宽
+$k = \text{tw}(G)$：树宽
 
-  $n = |V(G)|$：顶点数
+$n = |V(G)|$：顶点数
 
-  典型值：平面图 $k \leq 3$，道路网络 $k \leq 10$
+典型值：平面图 $k \leq 3$，道路网络 $k \leq 10$
 
   </Block>
 </Abs>
 
 ---
-layout: content
----
+
+## layout: content
 
 # Abs — `:z` prop：层叠控制
 
@@ -1253,17 +1313,20 @@ layout: content
 </Abs>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 十一、v-drag 与组件联用
+
 `<v-drag>` 直接包裹 Block · Callout · Takeaway · ResultBox · QRCode
 
 ---
+
 layout: content
 dragPos:
-  vd-block: 782,185,478,_
-  vd-callout: 781,322,478,_
+vd-block: 782,185,478,_
+vd-callout: 781,322,478,_
+
 ---
 
 # v-drag — Block 与 Callout
@@ -1279,7 +1342,7 @@ dragPos:
 <v-drag pos="vd-block">
   <Block title="定理（可拖拽）">
 
-  图 $G$ 是平面图，当且仅当不含 $K_5$ 或 $K_{3,3}$ 的细分作为子图。
+图 $G$ 是平面图，当且仅当不含 $K_5$ 或 $K_{3,3}$ 的细分作为子图。
 
   </Block>
 </v-drag>
@@ -1287,17 +1350,19 @@ dragPos:
 <v-drag pos="vd-callout">
   <Callout type="tip" title="提示（可拖拽）">
 
-  演示模式下**双击**即可拖拽；松开后位置自动写回 `dragPos`。
+演示模式下**双击**即可拖拽；松开后位置自动写回 `dragPos`。
 
   </Callout>
 </v-drag>
 
 ---
+
 layout: content
 dragPos:
-  vd-result: 521,317,490,_
-  vd-takeaway: 51,545,978,_
-  vd-qr: 1042,165,100,_
+vd-result: 521,317,490,_
+vd-takeaway: 51,545,978,_
+vd-qr: 1042,165,100,\_
+
 ---
 
 # v-drag — Takeaway · ResultBox · QRCode
@@ -1313,9 +1378,9 @@ dragPos:
 <v-drag pos="vd-result">
   <ResultBox title="拟合结果（可拖拽）">
 
-  $$\mu = 1.05^{+0.31}_{-0.29}$$
+$$\mu = 1.05^{+0.31}_{-0.29}$$
 
-  观测显著性 $4.2\sigma$，与 SM 一致。
+观测显著性 $4.2\sigma$，与 SM 一致。
 
   </ResultBox>
 </v-drag>
@@ -1323,7 +1388,7 @@ dragPos:
 <v-drag pos="vd-takeaway">
   <Takeaway>
 
-  Bounded treewidth is both necessary and sufficient for tractability.
+Bounded treewidth is both necessary and sufficient for tractability.
 
   </Takeaway>
 </v-drag>
@@ -1333,15 +1398,18 @@ dragPos:
 </v-drag>
 
 ---
-layout: section
----
+
+## layout: section
 
 # 十二、WIP 标注
+
 component 级 `wip` prop · slide 级 `wip` frontmatter
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # 组件 WIP 标注 — 全家桶（有src）
@@ -1350,33 +1418,30 @@ density: dense
 
 <Grid cols="2" gap="lg" alignY="top">
 
-
 <FigureBlock wip src="https://placehold.co/600x400" caption="待补：实验装置示意。" width="45%" />
-
 
 <VideoBlock wip caption="待补：方法演示视频。" src="/videos/sample_video.mp4" width="45%" />
 
-
-
 <TableBlock wip caption="待补：消融实验结果。" width="85%">
 
-| 方法 | Acc | F1 |
-|------|-----|----|
-| Full model | ? | ? |
-| Baseline | ? | ? |
+| 方法       | Acc | F1  |
+| ---------- | --- | --- |
+| Full model | ?   | ?   |
+| Baseline   | ?   | ?   |
 
 </TableBlock>
 
 <QRCode wip url="https://github.com" :size="140" caption="待补：项目主页 QR。" />
-
 
 </Grid>
 
 本页 frontmatter 没写 `wip: true`，所以上方 section bar 不会变红，也不会出现整页水印。需要整页标注时，在 slide frontmatter 显式写 `wip: true`。
 
 ---
+
 layout: content
 density: dense
+
 ---
 
 # 组件 WIP 标注 — 全家桶（无src）
@@ -1385,26 +1450,23 @@ density: dense
 
 <Grid cols="2" gap="lg" alignY="top">
 
-
 <FigureBlock wip caption="待补：实验装置示意。" width="45%" />
 
-
 <VideoBlock wip caption="待补：方法演示视频。" width="45%" />
-
-
 
 <TableBlock wip caption="待补：消融实验结果。" width="85%" />
 
 <QRCode wip :size="140" caption="待补：项目主页 QR。" />
-
 
 </Grid>
 
 适合"我连占位图都还没找"的真·草稿状态——broken-icon 本身就是"这里啥都没有"的最强信号。
 
 ---
+
 layout: content
 wip: true
+
 ---
 
 # Slide 级 WIP 标注
@@ -1419,7 +1481,7 @@ frontmatter 加 `wip: true` 触发两个信号：
 ship 前记得清掉 `wip: true` 和组件级 `wip`。
 
 ---
-layout: end
----
+
+## layout: end
 
 # 参考结束

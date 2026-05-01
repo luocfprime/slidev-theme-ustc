@@ -1,4 +1,4 @@
-import { computed, onMounted, onUpdated, ref } from 'vue'
+import { computed, getCurrentInstance, onMounted, onUpdated, ref } from 'vue'
 import { getPresenterName, resolveBodyMargin, handleBackground } from './layoutHelper'
 
 export interface BodyLayoutProps {
@@ -13,12 +13,14 @@ export interface BodyLayoutProps {
 }
 
 export function useBodyLayout(props: BodyLayoutProps) {
-  const presenterName = computed(() =>
-    getPresenterName(
-      ($slidev.configs.authors as any[]) ?? [],
-      $slidev.configs.presenter as string | undefined,
-    ),
-  )
+  const instance = getCurrentInstance()
+  const presenterName = computed(() => {
+    const slidev = instance?.appContext.config.globalProperties.$slidev
+    return getPresenterName(
+      (slidev?.configs.authors as unknown[]) ?? [],
+      slidev?.configs.presenter as string | undefined,
+    )
+  })
 
   const pageClass = computed(() => ({
     dense: props.density === 'dense',
@@ -46,8 +48,7 @@ export function useBodyLayout(props: BodyLayoutProps) {
     const subtitle = root.querySelector(':scope > .content-subtitle')
     const h1 = root.querySelector(':scope > h1')
     if (!subtitle || !h1) return
-    if (h1.nextElementSibling !== subtitle)
-      h1.insertAdjacentElement('afterend', subtitle)
+    if (h1.nextElementSibling !== subtitle) h1.insertAdjacentElement('afterend', subtitle)
   }
 
   onMounted(placeSubtitle)

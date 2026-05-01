@@ -3,16 +3,21 @@ import { computed } from 'vue'
 import { getPresenterName } from '../utils/layoutHelper'
 import { footerDefaults } from '../utils/defaults'
 
-const props = withDefaults(defineProps<{
-  footer?: boolean
-  footerMode?: 'full' | 'minimal'
-  wip?: boolean
-}>(), {
-  ...footerDefaults,
-  wip: false,
-})
+const props = withDefaults(
+  defineProps<{
+    footer?: boolean
+    footerMode?: 'full' | 'minimal'
+    wip?: boolean
+  }>(),
+  {
+    ...footerDefaults,
+    wip: false,
+  },
+)
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
+const presenterName = computed(() =>
+  getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter),
+)
 </script>
 
 <template>

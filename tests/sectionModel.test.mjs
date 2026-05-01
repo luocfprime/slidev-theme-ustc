@@ -27,9 +27,7 @@ test('buildSectionGroups groups body slides under preceding section', () => {
     {
       title: 'Method',
       sectionNo: 6,
-      slides: [
-        { no: 7, wip: false },
-      ],
+      slides: [{ no: 7, wip: false }],
     },
   ])
 })
@@ -60,7 +58,7 @@ test('buildSectionGroups can include sections after backup for toc compatibility
   ]
 
   assert.deepEqual(
-    buildSectionGroups(slides, { stopAtBackup: false }).map(s => s.title),
+    buildSectionGroups(slides, { stopAtBackup: false }).map((s) => s.title),
     ['Body', 'Appendix'],
   )
 })

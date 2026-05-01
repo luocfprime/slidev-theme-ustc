@@ -28,8 +28,11 @@
     "build": "mkdir -p .preview && cp examples/full-deck.md .preview/ && slidev build .preview/full-deck.md && cp -r public/. dist/",
     "export": "mkdir -p .preview && cp examples/full-deck.md .preview/ && slidev export .preview/full-deck.md",
     "preview": "python3 scripts/build_previews.py && uv run --script serve.py",
-    "test": "pnpm test:unit && playwright test",
-    "test:unit": "pnpm exec tsx --test tests/*.test.mjs"
+    "test": "pnpm test:unit && playwright test && playwright test --config playwright.examples.config.mjs",
+    "test:unit": "pnpm exec tsx --test tests/*.test.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",
@@ -44,8 +47,14 @@
     "@slidev/cli": "^52.14.2",
     "@types/katex": "^0.16.8",
     "@types/markdown-it": "^14.1.2",
+    "eslint": "^10.2.1",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-vue": "^10.9.0",
+    "prettier": "^3.8.3",
     "tsx": "^4.21.0",
-    "vite": "^7.0.0"
+    "typescript-eslint": "^8.59.1",
+    "vite": "^7.0.0",
+    "vue-eslint-parser": "^10.4.0"
   },
   "pnpm": {
     "onlyBuiltDependencies": [

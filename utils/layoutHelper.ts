@@ -9,12 +9,7 @@ import type { CSSProperties } from 'vue'
 // If Slidev restructures its slide object, add the new path here rather than
 // scattering defensive access across call sites.
 export function getSlideFrontmatter(slide: any): Record<string, any> {
-  return (
-    slide?.frontmatter
-    ?? slide?.meta?.slide?.frontmatter
-    ?? slide?.meta?.frontmatter
-    ?? {}
-  )
+  return slide?.frontmatter ?? slide?.meta?.slide?.frontmatter ?? slide?.meta?.frontmatter ?? {}
 }
 
 export function getLayout(slide: any): string {
@@ -44,18 +39,28 @@ export function getSectionBarMode(slide: any, fallback: string = 'full'): string
   return (local ?? fallback) as string
 }
 
-
 export function resolveAssetUrl(url: string) {
-  if (url.startsWith('/'))
-    return import.meta.env.BASE_URL + url.slice(1)
+  if (url.startsWith('/')) return import.meta.env.BASE_URL + url.slice(1)
   return url
 }
 
 export function handleBackground(background?: string, coverOverlay = false): CSSProperties {
-  const isColor = background && (
-    ['#', 'rgb', 'hsl', 'oklch', 'lch', 'lab', 'hwb', 'color', 'transparent', 'currentColor', 'inherit'].some(v => background.startsWith(v))
-    || /^[a-z]+$/.test(background)
-  )
+  const isColor =
+    background &&
+    ([
+      '#',
+      'rgb',
+      'hsl',
+      'oklch',
+      'lch',
+      'lab',
+      'hwb',
+      'color',
+      'transparent',
+      'currentColor',
+      'inherit',
+    ].some((v) => background.startsWith(v)) ||
+      /^[a-z]+$/.test(background))
 
   const style: CSSProperties = {
     background: isColor ? background : undefined,
@@ -111,11 +116,21 @@ export function normalizeAuthors(authors: AuthorEntry[]): NormalizedAuthor[] {
   return authors.map(normalizeAuthor)
 }
 
-interface InstitutionMap { [key: string]: number }
-interface AuthorInstitutions { instituteNum: number[]; instituteName: string[] }
-interface AuthorsDict { [key: string]: AuthorInstitutions }
+interface InstitutionMap {
+  [key: string]: number
+}
+interface AuthorInstitutions {
+  instituteNum: number[]
+  instituteName: string[]
+}
+interface AuthorsDict {
+  [key: string]: AuthorInstitutions
+}
 
-export interface FootnoteEntry { number: number; content: string }
+export interface FootnoteEntry {
+  number: number
+  content: string
+}
 
 export function getPresenterName(
   authors: AuthorEntry[] = [],
@@ -124,7 +139,8 @@ export function getPresenterName(
 ): string {
   if (typeof presenter === 'string' && presenter.trim()) return presenter
   const frontmatterPresenter = frontmatter?.presenter
-  if (typeof frontmatterPresenter === 'string' && frontmatterPresenter.trim()) return frontmatterPresenter
+  if (typeof frontmatterPresenter === 'string' && frontmatterPresenter.trim())
+    return frontmatterPresenter
   return authors.length ? normalizeAuthor(authors[0]).name : ''
 }
 
@@ -135,14 +151,13 @@ export function handleAuthor(authors: AuthorEntry[] = []): [AuthorsDict, Footnot
 
   normalized.forEach(({ affiliations }) => {
     affiliations.forEach((inst) => {
-      if (!allInstitutions[inst])
-        allInstitutions[inst] = institutionIndex++
+      if (!allInstitutions[inst]) allInstitutions[inst] = institutionIndex++
     })
   })
 
   const authorsDict: AuthorsDict = normalized.reduce((acc: AuthorsDict, { name, affiliations }) => {
     acc[name] = {
-      instituteNum: affiliations.map(i => allInstitutions[i]),
+      instituteNum: affiliations.map((i) => allInstitutions[i]),
       instituteName: affiliations,
     }
     return acc

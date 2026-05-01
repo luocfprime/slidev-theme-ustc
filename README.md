@@ -99,17 +99,22 @@ Notes:
 
 > [!TIP]
 > **Claude Code** — add this repo as a plugin marketplace, then install:
+>
 > ```
 > /plugin marketplace add luocfprime/slidev-theme-ustc
 > /plugin install slidev-theme-ustc@slidev-theme-ustc
 > ```
+>
 > Then run `/reload-plugins` to activate.
 >
 > **Other agents (Copilot, Gemini CLI, Codex, …)** — install via [`npx skills`](https://github.com/vercel-labs/skills):
+>
 > ```
 > npx skills add luocfprime/slidev-theme-ustc
 > ```
+>
 > To install globally (all projects) or target a specific agent:
+>
 > ```
 > npx skills add luocfprime/slidev-theme-ustc
 > ```

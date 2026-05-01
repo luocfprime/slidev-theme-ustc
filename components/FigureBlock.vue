@@ -6,35 +6,40 @@ import { DEFAULT_NUMBER_SUFFIX, figureDefaults } from '../utils/defaults'
 const base = import.meta.env.BASE_URL
 const slots = useSlots()
 
-const props = withDefaults(defineProps<{
-  src?: string
-  alt?: string
-  caption?: string
-  width?: string
-  imageWidth?: string | number
-  captionAlign?: 'left' | 'center'
-  captionInsetLeft?: string | number
-  captionInsetRight?: string | number
-  prefix?: string
-  numberSuffix?: string
-  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
-   *  Numeric for body figures (1, 2, 3, ...); string for appendix figures
-   *  with prefix (e.g. "A.1", "A.2"). */
-  number?: number | string
-  /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
-  numbered?: boolean
-  wip?: boolean
-}>(), {
-  ...figureDefaults,
-  numbered: true,
-  wip: false,
-})
+const props = withDefaults(
+  defineProps<{
+    src?: string
+    alt?: string
+    caption?: string
+    width?: string
+    imageWidth?: string | number
+    captionAlign?: 'left' | 'center'
+    captionInsetLeft?: string | number
+    captionInsetRight?: string | number
+    prefix?: string
+    numberSuffix?: string
+    /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
+     *  Numeric for body figures (1, 2, 3, ...); string for appendix figures
+     *  with prefix (e.g. "A.1", "A.2"). */
+    number?: number | string
+    /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
+    numbered?: boolean
+    wip?: boolean
+  }>(),
+  {
+    ...figureDefaults,
+    numbered: true,
+    wip: false,
+  },
+)
 
 if (import.meta.env.DEV && !props.src && !props.wip) {
-  console.warn('[FigureBlock] missing `src` and not flagged `wip`; this will render a broken <img>.')
+  console.warn(
+    '[FigureBlock] missing `src` and not flagged `wip`; this will render a broken <img>.',
+  )
 }
 
-const toCss = (v: string | number) => typeof v === 'number' ? `${v}px` : v
+const toCss = (v: string | number) => (typeof v === 'number' ? `${v}px` : v)
 
 const resolvedSrc = computed(() => {
   if (!props.src) return undefined
@@ -56,7 +61,10 @@ const displayPrefix = computed(
 )
 
 const displayNumberSuffix = computed(
-  () => props.numberSuffix ?? ($slidev.configs.figureNumberSuffix as string | undefined) ?? DEFAULT_NUMBER_SUFFIX,
+  () =>
+    props.numberSuffix ??
+    ($slidev.configs.figureNumberSuffix as string | undefined) ??
+    DEFAULT_NUMBER_SUFFIX,
 )
 
 const showLabel = computed(() => props.numbered !== false && props.number != null)
@@ -69,18 +77,9 @@ const labelText = computed(() => {
 
 <template>
   <figure class="figure-block" :class="{ 'is-wip': props.wip }" :style="{ width: props.width }">
-    <img
-      :src="resolvedSrc"
-      :alt="props.alt"
-      class="figure-image"
-      :style="imageStyle"
-    />
+    <img :src="resolvedSrc" :alt="props.alt" class="figure-image" :style="imageStyle" />
     <span v-if="props.wip" class="wip-badge">WIP</span>
-    <figcaption
-      v-if="showLabel || hasCaptionContent"
-      class="figure-caption"
-      :style="captionStyle"
-    >
+    <figcaption v-if="showLabel || hasCaptionContent" class="figure-caption" :style="captionStyle">
       <span v-if="showLabel" class="figure-caption-label">{{ labelText }}</span>
       <slot name="caption">
         <span v-if="props.caption" v-html="renderInlineMd(props.caption)" />

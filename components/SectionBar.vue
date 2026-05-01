@@ -18,12 +18,13 @@ const sections = computed(() => {
 const currentPage = computed(() => $slidev.nav.currentPage)
 
 const activeSectionIdx = computed(() =>
-  sections.value.findIndex(s => s.slides.some(slide => slide.no === currentPage.value))
+  sections.value.findIndex((s) => s.slides.some((slide) => slide.no === currentPage.value)),
 )
 
 const barMode = computed(() => {
   const slides = $slidev.nav.slides ?? []
   const idx = (currentPage.value ?? 1) - 1
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const s = slides[idx] as any
   return getSectionBarMode(s, ($slidev.configs.sectionBarMode as string) ?? 'full')
 })
@@ -36,11 +37,7 @@ const show = computed(() => {
 </script>
 
 <template>
-  <div
-    v-if="show"
-    class="ustc-section-bar"
-    :class="{ 'is-minimal': barMode === 'minimal' }"
-  >
+  <div v-if="show" class="ustc-section-bar" :class="{ 'is-minimal': barMode === 'minimal' }">
     <div
       v-for="(section, i) in sections"
       :key="i"
@@ -51,7 +48,8 @@ const show = computed(() => {
         v-if="barMode !== 'minimal'"
         class="ustc-section-label"
         @click="$slidev.nav.go(section.sectionNo)"
-      >{{ section.title }}</span>
+        >{{ section.title }}</span
+      >
       <div class="ustc-section-dots">
         <span
           v-for="slide in section.slides"
@@ -96,8 +94,12 @@ const show = computed(() => {
   min-width: 0;
 }
 
-.ustc-section-item.is-active { opacity: 1; }
-.ustc-section-item:not(.is-active):hover { opacity: 0.8; }
+.ustc-section-item.is-active {
+  opacity: 1;
+}
+.ustc-section-item:not(.is-active):hover {
+  opacity: 0.8;
+}
 
 .ustc-section-label {
   font-size: 0.6rem;
@@ -128,9 +130,18 @@ const show = computed(() => {
   cursor: pointer;
 }
 
-.ustc-dot:hover { border-color: white; background: rgba(255, 255, 255, 0.5); }
-.ustc-dot.is-current { background: white; border-color: white; }
-.ustc-dot.is-past { background: rgba(255, 255, 255, 0.32); border-color: rgba(255, 255, 255, 0.55); }
+.ustc-dot:hover {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.5);
+}
+.ustc-dot.is-current {
+  background: white;
+  border-color: white;
+}
+.ustc-dot.is-past {
+  background: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.55);
+}
 
 /* WIP slide marker — frontmatter `wip: true` only. Component-level `wip` props
    are local component badges/placeholders and do not affect section-bar dots. */
@@ -138,14 +149,28 @@ const show = computed(() => {
   border-color: var(--ustc-wip);
   border-width: 2px;
 }
-.ustc-dot.is-wip:hover { background: rgba(220, 38, 38, 0.45); border-color: var(--ustc-wip); }
-.ustc-dot.is-wip.is-current { background: var(--ustc-wip); border-color: var(--ustc-wip); }
-.ustc-dot.is-wip.is-past { background: rgba(220, 38, 38, 0.5); border-color: var(--ustc-wip); }
+.ustc-dot.is-wip:hover {
+  background: rgba(220, 38, 38, 0.45);
+  border-color: var(--ustc-wip);
+}
+.ustc-dot.is-wip.is-current {
+  background: var(--ustc-wip);
+  border-color: var(--ustc-wip);
+}
+.ustc-dot.is-wip.is-past {
+  background: rgba(220, 38, 38, 0.5);
+  border-color: var(--ustc-wip);
+}
 .ustc-dot.is-wip:not(.is-current) {
   animation: ustc-wip-dot-pulse 1.8s ease-in-out infinite;
 }
 @keyframes ustc-wip-dot-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55); }
-  50%      { box-shadow: 0 0 0 3px rgba(220, 38, 38, 0); }
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0);
+  }
 }
 </style>

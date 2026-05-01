@@ -2,16 +2,18 @@
 theme: ../../
 layout: cover
 talkTitle: Numbering Fixture
-figurePrefix: "Fig"
-tablePrefix: "Tab"
+figurePrefix: 'Fig'
+tablePrefix: 'Tab'
 sectionBar: false
 ---
 
 # Numbering Fixture
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 2: Fig 1, Tab 1 — independent counters -->
@@ -20,15 +22,17 @@ footer: false
 
 <TableBlock caption="First table">
 
-| A |
-|---|
-| 1 |
+| A   |
+| --- |
+| 1   |
 
 </TableBlock>
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 3: Fig 2, Tab 2 — cross-slide continuity -->
@@ -37,15 +41,17 @@ footer: false
 
 <TableBlock caption="Second table">
 
-| A |
-|---|
-| 1 |
+| A   |
+| --- |
+| 1   |
 
 </TableBlock>
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 4: Scheme 3 — per-component prefix overrides global, number from global counter -->
@@ -53,8 +59,10 @@ footer: false
 <FigureBlock prefix="Scheme" wip caption="A scheme" />
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 5: :numbered=false skips label and does not advance counter; next is Fig 4 -->
@@ -64,8 +72,10 @@ footer: false
 <FigureBlock wip caption="After opt-out" />
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 6: manual :number=10 → Fig 10, next auto → Fig 11 -->
@@ -75,8 +85,10 @@ footer: false
 <FigureBlock wip caption="After manual" />
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 7: no caption → label has no suffix → "Fig 12" -->
@@ -84,12 +96,14 @@ footer: false
 <FigureBlock wip />
 
 ---
-layout: backup
----
+
+## layout: backup
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 9: appendix — counters reset, prefix becomes A. → "Fig A.1", "Tab A.1" -->
@@ -98,15 +112,17 @@ footer: false
 
 <TableBlock caption="Appendix tab one">
 
-| A |
-|---|
-| 1 |
+| A   |
+| --- |
+| 1   |
 
 </TableBlock>
 
 ---
+
 layout: content
 footer: false
+
 ---
 
 <!-- slide 10: appendix continues → Fig A.2 -->

@@ -5,8 +5,10 @@
 
 export function isSlidevVirtualSlideModuleId(value: unknown): boolean {
   if (typeof value !== 'string') return false
-  return /__slidev_\d+\.(?:md|frontmatter)(?:\?|$)/.test(value)
-    || /(?:^|\/)@slidev\/slides(?:\/|$|\?)/.test(value)
+  return (
+    /__slidev_\d+\.(?:md|frontmatter)(?:\?|$)/.test(value) ||
+    /(?:^|\/)@slidev\/slides(?:\/|$|\?)/.test(value)
+  )
 }
 
 export function collectSlideHmrModules(moduleGraph: any): any[] {

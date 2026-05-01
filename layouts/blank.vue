@@ -1,9 +1,12 @@
 <script setup lang="ts">
-const props = withDefaults(defineProps<{
-  wip?: boolean
-}>(), {
-  wip: false,
-})
+const props = withDefaults(
+  defineProps<{
+    wip?: boolean
+  }>(),
+  {
+    wip: false,
+  },
+)
 </script>
 
 <template>

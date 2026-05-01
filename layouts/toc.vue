@@ -5,17 +5,22 @@ import { renderInlineMd } from '../utils/markdown'
 import { tocDefaults } from '../utils/defaults'
 import { buildSectionGroups } from '../utils/sectionModel'
 
-const props = withDefaults(defineProps<{
-  highlight?: number
-  footer?: boolean
-  footerMode?: 'full' | 'minimal'
-  columns?: 1 | 2
-  wip?: boolean
-}>(), {
-  ...tocDefaults,
-})
+const props = withDefaults(
+  defineProps<{
+    highlight?: number
+    footer?: boolean
+    footerMode?: 'full' | 'minimal'
+    columns?: 1 | 2
+    wip?: boolean
+  }>(),
+  {
+    ...tocDefaults,
+  },
+)
 
-const presenterName = computed(() => getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter))
+const presenterName = computed(() =>
+  getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenter),
+)
 
 interface TocEntry {
   title: string
@@ -24,8 +29,9 @@ interface TocEntry {
 }
 
 const sections = computed((): TocEntry[] => {
-  return buildSectionGroups($slidev.nav.slides ?? [], { stopAtBackup: false })
-    .map((section, i) => ({ title: section.title, no: section.sectionNo, index: i + 1 }))
+  return buildSectionGroups($slidev.nav.slides ?? [], { stopAtBackup: false }).map(
+    (section, i) => ({ title: section.title, no: section.sectionNo, index: i + 1 }),
+  )
 })
 
 const hasHighlight = computed(() => props.highlight > 0)
@@ -42,7 +48,11 @@ const autoFontSize = computed(() => {
   <div class="slidev-layout toc" :class="{ 'is-wip': props.wip }">
     <slot />
 
-    <ol class="toc-list" :class="{ 'toc-two-col': columns === 2 }" :style="{ '--toc-fs': autoFontSize, '--toc-rows': tocRows }">
+    <ol
+      class="toc-list"
+      :class="{ 'toc-two-col': columns === 2 }"
+      :style="{ '--toc-fs': autoFontSize, '--toc-rows': tocRows }"
+    >
       <li
         v-for="entry in sections"
         :key="entry.index"

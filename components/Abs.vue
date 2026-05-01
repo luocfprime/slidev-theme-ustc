@@ -8,7 +8,7 @@ const props = defineProps<{
   z?: number
 }>()
 
-const toCss = (v: string | number) => typeof v === 'number' ? `${v}px` : v
+const toCss = (v: string | number) => (typeof v === 'number' ? `${v}px` : v)
 
 const style = computed(() => ({
   position: 'absolute' as const,

@@ -3,40 +3,40 @@
 /* Design Tokens */
 :root {
   /* Brand */
-  --ustc-blue:        #1E4C90;
-  --ustc-blue-dark:   #16396b;
-  --ustc-blue-pale:   rgba(30, 76, 144, 0.07);
+  --ustc-blue: #1e4c90;
+  --ustc-blue-dark: #16396b;
+  --ustc-blue-pale: rgba(30, 76, 144, 0.07);
   --ustc-blue-border: rgba(30, 76, 144, 0.18);
 
   /* Status */
-  --ustc-wip:         #dc2626;  /* WIP / draft markers (badges, watermark, section-bar dot) */
+  --ustc-wip: #dc2626; /* WIP / draft markers (badges, watermark, section-bar dot) */
 
   /* Text */
-  --ustc-text:        #111827;
-  --ustc-text-muted:  #6b7280;
-  --ustc-text-light:  #9ca3af;
-  --ustc-footnote-ref: #7b8494;  /* footnote superscript ref */
+  --ustc-text: #111827;
+  --ustc-text-muted: #6b7280;
+  --ustc-text-light: #9ca3af;
+  --ustc-footnote-ref: #7b8494; /* footnote superscript ref */
 
   /* Footer bar */
-  --ustc-footer-h:    1.75rem;
-  --ustc-footer-bg:   var(--ustc-blue);
+  --ustc-footer-h: 1.75rem;
+  --ustc-footer-bg: var(--ustc-blue);
   --ustc-footer-text: rgba(255, 255, 255, 0.88);
-  --ustc-footer-fs:   0.74rem;
+  --ustc-footer-fs: 0.74rem;
 
   /* Section bar height: 0px when disabled; otherwise set by global-top.vue to
      var(--ustc-nav-h-full) or var(--ustc-nav-h-minimal). Override those two
      variables to change the bar height; do not set --ustc-nav-h directly. */
   --ustc-nav-h: 0px;
-  --ustc-nav-h-full:    2rem;
+  --ustc-nav-h-full: 2rem;
   --ustc-nav-h-minimal: 1.5rem;
 
   /* Slide padding
      TODO(low): --ustc-px (right) and --ustc-pl (left) share the same value but are kept
      separate so right and left can be adjusted independently if needed. */
-  --ustc-px:    2.8rem;
-  --ustc-py:    1.75rem;
-  --ustc-pl:    2.8rem;
-  --ustc-pb:    calc(var(--ustc-footer-h) + 0.9rem);
+  --ustc-px: 2.8rem;
+  --ustc-py: 1.75rem;
+  --ustc-pl: 2.8rem;
+  --ustc-pb: calc(var(--ustc-footer-h) + 0.9rem);
 
   /* Section / backup layout padding (structural; distinct from content/split tokens) */
   --ustc-section-py: 2.5rem;
@@ -45,69 +45,69 @@
 
   /* ── Typography scale (content / split slides) ───────────────────────── */
   /* Override any of these in your deck's <style> block to adjust globally */
-  --ustc-fs-body:          1.4rem;   /* p, li — normal mode                */
-  --ustc-fs-body-dense:    1.05rem;  /* p, li — dense mode                 */
-  --ustc-fs-h1:            2.75rem;  /* h1 in content, split, toc          */
-  --ustc-fs-h2:            1.55rem;  /* h2                                  */
-  --ustc-fs-h3:            1.3rem;   /* h3 (also used for dense h2)        */
-  --ustc-fs-table-cell:    1.1rem;   /* td, th                              */
+  --ustc-fs-body: 1.4rem; /* p, li — normal mode                */
+  --ustc-fs-body-dense: 1.05rem; /* p, li — dense mode                 */
+  --ustc-fs-h1: 2.75rem; /* h1 in content, split, toc          */
+  --ustc-fs-h2: 1.55rem; /* h2                                  */
+  --ustc-fs-h3: 1.3rem; /* h3 (also used for dense h2)        */
+  --ustc-fs-table-cell: 1.1rem; /* td, th                              */
   --ustc-fs-table-cell-dense: 0.96rem; /* td, th — dense mode              */
-  --ustc-fs-blockquote:    1.2rem;   /* blockquote                          */
-  --ustc-fs-blockquote-dense: 1rem;  /* blockquote — dense mode            */
-  --ustc-fs-caption:       1.1rem;   /* figure & table captions             */
-  --ustc-fs-caption-dense: 0.96rem;  /* figure & table captions — dense    */
-  --ustc-fs-subtitle:      1.15rem;  /* content layout subtitle             */
+  --ustc-fs-blockquote: 1.2rem; /* blockquote                          */
+  --ustc-fs-blockquote-dense: 1rem; /* blockquote — dense mode            */
+  --ustc-fs-caption: 1.1rem; /* figure & table captions             */
+  --ustc-fs-caption-dense: 0.96rem; /* figure & table captions — dense    */
+  --ustc-fs-subtitle: 1.15rem; /* content layout subtitle             */
   --ustc-fs-subtitle-dense: 0.97rem; /* content layout subtitle — dense    */
-  --ustc-fs-callout:       1.15rem;  /* Callout body text                   */
-  --ustc-fs-callout-dense: 0.95rem;  /* Callout body text in dense mode     */
-  --ustc-fs-callout-title: 1.15rem;  /* Callout title                       */
+  --ustc-fs-callout: 1.15rem; /* Callout body text                   */
+  --ustc-fs-callout-dense: 0.95rem; /* Callout body text in dense mode     */
+  --ustc-fs-callout-title: 1.15rem; /* Callout title                       */
   --ustc-fs-callout-title-dense: 0.95rem; /* Callout title — dense mode     */
-  --ustc-fs-result-title:  1.15rem;  /* ResultBox title                     */
+  --ustc-fs-result-title: 1.15rem; /* ResultBox title                     */
   --ustc-fs-result-title-dense: 0.96rem; /* ResultBox title — dense mode    */
-  --ustc-fs-result-body:   1.15rem;  /* ResultBox body text                 */
-  --ustc-fs-result-body-dense: 0.96rem;  /* ResultBox body text — dense mode    */
-  --ustc-fs-block-title:   1.15rem;  /* Block title                         */
+  --ustc-fs-result-body: 1.15rem; /* ResultBox body text                 */
+  --ustc-fs-result-body-dense: 0.96rem; /* ResultBox body text — dense mode    */
+  --ustc-fs-block-title: 1.15rem; /* Block title                         */
   --ustc-fs-block-title-dense: 0.96rem; /* Block title — dense mode         */
-  --ustc-fs-block-body:    1.15rem;  /* Block body text                     */
-  --ustc-fs-block-body-dense: 0.96rem;  /* Block body text — dense mode     */
-  --ustc-fs-takeaway:      1.4rem;   /* Takeaway text                       */
+  --ustc-fs-block-body: 1.15rem; /* Block body text                     */
+  --ustc-fs-block-body-dense: 0.96rem; /* Block body text — dense mode     */
+  --ustc-fs-takeaway: 1.4rem; /* Takeaway text                       */
   --ustc-fs-takeaway-dense: 1.05rem; /* Takeaway text — dense mode          */
-  --ustc-fs-footnote:      0.67rem;  /* footnote list items                 */
-  --ustc-lh:               1.8;      /* default line-height for body text   */
-  --ustc-lh-dense:         1.5;      /* line-height for body text in dense mode */
-  --ustc-lh-caption:       1.35;     /* figure/table captions               */
-  --ustc-lh-table:         1.38;     /* td, th                              */
-  --ustc-lh-blockquote:    1.5;      /* blockquote                          */
-  --ustc-fig-caption-gap:  0.75rem;  /* gap between figure image and its caption  */
-  --ustc-tab-caption-gap:  0.3rem;   /* gap between table caption and the table   */
-  --ustc-title-gap:        1.5rem;   /* gap between h1 and first content element  */
-  --ustc-title-gap-dense:  0.9rem;   /* gap between h1 and first content element — dense mode */
-  --ustc-lh-heading:       1.1;      /* h1 across all layouts               */
-  --ustc-lh-footnote:      1.28;     /* footnote list items                 */
-  --ustc-fs-footnote-ref:  0.64em;   /* footnote superscript anchor         */
-  --ustc-footnotes-max-h:  22%;      /* footnote overlay max visible height  */
+  --ustc-fs-footnote: 0.67rem; /* footnote list items                 */
+  --ustc-lh: 1.8; /* default line-height for body text   */
+  --ustc-lh-dense: 1.5; /* line-height for body text in dense mode */
+  --ustc-lh-caption: 1.35; /* figure/table captions               */
+  --ustc-lh-table: 1.38; /* td, th                              */
+  --ustc-lh-blockquote: 1.5; /* blockquote                          */
+  --ustc-fig-caption-gap: 0.75rem; /* gap between figure image and its caption  */
+  --ustc-tab-caption-gap: 0.3rem; /* gap between table caption and the table   */
+  --ustc-title-gap: 1.5rem; /* gap between h1 and first content element  */
+  --ustc-title-gap-dense: 0.9rem; /* gap between h1 and first content element — dense mode */
+  --ustc-lh-heading: 1.1; /* h1 across all layouts               */
+  --ustc-lh-footnote: 1.28; /* footnote list items                 */
+  --ustc-fs-footnote-ref: 0.64em; /* footnote superscript anchor         */
+  --ustc-footnotes-max-h: 22%; /* footnote overlay max visible height  */
 
   /* Semibold weight — works on Inter (variable font); fallback renders as bold */
   --ustc-fw-semibold: 650;
 
   /* ── Structural layout type scale ────────────────────────────────────── */
-  --ustc-fs-cover-h1:     3.5rem;   /* cover h1                            */
-  --ustc-fs-end-h1:       var(--ustc-fs-cover-h1); /* end h1              */
-  --ustc-fs-cover-sub:    1.9rem;   /* cover subtitle                      */
-  --ustc-fs-cover-author: 1.45rem;  /* author attribution line             */
-  --ustc-fs-cover-meta:   1.35rem;  /* date & conference/meeting line      */
-  --ustc-fs-cover-slot:   1.2rem;   /* cover slot / body text area         */
-  --ustc-fs-cover-aff:    1.1rem;   /* affiliations line                   */
-  --ustc-fs-section-h1:   3.4rem;   /* section & backup h1                 */
-  --ustc-fs-section-sub:  1.22rem;  /* section/backup subtitle paragraph   */
-  --ustc-fs-end-contact:  1rem;     /* end slide contact info              */
+  --ustc-fs-cover-h1: 3.5rem; /* cover h1                            */
+  --ustc-fs-end-h1: var(--ustc-fs-cover-h1); /* end h1              */
+  --ustc-fs-cover-sub: 1.9rem; /* cover subtitle                      */
+  --ustc-fs-cover-author: 1.45rem; /* author attribution line             */
+  --ustc-fs-cover-meta: 1.35rem; /* date & conference/meeting line      */
+  --ustc-fs-cover-slot: 1.2rem; /* cover slot / body text area         */
+  --ustc-fs-cover-aff: 1.1rem; /* affiliations line                   */
+  --ustc-fs-section-h1: 3.4rem; /* section & backup h1                 */
+  --ustc-fs-section-sub: 1.22rem; /* section/backup subtitle paragraph   */
+  --ustc-fs-end-contact: 1rem; /* end slide contact info              */
 
   /* ── Max-width constraints ───────────────────────────────────────────────── */
-  --ustc-max-w-h1:        58rem;    /* h1 readable width (section, backup) */
-  --ustc-max-w-sub:       48rem;    /* subtitle / body paragraph max width (section, backup) */
-  --ustc-max-w-cover-h1:  48rem;   /* cover h1 max width                  */
-  --ustc-max-w-cover-sub: 58rem;   /* cover subtitle max width            */
-  --ustc-max-w-cover-slot: 50rem;  /* cover slot / body text area               */
+  --ustc-max-w-h1: 58rem; /* h1 readable width (section, backup) */
+  --ustc-max-w-sub: 48rem; /* subtitle / body paragraph max width (section, backup) */
+  --ustc-max-w-cover-h1: 48rem; /* cover h1 max width                  */
+  --ustc-max-w-cover-sub: 58rem; /* cover subtitle max width            */
+  --ustc-max-w-cover-slot: 50rem; /* cover slot / body text area               */
 }
 
 /* ─── Cover ──────────────────────────────────────────────────────────────── */
@@ -155,7 +155,7 @@
   font-size: var(--ustc-fs-cover-author);
   line-height: 1.5;
   color: var(--ustc-text);
-  margin: 2.0rem 0 1.35rem;
+  margin: 2rem 0 1.35rem;
 }
 
 .slidev-layout.cover .cover-author-line .author-name.presenter-wrap {
@@ -281,7 +281,9 @@
   border-left: 3px solid transparent;
   border-radius: 0 4px 4px 0;
   cursor: pointer;
-  transition: border-color 0.15s, opacity 0.15s;
+  transition:
+    border-color 0.15s,
+    opacity 0.15s;
 }
 
 .slidev-layout.toc .toc-item:hover {
@@ -346,8 +348,12 @@
   max-width: var(--ustc-max-w-h1);
 }
 
-.slidev-layout.backup h1  { color: var(--ustc-text-muted); }
-.slidev-layout.section h1 { color: var(--ustc-blue-dark); }
+.slidev-layout.backup h1 {
+  color: var(--ustc-text-muted);
+}
+.slidev-layout.section h1 {
+  color: var(--ustc-blue-dark);
+}
 
 .slidev-layout.backup h1 + p,
 .slidev-layout.section h1 + p {
@@ -357,8 +363,12 @@
   max-width: var(--ustc-max-w-sub);
 }
 
-.slidev-layout.backup h1 + p  { color: var(--ustc-text-light); }
-.slidev-layout.section h1 + p { color: var(--ustc-text-muted); }
+.slidev-layout.backup h1 + p {
+  color: var(--ustc-text-light);
+}
+.slidev-layout.section h1 + p {
+  color: var(--ustc-text-muted);
+}
 
 /* ─── Content ────────────────────────────────────────────────────────────── */
 .slidev-layout.content {
@@ -463,7 +473,6 @@
   margin-bottom: 0.65rem;
 }
 
-
 .slidev-layout.content h2,
 .slidev-layout.split h2 {
   font-size: var(--ustc-fs-h2);
@@ -493,8 +502,7 @@
 
 /* Beat Slidev's default p/li line-height without taking over component
    colors or font sizes. Component title paragraphs keep their own rhythm. */
-.slidev-layout:is(.content, .split)
-  :where(p:not(.block-title):not(.result-box-title), li) {
+.slidev-layout:is(.content, .split) :where(p:not(.block-title):not(.result-box-title), li) {
   line-height: var(--ustc-lh);
 }
 
@@ -537,21 +545,21 @@
 
    Only non-variable adjustments (e.g. margin tweaks) need explicit rules. */
 .dense {
-  --ustc-fs-body:          var(--ustc-fs-body-dense);
-  --ustc-lh:               var(--ustc-lh-dense);
-  --ustc-fs-h2:            var(--ustc-fs-h3);
-  --ustc-fs-table-cell:    var(--ustc-fs-table-cell-dense);
-  --ustc-fs-blockquote:    var(--ustc-fs-blockquote-dense);
-  --ustc-fs-caption:       var(--ustc-fs-caption-dense);
-  --ustc-fs-subtitle:      var(--ustc-fs-subtitle-dense);
-  --ustc-fs-callout:       var(--ustc-fs-callout-dense);
+  --ustc-fs-body: var(--ustc-fs-body-dense);
+  --ustc-lh: var(--ustc-lh-dense);
+  --ustc-fs-h2: var(--ustc-fs-h3);
+  --ustc-fs-table-cell: var(--ustc-fs-table-cell-dense);
+  --ustc-fs-blockquote: var(--ustc-fs-blockquote-dense);
+  --ustc-fs-caption: var(--ustc-fs-caption-dense);
+  --ustc-fs-subtitle: var(--ustc-fs-subtitle-dense);
+  --ustc-fs-callout: var(--ustc-fs-callout-dense);
   --ustc-fs-callout-title: var(--ustc-fs-callout-title-dense);
-  --ustc-fs-result-title:  var(--ustc-fs-result-title-dense);
-  --ustc-fs-result-body:   var(--ustc-fs-result-body-dense);
-  --ustc-fs-block-title:   var(--ustc-fs-block-title-dense);
-  --ustc-fs-block-body:    var(--ustc-fs-block-body-dense);
-  --ustc-fs-takeaway:      var(--ustc-fs-takeaway-dense);
-  --ustc-title-gap:        var(--ustc-title-gap-dense);
+  --ustc-fs-result-title: var(--ustc-fs-result-title-dense);
+  --ustc-fs-result-body: var(--ustc-fs-result-body-dense);
+  --ustc-fs-block-title: var(--ustc-fs-block-title-dense);
+  --ustc-fs-block-body: var(--ustc-fs-block-body-dense);
+  --ustc-fs-takeaway: var(--ustc-fs-takeaway-dense);
+  --ustc-title-gap: var(--ustc-title-gap-dense);
 }
 
 /* Dense mode — non-variable adjustments (cannot be expressed via var swap) */
@@ -765,8 +773,12 @@
 }
 
 /* ─── End — footnotes (end-specific overrides; structure shared above) ────── */
-.slidev-layout.end .footnotes:not(:has(li)) { display: none; }
-.slidev-layout.end .footnotes { text-align: left; }
+.slidev-layout.end .footnotes:not(:has(li)) {
+  display: none;
+}
+.slidev-layout.end .footnotes {
+  text-align: left;
+}
 
 /* ─── End ────────────────────────────────────────────────────────────────── */
 .slidev-layout.end {
@@ -828,7 +840,9 @@
    diagonal "WIP" stamp across the slide; pointer-events disabled so content
    stays interactive. The section bar dot for the slide is also tinted red
    (see SectionBar.vue). */
-.slidev-layout.is-wip { position: relative; }
+.slidev-layout.is-wip {
+  position: relative;
+}
 .slidev-layout.is-wip::after {
   content: 'WIP';
   position: absolute;
@@ -840,7 +854,7 @@
   font-weight: 900;
   letter-spacing: 0.6rem;
   color: var(--ustc-wip);
-  opacity: 0.10;
+  opacity: 0.1;
   pointer-events: none;
   user-select: none;
   z-index: 999;

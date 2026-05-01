@@ -18,7 +18,7 @@ test('extractTypstFences follows CommonMark fence length and indentation rules',
   ].join('\n')
 
   assert.deepEqual(
-    extractTypstFences(src).map(fence => fence.code),
+    extractTypstFences(src).map((fence) => fence.code),
     ['```\nnot the close because the opener used four backticks\n```'],
   )
 })

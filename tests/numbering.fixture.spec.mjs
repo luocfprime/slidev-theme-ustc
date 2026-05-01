@@ -48,13 +48,17 @@ test.describe('figure/table auto-numbering', () => {
     expect(await tabLabel(page)).toBe('Tab 2.')
   })
 
-  test('slide 4 — per-component prefix overrides global; counter still advances', async ({ page }) => {
+  test('slide 4 — per-component prefix overrides global; counter still advances', async ({
+    page,
+  }) => {
     await gotoSlide(page, 4)
     // prefix="Scheme" replaces the label text; the number is from the global counter (3)
     expect(await figLabel(page)).toBe('Scheme 3.')
   })
 
-  test('slide 5 — :numbered=false produces no label and does not advance counter', async ({ page }) => {
+  test('slide 5 — :numbered=false produces no label and does not advance counter', async ({
+    page,
+  }) => {
     await gotoSlide(page, 5)
     // First figure-block has :numbered=false — no figcaption at all
     const firstFig = slide(page).locator('.figure-block').first()
@@ -65,7 +69,9 @@ test.describe('figure/table auto-numbering', () => {
     expect(await figLabel(page)).toBe('Fig 4.')
   })
 
-  test('slide 6 — manual :number jumps counter; next auto-number continues from max+1', async ({ page }) => {
+  test('slide 6 — manual :number jumps counter; next auto-number continues from max+1', async ({
+    page,
+  }) => {
     await gotoSlide(page, 6)
     expect(await figLabel(page, 0)).toBe('Fig 10.')
     expect(await figLabel(page, 1)).toBe('Fig 11.')

@@ -8,8 +8,12 @@ const isEntitiesSourcemapNoise = (msg: string) =>
   msg.includes('/entities/') && msg.includes('outside its package')
 const originalWarn = logger.warn.bind(logger)
 const originalWarnOnce = logger.warnOnce.bind(logger)
-logger.warn = (msg, opts) => { if (!isEntitiesSourcemapNoise(msg)) originalWarn(msg, opts) }
-logger.warnOnce = (msg, opts) => { if (!isEntitiesSourcemapNoise(msg)) originalWarnOnce(msg, opts) }
+logger.warn = (msg, opts) => {
+  if (!isEntitiesSourcemapNoise(msg)) originalWarn(msg, opts)
+}
+logger.warnOnce = (msg, opts) => {
+  if (!isEntitiesSourcemapNoise(msg)) originalWarnOnce(msg, opts)
+}
 
 export default defineConfig({
   customLogger: logger,

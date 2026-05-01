@@ -34,7 +34,7 @@ export function buildSectionGroups(
   for (let i = 0; i < slides.length; i++) {
     const slide = slides[i]
     const layout = getLayout(slide)
-    const no = slide?.no ?? (i + 1)
+    const no = slide?.no ?? i + 1
 
     if (layout === 'backup' && stopAtBackup) break
 

@@ -3,19 +3,22 @@ import { computed } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
 import { calloutDefaults } from '../utils/defaults'
 
-const props = withDefaults(defineProps<{
-  type?: 'note' | 'tip' | 'warning' | 'important' | 'example'
-  title?: string
-}>(), {
-  ...calloutDefaults,
-})
+const props = withDefaults(
+  defineProps<{
+    type?: 'note' | 'tip' | 'warning' | 'important' | 'example'
+    title?: string
+  }>(),
+  {
+    ...calloutDefaults,
+  },
+)
 
 const iconMap: Record<string, string> = {
-  note:      'i-mdi-information-outline',
-  tip:       'i-mdi-lightbulb-outline',
-  warning:   'i-mdi-alert-outline',
+  note: 'i-mdi-information-outline',
+  tip: 'i-mdi-lightbulb-outline',
+  warning: 'i-mdi-alert-outline',
   important: 'i-mdi-alert-circle-outline',
-  example:   'i-mdi-beaker-outline',
+  example: 'i-mdi-beaker-outline',
 }
 
 const icon = computed(() => iconMap[props.type] ?? 'i-mdi-information-outline')
@@ -77,8 +80,12 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
   border-left-color: var(--ustc-blue);
   color: var(--ustc-text);
 }
-.callout-note .callout-icon { color: var(--ustc-blue); }
-.callout-note .callout-title { color: var(--ustc-blue-dark); }
+.callout-note .callout-icon {
+  color: var(--ustc-blue);
+}
+.callout-note .callout-title {
+  color: var(--ustc-blue-dark);
+}
 
 /* tip — teal */
 .callout-tip {
@@ -86,8 +93,12 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
   border-left-color: #059669;
   color: var(--ustc-text);
 }
-.callout-tip .callout-icon { color: #059669; }
-.callout-tip .callout-title { color: #065f46; }
+.callout-tip .callout-icon {
+  color: #059669;
+}
+.callout-tip .callout-title {
+  color: #065f46;
+}
 
 /* warning — amber */
 .callout-warning {
@@ -95,8 +106,12 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
   border-left-color: #d97706;
   color: var(--ustc-text);
 }
-.callout-warning .callout-icon { color: #d97706; }
-.callout-warning .callout-title { color: #92400e; }
+.callout-warning .callout-icon {
+  color: #d97706;
+}
+.callout-warning .callout-title {
+  color: #92400e;
+}
 
 /* important — red */
 .callout-important {
@@ -104,8 +119,12 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
   border-left-color: #dc2626;
   color: var(--ustc-text);
 }
-.callout-important .callout-icon { color: #dc2626; }
-.callout-important .callout-title { color: #991b1b; }
+.callout-important .callout-icon {
+  color: #dc2626;
+}
+.callout-important .callout-title {
+  color: #991b1b;
+}
 
 /* example — purple */
 .callout-example {
@@ -113,6 +132,10 @@ const hasTitle = computed(() => (props.title ?? '').trim().length > 0)
   border-left-color: #7c3aed;
   color: var(--ustc-text);
 }
-.callout-example .callout-icon { color: #7c3aed; }
-.callout-example .callout-title { color: #4c1d95; }
+.callout-example .callout-icon {
+  color: #7c3aed;
+}
+.callout-example .callout-title {
+  color: #4c1d95;
+}
 </style>

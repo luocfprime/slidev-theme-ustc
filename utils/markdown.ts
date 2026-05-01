@@ -10,12 +10,21 @@ md.core.ruler.push('inline_math', (state) => {
     if (blockToken.type !== 'inline' || !blockToken.children) continue
     const next: Token[] = []
     for (const child of blockToken.children) {
-      if (child.type !== 'text') { next.push(child); continue }
+      if (child.type !== 'text') {
+        next.push(child)
+        continue
+      }
       const parts = child.content.split(/(?<!\\)(\$[^$\n]+?\$)/)
-      if (parts.length === 1) { next.push(child); continue }
+      if (parts.length === 1) {
+        next.push(child)
+        continue
+      }
       for (const part of parts) {
         if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
-          const html = katex.renderToString(part.slice(1, -1), { throwOnError: false, output: 'html' })
+          const html = katex.renderToString(part.slice(1, -1), {
+            throwOnError: false,
+            output: 'html',
+          })
           const t = new state.Token('html_inline', '', 0)
           t.content = html
           next.push(t)

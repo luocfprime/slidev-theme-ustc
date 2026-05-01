@@ -5,30 +5,36 @@ import { DEFAULT_NUMBER_SUFFIX, tableDefaults } from '../utils/defaults'
 
 const slots = useSlots()
 
-const props = withDefaults(defineProps<{
-  caption?: string
-  captionAlign?: 'left' | 'center'
-  width?: string
-  prefix?: string
-  numberSuffix?: string
-  /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
-   *  Numeric for body tables; string for appendix tables (e.g. "A.1"). */
-  number?: number | string
-  /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
-  numbered?: boolean
-  wip?: boolean
-}>(), {
-  ...tableDefaults,
-  numbered: true,
-  wip: false,
-})
+const props = withDefaults(
+  defineProps<{
+    caption?: string
+    captionAlign?: 'left' | 'center'
+    width?: string
+    prefix?: string
+    numberSuffix?: string
+    /** Auto-injected by setup/transformers.ts numberingTransformer at compile time.
+     *  Numeric for body tables; string for appendix tables (e.g. "A.1"). */
+    number?: number | string
+    /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
+    numbered?: boolean
+    wip?: boolean
+  }>(),
+  {
+    ...tableDefaults,
+    numbered: true,
+    wip: false,
+  },
+)
 
 const displayPrefix = computed(
   () => props.prefix || ($slidev.configs.tablePrefix as string | undefined) || 'Table',
 )
 
 const displayNumberSuffix = computed(
-  () => props.numberSuffix ?? ($slidev.configs.tableNumberSuffix as string | undefined) ?? DEFAULT_NUMBER_SUFFIX,
+  () =>
+    props.numberSuffix ??
+    ($slidev.configs.tableNumberSuffix as string | undefined) ??
+    DEFAULT_NUMBER_SUFFIX,
 )
 
 const showLabel = computed(() => props.numbered !== false && props.number != null)

@@ -11,7 +11,7 @@ on:
         required: true
 
 permissions:
-  id-token: write  # for npm provenance
+  id-token: write # for npm provenance
 
 jobs:
   release:
