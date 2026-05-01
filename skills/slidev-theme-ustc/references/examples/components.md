@@ -341,6 +341,8 @@ layout: content
 
 `caption` prop 走组件内置的简化 markdown 渲染，**脚注引用、链接、自定义组件都不会生效**。需要这些时改用 `#caption` slot——内容由 Slidev 主管道处理。
 
+**关键：`<template #caption>` 及其内容前后必须各有一个空行**，否则 Slidev 不把内容当 markdown 处理，`[^x]` 会原样显示为字面文字。
+
 <FigureBlock src="/ATLAS/ATLAS-Detector.webp" alt="ATLAS 探测器" width="35%">
 
 <template #caption>

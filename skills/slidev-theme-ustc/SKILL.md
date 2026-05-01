@@ -258,6 +258,8 @@ Cite[^1] in caption
 <QRCode url="https://example.com" :size="160" caption="Scan" />
 ```
 
+**`#caption` slot — blank lines required.** `<template #caption>` 及其内容前后必须各有一个空行，否则 Slidev 不把 slot 内容当 markdown 处理，`[^x]` 脚注引用会原样显示为字面文字。纯文字 caption 直接用 `caption` prop；只有需要脚注引用、链接或 Vue 组件时才开 slot。
+
 ---
 
 ## Design Principles
