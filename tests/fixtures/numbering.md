@@ -7,8 +7,6 @@ tablePrefix: "Tab"
 sectionBar: false
 ---
 
-# Numbering Fixture
-
 ---
 layout: content
 footer: false

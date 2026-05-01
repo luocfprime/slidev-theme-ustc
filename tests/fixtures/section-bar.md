@@ -6,8 +6,6 @@ sectionBar: true
 sectionBarMode: full
 ---
 
-# Section Bar Fixture Deck
-
 ---
 layout: section
 sectionLabel: "Alpha"

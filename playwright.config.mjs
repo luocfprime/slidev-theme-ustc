@@ -17,6 +17,12 @@ export default {
       reuseExistingServer: !isCI,
       timeout: 120_000,
     },
+    {
+      command: 'pnpm exec slidev tests/fixtures/footnote.md --port 13033',
+      port: 13033,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
   ],
 
   projects: [
@@ -29,6 +35,11 @@ export default {
       name: 'section-bar',
       use: { baseURL: 'http://localhost:13032' },
       testMatch: ['section-bar*.spec.mjs', 'slides.spec.mjs'],
+    },
+    {
+      name: 'footnote',
+      use: { baseURL: 'http://localhost:13033' },
+      testMatch: ['footnote.spec.mjs'],
     },
   ],
 
