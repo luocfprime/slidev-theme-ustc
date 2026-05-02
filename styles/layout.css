@@ -624,6 +624,14 @@
   border-bottom: 1.5px solid var(--ustc-blue-dark);
 }
 
+/* Slidev base sets `tr { border-bottom: 1px }` globally. For the last tbody row, this 1px
+   competes with the table's 1.5px bottom border in collapsed-border resolution and wins,
+   making the bottom line appear thin. Nullify only that one competing border. */
+.slidev-layout.content tbody tr:last-child,
+.slidev-layout.split tbody tr:last-child {
+  border-bottom: none;
+}
+
 .slidev-layout.content thead tr,
 .slidev-layout.split thead tr {
   border-bottom: 1px solid var(--ustc-blue-dark);
