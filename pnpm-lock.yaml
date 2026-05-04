@@ -22,7 +22,7 @@ importers:
         version: 14.1.1
       plotly.js-dist:
         specifier: ^3.5.0
-        version: 3.5.0
+        version: 3.5.1
       qrcode.vue:
         specifier: ^3.9.0
         version: 3.9.0(vue@3.5.33(typescript@5.9.3))
@@ -2697,8 +2697,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  plotly.js-dist@3.5.0:
-    resolution: {integrity: sha512-syvVpwKdofB5VTQ+faAVt7GOnrG/xPUMnBZyGWwjaDxYVbonsUZbmqKrvfnF21497SlTuBi45xYxVXkc88WjAA==}
+  plotly.js-dist@3.5.1:
+    resolution: {integrity: sha512-ZalyufrVSy5R7y1FWCJZSkm/ACw/5fid6taqUkR8HZfHPBkUDAdxSg1+Rjhe5kB/euLqq/PF4Ug9kD1NeLOmxQ==}
 
   points-on-curve@0.2.0:
     resolution: {integrity: sha512-0mYKnYYe9ZcqMCWhUjItv/oHjvgEsfKvnUTg8sAtnHr3GVy7rGkXCb6d5cSyqrWqL4k81b9CPg3urd+T7aop3A==}
@@ -6471,7 +6471,7 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.2
 
-  plotly.js-dist@3.5.0: {}
+  plotly.js-dist@3.5.1: {}
 
   points-on-curve@0.2.0: {}
 
