@@ -536,6 +536,13 @@ highlight: 0
 `columns: 2` 将条目排为两列，并按列优先填充：左列从上到下排列前半部分，右列排列后半部分。
 
 ---
+layout: toc
+highlight: 0
+---
+
+不写 `# Title` 时，布局自动渲染默认标题 **"Table of Contents"**。写 `# 目录` 即可覆盖。
+
+---
 layout: section
 ---
 

@@ -133,7 +133,11 @@ columns: 1 # 1 (default) | 2
 footer: true
 footerMode: full
 ---
+
+# Contents   # optional — defaults to "Table of Contents" if omitted
 ```
+
+The `# Title` line is **optional**. If omitted, the layout renders "Table of Contents" as the heading automatically. Write `# 目录` (or any text) to override it.
 
 Sections are auto-numbered `§1`, `§2`, … using h1 text from each `section` slide (or `sectionLabel` if set).
 
@@ -275,6 +279,64 @@ The theme exposes many features (subtitle, dense mode, section bar, footnotes, C
 Implementation boundaries for agents: auto-numbering only recognizes static `FigureBlock`/`TableBlock` tags; dynamic component aliases and `v-bind` object spreads require manual `:number`. `subtitle:` remains a frontmatter prop paired with a markdown `# h1`; the theme uses a small layout-local DOM relocation internally to preserve that authoring API, so do not extend subtitle behavior into cross-slide metadata inference. Typst code fences are bundled as advanced rendering support; keep them optional and do not make core theme behavior depend on Typst output.
 
 See [references/design-guide.md](references/design-guide.md) for fine-tuning recipes (width limits, gutter columns, scoped overrides) and a "when NOT to use" table per feature.
+
+---
+
+## Content Budget
+
+The slide canvas is 980 × 552 px (16:9). After the section bar, h1, title gap, and padding, the **usable body height is ~23.5 rem (≈ 376 px)**. Numbers below assume 1 rem = 16 px.
+
+### Line budget
+
+| Density | Height per line (font × line-height) | Hard max (single-line bullets only) | Practical target |
+|---------|--------------------------------------|-------------------------------------|-----------------|
+| normal  | 1.4 rem × 1.8 = **2.52 rem / 40 px** | 8 | **5–6** |
+| dense   | 1.05 rem × 1.5 = **1.58 rem / 25 px** | 13 | **9–10** |
+
+A "line" is one rendered text line — a sub-bullet, a continuation wrap, or a blank-line separator all count. Use the **practical target** column: real bullets often wrap, and slides usually include a heading, intro sentence, or component alongside the list. Plan for 5–6 at normal density; only approach the hard max if every item is a short single-line phrase with no other elements on the slide.
+
+### Component line cost
+
+Add these to your line count. "Normal" = `density: normal`; "Dense" = `density: dense`.
+
+| Element | Normal (40 px/line) | Dense (25 px/line) |
+|---------|--------------------|--------------------|
+| `<Callout type="…" title="…">` + 1 body line | 3 | 2.5 |
+| `<Block title="…">` + 1 body line | 2.5 | 2 |
+| `<ResultBox>` + 1 body line | 2.5 | 2 |
+| `<Takeaway>` (1 sentence) | 1.5 | 1.5 |
+| Each extra body line inside any component | +1 | +1 |
+| `<Grid cols="2">` row | max(left, right) + 0.5 | max(left, right) + 0.5 |
+| `$$…$$` simple (single-line, super/subscripts) | **1.5** | **2.5** |
+| `$$…$$` complex (fraction, Σ/∫, matrix) | **2–2.5** | **3–3.5** |
+
+**Display math does not scale down in dense mode.** `.katex-display` uses `margin: 1em` inherited from `.slidev-layout` (1.1 rem = 17.6 px, fixed), and KaTeX renders at 1.21 × that size — neither is overridden by `density: dense`. The same physical pixel height therefore represents more *line equivalents* at dense density. A slide with two display-math blocks plus bullets can overflow at dense density even if the raw line count looks safe.
+
+### Image sizing
+
+Images in `<FigureBlock>` **do not auto-shrink** to the available body height — they render at full width by default (`max-height: 38rem` CSS cap). Control size via props:
+
+| Situation | Approach |
+|-----------|----------|
+| Limit width (most common) | `width="60%"` on `<FigureBlock>` — constrains the whole figure block |
+| Limit image width inside the block | `imageWidth="400"` (px) or `imageWidth="80%"` |
+| Figure in a `<Grid cols="2">` or `split` column | no extra sizing needed — the column constrains it |
+
+```vue
+<FigureBlock src="/img.png" caption="…" width="60%" />
+<FigureBlock src="/img.png" caption="…" imageWidth="400" />
+```
+
+`width` sets the `<figure>` element's width (centering in the full column). `imageWidth` sets only the `<img>` inside it. Use `width` when the caption should also be narrowed; use `imageWidth` when you want the caption to span the full column width.
+
+### Overflow rules
+
+**Check line count before writing, not after.**
+
+- If over budget at normal density by ≤ 20%: switch to `density: dense` + `margin: tight`.
+- If over budget by more than 20%, or if there are ≥ 2 visually distinct ideas: **split into two slides** — add `(1/2)` / `(2/2)` to `subtitle:`.
+- Never reach for `density: dense` to cram content that genuinely belongs on two slides; dense mode is a slight scale-down, not a compression tool.
+- When splitting, put the core claim on slide 1 and the supporting detail on slide 2 (or demote to a `backup` slide).
 
 ---
 

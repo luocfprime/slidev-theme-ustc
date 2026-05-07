@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, useSlots } from 'vue'
+import type { VNode } from 'vue'
 import { getPresenterName } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
 import { tocDefaults } from '../utils/defaults'
@@ -42,10 +43,22 @@ const autoFontSize = computed(() => {
   const size = Math.min(1.9, Math.max(1.0, 12 / tocRows.value))
   return `${size.toFixed(2)}rem`
 })
+
+function slotHasH1(vnodes: VNode[]): boolean {
+  for (const vnode of vnodes) {
+    if (vnode.type === 'h1') return true
+    if (Array.isArray(vnode.children) && slotHasH1(vnode.children as VNode[])) return true
+  }
+  return false
+}
+
+const slots = useSlots()
+const hasSlotH1 = computed(() => slotHasH1(slots.default?.() ?? []))
 </script>
 
 <template>
   <div class="slidev-layout toc" :class="{ 'is-wip': props.wip }">
+    <h1 v-if="!hasSlotH1">Table of Contents</h1>
     <slot />
 
     <ol
