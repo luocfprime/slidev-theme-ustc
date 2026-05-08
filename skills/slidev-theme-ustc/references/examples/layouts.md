@@ -540,7 +540,7 @@ layout: toc
 highlight: 0
 ---
 
-不写 `# Title` 时，布局自动渲染默认标题 **"Table of Contents"**。写 `# 目录` 即可覆盖。
+不写 `# Title` 时，`toc` 布局自动渲染默认标题 **"Table of Contents"**。写 `# 目录` 即可覆盖。
 
 ---
 layout: section
@@ -685,3 +685,4 @@ layout: content
 # Backup Slide A.2
 
 第二张附录幻灯片，页脚显示 `A.2`。
+
