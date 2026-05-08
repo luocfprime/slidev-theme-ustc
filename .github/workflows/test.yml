@@ -23,7 +23,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --config.strict-dep-builds=false
 
       - name: Lint
         run: pnpm exec eslint .
