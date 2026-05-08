@@ -24,7 +24,7 @@ jobs:
 
       - uses: pnpm/action-setup@v6
         with:
-          version: latest
+          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -33,7 +33,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --config.strict-dep-builds=false
+        run: pnpm install
 
       - name: Build slides
         run: |
