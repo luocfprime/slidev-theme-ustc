@@ -7,6 +7,8 @@ import { test, expect } from '@playwright/test'
 //               [^alpha]: Alpha footnote definition.
 //  3  content  — "Single[^beta] reference only."
 //               [^beta]: Beta footnote definition.
+//  4  content  — two FigureBlock caption slots referencing [^caption]
+//               [^caption]: Caption footnote definition.
 //
 // Bug: markdown-it-footnote v4 renders the second reference to the same label
 // as [1:1] instead of [1]. This spec verifies both references show [1].
@@ -38,5 +40,21 @@ test.describe('footnote — repeated reference rendering', () => {
     const refs = slide(page).locator('.footnote-ref')
     await expect(refs).toHaveCount(1)
     await expect(refs.nth(0)).toHaveText('[1]')
+  })
+
+  test('slide 3 — footnote reference is visually superscripted', async ({ page }) => {
+    await gotoSlide(page, 3)
+    const ref = slide(page).locator('.footnote-ref').first()
+    await expect(ref).toHaveCSS('vertical-align', 'super')
+  })
+
+  test('slide 4 — repeated FigureBlock caption footnotes render consistently', async ({ page }) => {
+    await gotoSlide(page, 4)
+    const refs = slide(page).locator('.figure-caption .footnote-ref')
+    await expect(refs).toHaveCount(2)
+    await expect(refs.nth(0)).toHaveText('[1]')
+    await expect(refs.nth(1)).toHaveText('[1]')
+    await expect(refs.nth(0)).toHaveCSS('vertical-align', 'super')
+    await expect(refs.nth(1)).toHaveCSS('vertical-align', 'super')
   })
 })

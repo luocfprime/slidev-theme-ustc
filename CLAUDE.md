@@ -74,8 +74,8 @@ and export share the same source-order numbering path.
 
 `setup/main.ts` runs once on app mount. It imports KaTeX CSS and wires footnote
 tooltips. `setup/transformers.ts` registers the Typst code-block transformer.
-`vite.config.ts` is local Vite config and currently filters known dependency
-sourcemap noise.
+`vite.config.ts` is local Vite config for repository demos and tests. Published
+runtime behavior must live under the package `files` surface.
 
 ## Editing Guidelines
 

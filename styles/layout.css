@@ -755,6 +755,7 @@
   cursor: help;
   white-space: nowrap;
   line-height: 1;
+  vertical-align: super;
 }
 
 .slidev-layout.content .footnote-ref + .footnote-ref,

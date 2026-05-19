@@ -26,22 +26,6 @@ export default defineConfig({
         // slidev: { markdown: { markdownOptions: { typographer: true } } }.
         typographer: false,
       },
-      // Use markdownSetup (not markdownItSetup): Slidev v52 / unplugin-vue-markdown
-      // v30 picks markdownSetup over markdownItSetup and ignores the latter when
-      // markdownSetup is already set. Slidev chains our markdownSetup after
-      // registering its own plugins (including MarkdownItFootnote), so the
-      // footnote_caption override runs after the plugin has set its default.
-      markdownSetup(md) {
-        // markdown-it-footnote v4 renders repeated references to the same
-        // footnote as [1:1], [1:2], etc. (subId suffix). Academic slides
-        // expect all references to the same footnote to look identical ([1]),
-        // so we drop the subId suffix.
-        md.renderer.rules.footnote_caption = (tokens, idx) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const n = Number((tokens[idx] as any).meta.id + 1).toString()
-          return `[${n}]`
-        }
-      },
     },
   },
 })
