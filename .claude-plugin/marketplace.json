@@ -6,7 +6,7 @@
   "plugins": [
     {
       "name": "slidev-theme-ustc",
-      "version": "0.1.13",
+      "version": "0.1.14",
       "source": "./",
       "description": "Claude Code skill for the slidev-theme-ustc academic presentation theme"
     }
