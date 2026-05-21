@@ -14,7 +14,7 @@ const props = withDefaults(
   defineProps<{
     background?: string
     authors?: AuthorEntry[]
-    presenter?: string
+    presenterName?: string
     authorMarks?: Record<string, string>
     conference?: string
     talkTitle?: string
@@ -34,7 +34,7 @@ const props = withDefaults(
 
 const bgStyle = computed(() => handleBackground(props.background, true))
 const presenterName = computed(() =>
-  getPresenterName(props.authors, props.presenter, props.frontmatter),
+  getPresenterName(props.authors, props.presenterName, props.frontmatter),
 )
 const normalizedAuthors = computed(() => normalizeAuthors(props.authors ?? []))
 const authorData = computed(() => handleAuthor(props.authors))

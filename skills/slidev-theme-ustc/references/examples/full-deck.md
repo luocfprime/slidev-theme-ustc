@@ -1,7 +1,7 @@
 ---
 theme: ../
 layout: cover
-presenter: "李晓彤"
+presenterName: "李晓彤"
 authors:
   - name: "张明远"
     affiliations: ["中国科学技术大学", "ATLAS 合作组"]
@@ -22,7 +22,7 @@ tablePrefix: "表"
 ---
 
 <!--
-  features: layout: cover, presenter, authors with marks + affiliations, authorMarks, conference, talkTitle, subtitle, date, sectionBar: true, figurePrefix, tablePrefix
+  features: layout: cover, presenterName, authors with marks + affiliations, authorMarks, conference, talkTitle, subtitle, date, sectionBar: true, figurePrefix, tablePrefix
   not shown: background: image, showLogo: false
   see: SKILL.md → Layouts → cover, references/api/prop-defaults.md
 -->

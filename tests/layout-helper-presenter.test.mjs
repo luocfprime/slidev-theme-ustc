@@ -7,18 +7,18 @@ const authors = [
   { name: 'Taylor Morgan', affiliations: ['Fictional Institute of Technology'] },
 ]
 
-test('frontmatter presenter overrides first-author fallback', () => {
+test('frontmatter presenterName overrides first-author fallback', () => {
   assert.equal(
-    getPresenterName(authors, undefined, { presenter: 'Taylor Morgan' }),
+    getPresenterName(authors, undefined, { presenterName: 'Taylor Morgan' }),
     'Taylor Morgan',
   )
 })
 
-test('slide-level presenter prop is used when set', () => {
+test('slide-level presenterName prop is used when set', () => {
   assert.equal(getPresenterName(authors, 'Taylor Morgan'), 'Taylor Morgan')
 })
 
-test('Slidev boolean presenter config falls back to first author', () => {
-  // Slidev sets presenter:true for its built-in presenter mode; must not render as "true"
+test('non-string presenterName value falls back to first author', () => {
+  // Defensive: any non-string input (e.g. a misconfigured boolean) must not render as "true"
   assert.equal(getPresenterName(authors, true), 'Alex Rivera')
 })

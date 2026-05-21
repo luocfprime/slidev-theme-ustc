@@ -15,7 +15,10 @@ export interface BodyLayoutProps {
 
 export function useBodyLayout(props: BodyLayoutProps) {
   const presenterName = computed(() =>
-    getPresenterName((configs.authors as unknown[]) ?? [], configs.presenter as string | undefined),
+    getPresenterName(
+      (configs.authors as unknown[]) ?? [],
+      (configs as Record<string, unknown>).presenterName as string | undefined,
+    ),
   )
 
   const pageClass = computed(() => ({

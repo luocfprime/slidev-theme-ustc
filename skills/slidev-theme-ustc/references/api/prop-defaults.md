@@ -19,7 +19,9 @@ Applies to `content` and `default` layouts. `split` extends this via `splitDefau
 | `footerMode` | `'full'`    | `'full'` · `'minimal'`                                                                                                    |
 | `wip`        | `false`     | boolean — when `true` on slide frontmatter/layout props, renders a diagonal "WIP" stamp and tints the section-bar dot red |
 
-`lineHeight` and `background` have no default (omitted = unchanged).
+`lineHeight` has no default (omitted = body line-height applies).
+
+`background` (CSS color or image path) is accepted by **every layout** — `cover`, `default` / `content`, `split`, `section`, `toc`, `end`, `backup`, `blank`. It has no default; omitted means no background. Only `cover` adds a built-in white gradient overlay for text readability; other layouts render the image raw. See SKILL.md → "Background images on any layout" for the manual overlay recipe.
 
 `subtitle` (also accepted by `split`) has no default — omit to render no subtitle.
 
@@ -62,7 +64,7 @@ Extends `logoDefaults`.
 | `background` | `''`                   |
 | `wip`        | `false`                |
 
-`presenter` (default `undefined`, falls back to first author name) and `authorMarks` (default `{}`) are defined via `withDefaults` in `cover.vue` rather than in the `coverDefaults` object, but behave the same way.
+`presenterName` (default `undefined`, falls back to first author name) and `authorMarks` (default `{}`) are defined via `withDefaults` in `cover.vue` rather than in the `coverDefaults` object, but behave the same way.
 
 ---
 

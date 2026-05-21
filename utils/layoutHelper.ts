@@ -132,15 +132,19 @@ export interface FootnoteEntry {
   content: string
 }
 
+// We expose `presenterName` (not `presenter`) as the theme's frontmatter/config
+// override because Slidev reserves `presenter` for its built-in presenter mode
+// option (`true | false | 'dev'`). Using `presenter` here would shadow that
+// option in global frontmatter and configs.
 export function getPresenterName(
   authors: AuthorEntry[] = [],
-  presenter?: unknown,
+  presenterName?: unknown,
   frontmatter?: Record<string, unknown>,
 ): string {
-  if (typeof presenter === 'string' && presenter.trim()) return presenter
-  const frontmatterPresenter = frontmatter?.presenter
-  if (typeof frontmatterPresenter === 'string' && frontmatterPresenter.trim())
-    return frontmatterPresenter
+  if (typeof presenterName === 'string' && presenterName.trim()) return presenterName
+  const frontmatterPresenterName = frontmatter?.presenterName
+  if (typeof frontmatterPresenterName === 'string' && frontmatterPresenterName.trim())
+    return frontmatterPresenterName
   return authors.length ? normalizeAuthor(authors[0]).name : ''
 }
 

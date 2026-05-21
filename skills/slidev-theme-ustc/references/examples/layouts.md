@@ -34,13 +34,13 @@ layout: section
 ---
 
 # 一、cover 布局
-`talkTitle` · `subtitle` · `authors` · `presenter` · `authorMarks` · `conference` · `date` · `showLogo` · `logoSrc` · `logoAlt` · `background`
+`talkTitle` · `subtitle` · `authors` · `presenterName` · `authorMarks` · `conference` · `date` · `showLogo` · `logoSrc` · `logoAlt` · `background`
 
 ---
 layout: cover
 talkTitle: "showLogo: true（默认）"
 subtitle: "副标题（可选）"
-presenter: "演讲者"
+presenterName: "演讲者"
 authors:
   - name: "演讲者"
     affiliations: ["中国科学技术大学"]
@@ -55,7 +55,7 @@ showLogo: true
 
 `logoSrc` 可替换图片路径（默认 `'/ustc/logo.svg'`），`logoAlt` 修改无障碍文字。
 
-`presenter` 指定汇报者姓名（下划线标注），不填默认取第一作者。
+`presenterName` 指定汇报者姓名（下划线标注），不填默认取第一作者。注意：使用 `presenterName` 而不是 `presenter`，因为 `presenter` 是 Slidev 内置选项（控制 presenter mode）。
 
 ---
 layout: cover
@@ -86,7 +86,7 @@ showLogo: false
 ---
 layout: cover
 talkTitle: "authorMarks — marks + multi-affiliation wrapping"
-presenter: "Bob Chen"
+presenterName: "Bob Chen"
 authors:
   - name: "Alice Wang"
     affiliations: ["University of Science and Technology of China", "Shanghai AI Laboratory"]
@@ -107,7 +107,7 @@ date: "April 2026"
 
 `marks` 作为上标显示在机构编号之后，各 mark 之间有逗号。`authorMarks` 图例显示在机构行下方。机构行使用 `flex-wrap: wrap`，超出宽度自动折行，不影响上方作者行的标注。
 
-`presenter: "Bob Chen"` 下划线只覆盖名字本身，不延伸到上标。
+`presenterName: "Bob Chen"` 下划线只覆盖名字本身，不延伸到上标。
 
 ---
 layout: cover

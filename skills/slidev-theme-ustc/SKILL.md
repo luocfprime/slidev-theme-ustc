@@ -28,7 +28,7 @@ theme: ./
 talkTitle: 'Your Presentation Title'
 conference: 'CVPR 2025'
 date: 'June 2025'
-presenter: 'Alice Chen' # name of the presenter (underlined on cover)
+presenterName: 'Alice Chen' # name of the presenter (underlined on cover); use `presenterName`, not `presenter` — Slidev reserves `presenter` for its built-in presenter-mode option
 authors:
   - name: 'Alice Chen'
     affiliations: ['University of Science and Technology of China']
@@ -49,7 +49,7 @@ tableNumberSuffix: ': ' # suffix between TableBlock number and caption
 ---
 ```
 
-**Authors format:** array of `{ name, affiliations, marks? }` objects. `presenter` sets who is underlined (defaults to first author). Institutions get sequential superscript numbers in order of first appearance. `marks` are per-author symbols (e.g. `†`, `*`) displayed as superscripts after the institute number; `authorMarks` maps each symbol to its legend text (rendered below the affiliations line).
+**Authors format:** array of `{ name, affiliations, marks? }` objects. `presenterName` sets who is underlined (defaults to first author). Institutions get sequential superscript numbers in order of first appearance. `marks` are per-author symbols (e.g. `†`, `*`) displayed as superscripts after the institute number; `authorMarks` maps each symbol to its legend text (rendered below the affiliations line).
 
 ---
 
@@ -64,7 +64,7 @@ Title slide with author/affiliation display.
 layout: cover
 talkTitle: '...' # overrides global
 subtitle: '...'
-presenter: 'Alice Chen' # who to underline (default: first author)
+presenterName: 'Alice Chen' # who to underline (default: first author)
 authors: [...] # overrides global; see structured format above
 authorMarks: # symbol → legend text
   '†': 'Equal contribution'
