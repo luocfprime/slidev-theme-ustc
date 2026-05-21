@@ -686,3 +686,63 @@ layout: content
 
 第二张附录幻灯片，页脚显示 `A.2`。
 
+---
+layout: section
+---
+
+# 十、`background:` 适配所有 layout
+任意 layout 都可在 frontmatter 设置 `background`（CSS 颜色或图片路径）
+
+---
+layout: section
+background: '#0d1d33'
+---
+
+# Section 用颜色作背景
+
+`background: '#0d1d33'`，无覆盖层。
+
+<style>
+.slidev-layout.section h1 { color: #ffffff; }
+.slidev-layout.section h1 + p { color: rgba(255,255,255,0.78); }
+</style>
+
+---
+layout: toc
+highlight: 0
+background: '/ATLAS/ATLAS-Detector.webp'
+---
+
+<style>
+/* 演示：原图较暗时给整页加一层浅色覆盖增强 toc 可读性 */
+.slidev-layout.toc {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)),
+    url('/ATLAS/ATLAS-Detector.webp');
+}
+</style>
+
+---
+layout: end
+showLogo: false
+background: '#0d1d33'
+---
+
+# 谢 谢
+
+`end` 也支持 `background`，配合 `<style>` 覆写文字色实现暗底致谢页。
+
+<style>
+.slidev-layout.end h1 { color: #ffffff; }
+.slidev-layout.end p { color: rgba(255,255,255,0.72); }
+</style>
+
+---
+layout: blank
+background: '/ATLAS/ATLAS-Detector.webp'
+---
+
+<div style="height:100%;display:flex;align-items:center;justify-content:center;">
+  <span style="color:white;font-size:2.4rem;font-weight:700;background:rgba(0,0,0,0.45);padding:0.6rem 1.2rem;border-radius:6px;">blank + background 全出血图</span>
+</div>
+

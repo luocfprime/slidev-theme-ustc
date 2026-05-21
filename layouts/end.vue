@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { getPresenterName } from '../utils/layoutHelper'
+import { getPresenterName, handleBackground } from '../utils/layoutHelper'
 import { endDefaults } from '../utils/defaults'
 
 const props = withDefaults(
@@ -11,6 +11,7 @@ const props = withDefaults(
     footer?: boolean
     footerMode?: 'full' | 'minimal'
     wip?: boolean
+    background?: string
   }>(),
   {
     ...endDefaults,
@@ -23,10 +24,12 @@ const presenterName = computed(() =>
     $slidev.configs.presenterName as string | undefined,
   ),
 )
+
+const bgStyle = computed(() => (props.background ? handleBackground(props.background) : undefined))
 </script>
 
 <template>
-  <div class="slidev-layout end" :class="{ 'is-wip': props.wip }">
+  <div class="slidev-layout end" :class="{ 'is-wip': props.wip }" :style="bgStyle">
     <img
       v-if="props.showLogo && props.logoSrc"
       :src="props.logoSrc"

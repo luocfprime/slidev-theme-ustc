@@ -132,6 +132,7 @@ highlight: 2 # 1-indexed section to highlight (0 = no highlight)
 columns: 1 # 1 (default) | 2
 footer: true
 footerMode: full
+background: '#f5f5f5' # optional, CSS color or image path
 ---
 
 # Contents   # optional — defaults to "Table of Contents" if omitted
@@ -152,6 +153,7 @@ sectionLabel: 'Short Label' # overrides h1 for TOC/section bar display
 sectionBarMode: minimal # per-slide bar override
 footer: true
 footerMode: full
+background: '/bg-section.jpg' # optional, CSS color or image path
 ---
 # Full Section Title
 ```
@@ -166,6 +168,7 @@ layout: end
 showLogo: false            # default: false
 footer: true
 footerMode: full
+background: '#1a2a4a'      # optional, CSS color or image path
 ---
 
 Thank you!
@@ -184,6 +187,7 @@ Appendix marker. Everything after this slide gets `A.N` page numbering in the fo
 ---
 layout: backup
 footer: true
+background: '#f5f5f5' # optional, CSS color or image path
 ---
 ```
 
@@ -194,8 +198,32 @@ Full-bleed canvas with no padding or chrome. Use with `<Abs>` for precise positi
 ```yaml
 ---
 layout: blank
+background: '/bg-fullbleed.jpg' # optional, CSS color or image path
 ---
 ```
+
+### Background images on any layout
+
+Every layout (`cover`, `default` / `content`, `split`, `section`, `toc`, `end`, `backup`, `blank`) accepts the same `background:` frontmatter — either a CSS color (`#1a2a4a`, `rgb(...)`, named colors) or an image path (`/bg.jpg`, `https://...`). Images render at `background-size: cover; background-position: center`.
+
+**Readability — overlay behavior differs by layout:**
+
+- `cover` automatically adds a left-to-right white gradient (`rgba(255,255,255,1)` → `rgba(255,255,255,0.85)`) on top of the image so the left-aligned title/authors stay readable.
+- All other layouts render the image **raw, with no overlay**. If body text starts becoming hard to read on a busy image, add an overlay manually in the slide's `<style>` block:
+
+```vue
+<style>
+.slidev-layout {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88)),
+    url('/bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+</style>
+```
+
+This overrides the `background-image` produced by the frontmatter, so you can drop the `background:` prop on the slide if you're styling it manually. The same trick works for tinted color overlays (`linear-gradient(rgba(30,76,144,0.4), rgba(30,76,144,0.4))`) when the image is light and you want a brand-tinted wash.
 
 ---
 
@@ -262,7 +290,27 @@ Cite[^1] in caption
 <QRCode url="https://example.com" :size="160" caption="Scan" />
 ```
 
-**`#caption` slot — blank lines required.** `<template #caption>` 及其内容前后必须各有一个空行，否则 Slidev 不把 slot 内容当 markdown 处理，`[^x]` 脚注引用会原样显示为字面文字。纯文字 caption 直接用 `caption` prop；只有需要脚注引用、链接或 Vue 组件时才开 slot。
+**Vue 组件里的 markdown 内容 — 标签内部前后需要空行。** 任何 Vue 组件（`<Block>`、`<Callout>`、`<ResultBox>`、`<FigureBlock>` 等）的**默认 slot** 和**具名 slot**，只要内容含 markdown 语法（加粗 `**...**`、列表、链接、脚注 `[^x]`、行内/块级公式、内嵌 HTML 等），开/闭标签和内容之间**必须各留一个空行**——否则 Slidev/markdown-it 会把内容当成原始 HTML 直接吐出，`**foo**` 会保留字面星号，`[^1]` 不会变成脚注引用。
+
+正确（多行 + 空行）：
+
+```vue
+<Block title="Definition">
+
+A **convex** function satisfies[^1] $f(\lambda x + (1-\lambda) y) \le \lambda f(x) + (1-\lambda) f(y)$.
+
+</Block>
+```
+
+错误（一行写完，加粗 / 脚注 / 行内公式都不会被解析）：
+
+```vue
+<Block title="Definition">A **convex** function satisfies[^1] $f(...) \le ...$.</Block>
+```
+
+纯文字、无任何 markdown 语法的情况可以单行：`<Block title="Note">Plain text only.</Block>` 是 OK 的。判断标准是"这段内容里有没有需要 markdown 解析的符号"，不是"有几行"。
+
+具名 slot 同规则：`<template #caption>` 的标签内部前后也要各留一空行，否则 caption 里的 `[^x]` 脚注引用会原样显示。纯文字 caption 用 `caption` prop 就够了；只有需要脚注引用、链接或 Vue 组件时才开 slot。
 
 ---
 
@@ -571,6 +619,8 @@ wip: true
 | Dots-only section bar                    | `sectionBarMode: minimal`                                                                                                    |
 | Change section bar height                | `--ustc-nav-h-full` / `--ustc-nav-h-minimal` in `:root`                                                                      |
 | Mark a body slide as WIP                 | `wip: true` in frontmatter (watermark + red section-bar dot)                                                                 |
+| Background image / color on any layout   | `background: '/bg.jpg'` (or `'#1a2a4a'`) in frontmatter — accepted by every layout                                            |
+| Add overlay to a background image        | `.slidev-layout { background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url('/bg.jpg') }` in slide `<style>` |
 | Custom figure/table prefix               | `figurePrefix: "Fig."` / `tablePrefix: "Tab."` in global frontmatter                                                         |
 | Custom number suffix                     | `figureNumberSuffix: ": "` / `tableNumberSuffix: ": "` globally, or `numberSuffix=": "` per block                            |
 | Layer Abs elements                       | `:z="20"` on top, `:z="10"` behind                                                                                           |
@@ -588,7 +638,11 @@ wip: true
 
 ## Vite Configuration
 
-The theme sets defaults in its own `vite.config.ts`; users can override in their deck's `vite.config.js` (user config is merged last and wins).
+Use the deck's `vite.config.js` only for deck-local server and markdown options.
+Do **not** copy files from the theme repo's `vite.config.ts` into a deck; reusable
+theme behavior must come from the installed theme package itself. If a theme bug
+requires changing `setup/`, `styles/`, `layouts/`, `components/`, or `utils/`,
+update/reinstall the theme package and restart Slidev.
 
 A deck only ever has **one** `export default` — merge everything into a single object:
 

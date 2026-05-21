@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, useSlots } from 'vue'
 import type { VNode } from 'vue'
-import { getPresenterName } from '../utils/layoutHelper'
+import { getPresenterName, handleBackground } from '../utils/layoutHelper'
 import { renderInlineMd } from '../utils/markdown'
 import { tocDefaults } from '../utils/defaults'
 import { buildSectionGroups } from '../utils/sectionModel'
@@ -13,11 +13,14 @@ const props = withDefaults(
     footerMode?: 'full' | 'minimal'
     columns?: 1 | 2
     wip?: boolean
+    background?: string
   }>(),
   {
     ...tocDefaults,
   },
 )
+
+const bgStyle = computed(() => (props.background ? handleBackground(props.background) : undefined))
 
 const presenterName = computed(() =>
   getPresenterName($slidev.configs.authors ?? [], $slidev.configs.presenterName),
@@ -57,7 +60,7 @@ const hasSlotH1 = computed(() => slotHasH1(slots.default?.() ?? []))
 </script>
 
 <template>
-  <div class="slidev-layout toc" :class="{ 'is-wip': props.wip }">
+  <div class="slidev-layout toc" :class="{ 'is-wip': props.wip }" :style="bgStyle">
     <h1 v-if="!hasSlotH1">Table of Contents</h1>
     <slot />
 
