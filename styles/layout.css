@@ -8,6 +8,12 @@
   --ustc-blue-pale: rgba(30, 76, 144, 0.07);
   --ustc-blue-border: rgba(30, 76, 144, 0.18);
 
+  /* Box component ----------------------------------------- */
+  --ustc-box-border-color: var(--ustc-blue);
+  --ustc-box-border-width: 1px;
+  --ustc-box-padding: 0.55rem 0.9rem;
+  --ustc-box-bg-gray: #f5f5f5;
+
   /* Status */
   --ustc-wip: #dc2626; /* WIP / draft markers (badges, watermark, section-bar dot) */
 
