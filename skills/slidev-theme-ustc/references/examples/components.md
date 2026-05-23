@@ -1419,6 +1419,75 @@ frontmatter 加 `wip: true` 触发两个信号：
 ship 前记得清掉 `wip: true` 和组件级 `wip`。
 
 ---
+layout: section
+---
+
+# 十三、Box
+`bg` / `border` / `radius` Props · 不承担语义的原子容器
+
+---
+layout: content
+---
+
+# Box —— 默认形态（学术明示分块）
+
+`<Box>` 是一个不承担语义的原子容器，主要用于对 slide 内容做视觉划分（partition）。
+默认 `border + bg=transparent + radius=0`，渲染为 clean sharp rect。
+
+<Box>
+
+适合需要明示边界的学术内容分区，例如把一组前提或定义包起来。
+
+</Box>
+
+<Box>
+
+多个连续 Box 自然堆叠，作为正文分段的视觉骨架。
+
+</Box>
+
+---
+layout: content
+---
+
+# Box —— 软分块（隐式 partition）
+
+`bg="gray-soft" + :border="false" + radius="6px"` 形成一个柔和、不抢眼的视觉分区。
+适合长段正文里想做轻量分组、又不希望让分隔本身吸引读者注意。
+
+<Box bg="gray-soft" :border="false" radius="6px">
+
+软灰底 + 无边框 + soft 圆角。背景色用 `gray-soft` token，对应主题级 `--ustc-box-bg-gray`。
+
+</Box>
+
+<Box bg="gray-soft" :border="false" radius="6px">
+
+第二段同样的隐式分区，节奏一致、不喧宾夺主。
+
+</Box>
+
+---
+layout: content
+---
+
+# Box —— 主题色软底 / 自由色
+
+`bg` 是双模 prop：识别 `blue-pale` / `gray-soft` 两个 token，其它字符串当 CSS 颜色透传。
+
+<Box bg="blue-pale" radius="4px">
+
+`bg="blue-pale"` — 用 token 引用 USTC 主题淡蓝 `var(--ustc-blue-pale)`，保留默认边框。
+
+</Box>
+
+<Box bg="#eef5ff" :border="false" radius="8px">
+
+`bg="#eef5ff"` — 直接传任意 CSS 颜色字符串。适合需要"今天演讲的某个特殊色"的临时场景，作者自负配色协调。
+
+</Box>
+
+---
 layout: end
 ---
 
