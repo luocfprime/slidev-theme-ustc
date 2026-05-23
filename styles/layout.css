@@ -10,7 +10,7 @@
 
   /* Box component ----------------------------------------- */
   --ustc-box-border-color: var(--ustc-blue);
-  --ustc-box-border-width: 1px;
+  --ustc-box-border-width: 3px;
   --ustc-box-padding: 0.55rem 0.9rem;
   --ustc-box-bg-gray: #f5f5f5;
 

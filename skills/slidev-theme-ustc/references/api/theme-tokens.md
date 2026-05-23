@@ -254,7 +254,7 @@ Set via `margin:` frontmatter prop — these map to the spacing variables:
 | Variable                  | Default              | Role                                                                                                          |
 | ------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------- |
 | `--ustc-box-border-color` | `var(--ustc-blue)`   | border color when `border` is `true` — defaults to full USTC blue (`#1e4c90`) for a clean, clearly-visible edge |
-| `--ustc-box-border-width` | `1px`                | border width                                                                                                  |
+| `--ustc-box-border-width` | `3px`                | border width                                                                                                  |
 | `--ustc-box-padding`      | `0.55rem 0.9rem`     | inner padding — intentionally tighter than `Block` to read as a divider rather than a card                    |
 | `--ustc-box-bg-gray`      | `#f5f5f5`            | soft-gray surface resolved by `<Box bg="gray-soft">`; theme's neutral surface color, not tied to USTC blue    |
 

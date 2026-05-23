@@ -1434,6 +1434,8 @@ layout: content
 `<Box>` 是一个不承担语义的原子容器，主要用于对 slide 内容做视觉划分（partition）。
 默认 `border + bg=transparent + radius=0`，渲染为 clean sharp rect。
 
+<Grid cols="2" gap="md">
+
 <Box>
 
 适合需要明示边界的学术内容分区，例如把一组前提或定义包起来。
@@ -1442,9 +1444,11 @@ layout: content
 
 <Box>
 
-多个连续 Box 自然堆叠，作为正文分段的视觉骨架。
+并列的多个 Box 用 `<Grid cols="N">` 对齐，形成清晰的对比骨架。
 
 </Box>
+
+</Grid>
 
 ---
 layout: content
@@ -1455,6 +1459,8 @@ layout: content
 `bg="gray-soft" + :border="false" + radius="6px"` 形成一个柔和、不抢眼的视觉分区。
 适合长段正文里想做轻量分组、又不希望让分隔本身吸引读者注意。
 
+<Grid cols="2" gap="md">
+
 <Box bg="gray-soft" :border="false" radius="6px">
 
 软灰底 + 无边框 + soft 圆角。背景色用 `gray-soft` token，对应主题级 `--ustc-box-bg-gray`。
@@ -1463,9 +1469,11 @@ layout: content
 
 <Box bg="gray-soft" :border="false" radius="6px">
 
-第二段同样的隐式分区，节奏一致、不喧宾夺主。
+并列两块形成节奏一致、不喧宾夺主的隐式分区。
 
 </Box>
+
+</Grid>
 
 ---
 layout: content
@@ -1474,6 +1482,8 @@ layout: content
 # Box — 主题色软底 / 自由色
 
 `bg` 是双模 prop：识别 `blue-pale` / `gray-soft` 两个 token，其它字符串当 CSS 颜色透传。
+
+<Grid cols="2" gap="md">
 
 <Box bg="blue-pale" radius="4px">
 
@@ -1486,6 +1496,8 @@ layout: content
 `bg="#eef5ff"` — 直接传任意 CSS 颜色字符串。适合需要"今天演讲的某个特殊色"的临时场景，作者自负配色协调。
 
 </Box>
+
+</Grid>
 
 ---
 layout: end
