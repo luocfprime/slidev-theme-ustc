@@ -1429,7 +1429,7 @@ layout: section
 layout: content
 ---
 
-# Box —— 默认形态（学术明示分块）
+# Box — 默认形态（学术明示分块）
 
 `<Box>` 是一个不承担语义的原子容器，主要用于对 slide 内容做视觉划分（partition）。
 默认 `border + bg=transparent + radius=0`，渲染为 clean sharp rect。
@@ -1450,7 +1450,7 @@ layout: content
 layout: content
 ---
 
-# Box —— 软分块（隐式 partition）
+# Box — 软分块（隐式 partition）
 
 `bg="gray-soft" + :border="false" + radius="6px"` 形成一个柔和、不抢眼的视觉分区。
 适合长段正文里想做轻量分组、又不希望让分隔本身吸引读者注意。
@@ -1471,7 +1471,7 @@ layout: content
 layout: content
 ---
 
-# Box —— 主题色软底 / 自由色
+# Box — 主题色软底 / 自由色
 
 `bg` 是双模 prop：识别 `blue-pale` / `gray-soft` 两个 token，其它字符串当 CSS 颜色透传。
 
