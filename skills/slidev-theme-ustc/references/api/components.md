@@ -74,6 +74,34 @@ Content inside the block.
 
 ---
 
+## `<Box>`
+
+No-semantics atomic container for partitioning slide content. Defaults to a clean sharp rectangle (USTC-blue 1px border, transparent background); set `bg`, `border`, `radius` to get other shapes.
+
+```vue
+<Box>Default — bordered sharp rectangle.</Box>
+
+<Box bg="gray-soft" :border="false" radius="6px">
+Soft partition: gray fill, no border, rounded.
+</Box>
+
+<Box bg="blue-pale" radius="4px">Theme-color tinted (border kept).</Box>
+
+<Box bg="#eef5ff" :border="false" radius="8px">Any CSS color string.</Box>
+```
+
+| Prop     | Type      | Default         |
+| -------- | --------- | --------------- |
+| `bg`     | `string`  | `'transparent'` |
+| `border` | `boolean` | `true`          |
+| `radius` | `string`  | `'0'`           |
+
+`bg` is dual-mode: `'blue-pale'` resolves to `var(--ustc-blue-pale)`, `'gray-soft'` resolves to `var(--ustc-box-bg-gray)`; anything else passes through verbatim as a CSS color value.
+
+Typography (font-size, line-height, color, font-weight) is inherited from context — Box does not override it. Theme-level customization via `--ustc-box-*` tokens (see `theme-tokens.md`).
+
+---
+
 ## `<Callout>`
 
 Alert box with icon and colored left border.
