@@ -1181,3 +1181,42 @@ margin: tighter
   margin-bottom: 0;
 }
 </style>
+
+---
+layout: content
+density: dense
+---
+
+<!--
+  features: layout: content, density: dense, Grid cols=3 with three Box variants (default / soft-partition / theme-tinted), Box bg dual-mode token resolver (blue-pale / gray-soft)
+  not shown: free-color CSS string (e.g. bg="#eef5ff"), Box inside Abs/v-drag, --ustc-box-* CSS variable override
+  see: SKILL.md → Components, references/api/components.md (Box prop table), references/api/theme-tokens.md (--ustc-box-* tokens)
+-->
+
+# A.8　Box —— 不承担语义的容器原语
+
+`<Box>` 给"想画几个并列分区但不想被 Block / Callout / ResultBox / Takeaway 的语义绑架"的场景准备的原子容器，三个旋钮：`bg` / `border` / `radius`。
+
+<Grid cols="3" gap="md">
+
+<Box>
+
+**默认**：`border + bg=transparent + radius=0`，clean sharp rect，适合明示分块。
+
+</Box>
+
+<Box bg="gray-soft" :border="false" radius="6px">
+
+**软分块**：`bg="gray-soft" + :border="false" + radius="6px"`，柔和的隐式 partition。
+
+</Box>
+
+<Box bg="blue-pale" radius="4px">
+
+**主题色软底**：`bg="blue-pale"` token 引用 `var(--ustc-blue-pale)`，保留默认边框。
+
+</Box>
+
+</Grid>
+
+`bg` 是双模 prop：识别 `blue-pale` / `gray-soft` 两个 token，其它字符串当 CSS 颜色透传（如 `bg="#eef5ff"`）。Box 不重置 typography，正文字号、行高、颜色全部继承上下文。
