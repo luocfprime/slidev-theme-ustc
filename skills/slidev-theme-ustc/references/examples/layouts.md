@@ -560,20 +560,26 @@ density: dense
 
 ```yaml
 sectionBar: true          # 开启进度条（必须）
-sectionBarMode: full      # full（默认）或 minimal
+sectionBarMode: full      # full（默认）/ minimal / labels
 ```
 
-| | `full` | `minimal` |
-|---|---|---|
-| 进度条高度 | 2rem | 1.5rem |
-| 内容 | 圆点 + 章节标题 | 仅圆点 |
+| | `full` | `minimal` | `labels` |
+|---|---|---|---|
+| 进度条高度 | 2rem | 1.5rem | 1.5rem |
+| 章节标题 | ✅ | ❌ | ✅ |
+| 进度指示 | ✅ | ✅ | ❌ |
 
-**单页覆盖（写在单张幻灯片 frontmatter）：**
+**单页覆盖（写在单张幻灯片 frontmatter，任选一项）：**
 
 ```yaml
-sectionBarMode: minimal   # 仅此页使用 minimal 模式
-sectionBar: false         # 仅此页隐藏进度条
+sectionBarMode: minimal   # 仅此页：只显示进度指示（无章节标题）
+# 或
+sectionBarMode: labels    # 仅此页：只显示章节标题（无圆点 / 进度条）
+# 或
+sectionBar: false         # 仅此页：完全隐藏进度条
 ```
+
+**进度指示的自动切换**：默认每张幻灯片显示一个圆点。当某个 section 的圆点数超过一行能容纳的数量时，**该 section** 自动切换为可点击的进度条（点击任意位置跳转到对应幻灯片）；其它 section 仍保持圆点。判断基于实际可用宽度，因此宽屏 / 少 section 时容易保持圆点，密集 deck 中较长的 section 会自然切换。
 
 注意：进度条只在 `content` / `default` / `split` 页面渲染；`section` / `cover` / `toc` / `end` / `blank` / `backup` 页面均不显示。
 
@@ -585,9 +591,19 @@ sectionBarMode: minimal
 
 # sectionBarMode: minimal（本页实时效果）
 
-本页 frontmatter 设置了 `sectionBarMode: minimal`，顶部进度条仅显示圆点，无章节标题。
+本页 frontmatter 设置了 `sectionBarMode: minimal`，顶部进度条仅显示进度指示（圆点或进度条），无章节标题。
 
 对比上一页可观察 `full` 与 `minimal` 的高度与内容差异。
+
+---
+layout: content
+density: dense
+sectionBarMode: labels
+---
+
+# sectionBarMode: labels（本页实时效果）
+
+本页 frontmatter 设置了 `sectionBarMode: labels`，顶部只显示章节标题，不显示圆点或进度条——适合需要全局结构感但不关心当前位置的过渡页。
 
 ---
 layout: content

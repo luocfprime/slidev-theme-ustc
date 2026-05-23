@@ -29,6 +29,12 @@ export default {
       reuseExistingServer: !isCI,
       timeout: 120_000,
     },
+    {
+      command: 'pnpm exec slidev tests/fixtures/section-bar-progress.md --port 13035',
+      port: 13035,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
   ],
 
   projects: [
@@ -40,7 +46,7 @@ export default {
     {
       name: 'section-bar',
       use: { baseURL: 'http://localhost:13032' },
-      testMatch: ['section-bar*.spec.mjs', 'slides.spec.mjs'],
+      testMatch: ['section-bar.spec.mjs', 'slides.spec.mjs'],
     },
     {
       name: 'footnote',
@@ -51,6 +57,11 @@ export default {
       name: 'auto-number-disabled',
       use: { baseURL: 'http://localhost:13034' },
       testMatch: ['auto-number-disabled.spec.mjs'],
+    },
+    {
+      name: 'section-bar-progress',
+      use: { baseURL: 'http://localhost:13035' },
+      testMatch: ['section-bar-progress.spec.mjs'],
     },
   ],
 

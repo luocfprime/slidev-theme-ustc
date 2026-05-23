@@ -41,7 +41,7 @@ authorMarks:
   '†': 'Equal contribution'
 
 sectionBar: true # show section progress bar (default: true)
-sectionBarMode: full # 'full' (labels+dots) | 'minimal' (dots only)
+sectionBarMode: full # 'full' (labels + progress indicator) | 'minimal' (indicator only) | 'labels' (labels only)
 figurePrefix: Figure # auto-numbering prefix for FigureBlock
 tablePrefix: Table # auto-numbering prefix for TableBlock
 figureNumberSuffix: ': ' # suffix between FigureBlock number and caption
@@ -553,13 +553,16 @@ footerMode: minimal
 
 The section bar shows the presentation structure at the top of body slides. Only `content` / `default` / `split` slides render the bar; `cover`, `end`, `toc`, `section`, `blank`, and `backup` slides never show it (so `sectionBar: false` only matters on body layouts).
 
-- **Full mode:** section labels + dots per slide
-- **Minimal mode:** dots only
+- **Full mode:** section labels + progress indicator
+- **Minimal mode:** progress indicator only
+- **Labels mode:** section labels only
+
+The "progress indicator" is per-slide dots by default. When a section has more dots than fit on one row, that section's indicator automatically switches to a horizontal progress bar (click anywhere on it to jump to the corresponding slide). Other sections keep their dots. The threshold is computed from the actual available width per section, so wide decks with few sections get dots; dense decks with many sections may show progress bars in the long sections.
 
 Control globally:
 
 ```yaml
-sectionBarMode: full # or 'minimal'
+sectionBarMode: full # or 'minimal' | 'labels'
 sectionBar: false # disable entirely
 ```
 
@@ -593,7 +596,7 @@ Two independent WIP signals exist; they do not interact:
 **Slide-level `wip: true` frontmatter** — on any body slide (`content`, `default`, `split`). Produces two effects:
 
 1. A large semi-transparent "WIP" watermark centered on the slide.
-2. The slide's dot in the section bar is tinted red with a pulsing glow.
+2. In the section bar: if the section is showing dots, that slide's dot is tinted red with a pulsing glow. If the section is showing a progress bar (because dots overflowed), the whole bar tints red and pulses to signal "this section contains WIP content"; per-slide WIP precision is intentionally not preserved in progress-bar mode.
 
 ```yaml
 ---
@@ -616,8 +619,9 @@ wip: true
 | Change h1 / section-bar colour per slide | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1 and section bar                                  |
 | Recolor footer per slide                 | `.slidev-layout { --ustc-footer-bg: #... }` (or override `--ustc-blue`) in slide `<style>`                                   |
 | Hide section bar on one slide            | `sectionBar: false` in frontmatter                                                                                           |
-| Dots-only section bar                    | `sectionBarMode: minimal`                                                                                                    |
-| Change section bar height                | `--ustc-nav-h-full` / `--ustc-nav-h-minimal` in `:root`                                                                      |
+| Indicator-only section bar (no labels)   | `sectionBarMode: minimal`                                                                                                    |
+| Labels-only section bar (no indicator)   | `sectionBarMode: labels`                                                                                                     |
+| Change section bar height                | `--ustc-nav-h-full` / `--ustc-nav-h-minimal` in `:root` (labels mode uses minimal height)                                    |
 | Mark a body slide as WIP                 | `wip: true` in frontmatter (watermark + red section-bar dot)                                                                 |
 | Background image / color on any layout   | `background: '/bg.jpg'` (or `'#1a2a4a'`) in frontmatter — accepted by every layout                                            |
 | Add overlay to a background image        | `.slidev-layout { background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url('/bg.jpg') }` in slide `<style>` |
