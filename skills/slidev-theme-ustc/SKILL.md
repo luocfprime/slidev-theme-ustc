@@ -618,8 +618,9 @@ wip: true
 | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | Smaller body text globally               | `:root { --ustc-fs-body: 1.2rem }` in `styles/index.css`, or `.slidev-layout { --ustc-fs-body: 1.2rem }` per slide           |
 | Dense text on one slide                  | `density: dense` in frontmatter                                                                                              |
-| Change h1 / section-bar colour per slide | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1 and section bar                                  |
-| Recolor footer per slide                 | `.slidev-layout { --ustc-footer-bg: #... }` (or override `--ustc-blue`) in slide `<style>`                                   |
+| Change h1 / heading colour per slide     | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1, block/takeaway/callout titles                  |
+| Recolor section bar + footer per slide   | `.slidev-layout { --ustc-blue: #... }` in slide `<style>` — both chrome bars share this token                                |
+| Recolor only the footer (keep nav blue)  | `.slidev-layout { --ustc-footer-bg: #... }` in slide `<style>`                                                              |
 | Hide section bar on one slide            | `sectionBar: false` in frontmatter                                                                                           |
 | Indicator-only section bar (no labels)   | `sectionBarMode: minimal`                                                                                                    |
 | Labels-only section bar (no indicator)   | `sectionBarMode: labels`                                                                                                     |

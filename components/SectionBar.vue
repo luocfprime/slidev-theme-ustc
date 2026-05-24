@@ -201,7 +201,7 @@ function onProgressClick(e: MouseEvent, i: number) {
   left: 0;
   right: 0;
   height: var(--ustc-nav-h);
-  background: var(--ustc-blue-dark);
+  background: var(--ustc-blue);
   display: flex;
   align-items: stretch;
   z-index: 50;
