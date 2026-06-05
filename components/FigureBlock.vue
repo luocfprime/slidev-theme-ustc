@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, useSlots } from 'vue'
+import { computed, ref, watch, onBeforeUnmount, useSlots } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
 import { DEFAULT_NUMBER_SUFFIX, figureDefaults } from '../utils/defaults'
 
@@ -24,11 +24,20 @@ const props = withDefaults(
     number?: number | string
     /** Set to false to opt out of auto-numbering (no number rendered, no counter consumed). */
     numbered?: boolean
+    /** Click-to-zoom lightbox. Tristate: omit to inherit the deck-wide
+     *  `figureZoom` headmatter; `true`/`false` overrides it for this figure.
+     *  Interactive only — a no-op in PDF/PNG export, where the figure still
+     *  renders at its normal size. */
+    zoomable?: boolean
     wip?: boolean
   }>(),
   {
     ...figureDefaults,
     numbered: true,
+    // Explicit `undefined` default: keeps `zoomable` a true tristate. Without a
+    // declared default, Vue casts an absent Boolean prop to `false`, which would
+    // collapse "not set → inherit `figureZoom`" into "forced off".
+    zoomable: undefined,
     wip: false,
   },
 )
@@ -73,11 +82,47 @@ const labelText = computed(() => {
   const base = `${displayPrefix.value} ${props.number}`
   return hasCaptionContent.value ? `${base}${displayNumberSuffix.value}` : base
 })
+
+// Click-to-zoom. Tristate `zoomable` prop overrides the deck-wide
+// `figureZoom` headmatter; both default off, so existing decks are unaffected.
+const zoomEnabled = computed(
+  () => props.zoomable ?? ($slidev.configs.figureZoom as boolean | undefined) ?? false,
+)
+
+const isOpen = ref(false)
+const openZoom = () => {
+  if (zoomEnabled.value && resolvedSrc.value) isOpen.value = true
+}
+const closeZoom = () => {
+  isOpen.value = false
+}
+
+const onKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Escape') closeZoom()
+}
+
+// Only listen for Esc while the overlay is open; keep teardown symmetric so a
+// figure unmounting mid-zoom (e.g. slide navigation) never leaks a listener.
+watch(isOpen, (open) => {
+  if (typeof window === 'undefined') return
+  if (open) window.addEventListener('keydown', onKeydown)
+  else window.removeEventListener('keydown', onKeydown)
+})
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') window.removeEventListener('keydown', onKeydown)
+})
 </script>
 
 <template>
   <figure class="figure-block" :class="{ 'is-wip': props.wip }" :style="{ width: props.width }">
-    <img :src="resolvedSrc" :alt="props.alt" class="figure-image" :style="imageStyle" />
+    <img
+      :src="resolvedSrc"
+      :alt="props.alt"
+      class="figure-image"
+      :class="{ 'is-zoomable': zoomEnabled }"
+      :style="imageStyle"
+      @click="openZoom"
+    />
     <span v-if="props.wip" class="wip-badge">WIP</span>
     <figcaption v-if="showLabel || hasCaptionContent" class="figure-caption" :style="captionStyle">
       <span v-if="showLabel" class="figure-caption-label">{{ labelText }}</span>
@@ -86,6 +131,14 @@ const labelText = computed(() => {
       </slot>
     </figcaption>
   </figure>
+
+  <Teleport to="body">
+    <Transition name="ustc-zoom">
+      <div v-if="isOpen" class="ustc-zoom-overlay" @click="closeZoom">
+        <img :src="resolvedSrc" :alt="props.alt" class="ustc-zoom-img" />
+      </div>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -134,5 +187,47 @@ const labelText = computed(() => {
   border-radius: 4px;
   letter-spacing: 0.06em;
   line-height: 1.5;
+}
+
+.figure-image.is-zoomable {
+  cursor: zoom-in;
+}
+
+/* Lightbox overlay (teleported to <body>, so it sits above slide chrome).
+   Scoped styles still apply: the scope attribute travels with the element. */
+.ustc-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: var(--ustc-zoom-backdrop);
+  cursor: zoom-out;
+}
+
+.ustc-zoom-img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+}
+
+.ustc-zoom-enter-active,
+.ustc-zoom-leave-active {
+  transition: opacity 0.2s ease;
+}
+.ustc-zoom-enter-active .ustc-zoom-img,
+.ustc-zoom-leave-active .ustc-zoom-img {
+  transition: transform 0.2s ease;
+}
+.ustc-zoom-enter-from,
+.ustc-zoom-leave-to {
+  opacity: 0;
+}
+.ustc-zoom-enter-from .ustc-zoom-img,
+.ustc-zoom-leave-to .ustc-zoom-img {
+  transform: scale(0.92);
 }
 </style>

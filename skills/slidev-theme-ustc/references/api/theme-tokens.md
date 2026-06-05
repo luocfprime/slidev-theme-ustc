@@ -91,6 +91,7 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-text-light`   | `#9ca3af`              | tertiary text                                                                                         |
 | `--ustc-footnote-ref` | `#7b8494`              | footnote superscript color                                                                            |
 | `--ustc-wip`          | `#dc2626`              | WIP/draft markers — component badges plus frontmatter-driven slide watermark and section-bar dot ring |
+| `--ustc-zoom-backdrop` | `rgba(0,0,0,0.85)`    | FigureBlock click-to-zoom lightbox overlay backdrop (when `figureZoom`/`zoomable` is on)               |
 
 ---
 

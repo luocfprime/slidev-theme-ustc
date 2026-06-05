@@ -46,6 +46,7 @@ figurePrefix: Figure # auto-numbering prefix for FigureBlock
 tablePrefix: Table # auto-numbering prefix for TableBlock
 figureNumberSuffix: ': ' # suffix between FigureBlock number and caption
 tableNumberSuffix: ': ' # suffix between TableBlock number and caption
+figureZoom: false # click-to-zoom lightbox for all FigureBlocks (default: false; interactive-only, no-op in PDF export)
 ---
 ```
 
@@ -630,6 +631,7 @@ wip: true
 | Add overlay to a background image        | `.slidev-layout { background-image: linear-gradient(rgba(255,255,255,0.88), rgba(255,255,255,0.88)), url('/bg.jpg') }` in slide `<style>` |
 | Custom figure/table prefix               | `figurePrefix: "Fig."` / `tablePrefix: "Tab."` in global frontmatter                                                         |
 | Custom number suffix                     | `figureNumberSuffix: ": "` / `tableNumberSuffix: ": "` globally, or `numberSuffix=": "` per block                            |
+| Click-to-zoom figures (lightbox)         | `figureZoom: true` in global frontmatter (deck-wide); per-figure `zoomable` / `:zoomable="false"` override. Interactive-only — no-op in PDF export. |
 | Layer Abs elements                       | `:z="20"` on top, `:z="10"` behind                                                                                           |
 | Wider left column in split               | `ratio: "3:1"`                                                                                                               |
 | Inline footnotes                         | `footnote: flow`                                                                                                             |

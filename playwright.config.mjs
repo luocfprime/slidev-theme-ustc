@@ -35,6 +35,12 @@ export default {
       reuseExistingServer: !isCI,
       timeout: 120_000,
     },
+    {
+      command: 'pnpm exec slidev tests/fixtures/figure-zoom.md --port 13036',
+      port: 13036,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
   ],
 
   projects: [
@@ -62,6 +68,11 @@ export default {
       name: 'section-bar-progress',
       use: { baseURL: 'http://localhost:13035' },
       testMatch: ['section-bar-progress.spec.mjs'],
+    },
+    {
+      name: 'figure-zoom',
+      use: { baseURL: 'http://localhost:13036' },
+      testMatch: ['figure-zoom.spec.mjs'],
     },
   ],
 

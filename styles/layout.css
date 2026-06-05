@@ -17,6 +17,9 @@
   /* Status */
   --ustc-wip: #dc2626; /* WIP / draft markers (badges, watermark, section-bar dot) */
 
+  /* Figure zoom (click-to-zoom lightbox overlay backdrop) */
+  --ustc-zoom-backdrop: rgba(0, 0, 0, 0.85);
+
   /* Text */
   --ustc-text: #111827;
   --ustc-text-muted: #6b7280;

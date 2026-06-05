@@ -185,8 +185,21 @@ Image with auto-numbered caption. Counter is global across the entire deck.
 | `wip`               | `false`                               | mark figure as work-in-progress; shows red WIP badge      |
 | `number`            | injected                              | auto-numbered at compile time; set explicitly to override |
 | `numbered`          | `true`                                | set to `false` to skip auto-numbering entirely            |
+| `zoomable`          | inherits global `figureZoom`          | click-to-zoom lightbox; tristate — see below              |
 
 Global prefix set in deck frontmatter: `figurePrefix: Figure` (default). Global suffix set in deck frontmatter: `figureNumberSuffix: ". "` (default).
+
+**Click-to-zoom (lightbox).** Off by default. Enable deck-wide with `figureZoom: true` in the first slide's frontmatter; every `<FigureBlock>` then opens a fullscreen enlarged view on click (click the backdrop/image or press `Esc` to close). The `zoomable` prop is a **tristate override**:
+
+```vue
+<FigureBlock src="/a.png" />                    <!-- inherits global figureZoom -->
+<FigureBlock src="/b.png" :zoomable="false" />  <!-- force off, even if global on -->
+<FigureBlock src="/c.png" zoomable />           <!-- force on, even if global off -->
+```
+
+Resolution: `zoomable` prop (if set) wins; otherwise the deck-wide `figureZoom` headmatter; otherwise off. A zoomable image shows a `zoom-in` cursor on hover. The overlay backdrop color is the `--ustc-zoom-backdrop` CSS variable (default `rgba(0,0,0,0.85)`).
+
+**Mode boundary — interactive only.** Zoom is a runtime DOM interaction: it works in `pnpm dev` and in the static `pnpm build` SPA, but is a **no-op in `pnpm export`** (PDF/PNG). Exported figures still render normally at their original size — they just can't be clicked. Don't rely on zoom to convey information that must survive to PDF.
 
 **Caption slot — required for footnotes, links, or rich markdown.** The `caption` prop runs through a stripped-down inline markdown renderer (math + inline HTML only); footnote refs (`[^x]`), reference-style links, and Vue components inside it render as literal text. To use those, write the caption as the `#caption` slot — its content goes through Slidev's slide-level markdown pipeline, so footnote refs wire up to definitions placed elsewhere in the slide.
 
