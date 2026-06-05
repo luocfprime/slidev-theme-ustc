@@ -681,7 +681,7 @@ wip: true
 | Inline footnotes                         | `footnote: flow`                                                                                                             |
 | One-off width / spacing tweak            | Wrap the component in `<div style="…">`; don't passthrough to the theme component                                            |
 | Equal-height items                       | Use raw native CSS Grid instead of `<Grid>` — see [design-guide.md](references/design-guide.md#force-equal-height-in-a-grid) |
-| Absolute positioning                     | Prefer `<v-drag>`, use `<Abs>` for `%` coords                                                                                |
+| Absolute positioning                     | Use `<Abs x y w :z>` (`%`/px coords); Slidev's built-in `<v-drag>` also works for drag-positioned elements                   |
 | All valid prop values                    | See [references/api/components.md](references/api/components.md)                                                             |
 | All CSS variables                        | See [references/api/theme-tokens.md](references/api/theme-tokens.md)                                                         |
 | Re-enable typographic replacements       | `slidev: { markdown: { markdownOptions: { typographer: true } } }` in deck's `vite.config.js`                                |

@@ -236,6 +236,16 @@ Strong anti-patterns. Avoid all of these.
   a work has a real published venue; annotate works with date, venue, and honors when
   relevant.
 
+**Citation format.** Cite as a per-page footnote where the work is discussed — Slidev
+footnotes: a `[^1]` marker in the text and `[^1]: …` at the slide's end (see SKILL.md's
+footnote example for the mechanics; `footnote: flow` to render inline). Keep it short and
+muted: author + short title + venue + year, e.g. `[^1]: Smith et al. "Title." NeurIPS 2024.`
+Verify against the real source. No trailing references slide.
+
+**Where "cut" content goes** (when a rule says relocate, not delete): the theme's `backup`
+layout (appendix slides, `A.N`-numbered), or Slidev **speaker notes** — an HTML comment
+`<!-- ... -->` at the very end of a slide's markdown, presenter-only and never rendered.
+
 ---
 
 ## 7. The audit ruler — how to run the loop
