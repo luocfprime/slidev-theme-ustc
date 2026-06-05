@@ -83,8 +83,7 @@ const marksLegend = computed(() =>
               </span>
             </sup>
           </span>
-          <span v-if="idx < normalizedAuthors.length - 2">, </span>
-          <span v-if="idx === normalizedAuthors.length - 2"> and </span>
+          <span v-if="idx < normalizedAuthors.length - 1">, </span>
         </template>
       </p>
     </template>
