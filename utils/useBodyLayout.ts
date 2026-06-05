@@ -3,7 +3,7 @@ import { configs } from '@slidev/client'
 import { getPresenterName, resolveBodyMargin, handleBackground } from './layoutHelper'
 
 export interface BodyLayoutProps {
-  density?: 'normal' | 'dense'
+  density?: 'normal' | 'compact' | 'dense'
   margin?: 'normal' | 'tight' | 'tighter' | 'none'
   footnote?: 'overlay' | 'flow'
   sectionBar?: boolean
@@ -22,6 +22,7 @@ export function useBodyLayout(props: BodyLayoutProps) {
   )
 
   const pageClass = computed(() => ({
+    compact: props.density === 'compact',
     dense: props.density === 'dense',
     'footnotes-flow': props.footnote === 'flow',
     'no-section-bar': props.sectionBar === false,

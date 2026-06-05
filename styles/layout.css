@@ -92,6 +92,25 @@
   --ustc-title-gap: 1.5rem; /* gap between h1 and first content element  */
   --ustc-title-gap-dense: 0.9rem; /* gap between h1 and first content element — dense mode */
   --ustc-lh-heading: 1.1; /* h1 across all layouts               */
+
+  /* ── Compact density — the middle tier between normal and dense ────────
+     Each value sits roughly halfway between its base and *-dense variant.
+     Applied via the `.compact` swap block below, mirroring `.dense`. */
+  --ustc-fs-body-compact: 1.22rem; /* p, li — compact mode               */
+  --ustc-fs-h2-compact: 1.42rem; /* h2 — compact mode (base 1.55 → dense h3 1.3) */
+  --ustc-fs-table-cell-compact: 1.03rem; /* td, th — compact mode         */
+  --ustc-fs-blockquote-compact: 1.1rem; /* blockquote — compact mode      */
+  --ustc-fs-caption-compact: 1.03rem; /* figure & table captions — compact */
+  --ustc-fs-subtitle-compact: 1.06rem; /* content layout subtitle — compact */
+  --ustc-fs-callout-compact: 1.05rem; /* Callout body text — compact      */
+  --ustc-fs-callout-title-compact: 1.05rem; /* Callout title — compact     */
+  --ustc-fs-result-title-compact: 1.05rem; /* ResultBox title — compact    */
+  --ustc-fs-result-body-compact: 1.05rem; /* ResultBox body text — compact */
+  --ustc-fs-block-title-compact: 1.05rem; /* Block title — compact         */
+  --ustc-fs-block-body-compact: 1.05rem; /* Block body text — compact      */
+  --ustc-fs-takeaway-compact: 1.22rem; /* Takeaway text — compact mode     */
+  --ustc-lh-compact: 1.65; /* line-height for body text in compact mode  */
+  --ustc-title-gap-compact: 1.2rem; /* h1 → first content gap — compact   */
   --ustc-lh-footnote: 1.28; /* footnote list items                 */
   --ustc-fs-footnote-ref: 0.64em; /* footnote superscript anchor         */
   --ustc-footnotes-max-h: 22%; /* footnote overlay max visible height  */
@@ -571,6 +590,26 @@
   --ustc-title-gap: var(--ustc-title-gap-dense);
 }
 
+/* Compact mode — middle tier. Same variable-swap mechanism as `.dense`,
+   resolving each typography var to its *-compact variant. */
+.compact {
+  --ustc-fs-body: var(--ustc-fs-body-compact);
+  --ustc-lh: var(--ustc-lh-compact);
+  --ustc-fs-h2: var(--ustc-fs-h2-compact);
+  --ustc-fs-table-cell: var(--ustc-fs-table-cell-compact);
+  --ustc-fs-blockquote: var(--ustc-fs-blockquote-compact);
+  --ustc-fs-caption: var(--ustc-fs-caption-compact);
+  --ustc-fs-subtitle: var(--ustc-fs-subtitle-compact);
+  --ustc-fs-callout: var(--ustc-fs-callout-compact);
+  --ustc-fs-callout-title: var(--ustc-fs-callout-title-compact);
+  --ustc-fs-result-title: var(--ustc-fs-result-title-compact);
+  --ustc-fs-result-body: var(--ustc-fs-result-body-compact);
+  --ustc-fs-block-title: var(--ustc-fs-block-title-compact);
+  --ustc-fs-block-body: var(--ustc-fs-block-body-compact);
+  --ustc-fs-takeaway: var(--ustc-fs-takeaway-compact);
+  --ustc-title-gap: var(--ustc-title-gap-compact);
+}
+
 /* Dense mode — non-variable adjustments (cannot be expressed via var swap) */
 .slidev-layout.content.dense h2,
 .slidev-layout.split.dense h2 {
@@ -582,6 +621,19 @@
 .slidev-layout.content .dense li + li,
 .slidev-layout.split .dense li + li {
   margin-top: 0.12rem;
+}
+
+/* Compact mode — non-variable adjustments (midway between normal and dense) */
+.slidev-layout.content.compact h2,
+.slidev-layout.split.compact h2 {
+  margin-top: 0.6rem;
+}
+
+.slidev-layout.content.compact li + li,
+.slidev-layout.split.compact li + li,
+.slidev-layout.content .compact li + li,
+.slidev-layout.split .compact li + li {
+  margin-top: 0.2rem;
 }
 
 /* Component body text — font-size managed here so dense overrides apply uniformly */

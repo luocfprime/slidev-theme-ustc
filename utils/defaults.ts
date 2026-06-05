@@ -19,7 +19,7 @@ export const footerDefaults = {
 
 export const bodyDefaults = {
   ...footerDefaults,
-  density: 'normal' as 'normal' | 'dense',
+  density: 'normal' as 'normal' | 'compact' | 'dense',
   margin: 'normal' as 'normal' | 'tight' | 'tighter' | 'none',
   footnote: 'overlay' as 'overlay' | 'flow',
   sectionBar: true,

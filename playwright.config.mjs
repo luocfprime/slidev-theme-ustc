@@ -41,6 +41,12 @@ export default {
       reuseExistingServer: !isCI,
       timeout: 120_000,
     },
+    {
+      command: 'pnpm exec slidev tests/fixtures/density.md --port 13037',
+      port: 13037,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
   ],
 
   projects: [
@@ -73,6 +79,11 @@ export default {
       name: 'figure-zoom',
       use: { baseURL: 'http://localhost:13036' },
       testMatch: ['figure-zoom.spec.mjs'],
+    },
+    {
+      name: 'density',
+      use: { baseURL: 'http://localhost:13037' },
+      testMatch: ['density.spec.mjs'],
     },
   ],
 

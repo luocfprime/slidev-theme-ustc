@@ -129,6 +129,8 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-fs-footnote`            | `0.67rem` | footnote items                                   |
 | `--ustc-fs-footnote-ref`        | `0.64em`  | footnote superscript anchor (relative to parent) |
 
+**Compact tier (`density: compact`).** Every `*-dense` token above has a parallel `*-compact` variant holding a value roughly halfway between the base and the dense value. The `.compact` class swaps them in exactly as `.dense` swaps the dense variants. Values: `--ustc-fs-body-compact` `1.22rem`, `--ustc-fs-h2-compact` `1.42rem`, `--ustc-fs-table-cell-compact` `1.03rem`, `--ustc-fs-blockquote-compact` `1.1rem`, `--ustc-fs-caption-compact` `1.03rem`, `--ustc-fs-subtitle-compact` `1.06rem`, `--ustc-fs-callout-compact` / `--ustc-fs-callout-title-compact` `1.05rem`, `--ustc-fs-result-title-compact` / `--ustc-fs-result-body-compact` `1.05rem`, `--ustc-fs-block-title-compact` / `--ustc-fs-block-body-compact` `1.05rem`, `--ustc-fs-takeaway-compact` `1.22rem`, `--ustc-lh-compact` `1.65`, `--ustc-title-gap-compact` `1.2rem`.
+
 ---
 
 ## Typography Scale — Structural Layouts

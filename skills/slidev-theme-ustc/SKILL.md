@@ -86,7 +86,7 @@ Standard body slide. `default` is the fallback when no `layout:` is specified; `
 ```yaml
 ---
 layout: default # or 'content'
-density: normal # 'normal' (default) | 'dense'
+density: normal # 'normal' (default) | 'compact' | 'dense'
 margin: normal # 'normal' | 'tight' | 'tighter' | 'none'
 lineHeight: 1.8 # optional override; matches default body line-height
 align: left # 'left' | 'center' | 'right'
@@ -342,6 +342,7 @@ The slide canvas is 980 × 552 px (16:9). After the section bar, h1, title gap, 
 | Density | Height per line (font × line-height) | Hard max (single-line bullets only) | Practical target |
 |---------|--------------------------------------|-------------------------------------|-----------------|
 | normal  | 1.4 rem × 1.8 = **2.52 rem / 40 px** | 8 | **5–6** |
+| compact | 1.22 rem × 1.65 = **2.01 rem / 32 px** | 10 | **7** |
 | dense   | 1.05 rem × 1.5 = **1.58 rem / 25 px** | 13 | **9–10** |
 
 A "line" is one rendered text line — a sub-bullet, a continuation wrap, or a blank-line separator all count. Use the **practical target** column: real bullets often wrap, and slides usually include a heading, intro sentence, or component alongside the list. Plan for 5–6 at normal density; only approach the hard max if every item is a short single-line phrase with no other elements on the slide.
@@ -401,6 +402,7 @@ Key overridable variables:
 | -------------------------------------------------- | --------------------- | ---------------------------- |
 | `--ustc-blue`                                      | `#1E4C90`             | primary brand color          |
 | `--ustc-fs-body`                                   | `1.4rem`              | body text (normal density)   |
+| `--ustc-fs-body-compact`                           | `1.22rem`             | body text (compact density)  |
 | `--ustc-fs-body-dense`                             | `1.05rem`             | body text (dense density)    |
 | `--ustc-fs-callout` / `--ustc-fs-callout-title`    | `1.15rem` / `1.15rem` | Callout body/title           |
 | `--ustc-fs-result-title` / `--ustc-fs-result-body` | `1.15rem` / `1.15rem` | ResultBox title/body         |
@@ -427,6 +429,8 @@ margin: tight
 ```
 
 `density: dense` is a coordinated scale-down — it simultaneously shrinks body text (`1.4rem` → `1.05rem`), Callout body/title (`1.15rem` → `0.95rem`), ResultBox and Block text (`1.15rem` → `0.96rem`), table cells (`1.1rem` → `0.96rem`), h2 (drops to h3 size `1.3rem`), Takeaway text (`1.4rem` → `1.05rem`), and tightens line-height (`1.8` → `1.5`) plus list spacing. Use it instead of overriding font sizes in `<style>` because a `<style>` override changes one element in isolation and breaks the theme's internal proportions. Dense mode keeps the whole slide visually coherent at a smaller scale. Combine with `margin: tight` or `margin: tighter` to reclaim additional page padding.
+
+**`density: compact` is the middle tier** — every typography token sits roughly halfway between `normal` and `dense` (body `1.4rem` → `1.22rem` → `1.05rem`; line-height `1.8` → `1.65` → `1.5`). Reach for it when a slide is slightly over budget at `normal` but `dense` shrinks things more than necessary. Same coordinated-scale mechanism as dense — don't hand-tune font sizes to fake an in-between size.
 
 ### Limit a component's width
 
@@ -619,6 +623,7 @@ wip: true
 | ---------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | Smaller body text globally               | `:root { --ustc-fs-body: 1.2rem }` in `styles/index.css`, or `.slidev-layout { --ustc-fs-body: 1.2rem }` per slide           |
 | Dense text on one slide                  | `density: dense` in frontmatter                                                                                              |
+| Middle density (between normal & dense)  | `density: compact` in frontmatter                                                                                            |
 | Change h1 / heading colour per slide     | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1, block/takeaway/callout titles                  |
 | Recolor section bar + footer per slide   | `.slidev-layout { --ustc-blue: #... }` in slide `<style>` — both chrome bars share this token                                |
 | Recolor only the footer (keep nav blue)  | `.slidev-layout { --ustc-footer-bg: #... }` in slide `<style>`                                                              |

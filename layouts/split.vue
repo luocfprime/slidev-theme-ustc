@@ -6,7 +6,7 @@ import { splitDefaults } from '../utils/defaults'
 
 const props = withDefaults(
   defineProps<{
-    density?: 'normal' | 'dense'
+    density?: 'normal' | 'compact' | 'dense'
     margin?: 'normal' | 'tight' | 'tighter' | 'none'
     footer?: boolean
     footerMode?: 'full' | 'minimal'
