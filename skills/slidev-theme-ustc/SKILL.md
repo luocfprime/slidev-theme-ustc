@@ -1,6 +1,6 @@
 ---
 name: slidev-theme-ustc
-description: Use when creating or editing Slidev presentations with the slidev-theme-ustc theme (USTC academic style). Covers available layouts, components, frontmatter props, CSS variables, and configuration options for this theme.
+description: Use when creating, editing, or designing academic presentation slides with the slidev-theme-ustc theme (USTC academic style) — choosing layouts and density, placing figures, fixing slides that overflow or look empty/cramped/ugly, and making a deck logically clear and visually polished.
 ---
 
 # slidev-theme-ustc
@@ -14,6 +14,24 @@ A clean academic Slidev theme for USTC-style presentations.
 > academic taboos, citation discipline, and the **render → measure → fix audit loop**
 > (`scripts/audit-layout.mjs`). This file below is the API reference — *what knobs
 > exist*; that file is *which to turn and why*.
+
+## Designing a deck — 10 rules (start here)
+
+The load-bearing rules, condensed. The *why/how* (layout decision tree, density rubric,
+taboos, citations) is in [references/authoring-academic-decks.md](references/authoring-academic-decks.md).
+
+1. **A deck is an argument, not a document** — pick one claim; rest → `backup`.
+2. **One job per slide** — one clear point each; split if it does two things.
+3. **Structure, not prose** — short bullet fragments, never paragraphs (walls of text are the #1 tell of a bad deck).
+4. **Motivation before formalism** — "Why?" before "What?"; task + motivation before method/results.
+5. **Dense content, not dense *mode*** — cover a lot via structure and terse wording, not by reaching for `density: dense` to shrink text. `dense` + a half-empty slide is the worst combination.
+6. **Fill the canvas (~85–100%) by adding substance, never by cramming** — this style dislikes empty corners, but reach the target by adding a figure / merging thin slides / rebalancing; legibility always wins over a fill number.
+7. **Wide figures (aspect ratio > ~2.5) span full width** — never in a `split` column (they go small and leave a void below).
+8. **Cite on the slide, verify every citation** — per-page footnotes, **no references slide**; credit borrowed figures; never invent a citation.
+9. **Academic voice** — no colloquialisms, filler, "not X but Y" templates, or invented abbreviations; don't oversell (no "SOTA" for older work).
+10. **Measure, then commit** — run `scripts/audit-layout.mjs` + eyeball a `--shot` screenshot before declaring a slide done; when you cut content to fit, relocate it to `backup` — never silently delete.
+
+Density tiers: `normal` (default) → `compact` (middle) → `dense` (tightest); reach for the *largest* that fits. The `end` slide MUST have an `# h1` (the large centered closing line).
 
 ## Setup
 
