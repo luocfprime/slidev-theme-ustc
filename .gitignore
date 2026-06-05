@@ -8,6 +8,7 @@ docs/superpowers/
 .claude
 .worktrees/
 .preview/
+audit-shots/
 __pycache__
 .gstack/
 .DS_Store

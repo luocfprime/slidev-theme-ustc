@@ -7,6 +7,14 @@ description: Use when creating or editing Slidev presentations with the slidev-t
 
 A clean academic Slidev theme for USTC-style presentations.
 
+> **Designing a deck, not just operating the template?** Read
+> [references/authoring-academic-decks.md](references/authoring-academic-decks.md) first.
+> It covers how to make slides that are logically clear, rigorous, and not ugly:
+> the argument spine, the layout decision tree, the density rubric, figure handling,
+> academic taboos, citation discipline, and the **render → measure → fix audit loop**
+> (`scripts/audit-layout.mjs`). This file below is the API reference — *what knobs
+> exist*; that file is *which to turn and why*.
+
 ## Setup
 
 ```yaml
@@ -139,7 +147,7 @@ background: '#f5f5f5' # optional, CSS color or image path
 # Contents   # optional — defaults to "Table of Contents" if omitted
 ```
 
-The `# Title` line is **optional**. If omitted, the layout renders "Table of Contents" as the heading automatically. Write `# 目录` (or any text) to override it.
+The `# Title` line is **optional**. If omitted, the layout renders "Table of Contents" as the heading automatically. Write `# Contents` (or any text) to override it.
 
 Sections are auto-numbered `§1`, `§2`, … using h1 text from each `section` slide (or `sectionLabel` if set).
 
@@ -172,13 +180,20 @@ footerMode: full
 background: '#1a2a4a'      # optional, CSS color or image path
 ---
 
-Thank you!
+# Thank you
 
 ::contact::
 name@ustc.edu.cn
 ```
 
-The `::contact::` slot renders below the main content.
+**The `end` slide MUST have an `# h1`** — that h1 is the large centered line (e.g.
+`# Thank you`, or the closing line in the deck's language). A common mistake is
+shipping an `end` slide with only body
+text and no h1, which renders small and off-center. Always include the h1.
+
+The `end` slide is a courtesy close; it does **not** replace a substantive
+**conclusions / takeaways** slide, which must come *before* it. The `::contact::` slot
+renders below the main content.
 
 ### `backup`
 
@@ -291,9 +306,15 @@ Cite[^1] in caption
 <QRCode url="https://example.com" :size="160" caption="Scan" />
 ```
 
-**Vue 组件里的 markdown 内容 — 标签内部前后需要空行。** 任何 Vue 组件（`<Block>`、`<Callout>`、`<ResultBox>`、`<FigureBlock>` 等）的**默认 slot** 和**具名 slot**，只要内容含 markdown 语法（加粗 `**...**`、列表、链接、脚注 `[^x]`、行内/块级公式、内嵌 HTML 等），开/闭标签和内容之间**必须各留一个空行**——否则 Slidev/markdown-it 会把内容当成原始 HTML 直接吐出，`**foo**` 会保留字面星号，`[^1]` 不会变成脚注引用。
+**Markdown content inside Vue components — blank lines required around the content.** For
+any Vue component (`<Block>`, `<Callout>`, `<ResultBox>`, `<FigureBlock>`, etc.), in both
+the **default slot** and **named slots**, whenever the content uses markdown syntax (bold
+`**...**`, lists, links, footnotes `[^x]`, inline/block math, embedded HTML, etc.), there
+**must be a blank line** between the opening/closing tag and the content — otherwise
+Slidev/markdown-it treats it as raw HTML and emits it verbatim: `**foo**` keeps the literal
+asterisks and `[^1]` is not turned into a footnote reference.
 
-正确（多行 + 空行）：
+Correct (multi-line + blank lines):
 
 ```vue
 <Block title="Definition">
@@ -303,15 +324,15 @@ A **convex** function satisfies[^1] $f(\lambda x + (1-\lambda) y) \le \lambda f(
 </Block>
 ```
 
-错误（一行写完，加粗 / 脚注 / 行内公式都不会被解析）：
+Wrong (all on one line — bold / footnotes / inline math won't be parsed):
 
 ```vue
 <Block title="Definition">A **convex** function satisfies[^1] $f(...) \le ...$.</Block>
 ```
 
-纯文字、无任何 markdown 语法的情况可以单行：`<Block title="Note">Plain text only.</Block>` 是 OK 的。判断标准是"这段内容里有没有需要 markdown 解析的符号"，不是"有几行"。
+Plain text with no markdown syntax can stay on one line: `<Block title="Note">Plain text only.</Block>` is fine. The test is whether the content contains anything that needs markdown parsing, not how many lines it spans.
 
-具名 slot 同规则：`<template #caption>` 的标签内部前后也要各留一空行，否则 caption 里的 `[^x]` 脚注引用会原样显示。纯文字 caption 用 `caption` prop 就够了；只有需要脚注引用、链接或 Vue 组件时才开 slot。
+Named slots follow the same rule: `<template #caption>` also needs a blank line around its content, otherwise a `[^x]` footnote reference in the caption renders literally. For a plain-text caption the `caption` prop is enough; only open the slot when you need footnote references, links, or Vue components.
 
 ---
 
@@ -686,6 +707,8 @@ Include only the keys you actually need — the two blocks above are independent
 
 ## Additional Resources
 
+- [references/authoring-academic-decks.md](references/authoring-academic-decks.md) — **how to design good academic decks**: argument spine, layout decision tree, density rubric, figure handling, academic taboos, citations, the render→measure→fix audit loop
+- [scripts/audit-layout.mjs](scripts/audit-layout.mjs) — the layout audit ruler: renders each slide headless and reports overflow / sparse / wide-figure-in-split / image whitespace / orphan defects with fix hints (`node <skill>/scripts/audit-layout.mjs <url-or-deck.md>`)
 - [references/api/components.md](references/api/components.md) — full prop tables for all components
 - [references/api/prop-defaults.md](references/api/prop-defaults.md) — all prop default values (source: `utils/defaults.ts`)
 - [references/api/theme-tokens.md](references/api/theme-tokens.md) — complete CSS variable reference
