@@ -3,7 +3,7 @@ theme: ../
 layout: cover
 conference: "USTC Slidev 主题"
 talkTitle: "组件与布局原语完整参考"
-subtitle: "Callout · FigureBlock · TableBlock · ResultBox · QRCode · PlotlyGraph · Grid · Block · Takeaway · Abs"
+subtitle: "Callout · FigureBlock · TableBlock · ResultBox · QRCode · PlotlyGraph · Grid · Block · Takeaway · Abs · Badge"
 date: "2026 年 4 月 27 日"
 sectionBar: true
 figurePrefix: "图"
@@ -1498,6 +1498,75 @@ layout: content
 </Box>
 
 </Grid>
+
+---
+layout: section
+---
+
+# 十四、Badge
+`variant` · `color` · `href`
+
+---
+layout: content
+---
+
+# Badge — 变体 × 配色
+
+行内药丸,标注 venue / year / 状态 / CCF 等级 / 数据集。三种变体,配色任意,内容支持纯文本 / emoji / Iconify 图标。
+
+<div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem">
+<Badge variant="soft" color="#e67e22">🔥 HF #288</Badge>
+<Badge variant="soft" color="#3b82f6">2026-05</Badge>
+<Badge variant="soft" color="#16a34a">rerank 0.998</Badge>
+<Badge variant="soft" color="#6b7280">kw+title</Badge>
+</div>
+
+<div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem">
+<Badge variant="solid" color="#c0392b">CCF A</Badge>
+<Badge variant="solid">USTC</Badge>
+<Badge variant="solid" color="#16a34a">Oral</Badge>
+<Badge variant="outline" color="#3b82f6">Spotlight</Badge>
+<Badge variant="outline" color="#6b7280">preliminary</Badge>
+</div>
+
+<div style="display:flex;gap:.6rem;flex-wrap:wrap;align-items:center">
+<Badge variant="soft"><mdi-github /> 1.2k</Badge>
+<Badge variant="solid" color="#24292f"><mdi-github /> GitHub</Badge>
+<Badge variant="soft" color="#b31b1b"><mdi-school /> arXiv</Badge>
+<Badge variant="outline" color="#16a34a"><mdi-check-circle /> reproduced</Badge>
+</div>
+
+行内对齐:正文中嵌 <Badge variant="solid" color="#24292f"><mdi-github /> GitHub</Badge> 和 <Badge variant="soft" color="#16a34a"><mdi-check-circle /> verified</Badge>,icon 与文字基线对齐。
+
+---
+layout: content
+---
+
+# Badge — 文献汇报场景
+
+一眼扫到 <b>year · venue · highlight</b>,year 按新旧用色阶区分;`href` 让 badge 变成链接。
+
+<div style="display:flex;flex-direction:column;gap:.5rem">
+<div><Badge variant="soft" color="#16a34a">2026</Badge> <Badge variant="soft" color="#6b7280">CVPR</Badge> <b>方法 A</b> — 文本驱动的三维编辑 <Badge variant="solid" color="#c0392b">Oral</Badge></div>
+<div><Badge variant="soft" color="#3b82f6">2025</Badge> <Badge variant="soft" color="#6b7280">NeurIPS</Badge> <b>方法 B</b> — 组合式生成框架 <Badge variant="soft" color="#c0392b">CCF A</Badge></div>
+<div><Badge variant="soft" color="#9ca3af">2024</Badge> <Badge variant="soft" color="#6b7280">ICLR</Badge> <b>方法 C</b> — 高效推理 <Badge href="https://arxiv.org/abs/2509.20358" variant="outline" color="#b31b1b"><mdi-school /> arXiv</Badge></div>
+<div><Badge variant="outline" color="#9ca3af">2021</Badge> <Badge variant="soft" color="#6b7280">ECCV</Badge> <b>方法 D</b> — 早期基线</div>
+</div>
+
+色阶:今年 <Badge variant="soft" color="#16a34a">2026</Badge> → 去年 <Badge variant="soft" color="#3b82f6">2025</Badge> → 前年 <Badge variant="soft" color="#9ca3af">2024</Badge> → 更早 <Badge variant="outline" color="#9ca3af">≤2023</Badge>
+
+---
+layout: content
+density: dense
+---
+
+# Badge — dense 下自动缩放
+
+badge 字号是 `--ustc-fs-badge`(`calc(var(--ustc-fs-body) * 0.7)`),锚定主题正文字号,dense / compact 下自动跟随缩小,无论它在 `<p>`、`<li>` 还是裸 `<div>` 里都保持一致大小。
+
+- 带 icon 标签 <Badge variant="outline" color="#3b82f6"><mdi-github /> Code</Badge> 在 dense 行内的对齐
+- 纯文本标签 <Badge variant="soft" color="#16a34a">SOTA</Badge> 跟随上下文缩放
+- 要整体调大/调小所有 badge,覆盖 `--ustc-fs-badge` 即可
 
 ---
 layout: end

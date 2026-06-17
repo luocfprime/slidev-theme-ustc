@@ -108,9 +108,9 @@ density: dense
 ---
 
 <!--
-  features: layout: content, density: dense, TableBlock with caption, footnote refs [^kf] (auto-numbered), inline math
+  features: layout: content, density: dense, TableBlock with caption, footnote refs [^kf] (auto-numbered), inline math, inline <Badge> tags in table cells (classical vs DL type) — badge text auto-shrinks under density: dense
   not shown: TableBlock wip flag, FigureBlock alongside table, subtitle
-  see: SKILL.md → Components, references/api/components.md (TableBlock prop table)
+  see: SKILL.md → Components, references/api/components.md (TableBlock + Badge prop tables)
 -->
 
 # 相关工作对比
@@ -119,15 +119,15 @@ density: dense
 
 | 方法 | 主干网络 | 径迹效率 | 假径迹率 | 推理时间 |
 |------|---------|--------:|--------:|--------:|
-| Kalman Filter [^kf] | — | 98.1% | 0.3% | 820 ms |
-| ACTS [^acts] | — | 97.8% | 0.4% | 310 ms |
-| GNN-Tracking [^gnn1] | GravNet | 96.2% | 1.1% | 42 ms |
-| Exa.TrkX [^exa] | GNN | 97.1% | 0.8% | 28 ms |
-| **本工作** | **HeteroGNN** | **97.9%** | **0.5%** | **18 ms** |
+| Kalman Filter [^kf] <Badge variant="soft" color="#6b7280">经典</Badge> | — | 98.1% | 0.3% | 820 ms |
+| ACTS [^acts] <Badge variant="soft" color="#6b7280">经典</Badge> | — | 97.8% | 0.4% | 310 ms |
+| GNN-Tracking [^gnn1] <Badge variant="soft" color="#3b82f6">DL</Badge> | GravNet | 96.2% | 1.1% | 42 ms |
+| Exa.TrkX [^exa] <Badge variant="soft" color="#3b82f6">DL</Badge> | GNN | 97.1% | 0.8% | 28 ms |
+| **本工作** <Badge variant="solid" color="#16a34a">本工作</Badge> | **HeteroGNN** | **97.9%** | **0.5%** | **18 ms** |
 
 </TableBlock>
 
-效率与速度同时优于现有深度学习方案，同时保持与经典算法相当的假径迹率。
+效率与速度同时优于现有深度学习方案（<Badge variant="soft" color="#3b82f6">DL</Badge>），同时保持与经典算法（<Badge variant="soft" color="#6b7280">经典</Badge>）相当的假径迹率。
 
 [^kf]: Frühwirth, *NIM A* **262** (1987) 444.
 [^acts]: Ai et al., *Front. Phys.* **10** (2022) 817828.
@@ -622,9 +622,9 @@ layout: content
 ---
 
 <!--
-  features: layout: content, Grid cols=3 gap=md with Block children (each with title), Takeaway component
+  features: layout: content, Grid cols=3 gap=md with Block children (each with title), inline <Badge> headline-metric tags (one per block, soft / solid / outline variants), Takeaway component
   not shown: density: dense, ResultBox, Callout
-  see: SKILL.md → Components, references/api/components.md (Takeaway has no props — its constraint is "use at most one per slide")
+  see: SKILL.md → Components, references/api/components.md (Takeaway has no props — its constraint is "use at most one per slide"; Badge prop table)
 -->
 
 # 主要贡献
@@ -633,19 +633,19 @@ layout: content
 
 <Block title="算法贡献">
 
-提出异构消息传递框架，首次在统一架构中同时处理 Pixel / SCT / TRT 三种探测器几何。
+<Badge variant="outline" color="#c0392b">首次</Badge> 提出异构消息传递框架，在统一架构中同时处理 Pixel / SCT / TRT 三种探测器几何。
 
 </Block>
 
 <Block title="工程贡献">
 
-推理时间降至 18 ms/event，比最优基线快 1.6×，满足 HL-LHC 在线触发预算。
+<Badge variant="solid" color="#16a34a">1.6× 加速</Badge> 推理时间降至 18 ms/event，满足 HL-LHC 在线触发预算。
 
 </Block>
 
 <Block title="科学价值">
 
-在 $\langle\mu\rangle = 200$ 高堆积条件下保持 97.1% 效率，为未来 ATLAS Run 4 分析奠定基础。
+<Badge variant="soft" color="#3b82f6">97.1% @ μ=200</Badge> 高堆积条件下保持效率，为未来 ATLAS Run 4 分析奠定基础。
 
 </Block>
 
@@ -664,9 +664,9 @@ dragPos:
 ---
 
 <!--
-  features: layout: content, dragPos frontmatter, v-drag pos= (Slidev primitive), QRCode component (url, size, caption, color), Callout type=example with title
+  features: layout: content, dragPos frontmatter, v-drag pos= (Slidev primitive), QRCode component (url, size, caption, color), Callout type=example with title, <Badge href=...> link mode with Iconify icons (mdi-github / mdi-school) — external href opens in a new tab
   not shown: Abs absolute positioning, FigureBlock, density: dense
-  see: SKILL.md → Components, references/examples/components.md (QRCode demo with prop variants). NOTE: shown here together with `<v-drag>` (Slidev primitive) for a "floating QR" pattern; use `<v-drag>` only for content that doesn't need to participate in document flow.
+  see: SKILL.md → Components, references/examples/components.md (QRCode demo with prop variants; Badge link/icon demo). NOTE: shown here together with `<v-drag>` (Slidev primitive) for a "floating QR" pattern; use `<v-drag>` only for content that doesn't need to participate in document flow.
 -->
 
 # 未来工作
@@ -680,6 +680,8 @@ dragPos:
 <Callout type="example" title="开放资源">
 
 代码与预训练模型已在 GitHub 开源，数据集可通过 CERN Open Data 门户获取。
+
+<Badge href="https://github.com" color="#24292f"><mdi-github /> GitHub</Badge> <Badge href="https://arxiv.org/abs/2509.20358" color="#b31b1b"><mdi-school /> arXiv</Badge> <Badge variant="outline" color="#16a34a">CERN Open Data</Badge>
 
 </Callout>
 

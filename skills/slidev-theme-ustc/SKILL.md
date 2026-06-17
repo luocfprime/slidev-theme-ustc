@@ -263,7 +263,7 @@ This overrides the `background-image` produced by the frontmatter, so you can dr
 
 ## Components
 
-`Grid`, `Block`, `Abs` — layout helpers. `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `Takeaway` — content blocks. `VideoBlock`, `PlotlyGraph`, `QRCode` — media.
+`Grid`, `Block`, `Abs` — layout helpers. `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `Takeaway` — content blocks. `Badge` — inline pill tag. `VideoBlock`, `PlotlyGraph`, `QRCode` — media.
 
 All are auto-imported by Slidev. For full prop tables see [references/api/components.md](references/api/components.md).
 
@@ -275,6 +275,7 @@ All are auto-imported by Slidev. For full prop tables see [references/api/compon
 | `<Callout>`   | Typed advisory notice with icon | Notes, tips, warnings, important caveats — when the _type_ of message matters |
 | `<Takeaway>`  | The single most important point | One bold conclusion per slide; no props, forces brevity                       |
 | `<ResultBox>` | Quantitative or formal result   | Experimental numbers, theorem statements, final answers                       |
+| `<Badge>`     | Inline metadata tag (not a box) | Venue / year / status / CCF rank / dataset / links — flowing inline with text |
 
 Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning">` is for the audience, not the presenter. `<Block>` is neutral — reach for it when none of the others fit.
 
@@ -287,6 +288,9 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 <!-- types: note tip warning important example -->
 <Takeaway>Key point.</Takeaway>
 <ResultBox title="Result">...</ResultBox>
+<Badge variant="solid" color="#c0392b">CCF A</Badge> <Badge variant="soft"><mdi-github /> Code</Badge>
+<!-- variants: soft solid outline; any color; href turns it into a link -->
+<Badge href="https://arxiv.org/abs/2509.20358" color="#b31b1b"><mdi-school /> arXiv</Badge>
 <FigureBlock src="/img.png" caption="Caption" width="80%" />
 <FigureBlock src="/img.png" caption="Scheme" prefix="Scheme" />
 <!-- shows "Scheme 2" if global counter is at 2 — prefix changes the label text, the global number stays -->
@@ -447,6 +451,7 @@ Key overridable variables:
 | `--ustc-fs-result-title` / `--ustc-fs-result-body` | `1.15rem` / `1.15rem` | ResultBox title/body         |
 | `--ustc-fs-block-title` / `--ustc-fs-block-body`   | `1.15rem` / `1.15rem` | Block title/body             |
 | `--ustc-fs-takeaway`                               | `1.4rem`              | Takeaway text                |
+| `--ustc-fs-badge`                                  | `calc(body * 0.7)`    | Badge text (tracks density)  |
 | `--ustc-lh`                                        | `1.8`                 | body text line-height        |
 | `--ustc-title-gap`                                 | `1.5rem`              | h1 to first body element gap |
 | `--ustc-px` / `--ustc-py`                          | `2.8rem` / `1.75rem`  | slide padding                |

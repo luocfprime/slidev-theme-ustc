@@ -140,6 +140,29 @@ The main conclusion in one sentence.
 
 ---
 
+## `<Badge>`
+
+Inline pill for compact factual tags — venue, year, status, CCF rank, dataset, links. Renders as a single inline-flex pill that sits on the text baseline, so multiple badges flow inline or wrap naturally inside a `<div class="row">`.
+
+```vue
+<Badge>default soft</Badge>
+<Badge variant="solid" color="#c0392b">CCF A</Badge>
+<Badge variant="outline" color="#16a34a"><mdi-check-circle /> reproduced</Badge>
+<Badge href="https://arxiv.org/abs/2509.20358" color="#b31b1b"><mdi-school /> arXiv</Badge>
+```
+
+| Prop      | Default            | Behavior                                                            |
+| --------- | ------------------ | ------------------------------------------------------------------ |
+| `variant` | `soft`             | `soft` (tinted bg) · `solid` (filled, white text) · `outline` (bordered) |
+| `color`   | `var(--ustc-blue)` | Any CSS color; drives bg/text/border per variant via `color-mix`   |
+| `href`    | `''`               | Turns the badge into a link. `http(s)://` or `//` opens in a new tab; in-deck anchors (`#/5`) navigate in place |
+
+**Slot content** is freeform: plain text, emoji, or Slidev Iconify icons (e.g. `<mdi-github />`). Icons are sized relative to the text and baseline-aligned automatically — no wrapper needed.
+
+**Sizing.** Badge text is `--ustc-fs-badge` (`calc(var(--ustc-fs-body) * 0.7)`), anchored to the theme body size so it auto-shrinks in `dense`/`compact` and stays consistent whether the badge sits in a `<p>`, `<li>`, or a bare `<div>`. Override `--ustc-fs-badge` to resize all badges.
+
+---
+
 ## `<ResultBox>`
 
 Result/conclusion box with 2px border.

@@ -82,6 +82,9 @@
   --ustc-fs-takeaway: 1.4rem; /* Takeaway text                       */
   --ustc-fs-takeaway-dense: 1.05rem; /* Takeaway text — dense mode          */
   --ustc-fs-footnote: 0.67rem; /* footnote list items                 */
+  --ustc-fs-badge: calc(
+    var(--ustc-fs-body) * 0.7
+  ); /* <Badge> text — tracks body density via --ustc-fs-body swap */
   --ustc-lh: 1.8; /* default line-height for body text   */
   --ustc-lh-dense: 1.5; /* line-height for body text in dense mode */
   --ustc-lh-caption: 1.35; /* figure/table captions               */
