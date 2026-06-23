@@ -71,6 +71,29 @@ footer: false
 ---
 
 ---
+layout: toc
+variant: arrow
+columns: 2
+highlight: 1
+footer: false
+---
+
+---
+layout: toc
+variant: classic
+columns: 2
+highlight: 0
+footer: false
+---
+
+---
+layout: toc
+columns: 2
+highlight: 0
+footer: false
+---
+
+---
 layout: backup
 ---
 

@@ -155,8 +155,9 @@ Auto-generated table of contents from `section` slides.
 ```yaml
 ---
 layout: toc
+variant: arrow # 'arrow' (default) | 'classic'
 highlight: 2 # 1-indexed section to highlight (0 = no highlight)
-columns: 1 # 1 (default) | 2
+columns: 1 # only used by variant: classic; 1 | 2
 footer: true
 footerMode: full
 background: '#f5f5f5' # optional, CSS color or image path
@@ -168,6 +169,15 @@ background: '#f5f5f5' # optional, CSS color or image path
 The `# Title` line is **optional**. If omitted, the layout renders "Table of Contents" as the heading automatically. Write `# Contents` (or any text) to override it.
 
 Sections are auto-numbered `§1`, `§2`, … using h1 text from each `section` slide (or `sectionLabel` if set).
+
+TOC variant rubric:
+
+- `variant: arrow` (default): use for 3–5 sections, and up to about 6 if labels are short. Best for opening agenda pages and section-transition pages. `columns` has no effect.
+- `variant: classic`, `columns: 1`: use for 6–8 sections when a linear reading order matters.
+- `variant: classic`, `columns: 2`: use for 9–14 sections when space matters more than a strong visual agenda.
+- 15+ sections: avoid listing every section automatically; merge sections, split into grouped TOCs, or hand-author a shorter structure page.
+
+Compatibility: existing decks that set `columns` without `variant` keep the old classic appearance. New decks should set `variant: classic` explicitly when they want `columns`.
 
 ### `section`
 
@@ -524,8 +534,8 @@ Supporting figure or code
 ```yaml
 ---
 layout: toc
+variant: arrow # default; columns is ignored
 highlight: 2 # highlight section 2
-columns: 2
 ---
 ```
 

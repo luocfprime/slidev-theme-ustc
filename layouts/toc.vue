@@ -6,12 +6,15 @@ import { renderInlineMd } from '../utils/markdown'
 import { tocDefaults } from '../utils/defaults'
 import { buildSectionGroups } from '../utils/sectionModel'
 
+type TocVariant = 'arrow' | 'classic'
+
 const props = withDefaults(
   defineProps<{
     highlight?: number
     footer?: boolean
     footerMode?: 'full' | 'minimal'
     columns?: 1 | 2
+    variant?: TocVariant
     wip?: boolean
     background?: string
   }>(),
@@ -40,12 +43,25 @@ const sections = computed((): TocEntry[] => {
 
 const hasHighlight = computed(() => props.highlight > 0)
 
-const tocRows = computed(() => Math.ceil((sections.value.length || 1) / props.columns))
+const effectiveVariant = computed<TocVariant>(() => {
+  if (props.variant) return props.variant
+  return props.columns === undefined ? 'arrow' : 'classic'
+})
+
+const effectiveColumns = computed(() => props.columns ?? 1)
+
+const isClassic = computed(() => effectiveVariant.value === 'classic')
+
+const tocRows = computed(() => Math.ceil((sections.value.length || 1) / effectiveColumns.value))
 
 const autoFontSize = computed(() => {
   const size = Math.min(1.9, Math.max(1.0, 12 / tocRows.value))
   return `${size.toFixed(2)}rem`
 })
+
+function formatTocIndex(index: number): string {
+  return index.toString().padStart(2, '0')
+}
 
 function slotHasH1(vnodes: VNode[]): boolean {
   for (const vnode of vnodes) {
@@ -60,13 +76,17 @@ const hasSlotH1 = computed(() => slotHasH1(slots.default?.() ?? []))
 </script>
 
 <template>
-  <div class="slidev-layout toc" :class="{ 'is-wip': props.wip }" :style="bgStyle">
+  <div
+    class="slidev-layout toc"
+    :class="[`toc-variant-${effectiveVariant}`, { 'is-wip': props.wip }]"
+    :style="bgStyle"
+  >
     <h1 v-if="!hasSlotH1">Table of Contents</h1>
     <slot />
 
     <ol
       class="toc-list"
-      :class="{ 'toc-two-col': columns === 2 }"
+      :class="{ 'toc-two-col': isClassic && effectiveColumns === 2 }"
       :style="{ '--toc-fs': autoFontSize, '--toc-rows': tocRows }"
     >
       <li
@@ -79,6 +99,10 @@ const hasSlotH1 = computed(() => slotHasH1(slots.default?.() ?? []))
         }"
         @click="$slidev.nav.go(entry.no)"
       >
+        <span v-if="effectiveVariant === 'arrow'" class="toc-num">{{
+          formatTocIndex(entry.index)
+        }}</span>
+        <span v-if="effectiveVariant === 'arrow'" class="toc-arrow">▶</span>
         <span class="toc-label" v-html="renderInlineMd(entry.title)" />
       </li>
     </ol>

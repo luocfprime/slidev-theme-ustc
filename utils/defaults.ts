@@ -38,11 +38,12 @@ export const splitDefaults = {
   gap: 'md' as 'sm' | 'md' | 'lg',
 }
 
-// toc is structural: no density/margin/align — only footer + highlight index
+// toc is structural: no density/margin/align — only footer + highlight index.
+// `columns` intentionally has no default here: omitted columns means the new
+// default arrow variant, while explicit columns keeps the old classic style.
 export const tocDefaults = {
   ...footerDefaults,
   highlight: 0,
-  columns: 1 as 1 | 2,
   wip: false,
 }
 
