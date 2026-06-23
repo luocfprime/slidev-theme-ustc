@@ -1,11 +1,32 @@
 ---
 name: slidev-theme-ustc
-description: Use when creating, editing, or designing academic presentation slides with the slidev-theme-ustc theme (USTC academic style) — choosing layouts and density, placing figures, fixing slides that overflow or look empty/cramped/ugly, and making a deck logically clear and visually polished.
+description: Use when creating, editing, converting, exporting, or designing academic Slidev decks with slidev-theme-ustc, including group-meeting reports, literature surveys, conference talks, PPT-to-Slidev conversion, figure/PDF asset ingestion, layout density fixes, and ugly/empty/cramped slide repair.
 ---
 
 # slidev-theme-ustc
 
 A clean academic Slidev theme for USTC-style presentations.
+
+## First classify the deck
+
+Before drafting or editing, classify the task and read the matching reference:
+
+| Scenario | Read |
+| --- | --- |
+| Internal group progress / weekly report | [references/scenarios/group-progress.md](references/scenarios/group-progress.md) |
+| Group literature survey / paper reading | [references/scenarios/group-literature.md](references/scenarios/group-literature.md) |
+| Conference oral / formal paper talk | [references/scenarios/conference-talk.md](references/scenarios/conference-talk.md) |
+| PPT or PowerPoint conversion | [references/workflows/ppt-to-slidev.md](references/workflows/ppt-to-slidev.md) |
+| Paper figures, PDFs, large images, videos | [references/workflows/asset-ingestion.md](references/workflows/asset-ingestion.md) |
+| Final package for another presenter | [references/workflows/handover-export.md](references/workflows/handover-export.md) |
+
+If the user gives a PPT, distinguish **materials-only PPT** from **drafted deck PPT**.
+Materials-only PPTs can be reorganized. Drafted PPTs with titles/order/notes should
+be treated as structural references unless the user asks for a redesign.
+
+Group meeting and conference defaults differ: group meeting decks normally omit
+affiliations; formal conference talks normally include authors, affiliations, venue,
+date, and presenter. Do not let one scenario's cover metadata leak into the other.
 
 > **Designing a deck, not just operating the template?** Read
 > [references/authoring-academic-decks.md](references/authoring-academic-decks.md) first.
@@ -28,10 +49,10 @@ taboos, citations) is in [references/authoring-academic-decks.md](references/aut
 6. **Fill the canvas (~85–100%) by adding substance, never by cramming** — this style dislikes empty corners, but reach the target by adding a figure / merging thin slides / rebalancing; legibility always wins over a fill number.
 7. **Wide figures (aspect ratio > ~2.5) span full width** — never in a `split` column (they go small and leave a void below).
 8. **Cite on the slide, verify every citation** — per-page footnotes, **no references slide**; credit borrowed figures; never invent a citation.
-9. **Academic voice** — no colloquialisms, filler, "not X but Y" templates, or invented abbreviations; don't oversell (no "SOTA" for older work).
+9. **Academic voice** — no colloquialisms, filler, "not X but Y" templates, or invented abbreviations; don't oversell (no "SOTA" for older work). See [references/style/wording.md](references/style/wording.md).
 10. **Measure, then commit** — run `scripts/audit-layout.mjs` + eyeball a `--shot` screenshot before declaring a slide done; when you cut content to fit, relocate it to `backup` — never silently delete.
 
-Density tiers: `normal` (default) → `compact` (middle) → `dense` (tightest); reach for the *largest* that fits. The `end` slide MUST have an `# h1` (the large centered closing line).
+Density tiers: `normal` (default) → `compact` (middle) → `dense` (tightest); reach for the *largest* that fits. The visual target is clean, compact, and readable: neither sparse nor cramped. See [references/style/visual-rubric.md](references/style/visual-rubric.md). The `end` slide MUST have an `# h1` (the large centered closing line).
 
 ## Setup
 
@@ -802,7 +823,17 @@ pnpm test:unit
 ## Additional Resources
 
 - [references/authoring-academic-decks.md](references/authoring-academic-decks.md) — **how to design good academic decks**: argument spine, layout decision tree, density rubric, figure handling, academic taboos, citations, the render→measure→fix audit loop
+- [references/scenarios/group-progress.md](references/scenarios/group-progress.md) — internal group meeting / weekly progress defaults, including no-affiliation covers and WIP handling
+- [references/scenarios/group-literature.md](references/scenarios/group-literature.md) — literature survey / paper reading structure, metadata badges, and survey-specific pitfalls
+- [references/scenarios/conference-talk.md](references/scenarios/conference-talk.md) — formal conference/oral paper talks: affiliations, time budget, image-heavy text-light slides, and drafted PPT preservation
+- [references/workflows/ppt-to-slidev.md](references/workflows/ppt-to-slidev.md) — classify PPTs as materials-only vs drafted deck, then convert appropriately
+- [references/workflows/asset-ingestion.md](references/workflows/asset-ingestion.md) — bring in PDF/SVG/raster/video assets; includes `scripts/pdf2svg.py`
+- [references/workflows/handover-export.md](references/workflows/handover-export.md) — package PDF/PPTX/PNG/source handovers; includes `scripts/handover-export.sh`
+- [references/style/wording.md](references/style/wording.md) — wording preferences: avoid AI-smelling shorthand, invented acronyms, filler, and unsupported SOTA claims
+- [references/style/visual-rubric.md](references/style/visual-rubric.md) — operational check for sparse, cramped, ugly, over-boxed, or misaligned slides
 - [scripts/audit-layout.mjs](scripts/audit-layout.mjs) — the layout audit ruler: renders each slide headless and reports overflow / sparse / wide-figure-in-split / image whitespace / orphan defects with fix hints (`node <skill>/scripts/audit-layout.mjs <url-or-deck.md>`)
+- [scripts/pdf2svg.py](scripts/pdf2svg.py) — convert PDF figures/pages to SVG (`uv run <skill>/scripts/pdf2svg.py input.pdf -o public/images`)
+- [scripts/handover-export.sh](scripts/handover-export.sh) — export PDF/PPTX/PNG once and zip a handover package (`bash <skill>/scripts/handover-export.sh <deck-dir> <handover-dir> <artifact-prefix>`)
 - [references/api/components.md](references/api/components.md) — full prop tables for all components
 - [references/api/prop-defaults.md](references/api/prop-defaults.md) — all prop default values (source: `utils/defaults.ts`)
 - [references/api/theme-tokens.md](references/api/theme-tokens.md) — complete CSS variable reference
