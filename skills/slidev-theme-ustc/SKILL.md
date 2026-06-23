@@ -702,6 +702,7 @@ wip: true
 | All CSS variables                        | See [references/api/theme-tokens.md](references/api/theme-tokens.md)                                                         |
 | Re-enable typographic replacements       | `slidev: { markdown: { markdownOptions: { typographer: true } } }` in deck's `vite.config.js`                                |
 | Allow external network access to dev server | `server: { allowedHosts: true }` in deck's `vite.config.ts`                                                              |
+| Ignore speaker-note-only HMR updates     | Built into the theme for `slides.md` and `sections/*.md`; add deck-specific files via `ustcTheme.extraNotesOnlyHmrFiles`     |
 
 ---
 
@@ -736,6 +737,65 @@ export default {
 ```
 
 Include only the keys you actually need — the two blocks above are independent and can be used separately.
+
+### Theme-maintained HMR whitelist
+
+The theme's default Vite plugin ignores HMR when a whitelisted markdown file
+changes only Slidev speaker notes (HTML comments outside fenced code blocks).
+This keeps presenter-note edits from refreshing the visible deck.
+
+Default whitelist:
+
+```ts
+// setup/vite-plugins.ts in the theme repo
+export const notesOnlyHmrFiles = ['slides.md', 'sections/*.md']
+```
+
+For a deck/project with extra markdown entry points, do **not** copy the theme
+plugin into the project. Add the extra deck-root-relative patterns in the deck's
+`vite.config.js`:
+
+```js
+// vite.config.js in your deck
+export default {
+  ustcTheme: {
+    // Appended to the default ['slides.md', 'sections/*.md'] whitelist.
+    extraNotesOnlyHmrFiles: ['chapters/*.md', 'appendix.md'],
+  },
+}
+```
+
+If the deck also needs other local Vite options, merge them into the same single
+`export default` object:
+
+```js
+export default {
+  server: {
+    allowedHosts: true,
+  },
+  ustcTheme: {
+    extraNotesOnlyHmrFiles: ['chapters/*.md'],
+  },
+}
+```
+
+For theme-repo changes that should affect every deck by default, update
+`notesOnlyHmrFiles` in `setup/vite-plugins.ts` instead:
+
+```ts
+export const notesOnlyHmrFiles = ['slides.md', 'sections/*.md', 'chapters/*.md']
+```
+
+Patterns are deck-root-relative, case-insensitive, and support `*` inside a
+single path segment only. Do not add broad patterns such as `**/*.md` unless the
+theme intentionally wants notes-only edits in every markdown file to skip HMR.
+After changing the whitelist or stripping behavior, update
+`tests/vitePlugins.test.mjs` and run:
+
+```bash
+pnpm exec tsx --test tests/vitePlugins.test.mjs
+pnpm test:unit
+```
 
 ---
 
