@@ -56,6 +56,7 @@ In dense mode the `.dense` class **reassigns** the base tokens below to their `*
 | `--ustc-fs-block-title` / `--ustc-fs-block-body`                                    | `--ustc-fs-block-title-dense` / `--ustc-fs-block-body-dense`   |
 | `--ustc-fs-takeaway`                                                                | `--ustc-fs-takeaway-dense`                                     |
 | `--ustc-lh`                                                                         | `--ustc-lh-dense`                                              |
+| `--ustc-component-gap`                                                              | `--ustc-component-gap-dense`                                   |
 | `--ustc-title-gap`                                                                  | `--ustc-title-gap-dense`                                       |
 
 ### Inheritance shortcuts — override freely
@@ -130,7 +131,7 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-fs-badge`               | `calc(var(--ustc-fs-body) * 0.7)` | `<Badge>` text size (auto-tracks body density)   |
 | `--ustc-fs-footnote-ref`        | `0.64em`  | footnote superscript anchor (relative to parent) |
 
-**Compact tier (`density: compact`).** Every `*-dense` token above has a parallel `*-compact` variant holding a value roughly halfway between the base and the dense value. The `.compact` class swaps them in exactly as `.dense` swaps the dense variants. Values: `--ustc-fs-body-compact` `1.22rem`, `--ustc-fs-h2-compact` `1.42rem`, `--ustc-fs-table-cell-compact` `1.03rem`, `--ustc-fs-blockquote-compact` `1.1rem`, `--ustc-fs-caption-compact` `1.03rem`, `--ustc-fs-subtitle-compact` `1.06rem`, `--ustc-fs-callout-compact` / `--ustc-fs-callout-title-compact` `1.05rem`, `--ustc-fs-result-title-compact` / `--ustc-fs-result-body-compact` `1.05rem`, `--ustc-fs-block-title-compact` / `--ustc-fs-block-body-compact` `1.05rem`, `--ustc-fs-takeaway-compact` `1.22rem`, `--ustc-lh-compact` `1.65`, `--ustc-title-gap-compact` `1.2rem`.
+**Compact tier (`density: compact`).** Every `*-dense` token above has a parallel `*-compact` variant holding a value roughly halfway between the base and the dense value. The `.compact` class swaps them in exactly as `.dense` swaps the dense variants. Values: `--ustc-fs-body-compact` `1.22rem`, `--ustc-fs-h2-compact` `1.42rem`, `--ustc-fs-table-cell-compact` `1.03rem`, `--ustc-fs-blockquote-compact` `1.1rem`, `--ustc-fs-caption-compact` `1.03rem`, `--ustc-fs-subtitle-compact` `1.06rem`, `--ustc-fs-callout-compact` / `--ustc-fs-callout-title-compact` `1.05rem`, `--ustc-fs-result-title-compact` / `--ustc-fs-result-body-compact` `1.05rem`, `--ustc-fs-block-title-compact` / `--ustc-fs-block-body-compact` `1.05rem`, `--ustc-fs-takeaway-compact` `1.22rem`, `--ustc-lh-compact` `1.65`, `--ustc-component-gap-compact` `0.65rem`, `--ustc-title-gap-compact` `1.2rem`.
 
 ---
 
@@ -188,6 +189,8 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | `--ustc-section-pl`      | `4.8rem`                              | left padding for section/backup layouts                          |
 | `--ustc-title-gap`       | `1.5rem`                              | gap between h1 and first content element (content/split layouts) |
 | `--ustc-title-gap-dense` | `0.9rem`                              | gap between h1 and first content element — dense mode            |
+| `--ustc-component-gap`   | `0.75rem`                             | gap between top-level flow components in content/split layouts   |
+| `--ustc-component-gap-dense` | `0.55rem`                         | top-level component gap — dense mode                             |
 | `--ustc-fig-caption-gap` | `0.75rem`                             | gap between figure image and its caption (inside FigureBlock)    |
 | `--ustc-tab-caption-gap` | `0.3rem`                              | gap between table caption and the table (inside TableBlock)      |
 

@@ -7,6 +7,7 @@ import { test, expect } from '@playwright/test'
 //  3  content  density: compact  — middle tier, .compact class on layout root
 //  4  content  density: dense    — tightest, .dense class on layout root
 //  5  content  Box/ResultBox custom bg and borderColor props
+//  6  content  top-level component flow spacing
 //
 // Verifies the three-tier density scale: the `.compact` class is applied and
 // its body font-size sits strictly between normal and dense (monotonic
@@ -70,5 +71,30 @@ test.describe('Box and ResultBox — styling props', () => {
     const tokenResolved = slide(page).locator('.result-box').nth(1)
     await expect(tokenResolved).toHaveCSS('background-color', 'rgb(245, 245, 245)')
     await expect(tokenResolved).toHaveCSS('border-color', 'rgb(217, 119, 6)')
+  })
+})
+
+test.describe('component flow spacing', () => {
+  const gapBetween = async (page, beforeSelector, afterSelector) => {
+    return await slide(page)
+      .locator(afterSelector)
+      .first()
+      .evaluate((after, beforeSelector) => {
+        const root = after.closest('.slidev-layout')
+        const before = root?.querySelector(beforeSelector)
+        if (!before) throw new Error(`Missing spacing fixture selector: ${beforeSelector}`)
+        return after.getBoundingClientRect().top - before.getBoundingClientRect().bottom
+      }, beforeSelector)
+  }
+
+  test('top-level components have breathing room after raw divs and media helpers', async ({
+    page,
+  }) => {
+    await gotoSlide(page, 6)
+
+    expect(await gapBetween(page, '.fixture-raw-grid', 'table')).toBeGreaterThanOrEqual(10)
+    expect(await gapBetween(page, 'table', '.takeaway')).toBeGreaterThanOrEqual(10)
+    expect(await gapBetween(page, '.grid', '.callout')).toBeGreaterThanOrEqual(10)
+    expect(await gapBetween(page, '.figure-block', '.result-box')).toBeGreaterThanOrEqual(10)
   })
 })

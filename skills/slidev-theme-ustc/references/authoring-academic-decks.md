@@ -176,9 +176,12 @@ Mostly text, no figure?
 - **Same-size comparable figures.** When several figures are meant to be compared, render
   them at identical size.
 
-**Vertical rhythm:** between stacked visual blocks (a `<Block>` and a `<Callout>`, a
-figure and a `<Takeaway>`) that pack tight, one `<br>` adds breathing room — *but only
-when the slide has room to spare*. If the slide is already full, don't; cut instead.
+**Vertical rhythm:** top-level theme components and media blocks already carry a
+consistent `--ustc-component-gap`. Do not add `<br>` by habit between components. Use one
+only for a deliberate, single-slide visual adjustment when the slide has room to spare; if
+several slides need the same change, override `--ustc-component-gap` on `.slidev-layout`
+for one slide or `:root` for the deck. If the slide is already full, don't add space; cut
+or split content.
 
 ---
 
