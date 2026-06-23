@@ -40,9 +40,17 @@ Wrap the component in a `<div>` — the wrapper becomes the grid item and carrie
 
 ```vue
 <Grid cols="2" gap="lg">
-  <Block title="A">…</Block>
+  <Block title="A">
+
+  …
+
+  </Block>
   <div style="justify-self: center; max-width: 26rem;">
-    <Block title="B">…</Block>
+    <Block title="B">
+
+    …
+
+    </Block>
   </div>
 </Grid>
 ```
@@ -52,8 +60,16 @@ Wrap the component in a `<div>` — the wrapper becomes the grid item and carrie
 ```vue
 <Grid cols="1 8 8 1" gap="md">
   <div></div>
-  <Block>…</Block>
-  <Block>…</Block>
+  <Block>
+
+  …
+
+  </Block>
+  <Block>
+
+  …
+
+  </Block>
   <div></div>
 </Grid>
 ```
@@ -66,9 +82,25 @@ The theme `<Grid>` sets `align-items: start`, so items don't stretch to row heig
 
 ```vue
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;">
-  <Block title="A">one line</Block>
-  <Callout type="tip" title="B">two<br>bullets</Callout>
-  <ResultBox title="C">four<br>bullets<br>of<br>content</ResultBox>
+  <Block title="A">
+
+  One line.
+
+  </Block>
+  <Callout type="tip" title="B">
+
+  - Two
+  - Bullets
+
+  </Callout>
+  <ResultBox title="C">
+
+  - Four
+  - Bullets
+  - Of
+  - Content
+
+  </ResultBox>
 </div>
 ```
 
@@ -80,7 +112,11 @@ When you wrap a component in a `<div>` to width-limit it, also use `justify-self
 
 ```vue
 <div style="justify-self: center; max-width: 18rem;">
-  <Block>…</Block>
+  <Block>
+
+  …
+
+  </Block>
 </div>
 ```
 

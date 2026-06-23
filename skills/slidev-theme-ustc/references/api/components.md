@@ -79,15 +79,27 @@ Content inside the block.
 No-semantics atomic container for partitioning slide content. Defaults to a clean sharp rectangle (USTC-blue border, transparent background); set `bg`, `borderColor`, `border`, and `radius` to get other shapes.
 
 ```vue
-<Box>Default — bordered sharp rectangle.</Box>
+<Box>
+
+Default — bordered sharp rectangle.
+
+</Box>
 
 <Box bg="gray-soft" :border="false" radius="6px">
 Soft partition: gray fill, no border, rounded.
 </Box>
 
-<Box bg="blue-pale" borderColor="#1e4c90" radius="4px">Theme-color tinted (border kept).</Box>
+<Box bg="blue-pale" borderColor="#1e4c90" radius="4px">
 
-<Box bg="#eef5ff" :border="false" radius="8px">Any CSS color string.</Box>
+Theme-color tinted (border kept).
+
+</Box>
+
+<Box bg="#eef5ff" :border="false" radius="8px">
+
+Any CSS color string.
+
+</Box>
 ```
 
 | Prop          | Type      | Default                        |

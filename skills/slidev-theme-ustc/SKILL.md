@@ -314,12 +314,37 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 
 ```vue
 <Grid cols="2" gap="md" alignY="top">...</Grid>
-<Block title="Definition">...</Block>
-<Box bg="blue-pale" borderColor="var(--ustc-blue)" radius="4px">...</Box>
-<Callout type="tip" title="Insight">...</Callout>
+
+<Block title="Definition">
+
+...
+
+</Block>
+
+<Box bg="blue-pale" borderColor="var(--ustc-blue)" radius="4px">
+
+...
+
+</Box>
+
+<Callout type="tip" title="Insight">
+
+...
+
+</Callout>
 <!-- types: note tip warning important example -->
-<Takeaway>Key point.</Takeaway>
-<ResultBox title="Result" bg="blue-pale" borderColor="var(--ustc-blue)">...</ResultBox>
+
+<Takeaway>
+
+Key point.
+
+</Takeaway>
+
+<ResultBox title="Result" bg="blue-pale" borderColor="var(--ustc-blue)">
+
+...
+
+</ResultBox>
 <Badge variant="solid" color="#c0392b">CCF A</Badge> <Badge variant="soft"><mdi-github /> Code</Badge>
 <!-- variants: soft solid outline; any color; href turns it into a link -->
 <Badge href="https://arxiv.org/abs/2509.20358" color="#b31b1b"><mdi-school /> arXiv</Badge>
@@ -360,13 +385,15 @@ Cite[^1] in caption
 <QRCode url="https://example.com" :size="160" caption="Scan" />
 ```
 
-**Markdown content inside Vue components — blank lines required around the content.** For
-any Vue component (`<Block>`, `<Callout>`, `<ResultBox>`, `<FigureBlock>`, etc.), in both
-the **default slot** and **named slots**, whenever the content uses markdown syntax (bold
-`**...**`, lists, links, footnotes `[^x]`, inline/block math, embedded HTML, etc.), there
-**must be a blank line** between the opening/closing tag and the content — otherwise
-Slidev/markdown-it treats it as raw HTML and emits it verbatim: `**foo**` keeps the literal
-asterisks and `[^1]` is not turned into a footnote reference.
+**Content-bearing Vue components must be multi-line with blank lines.** Write
+`<Block>`, `<Box>`, `<Callout>`, `<ResultBox>`, and `<Takeaway>` with the opening tag,
+a blank line, the body, another blank line, and the closing tag — even when the body
+is just one plain-text sentence. The one-line form is syntactically possible, but it
+is not the style for this skill and it fails as soon as the body grows markdown
+syntax (bold `**...**`, lists, links, footnotes `[^x]`, inline/block math, embedded
+HTML, etc.). In those cases Slidev/markdown-it treats the body as raw HTML:
+`**foo**` keeps the literal asterisks and `[^1]` is not turned into a footnote
+reference.
 
 Correct (multi-line + blank lines):
 
@@ -378,15 +405,27 @@ A **convex** function satisfies[^1] $f(\lambda x + (1-\lambda) y) \le \lambda f(
 </Block>
 ```
 
-Wrong (all on one line — bold / footnotes / inline math won't be parsed):
+Wrong (all on one line — not accepted, even if the text looks simple):
 
 ```vue
 <Block title="Definition">A **convex** function satisfies[^1] $f(...) \le ...$.</Block>
 ```
 
-Plain text with no markdown syntax can stay on one line: `<Block title="Note">Plain text only.</Block>` is fine. The test is whether the content contains anything that needs markdown parsing, not how many lines it spans.
+Do not use one-line content components such as
+`<Takeaway>Key point.</Takeaway>` or `<Callout type="tip">Plain text.</Callout>`.
+`<Badge>` is different: it is an inline pill and should stay inline when used inside
+running text.
 
 Named slots follow the same rule: `<template #caption>` also needs a blank line around its content, otherwise a `[^x]` footnote reference in the caption renders literally. For a plain-text caption the `caption` prop is enough; only open the slot when you need footnote references, links, or Vue components.
+
+Before handoff, run the mechanical check on edited deck files:
+
+```bash
+node <skill>/scripts/check-component-format.mjs slides.md sections/*.md
+```
+
+Fix every reported one-line content component. The check intentionally ignores inline
+`<Badge>` and self-closing media components.
 
 ---
 
@@ -514,9 +553,17 @@ Wrap the component in a plain `<div style="…">` — inline `style` on a raw `<
 
 ```vue
 <Grid cols="2" gap="lg">
-  <Block title="A">…</Block>
+  <Block title="A">
+
+  …
+
+  </Block>
   <div style="justify-self: center; max-width: 26rem;">
-    <Block title="B">…</Block>
+    <Block title="B">
+
+    …
+
+    </Block>
   </div>
 </Grid>
 ```
@@ -527,9 +574,21 @@ For equal-height items, replace the theme `<Grid>` with raw native CSS Grid — 
 
 ```vue
 <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4rem;">
-  <Block>…</Block>
-  <Callout type="tip">…</Callout>
-  <ResultBox>…</ResultBox>
+  <Block>
+
+  …
+
+  </Block>
+  <Callout type="tip">
+
+  …
+
+  </Callout>
+  <ResultBox>
+
+  …
+
+  </ResultBox>
 </div>
 ```
 
@@ -834,6 +893,7 @@ pnpm test:unit
 - [scripts/audit-layout.mjs](scripts/audit-layout.mjs) — the layout audit ruler: renders each slide headless and reports overflow / sparse / wide-figure-in-split / image whitespace / orphan defects with fix hints (`node <skill>/scripts/audit-layout.mjs <url-or-deck.md>`)
 - [scripts/pdf2svg.py](scripts/pdf2svg.py) — convert PDF figures/pages to SVG (`uv run <skill>/scripts/pdf2svg.py input.pdf -o public/images`)
 - [scripts/handover-export.sh](scripts/handover-export.sh) — export PDF/PPTX/PNG once and zip a handover package (`bash <skill>/scripts/handover-export.sh <deck-dir> <handover-dir> <artifact-prefix>`)
+- [scripts/check-component-format.mjs](scripts/check-component-format.mjs) — fail on one-line content components such as `<Takeaway>...</Takeaway>` (`node <skill>/scripts/check-component-format.mjs slides.md sections/*.md`)
 - [references/api/components.md](references/api/components.md) — full prop tables for all components
 - [references/api/prop-defaults.md](references/api/prop-defaults.md) — all prop default values (source: `utils/defaults.ts`)
 - [references/api/theme-tokens.md](references/api/theme-tokens.md) — complete CSS variable reference
