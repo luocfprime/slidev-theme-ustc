@@ -284,10 +284,11 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 ```vue
 <Grid cols="2" gap="md" alignY="top">...</Grid>
 <Block title="Definition">...</Block>
+<Box bg="blue-pale" borderColor="var(--ustc-blue)" radius="4px">...</Box>
 <Callout type="tip" title="Insight">...</Callout>
 <!-- types: note tip warning important example -->
 <Takeaway>Key point.</Takeaway>
-<ResultBox title="Result">...</ResultBox>
+<ResultBox title="Result" bg="blue-pale" borderColor="var(--ustc-blue)">...</ResultBox>
 <Badge variant="solid" color="#c0392b">CCF A</Badge> <Badge variant="soft"><mdi-github /> Code</Badge>
 <!-- variants: soft solid outline; any color; href turns it into a link -->
 <Badge href="https://arxiv.org/abs/2509.20358" color="#b31b1b"><mdi-school /> arXiv</Badge>

@@ -76,7 +76,7 @@ Content inside the block.
 
 ## `<Box>`
 
-No-semantics atomic container for partitioning slide content. Defaults to a clean sharp rectangle (USTC-blue 1px border, transparent background); set `bg`, `border`, `radius` to get other shapes.
+No-semantics atomic container for partitioning slide content. Defaults to a clean sharp rectangle (USTC-blue border, transparent background); set `bg`, `borderColor`, `border`, and `radius` to get other shapes.
 
 ```vue
 <Box>Default — bordered sharp rectangle.</Box>
@@ -85,20 +85,23 @@ No-semantics atomic container for partitioning slide content. Defaults to a clea
 Soft partition: gray fill, no border, rounded.
 </Box>
 
-<Box bg="blue-pale" radius="4px">Theme-color tinted (border kept).</Box>
+<Box bg="blue-pale" borderColor="#1e4c90" radius="4px">Theme-color tinted (border kept).</Box>
 
 <Box bg="#eef5ff" :border="false" radius="8px">Any CSS color string.</Box>
 ```
 
-| Prop     | Type      | Default         |
-| -------- | --------- | --------------- |
-| `bg`     | `string`  | `'transparent'` |
-| `border` | `boolean` | `true`          |
-| `radius` | `string`  | `'0'`           |
+| Prop          | Type      | Default                        |
+| ------------- | --------- | ------------------------------ |
+| `bg`          | `string`  | `'transparent'`                |
+| `border`      | `boolean` | `true`                         |
+| `borderColor` | `string`  | `var(--ustc-box-border-color)` |
+| `radius`      | `string`  | `'0'`                          |
 
 `bg` is dual-mode: `'blue-pale'` resolves to `var(--ustc-blue-pale)`, `'gray-soft'` resolves to `var(--ustc-box-bg-gray)`; anything else passes through verbatim as a CSS color value.
 
-Typography (font-size, line-height, color, font-weight) is inherited from context — Box does not override it. Theme-level customization via `--ustc-box-*` tokens (see `theme-tokens.md`).
+`borderColor` accepts any CSS color. Typography (font-size, line-height, color,
+font-weight) is inherited from context — Box does not override it. Theme-level
+customization via `--ustc-box-*` tokens (see `theme-tokens.md`).
 
 ---
 
@@ -173,9 +176,25 @@ Result/conclusion box with 2px border.
 Our method achieves 94.3% accuracy.
 
 </ResultBox>
+
+<ResultBox title="Green Result" bg="#ecfdf5" borderColor="#16a34a">
+
+The same semantic result box with custom colors.
+
+</ResultBox>
 ```
 
 `title` is optional and supports markdown.
+
+| Prop          | Type     | Default            |
+| ------------- | -------- | ------------------ |
+| `title`       | `string` | `''`               |
+| `bg`          | `string` | `'blue-pale'`      |
+| `borderColor` | `string` | `var(--ustc-blue)` |
+
+`bg` uses the same naming as `<Box>`: `'blue-pale'` resolves to `var(--ustc-blue-pale)`,
+`'gray-soft'` resolves to `var(--ustc-box-bg-gray)`, and any other value passes through
+as a CSS color.
 
 ---
 

@@ -1,8 +1,26 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import { renderInlineMd } from '../utils/markdown'
-defineProps<{
-  title?: string
-}>()
+
+const props = withDefaults(
+  defineProps<{
+    title?: string
+    bg?: string
+    borderColor?: string
+  }>(),
+  {
+    bg: 'blue-pale',
+    borderColor: 'var(--ustc-blue)',
+  },
+)
+
+const bgResolved = computed(() => {
+  if (props.bg === 'blue-pale') return 'var(--ustc-blue-pale)'
+  if (props.bg === 'gray-soft') return 'var(--ustc-box-bg-gray)'
+  return props.bg
+})
+
+const borderColorResolved = computed(() => props.borderColor)
 </script>
 
 <template>
@@ -16,9 +34,9 @@ defineProps<{
 
 <style scoped>
 .result-box {
-  border: 2px solid var(--ustc-blue);
+  border: 2px solid v-bind(borderColorResolved);
   border-radius: 6px;
-  background: var(--ustc-blue-pale);
+  background: v-bind(bgResolved);
   padding: 0.7rem 1rem;
   margin-bottom: 0.7rem;
 }

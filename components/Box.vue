@@ -5,11 +5,13 @@ const props = withDefaults(
   defineProps<{
     bg?: string
     border?: boolean
+    borderColor?: string
     radius?: string
   }>(),
   {
     bg: 'transparent',
     border: true,
+    borderColor: 'var(--ustc-box-border-color)',
     radius: '0',
   },
 )
@@ -19,6 +21,8 @@ const bgResolved = computed(() => {
   if (props.bg === 'gray-soft') return 'var(--ustc-box-bg-gray)'
   return props.bg
 })
+
+const borderColorResolved = computed(() => props.borderColor)
 </script>
 
 <template>
@@ -30,7 +34,7 @@ const bgResolved = computed(() => {
 <style scoped>
 .box {
   background: v-bind(bgResolved);
-  border: var(--ustc-box-border-width) solid var(--ustc-box-border-color);
+  border: var(--ustc-box-border-width) solid v-bind(borderColorResolved);
   border-radius: v-bind(radius);
   padding: var(--ustc-box-padding);
   margin-bottom: 0.6rem;

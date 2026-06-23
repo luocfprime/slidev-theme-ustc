@@ -40,3 +40,35 @@ footer: false
 # Dense
 
 Body paragraph at dense density.
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 5: ResultBox custom bg and borderColor props -->
+
+# Box Color Props
+
+<Box bg="#eef5ff" borderColor="#9333ea" radius="4px">
+
+Box body.
+
+</Box>
+
+<br>
+
+# ResultBox Props
+
+<ResultBox title="Custom Result" bg="#ecfdf5" borderColor="#16a34a">
+
+Custom result body.
+
+</ResultBox>
+
+<ResultBox title="Soft Gray Result" bg="gray-soft" borderColor="#d97706">
+
+Token-resolved result body.
+
+</ResultBox>
