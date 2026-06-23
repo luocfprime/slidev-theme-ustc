@@ -42,10 +42,15 @@ Extends `bodyDefaults`. Additional props:
 
 Extends `footerDefaults`. Additional props:
 
-| Prop        | Default | Valid values                              |
-| ----------- | ------- | ----------------------------------------- |
-| `highlight` | `0`     | 1-based section index; `0` = no highlight |
-| `columns`   | `1`     | `1` · `2`                                 |
+| Prop        | Effective default | Valid values                              |
+| ----------- | ----------------- | ----------------------------------------- |
+| `variant`   | `'arrow'`         | `'arrow'` · `'classic'`                   |
+| `highlight` | `0`               | 1-based section index; `0` = no highlight |
+| `columns`   | unset             | `1` · `2`; only used by `variant: classic` |
+
+Compatibility: when `variant` is omitted but `columns` is set, the layout uses
+`variant: classic` so older decks keep their previous single/two-column TOC
+appearance. When both are omitted, the layout uses the default `arrow` variant.
 
 ---
 

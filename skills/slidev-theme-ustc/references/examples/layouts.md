@@ -15,6 +15,7 @@ sectionBarMode: full
 
 ---
 layout: toc
+variant: classic
 columns: 2
 highlight: 0
 ---
@@ -23,6 +24,7 @@ highlight: 0
 
 ---
 layout: toc
+variant: classic
 columns: 2
 highlight: 1
 ---
@@ -503,23 +505,25 @@ layout: section
 ---
 
 # 五、toc 布局
-`highlight` · `columns` · `footer` · `footerMode`
+`variant` · `highlight` · `columns` · `footer` · `footerMode`
 
 ---
 layout: toc
+variant: arrow
 highlight: 0
 ---
 
-# 目录（highlight: 0）
+# 目录（variant: arrow, highlight: 0）
 
-`highlight: 0`（默认）不高亮任何条目，全部均匀显示。
+`arrow` 是默认目录样式，适合 3–5 个章节的开场目录；`highlight: 0`（默认）不高亮任何条目，全部均匀显示。
 
 ---
 layout: toc
+variant: arrow
 highlight: 3
 ---
 
-# 目录（highlight: 3）
+# 目录（variant: arrow, highlight: 3）
 
 `highlight: 3` 高亮第三个分节，其余条目以较低不透明度显示。
 
@@ -527,13 +531,38 @@ highlight: 3
 
 ---
 layout: toc
+variant: classic
+columns: 1
+highlight: 0
+---
+
+# 目录（variant: classic, columns: 1）
+
+`classic` 保留旧版目录样式；`columns: 1` 适合 6–8 个章节，阅读顺序最清楚。
+
+---
+layout: toc
+variant: classic
 columns: 2
 highlight: 0
 ---
 
-# 目录（columns: 2）
+# 目录（variant: classic, columns: 2）
 
-`columns: 2` 将条目排为两列，并按列优先填充：左列从上到下排列前半部分，右列排列后半部分。
+`columns: 2` 只对 `variant: classic` 生效，适合 9–14 个章节；条目按列优先填充。
+
+---
+layout: content
+---
+
+# TOC 选择准则
+
+- 3–5 个 section：默认 `variant: arrow`，适合开场目录和章节转场。
+- 6–8 个 section：`variant: classic` + `columns: 1`。
+- 9–14 个 section：`variant: classic` + `columns: 2`。
+- 15+ 个 section：不建议自动列全量目录；应合并 section、分组展示或手写摘要目录。
+
+`columns` 是 `classic` 的密度参数；对 `arrow` 无效。旧 deck 若只写 `columns` 而未写 `variant`，会继续使用 `classic` 兼容外观。
 
 ---
 layout: toc
@@ -761,4 +790,3 @@ background: '/ATLAS/ATLAS-Detector.webp'
 <div style="height:100%;display:flex;align-items:center;justify-content:center;">
   <span style="color:white;font-size:2.4rem;font-weight:700;background:rgba(0,0,0,0.45);padding:0.6rem 1.2rem;border-radius:6px;">blank + background 全出血图</span>
 </div>
-

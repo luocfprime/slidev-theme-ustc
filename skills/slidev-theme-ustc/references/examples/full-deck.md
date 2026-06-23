@@ -37,13 +37,12 @@ tablePrefix: "表"
 
 ---
 layout: toc
-columns: 2
 highlight: 0
 ---
 
 <!--
-  features: layout: toc, columns: 2, highlight: 0 (no item highlighted - opening agenda)
-  not shown: subtitle, custom toc filtering
+  features: layout: toc, variant: arrow (default), highlight: 0 (no item highlighted - opening agenda)
+  not shown: variant: classic, columns: 1/2, custom toc filtering
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 
@@ -51,13 +50,12 @@ highlight: 0
 
 ---
 layout: toc
-columns: 2
 highlight: 1
 ---
 
 <!--
-  features: layout: toc, columns: 2, highlight: 1 (highlights first section before entering it)
-  not shown: columns: 1 single-column toc, highlight: 0
+  features: layout: toc, variant: arrow (default), highlight: 1 (highlights first section before entering it)
+  not shown: variant: classic, columns: 1/2, highlight: 0
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 
@@ -166,13 +164,12 @@ layout: split
 
 ---
 layout: toc
-columns: 2
 highlight: 2
 ---
 
 <!--
-  features: layout: toc, columns: 2, highlight: 2 (transition between sections - highlights next section)
-  not shown: columns: 1, custom subtitle
+  features: layout: toc, variant: arrow (default), highlight: 2 (transition between sections - highlights next section)
+  not shown: variant: classic, columns: 1/2, custom subtitle
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 
@@ -393,13 +390,12 @@ flowchart LR
 
 ---
 layout: toc
-columns: 2
 highlight: 3
 ---
 
 <!--
-  features: layout: toc, columns: 2, highlight: 3 (mid-deck transition between sections)
-  not shown: columns: 1, custom highlight color via theme tokens
+  features: layout: toc, variant: arrow (default), highlight: 3 (mid-deck transition between sections)
+  not shown: variant: classic, columns: 1/2, custom highlight color via theme tokens
   see: SKILL.md → Layouts → toc, SKILL.md → Common Patterns → "TOC with section highlight"
 -->
 
@@ -591,13 +587,12 @@ density: dense
 
 ---
 layout: toc
-columns: 2
 highlight: 4
 ---
 
 <!--
-  features: layout: toc, columns: 2, highlight: 4 (final section transition)
-  not shown: columns: 1, custom subtitle
+  features: layout: toc, variant: arrow (default), highlight: 4 (final section transition)
+  not shown: variant: classic, columns: 1/2, custom subtitle
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 

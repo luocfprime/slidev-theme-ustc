@@ -23,13 +23,16 @@ const slide = (page) => page.locator('.slidev-layout:visible').first()
 //  7  content                        body B2
 //  8  content  sectionBar: false     body B3 — bar hidden per-slide
 //  9  content  sectionBarMode: minimal  body B4 — dots-only mode
-// 10  toc      highlight: 1          structural (no section bar)
-// 11  backup                         appendix boundary; stops section model scan
-// 12  section  h1="After-Backup"     post-backup section
-// 13  content                        post-backup body — bar renders, no active section
+// 10  toc      highlight: 1          default arrow variant
+// 11  toc      variant: arrow columns: 2  columns ignored by arrow
+// 12  toc      variant: classic columns: 2  old two-column visual style
+// 13  toc      columns: 2            compatibility: implicit classic variant
+// 14  backup                         appendix boundary; stops section model scan
+// 15  section  h1="After-Backup"     post-backup section
+// 16  content                        post-backup body — bar renders, no active section
 //
 // buildSectionGroups (stopAtBackup=true) → Alpha[3,4], Beta[6,7,8,9]
-// buildSectionGroups (stopAtBackup=false) → Alpha[3,4], Beta[6,7,8,9], After-Backup[13]
+// buildSectionGroups (stopAtBackup=false) → Alpha[3,4], Beta[6,7,8,9], After-Backup[16]
 //   (used by toc layout)
 // ──────────────────────────────────────────────────────────────────────────────
 
@@ -126,16 +129,16 @@ test.describe('section bar — per-slide overrides', () => {
 
 test.describe('section bar — post-backup behavior', () => {
   test('bar still renders on a content slide after backup', async ({ page }) => {
-    await gotoSlide(page, 13)
+    await gotoSlide(page, 16)
     await slide(page).locator('.ustc-section-bar').waitFor()
     // Pre-backup sections (Alpha, Beta) are still shown
     await expect(slide(page).locator('.ustc-section-item')).toHaveCount(2)
   })
 
   test('no section is active on a post-backup body slide', async ({ page }) => {
-    await gotoSlide(page, 13)
+    await gotoSlide(page, 16)
     await slide(page).locator('.ustc-section-bar').waitFor()
-    // Slide 13 is not in any section group (model stops at backup)
+    // Slide 16 is not in any section group (model stops at backup)
     const items = slide(page).locator('.ustc-section-item')
     await expect(items.nth(0)).not.toHaveClass(/is-active/)
     await expect(items.nth(1)).not.toHaveClass(/is-active/)
@@ -154,11 +157,46 @@ test.describe('toc layout', () => {
     await expect(items.nth(2).locator('.toc-label')).toContainText('After-Backup')
   })
 
+  test('defaults to arrow variant with numbered arrow rows', async ({ page }) => {
+    await gotoSlide(page, 10)
+    await expect(slide(page)).toHaveClass(/toc-variant-arrow/)
+    const items = slide(page).locator('.toc-item')
+    await expect(items.nth(0).locator('.toc-num')).toHaveText('01')
+    await expect(items.nth(1).locator('.toc-num')).toHaveText('02')
+    await expect(items.nth(0).locator('.toc-arrow')).toHaveText('▶')
+  })
+
   test('highlight:1 marks first section highlighted, rest dimmed', async ({ page }) => {
     await gotoSlide(page, 10)
     const items = slide(page).locator('.toc-item')
     await expect(items.nth(0)).toHaveClass(/is-highlighted/)
     await expect(items.nth(1)).toHaveClass(/is-dimmed/)
     await expect(items.nth(2)).toHaveClass(/is-dimmed/)
+  })
+
+  test('arrow variant ignores columns and does not indent highlighted rows', async ({ page }) => {
+    await gotoSlide(page, 11)
+    await expect(slide(page)).toHaveClass(/toc-variant-arrow/)
+    await expect(slide(page).locator('.toc-list')).not.toHaveClass(/toc-two-col/)
+
+    const items = slide(page).locator('.toc-item')
+    const highlightedBox = await items.nth(0).boundingBox()
+    const dimmedBox = await items.nth(1).boundingBox()
+    expect(highlightedBox.x).toBeCloseTo(dimmedBox.x, 1)
+  })
+
+  test('classic variant honors columns:2', async ({ page }) => {
+    await gotoSlide(page, 12)
+    await expect(slide(page)).toHaveClass(/toc-variant-classic/)
+    await expect(slide(page).locator('.toc-list')).toHaveClass(/toc-two-col/)
+    await expect(slide(page).locator('.toc-num')).toHaveCount(0)
+  })
+
+  test('columns without variant keeps the old classic behavior for compatibility', async ({
+    page,
+  }) => {
+    await gotoSlide(page, 13)
+    await expect(slide(page)).toHaveClass(/toc-variant-classic/)
+    await expect(slide(page).locator('.toc-list')).toHaveClass(/toc-two-col/)
   })
 })
