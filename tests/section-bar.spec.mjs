@@ -164,6 +164,9 @@ test.describe('toc layout', () => {
     await expect(items.nth(0).locator('.toc-num')).toHaveText('01')
     await expect(items.nth(1).locator('.toc-num')).toHaveText('02')
     await expect(items.nth(0).locator('.toc-arrow')).toHaveText('▶')
+    await expect(items.nth(0)).toHaveCSS('display', 'flex')
+    await expect(items.nth(0).locator('.toc-arrow')).toHaveCSS('transform', 'none')
+    await expect(items.nth(0)).not.toHaveCSS('letter-spacing', '0px')
   })
 
   test('highlight:1 marks first section highlighted, rest dimmed', async ({ page }) => {
@@ -198,5 +201,11 @@ test.describe('toc layout', () => {
     await gotoSlide(page, 13)
     await expect(slide(page)).toHaveClass(/toc-variant-classic/)
     await expect(slide(page).locator('.toc-list')).toHaveClass(/toc-two-col/)
+  })
+
+  test('omitting h1 leaves toc without a heading', async ({ page }) => {
+    await gotoSlide(page, 10)
+    await expect(slide(page).locator('h1')).toHaveCount(0)
+    await expect(slide(page).locator('.toc-item')).toHaveCount(3)
   })
 })

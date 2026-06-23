@@ -318,19 +318,22 @@
   justify-content: center;
   align-items: flex-start;
   gap: 2.4rem;
-  height: calc(100% - 7.2rem);
+  height: 100%;
   padding-left: 8rem;
 }
 
+.slidev-layout.toc.toc-variant-arrow:has(> h1) .toc-list {
+  height: calc(100% - 7.2rem);
+}
+
 .slidev-layout.toc.toc-variant-arrow .toc-item {
-  display: grid;
-  grid-template-columns: 2.4em auto auto;
+  display: flex;
+  align-items: center;
   gap: 1.6rem;
   font-size: 2.6rem;
   font-weight: 500;
   color: var(--ustc-text);
-  line-height: 1.16;
-  letter-spacing: 0;
+  letter-spacing: 0.02em;
 }
 
 .slidev-layout.toc.toc-variant-arrow .toc-num {
@@ -345,7 +348,6 @@
   color: var(--ustc-blue);
   font-size: 1.6rem;
   line-height: 1;
-  transform: translateY(0.1em);
 }
 
 .slidev-layout.toc.toc-variant-arrow .toc-label {

@@ -46,7 +46,7 @@ highlight: 0
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 
-# 目录
+
 
 ---
 layout: toc
@@ -59,15 +59,16 @@ highlight: 1
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 
-# 目录
+
 
 ---
 layout: section
+sectionLabel: "研究背景"
 ---
 
 <!--
-  features: layout: section, h1 + sub-paragraph as section description
-  not shown: sectionLabel override, background image
+  features: layout: section, sectionLabel override, h1 + sub-paragraph as section description
+  not shown: background image
   see: SKILL.md → Layouts → section, references/examples/layouts.md
 -->
 
@@ -173,15 +174,16 @@ highlight: 2
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 
-# 目录
+
 
 ---
 layout: section
+sectionLabel: "方法设计"
 ---
 
 <!--
-  features: layout: section, h1 + sub-paragraph as section description
-  not shown: sectionLabel override, custom background
+  features: layout: section, sectionLabel override, h1 + sub-paragraph as section description
+  not shown: custom background
   see: SKILL.md → Layouts → section, references/examples/layouts.md
 -->
 
@@ -399,15 +401,16 @@ highlight: 3
   see: SKILL.md → Layouts → toc, SKILL.md → Common Patterns → "TOC with section highlight"
 -->
 
-# 目录
+
 
 ---
 layout: section
+sectionLabel: "实验验证"
 ---
 
 <!--
-  features: layout: section, h1 + sub-paragraph as section description
-  not shown: sectionLabel override, background image
+  features: layout: section, sectionLabel override, h1 + sub-paragraph as section description
+  not shown: background image
   see: SKILL.md → Layouts → section, references/examples/layouts.md
 -->
 
@@ -596,15 +599,14 @@ highlight: 4
   see: SKILL.md → Layouts → toc, references/examples/layouts.md
 -->
 
-# 目录
-
 ---
 layout: section
+sectionLabel: "结论"
 ---
 
 <!--
-  features: layout: section, h1 + sub-paragraph as section description
-  not shown: sectionLabel override, custom background
+  features: layout: section, sectionLabel override, h1 + sub-paragraph as section description
+  not shown: custom background
   see: SKILL.md → Layouts → section, references/examples/layouts.md
 -->
 

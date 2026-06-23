@@ -163,16 +163,16 @@ footerMode: full
 background: '#f5f5f5' # optional, CSS color or image path
 ---
 
-# Contents   # optional — defaults to "Table of Contents" if omitted
+# Contents   # optional; omit for a titleless agenda page
 ```
 
-The `# Title` line is **optional**. If omitted, the layout renders "Table of Contents" as the heading automatically. Write `# Contents` (or any text) to override it.
+The `# Title` line is **optional**. If omitted, the TOC has no heading. Write `# Contents` (or any text) when the page needs an explicit title.
 
-Sections are auto-numbered `§1`, `§2`, … using h1 text from each `section` slide (or `sectionLabel` if set).
+Sections use h1 text from each `section` slide (or `sectionLabel` if set). The `arrow` variant displays `01`, `02`, …; `classic` displays `§1`, `§2`, ….
 
 TOC variant rubric:
 
-- `variant: arrow` (default): use for 3–5 sections, and up to about 6 if labels are short. Best for opening agenda pages and section-transition pages. `columns` has no effect.
+- `variant: arrow` (default): use for 3–5 sections, and up to about 6 if labels are short. Best for opening agenda pages and section-transition pages; usually omit the H1 and avoid numbered section labels such as `一、`. Use `sectionLabel` on section slides when the section slide title itself needs numbering. `columns` has no effect.
 - `variant: classic`, `columns: 1`: use for 6–8 sections when a linear reading order matters.
 - `variant: classic`, `columns: 2`: use for 9–14 sections when space matters more than a strong visual agenda.
 - 15+ sections: avoid listing every section automatically; merge sections, split into grouped TOCs, or hand-author a shorter structure page.

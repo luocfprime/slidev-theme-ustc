@@ -513,8 +513,6 @@ variant: arrow
 highlight: 0
 ---
 
-# 目录（variant: arrow, highlight: 0）
-
 `arrow` 是默认目录样式，适合 3–5 个章节的开场目录；`highlight: 0`（默认）不高亮任何条目，全部均匀显示。
 
 ---
@@ -522,8 +520,6 @@ layout: toc
 variant: arrow
 highlight: 3
 ---
-
-# 目录（variant: arrow, highlight: 3）
 
 `highlight: 3` 高亮第三个分节，其余条目以较低不透明度显示。
 
@@ -562,14 +558,14 @@ layout: content
 - 9–14 个 section：`variant: classic` + `columns: 2`。
 - 15+ 个 section：不建议自动列全量目录；应合并 section、分组展示或手写摘要目录。
 
-`columns` 是 `classic` 的密度参数；对 `arrow` 无效。旧 deck 若只写 `columns` 而未写 `variant`，会继续使用 `classic` 兼容外观。
+`columns` 是 `classic` 的密度参数；对 `arrow` 无效。`arrow` 通常不写 H1，也避免在 section label 中重复使用「一、二、三」这类序号；如果 section 页标题需要编号，用 `sectionLabel` 给 TOC 提供短标签。旧 deck 若只写 `columns` 而未写 `variant`，会继续使用 `classic` 兼容外观。
 
 ---
 layout: toc
 highlight: 0
 ---
 
-不写 `# Title` 时，`toc` 布局自动渲染默认标题 **"Table of Contents"**。写 `# 目录` 即可覆盖。
+不写 `# Title` 时，`toc` 布局不显示标题。写 `# 目录` 或任意 H1 即可显式添加标题。
 
 ---
 layout: section
