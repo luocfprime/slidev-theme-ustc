@@ -19,6 +19,17 @@ When a slide doesn't look right, climb in this order. **Stop at the first step t
 
 Rule of thumb: one-shot change → step 3 or 4 (wrapper `<div>`). Deck-wide change → `styles/index.css`. Reusable theme-level change → upstream feature request / PR. **Editing `node_modules` is never the answer.**
 
+### Deck-local CSS restraint
+
+Keep `style.css` short and deck-specific. It should usually do only two things:
+
+- Brand/theme adaptation for this deck, preferably through CSS variables such as `--ustc-blue`.
+- Local layout helpers that the theme API cannot express cleanly.
+
+Do not copy large chunks of theme CSS into a deck. If the deck links a local theme package, fix reusable behavior in the theme repo instead of shadowing it in `style.css`.
+
+Avoid overriding theme internals such as `toc`, section-bar arrows, footer chrome, or component base styles unless the user explicitly asks for a deck-specific fork. The theme's built-in TOC should remain visually recognizable; custom arrows and copied selectors often look harsher or drift from the package after updates.
+
 ---
 
 ## Layout Fine-Tuning Recipes
