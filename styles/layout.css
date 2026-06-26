@@ -335,6 +335,17 @@
   font-weight: 500;
   color: var(--ustc-text);
   letter-spacing: 0.02em;
+  transition:
+    color 0.15s,
+    opacity 0.15s;
+}
+
+.slidev-layout.toc.toc-variant-arrow .toc-item:hover {
+  color: var(--ustc-blue-dark);
+}
+
+.slidev-layout.toc.toc-variant-arrow .toc-item.is-dimmed:hover {
+  opacity: 0.68;
 }
 
 .slidev-layout.toc.toc-variant-arrow .toc-num {
@@ -343,12 +354,25 @@
   font-family: 'Helvetica Neue', Arial, sans-serif;
   font-weight: 400;
   font-variant-numeric: tabular-nums;
+  transition: color 0.15s;
 }
 
 .slidev-layout.toc.toc-variant-arrow .toc-arrow {
   color: var(--ustc-blue);
   font-size: 1.6rem;
   line-height: 1;
+  transition:
+    color 0.15s,
+    transform 0.15s;
+}
+
+.slidev-layout.toc.toc-variant-arrow .toc-item:hover .toc-arrow {
+  color: var(--ustc-blue-dark);
+  transform: translateX(0.35rem);
+}
+
+.slidev-layout.toc.toc-variant-arrow .toc-item:hover .toc-num {
+  color: var(--ustc-blue);
 }
 
 .slidev-layout.toc.toc-variant-arrow .toc-label {

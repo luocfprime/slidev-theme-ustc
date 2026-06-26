@@ -169,6 +169,16 @@ test.describe('toc layout', () => {
     await expect(items.nth(0)).not.toHaveCSS('letter-spacing', '0px')
   })
 
+  test('arrow toc rows show a subtle link-like hover hint', async ({ page }) => {
+    await gotoSlide(page, 10)
+    const item = slide(page).locator('.toc-item').first()
+    const arrow = item.locator('.toc-arrow')
+    await item.hover()
+    await expect(item).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
+    await expect(item).toHaveCSS('box-shadow', 'none')
+    await expect(arrow).not.toHaveCSS('transform', 'none')
+  })
+
   test('highlight:1 marks first section highlighted, rest dimmed', async ({ page }) => {
     await gotoSlide(page, 10)
     const items = slide(page).locator('.toc-item')
