@@ -8,9 +8,41 @@ export interface BodyLayoutProps {
   footnote?: 'overlay' | 'flow'
   sectionBar?: boolean
   lineHeight?: number
+  flowGap?: string | number
   align?: 'left' | 'center' | 'right'
   background?: string
   wip?: boolean
+}
+
+const flowGapMap: Record<string, string> = {
+  none: '0',
+  tight: '0.45rem',
+  normal: '0.75rem',
+  loose: '1rem',
+}
+
+function resolveLineHeight(value: unknown): string | undefined {
+  if (typeof value === 'number' && Number.isFinite(value) && value > 0) return String(value)
+  if (typeof value !== 'string') return undefined
+
+  const trimmed = value.trim()
+  const n = Number(trimmed)
+  return Number.isFinite(n) && n > 0 ? trimmed : undefined
+}
+
+function resolveFlowGap(value: unknown): string | undefined {
+  if (typeof value === 'number') return value === 0 ? '0' : undefined
+  if (typeof value !== 'string') return undefined
+
+  const trimmed = value.trim()
+  const mapped = flowGapMap[trimmed.toLowerCase()]
+  if (mapped) return mapped
+  if (trimmed === '0') return '0'
+  const number = String.raw`(?:\d+|\d*\.\d+)`
+  const lengthUnit = String.raw`(?:px|rem|em|%|vw|vh|vmin|vmax|svw|svh|lvw|lvh|dvw|dvh|ch|ex|cap|ic|lh|rlh|cm|mm|q|in|pt|pc)`
+  if (new RegExp(String.raw`^${number}${lengthUnit}$`, 'i').test(trimmed)) return trimmed
+  if (/^(?:var|calc|min|max|clamp)\([^;{}]+\)$/i.test(trimmed)) return trimmed
+  return undefined
 }
 
 export function useBodyLayout(props: BodyLayoutProps) {
@@ -31,7 +63,11 @@ export function useBodyLayout(props: BodyLayoutProps) {
 
   const pageStyle = computed(() => {
     const s: Record<string, string> = { ...resolveBodyMargin(props.margin) }
-    if (props.lineHeight) s['--ustc-lh'] = String(props.lineHeight)
+    const config = configs as Record<string, unknown>
+    const lineHeight = resolveLineHeight(props.lineHeight) ?? resolveLineHeight(config.lineHeight)
+    const flowGap = resolveFlowGap(props.flowGap) ?? resolveFlowGap(config.flowGap)
+    if (lineHeight) s['--ustc-lh'] = lineHeight
+    if (flowGap) s['--ustc-component-gap'] = flowGap
     if (props.align) s.textAlign = props.align
     if (props.background) Object.assign(s, handleBackground(props.background))
     return s

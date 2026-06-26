@@ -12,6 +12,7 @@ const props = withDefaults(
     footnote?: 'overlay' | 'flow'
     sectionBar?: boolean
     lineHeight?: number
+    flowGap?: string | number
     align?: 'left' | 'center' | 'right'
     subtitle?: string
     background?: string

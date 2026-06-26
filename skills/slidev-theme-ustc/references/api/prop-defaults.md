@@ -10,7 +10,7 @@ Applies to `content` and `default` layouts. `split` extends this via `splitDefau
 
 | Prop         | Default     | Valid values                                                                                                              |
 | ------------ | ----------- | ------------------------------------------------------------------------------------------------------------------------- |
-| `density`    | `'normal'`  | `'normal'` · `'dense'`                                                                                                    |
+| `density`    | `'normal'`  | `'normal'` · `'compact'` · `'dense'`                                                                                      |
 | `margin`     | `'normal'`  | `'normal'` · `'tight'` · `'tighter'` · `'none'`                                                                           |
 | `footnote`   | `'overlay'` | `'overlay'` · `'flow'`                                                                                                    |
 | `sectionBar` | `true`      | boolean                                                                                                                   |
@@ -19,7 +19,19 @@ Applies to `content` and `default` layouts. `split` extends this via `splitDefau
 | `footerMode` | `'full'`    | `'full'` · `'minimal'`                                                                                                    |
 | `wip`        | `false`     | boolean — when `true` on slide frontmatter/layout props, renders a diagonal "WIP" stamp and tints the section-bar dot red |
 
-`lineHeight` has no default (omitted = body line-height applies).
+`lineHeight` has no layout default. If omitted on a body slide, the layout uses
+global first-slide `lineHeight` when present; otherwise the current density's
+body line-height token applies. Values are unitless CSS line-height multipliers.
+
+`flowGap` has no layout default. If omitted on a body slide, the layout uses
+global first-slide `flowGap` when present; otherwise the current density's
+`--ustc-component-gap` token applies. It controls vertical spacing between
+adjacent top-level content blocks in `default` / `content` / `split` body slides,
+including markdown tables, theme components, media components, Plotly blocks,
+code fences, Mermaid diagrams, Typst output, and split-column top-level blocks.
+Valid values: `'none'` (`0`), `'tight'` (`0.45rem`), `'normal'` (`0.75rem`),
+`'loose'` (`1rem`), or a CSS length string such as `'0.6rem'`, `'8px'`, `'1em'`,
+or `'5%'`.
 
 `background` (CSS color or image path) is accepted by **every layout** — `cover`, `default` / `content`, `split`, `section`, `toc`, `end`, `backup`, `blank`. It has no default; omitted means no background. Only `cover` adds a built-in white gradient overlay for text readability; other layouts render the image raw. See SKILL.md → "Background images on any layout" for the manual overlay recipe.
 

@@ -150,6 +150,33 @@ export function patchTypstTableHtml(html: string): string {
   return out
 }
 
+export function wrapTypstDocHtml(html: string): string {
+  const leadingWhitespace = html.match(/^\s*/)?.[0] ?? ''
+  const body = html.slice(leadingWhitespace.length)
+  const openDiv = /^<div(?=[\s>])([^>]*)>/.exec(body)
+
+  if (!openDiv) {
+    return `${leadingWhitespace}<div class="typst-doc">${body}</div>`
+  }
+
+  const attrs = openDiv[1]
+  const classAttr = /\sclass=(["'])(.*?)\1/.exec(attrs)
+  let nextAttrs: string
+
+  if (classAttr) {
+    const classes = classAttr[2].split(/\s+/).filter(Boolean)
+    if (!classes.includes('typst-doc')) classes.push('typst-doc')
+    nextAttrs = attrs.replace(
+      classAttr[0],
+      ` class=${classAttr[1]}${classes.join(' ')}${classAttr[1]}`,
+    )
+  } else {
+    nextAttrs = `${attrs} class="typst-doc"`
+  }
+
+  return `${leadingWhitespace}<div${nextAttrs}>${body.slice(openDiv[0].length)}`
+}
+
 export function renderTypst(code: string, options: TypstOptions) {
   const colorNames: string[] = []
   code = code.replace(/var\(([\w-]+)\)/g, ($0, name: string) => {
@@ -173,7 +200,7 @@ export function renderTypst(code: string, options: TypstOptions) {
     })
   // Typst HTML output emits <tr> as direct children of <table>, which is
   // invalid HTML and triggers Vue hydration warnings. Wrap bare rows in <tbody>.
-  return patchTypstTableHtml(html)
+  return wrapTypstDocHtml(patchTypstTableHtml(html))
 }
 
 async function typstTransformer(ctx: any) {

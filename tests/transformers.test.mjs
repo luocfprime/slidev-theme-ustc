@@ -2,7 +2,7 @@
 
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { extractTypstFences, patchTypstTableHtml } from '../setup/transformers.ts'
+import { extractTypstFences, patchTypstTableHtml, wrapTypstDocHtml } from '../setup/transformers.ts'
 
 test('extractTypstFences follows CommonMark fence length and indentation rules', () => {
   const src = [
@@ -33,4 +33,15 @@ test('patchTypstTableHtml wraps bare table rows in tbody', () => {
 test('patchTypstTableHtml leaves structured tables unchanged', () => {
   const html = '<table><thead><tr><th>A</th></tr></thead><tbody><tr><td>B</td></tr></tbody></table>'
   assert.equal(patchTypstTableHtml(html), html)
+})
+
+test('wrapTypstDocHtml adds typst-doc to compiler root div', () => {
+  assert.equal(wrapTypstDocHtml('<div><p>A</p></div>'), '<div class="typst-doc"><p>A</p></div>')
+})
+
+test('wrapTypstDocHtml preserves existing root div classes', () => {
+  assert.equal(
+    wrapTypstDocHtml('<div class="typst other"><p>A</p></div>'),
+    '<div class="typst other typst-doc"><p>A</p></div>',
+  )
 })

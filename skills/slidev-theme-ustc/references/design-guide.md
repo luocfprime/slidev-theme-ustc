@@ -8,7 +8,7 @@ Long-form companion to the **Design Principles** section in SKILL.md. Read this 
 
 When a slide doesn't look right, climb in this order. **Stop at the first step that solves the problem.**
 
-1. **Frontmatter prop** — `density`, `margin`, `align`, `lineHeight`, `ratio`, `gap`, `cols`. The theme was designed around these; they survive upgrades and combine cleanly.
+1. **Frontmatter prop** — `density`, `margin`, `align`, `lineHeight`, `flowGap`, `ratio`, `gap`, `cols`. The theme was designed around these; they survive upgrades and combine cleanly.
 2. **CSS variable override scoped to a wrapper `<div>` or to `.slidev-layout`.** Slidev auto-scopes `<style>` blocks per slide, so `:root { … }` from a slide does **not** reach `:root`. Two scoping levels are available:
    - _Element scope_ — wrap the affected content in `<div class="my-scope">…</div>` and override variables on `.my-scope` in the slide's `<style>`. Only descendants of that wrapper pick up the new values.
    - _Slide scope_ — write `.slidev-layout { --vars }` in the slide's `<style>`. Every element inside `.slidev-layout` (h1, body, tables, footer, **section bar**) inherits the override. The `<style>` is auto-scoped by Slidev, so it only applies to the current slide.
@@ -124,7 +124,7 @@ When you wrap a component in a `<div>` to width-limit it, also use `justify-self
 
 ### Reclaim page padding without shrinking text
 
-Try `margin: tight` (or `tighter`, or `none`) **before** reaching for `density: dense` when the problem is slide padding. `margin` reduces the layout's top/side padding; `density` rescales typography. Paragraph and list rhythm are separate CSS rules, so adjust them with a scoped CSS wrapper if that is the actual problem.
+Try `margin: tight` (or `tighter`, or `none`) **before** reaching for `density: dense` when the problem is slide padding. `margin` reduces the layout's top/side padding; `density` rescales typography. Use `lineHeight` for line spacing and `flowGap` for top-level content block spacing; paragraph/list micro-rhythm still needs a scoped CSS wrapper when that is the actual problem.
 
 ### Per-slide font-size tweak (or any per-slide variable override)
 

@@ -47,6 +47,12 @@ export default {
       reuseExistingServer: !isCI,
       timeout: 120_000,
     },
+    {
+      command: 'pnpm exec slidev tests/fixtures/rhythm.md --port 13038',
+      port: 13038,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
   ],
 
   projects: [
@@ -84,6 +90,11 @@ export default {
       name: 'density',
       use: { baseURL: 'http://localhost:13037' },
       testMatch: ['density.spec.mjs'],
+    },
+    {
+      name: 'rhythm',
+      use: { baseURL: 'http://localhost:13038' },
+      testMatch: ['rhythm.spec.mjs'],
     },
   ],
 

@@ -160,7 +160,7 @@ layout: section
 ---
 
 # 二、content 布局
-`density` · `margin` · `footer` · `footerMode` · `footnote` · `lineHeight` · `align` · `subtitle` · `background` · `sectionBar` · `sectionBarMode`
+`density` · `margin` · `footer` · `footerMode` · `footnote` · `lineHeight` · `flowGap` · `align` · `subtitle` · `background` · `sectionBar` · `sectionBarMode`
 
 ---
 layout: content
@@ -233,7 +233,7 @@ lineHeight: 2.5
 
 `lineHeight` 覆盖默认正文行高（`1.8`）。
 
-它只调整段落内部的行距；段落之间的块间距仍由段落 margin 或外层 CSS 控制。
+它只调整段落内部的行距；顶层内容块之间的间距用 `flowGap` 控制。
 
 设为 `2.5` 时正文行间距明显增大，适合：
 
@@ -307,7 +307,7 @@ layout: section
 ---
 
 # 三、split 布局
-`ratio` · `gap` · `density` · `margin` · `lineHeight` · `align` · `footnote` · `subtitle` · `background` · `footer` · `footerMode` · `sectionBar` · `sectionBarMode`
+`ratio` · `gap` · `density` · `margin` · `lineHeight` · `flowGap` · `align` · `footnote` · `subtitle` · `background` · `footer` · `footerMode` · `sectionBar` · `sectionBarMode`
 
 ---
 layout: split
