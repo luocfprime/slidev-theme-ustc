@@ -60,7 +60,7 @@ Left cell
 
 ## `<Block>`
 
-Labeled container with header bar and bordered box.
+Labeled neutral container with a floating title label and outlined box.
 
 ```vue
 <Block title="Definition">
@@ -70,7 +70,18 @@ Content inside the block.
 </Block>
 ```
 
-`title` is optional and supports markdown.
+```vue
+<Block title="Recovered state" color="#065f46">
+
+Custom accent color for the label and outline.
+
+</Block>
+```
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `title` | string | — | Optional floating label; supports inline markdown. |
+| `color` | string | USTC blue-dark | Optional CSS color for the label and outline family. |
 
 ---
 

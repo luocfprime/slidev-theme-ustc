@@ -336,6 +336,12 @@ Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning
 
 </Block>
 
+<Block title="Recovered state" color="#065f46">
+
+...
+
+</Block>
+
 <Box bg="blue-pale" borderColor="var(--ustc-blue)" radius="4px">
 
 ...

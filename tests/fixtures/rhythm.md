@@ -224,3 +224,108 @@ const nested = true
 ```
 
 </Block>
+
+---
+layout: content
+lineHeight: 1.35
+flowGap: 1.25rem
+footer: false
+sectionBar: false
+---
+
+<!-- slide 10: Markdown flow before components uses flowGap -->
+
+# Markdown Flow Rhythm
+
+Paragraph before a component should use the same flow gap.
+
+<Block title="After paragraph">
+
+The gap above this block should match `flowGap`.
+
+</Block>
+
+- List item before a component should use the same flow gap.
+
+<Callout type="note" title="After list">
+
+The gap above this callout should also match `flowGap`.
+
+</Callout>
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 11: Block floating label style and color prop -->
+
+# Block Style
+
+<Block title="Default block">
+
+Default title uses the theme accent without a solid label fill.
+
+</Block>
+
+<Block title="Green block" color="#065f46">
+
+Custom color changes the title and outline color family.
+
+</Block>
+
+<Block title="A deliberately long theorem label that can wrap without overlapping body text">
+
+Wrapped titles should reserve enough vertical space before the body starts.
+
+</Block>
+
+---
+layout: content
+density: dense
+footer: false
+sectionBar: false
+---
+
+<!-- slide 12: dense Block floating label spacing stays compact -->
+
+# Dense Block Style
+
+<Block title="Definition">
+
+Dense block spacing should remain compact but not collide.
+
+</Block>
+
+<Block title="Lemma 2">
+
+Adjacent dense blocks should keep visible label breathing room.
+
+</Block>
+
+---
+layout: split
+footer: false
+sectionBar: false
+---
+
+<!-- slide 13: split code block before titled Block leaves room for the floating label -->
+
+# Code Before Block
+
+::left::
+
+Context text.
+
+::right::
+
+```ts
+const stage = 'synthetic supervised grounding'
+```
+
+<Block title="Effect">
+
+The floating label should not collide with the preceding code block.
+
+</Block>

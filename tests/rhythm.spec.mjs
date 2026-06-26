@@ -13,6 +13,10 @@ test.setTimeout(60_000)
 //  7  split    split-column blocks use flowGap
 //  8  content  QRCode, VideoBlock, and Typst output use flowGap
 //  9  content  nested generated blocks keep internal spacing
+// 10  content  Markdown flow before components uses flowGap
+// 11  content  Block floating label style and color prop
+// 12  content  dense Block floating label spacing stays compact
+// 13  split    code block before titled Block leaves floating-label space
 
 async function gotoSlide(page, n) {
   await page.goto('/1', { waitUntil: 'domcontentloaded' })
@@ -45,7 +49,116 @@ const directMarginBottom = async (page, selector) =>
     return getComputedStyle(el).marginBottom
   }, selector)
 
+const borderBoxGap = async (page, fromSelector, toSelector) =>
+  slide(page).evaluate(
+    (root, [fromSelector, toSelector]) => {
+      const from = root.querySelector(fromSelector)
+      const to = root.querySelector(toSelector)
+      if (!from || !to) {
+        throw new Error(`Missing rhythm fixture selector pair: ${fromSelector} -> ${toSelector}`)
+      }
+      const fromRect = from.getBoundingClientRect()
+      const toRect = to.getBoundingClientRect()
+      return Math.round((toRect.top - fromRect.bottom) * 100) / 100
+    },
+    [fromSelector, toSelector],
+  )
+
 test.describe('body rhythm frontmatter', () => {
+  test('Block title renders as an outlined floating label with selectable color', async ({
+    page,
+  }) => {
+    await gotoSlide(page, 11)
+
+    const defaultBlock = slide(page).locator('.block').filter({ hasText: 'Default block' })
+    const defaultTitle = defaultBlock.locator('.block-title')
+    const customBlock = slide(page).locator('.block').filter({ hasText: 'Green block' })
+    const customTitle = customBlock.locator('.block-title')
+
+    await expect(defaultBlock).toHaveCSS('position', 'relative')
+    await expect(defaultBlock).toHaveCSS('border-top-width', '2px')
+    await expect(defaultTitle).toHaveCSS('position', 'relative')
+    await expect(defaultTitle).toHaveCSS('background-color', 'rgb(255, 255, 255)')
+    await expect(defaultTitle).toHaveCSS('color', 'rgb(22, 57, 107)')
+
+    await expect(customTitle).toHaveCSS('color', 'rgb(6, 95, 70)')
+    await expect(customBlock).not.toHaveCSS(
+      'border-color',
+      await defaultBlock.evaluate((el) => getComputedStyle(el).borderColor),
+    )
+  })
+
+  test('adjacent titled Blocks leave visible space for floating labels', async ({ page }) => {
+    await gotoSlide(page, 11)
+
+    const gap = await slide(page).evaluate((root) => {
+      const blocks = [...root.querySelectorAll('.block')]
+      if (blocks.length < 2) throw new Error('Expected at least two Block components')
+      const firstRect = blocks[0].getBoundingClientRect()
+      const secondTitle = blocks[1].querySelector('.block-title')
+      if (!secondTitle) throw new Error('Expected second Block title')
+      const titleRect = secondTitle.getBoundingClientRect()
+      return Math.round((titleRect.top - firstRect.bottom) * 100) / 100
+    })
+
+    expect(gap).toBeGreaterThanOrEqual(10)
+  })
+
+  test('wrapped Block titles reserve body space', async ({ page }) => {
+    await gotoSlide(page, 11)
+
+    const gap = await slide(page).evaluate((root) => {
+      const block = [...root.querySelectorAll('.block')].find((el) =>
+        el.textContent?.includes('deliberately long theorem label'),
+      )
+      const title = block?.querySelector('.block-title')
+      const bodyFirst = block?.querySelector('.block-body > :first-child')
+      if (!block || !title || !bodyFirst) {
+        throw new Error('Expected wrapped title Block with body content')
+      }
+      const titleRect = title.getBoundingClientRect()
+      const bodyRect = bodyFirst.getBoundingClientRect()
+      return Math.round((bodyRect.top - titleRect.bottom) * 100) / 100
+    })
+
+    expect(gap).toBeGreaterThanOrEqual(4)
+  })
+
+  test('dense adjacent titled Blocks keep compact floating-label spacing', async ({ page }) => {
+    await gotoSlide(page, 12)
+
+    const gap = await slide(page).evaluate((root) => {
+      const blocks = [...root.querySelectorAll('.block')]
+      if (blocks.length < 2) throw new Error('Expected at least two Block components')
+      const firstRect = blocks[0].getBoundingClientRect()
+      const secondTitle = blocks[1].querySelector('.block-title')
+      if (!secondTitle) throw new Error('Expected second Block title')
+      const titleRect = secondTitle.getBoundingClientRect()
+      return Math.round((titleRect.top - firstRect.bottom) * 100) / 100
+    })
+
+    expect(gap).toBeGreaterThanOrEqual(6)
+    expect(gap).toBeLessThanOrEqual(10)
+  })
+
+  test('split code blocks leave visible space before floating Block labels', async ({ page }) => {
+    await gotoSlide(page, 13)
+
+    const gap = await slide(page).evaluate((root) => {
+      const block = root.querySelector('.split-col .block')
+      const title = block?.querySelector('.block-title')
+      const previous = block?.previousElementSibling
+      if (!block || !title || !previous) {
+        throw new Error('Expected split-column code block followed by titled Block')
+      }
+      const previousRect = previous.getBoundingClientRect()
+      const titleRect = title.getBoundingClientRect()
+      return Math.round((titleRect.top - previousRect.bottom) * 100) / 100
+    })
+
+    expect(gap).toBeGreaterThanOrEqual(10)
+  })
+
   test('global lineHeight and flowGap apply to body layouts', async ({ page }) => {
     await gotoSlide(page, 2)
 
@@ -100,7 +213,9 @@ test.describe('body rhythm frontmatter', () => {
 
     expect(await cssVar(page, '--ustc-component-gap')).toBe('1rem')
     expect(await marginBottom(page, '.split-col .block')).toBe('16px')
-    expect(await marginBottom(page, '.split-col .plotly-wrap')).toBe('16px')
+    expect(parseFloat(await marginBottom(page, '.split-col .plotly-wrap'))).toBeGreaterThanOrEqual(
+      30,
+    )
   })
 
   test('media and transformed flow blocks use flowGap', async ({ page }) => {
@@ -118,5 +233,13 @@ test.describe('body rhythm frontmatter', () => {
     expect(await cssVar(page, '--ustc-component-gap')).toBe('1.25rem')
     expect(await marginTop(page, '.block .slidev-code-wrapper')).toBe('4px')
     expect(await marginBottom(page, '.block .slidev-code-wrapper')).toBe('4px')
+  })
+
+  test('Markdown paragraphs and lists use flowGap before components', async ({ page }) => {
+    await gotoSlide(page, 10)
+
+    expect(await cssVar(page, '--ustc-component-gap')).toBe('1.25rem')
+    expect(await borderBoxGap(page, 'h1 + p', '.block-title')).toBeGreaterThanOrEqual(20)
+    expect(await borderBoxGap(page, 'ul', '.callout')).toBe(20)
   })
 })

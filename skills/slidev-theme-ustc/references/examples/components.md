@@ -966,6 +966,12 @@ layout: content
 
 </Block>
 
+<Block title="Recovered state" color="#065f46">
+
+`color` 可切换标签与边框色系，用于并排比较或强调不同类别。
+
+</Block>
+
 **无 title**（退化为通用有边框容器）
 
 <Block>

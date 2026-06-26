@@ -254,7 +254,7 @@ lineHeight: 1.55
 <!--
   features: layout: content, density: dense, lineHeight override (1.55), Block component (3x stacked, with title)
   not shown: Block inside Grid, Callout, ResultBox
-  see: SKILL.md → Components, references/api/components.md (Block has only an optional `title` prop)
+  see: SKILL.md → Components, references/api/components.md (Block supports optional `title` and `color` props)
 -->
 
 # 核心理论性质
@@ -271,7 +271,7 @@ $k$ 轮消息传递的表达能力不超过 $k$ 阶 Weisfeiler-Leman 图同构�
 
 </Block>
 
-<Block title="命题 2（推理复杂度）">
+<Block title="命题 2（推理复杂度）" color="#065f46">
 
 单次事例推理时间为 $\mathcal{O}(N_v \cdot d + N_e \cdot d^2)$，其中 $d$ 为隐层维度，与 $\langle\mu\rangle$ 线性相关，优于 Kalman Filter 的 $\mathcal{O}(\langle\mu\rangle^2)$。
 
@@ -1054,7 +1054,7 @@ Takeaway 边框 = `--ustc-blue`，文字 = `--ustc-blue-dark`，淡背景 = `--u
 
 <Block title="带边框的 Block">
 
-Block 边框 = `--ustc-blue-border`。
+Block 默认使用 `--ustc-blue-dark` 作为标签色，并派生浅边框色。
 
 </Block>
 
@@ -1070,9 +1070,9 @@ Block 边框 = `--ustc-blue-border`。
 
 </Takeaway>
 
-<Block title="同样的 Block">
+<Block title="同样的 Block" color="#065f46">
 
-边框颜色由 `--ustc-blue-border` 接管。
+也可以用 `color` 单独指定标签与边框色系。
 
 </Block>
 

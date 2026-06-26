@@ -774,6 +774,231 @@
   margin-top: 0.25rem;
 }
 
+.slidev-layout.content
+  > :is(p, ul, ol):has(
+    + :is(
+      .callout,
+      .block,
+      .result-box,
+      .takeaway,
+      .box,
+      .grid,
+      .figure-block,
+      .video-block,
+      .table-block,
+      .plotly-wrap,
+      .ustc-qrcode-wrap,
+      .slidev-code-wrapper,
+      pre.slidev-code,
+      pre.shiki,
+      .mermaid,
+      .typst-doc
+    )
+  ),
+.slidev-layout.split
+  > :is(p, ul, ol):has(
+    + :is(
+      .callout,
+      .block,
+      .result-box,
+      .takeaway,
+      .box,
+      .grid,
+      .figure-block,
+      .video-block,
+      .table-block,
+      .plotly-wrap,
+      .ustc-qrcode-wrap,
+      .slidev-code-wrapper,
+      pre.slidev-code,
+      pre.shiki,
+      .mermaid,
+      .typst-doc
+    )
+  ),
+.slidev-layout.split
+  .split-col
+  > :is(p, ul, ol):has(
+    + :is(
+      .callout,
+      .block,
+      .result-box,
+      .takeaway,
+      .box,
+      .grid,
+      .figure-block,
+      .video-block,
+      .table-block,
+      .plotly-wrap,
+      .ustc-qrcode-wrap,
+      .slidev-code-wrapper,
+      pre.slidev-code,
+      pre.shiki,
+      .mermaid,
+      .typst-doc
+    )
+  ) {
+  margin-bottom: var(--ustc-component-gap);
+}
+
+.slidev-layout.content
+  > :is(
+    p,
+    ul,
+    ol,
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout.split
+  > :is(
+    p,
+    ul,
+    ol,
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout.split
+  .split-col
+  > :is(
+    p,
+    ul,
+    ol,
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ):has(+ .block:not(.block-untitled)) {
+  /* Block.vue's floating label paints above the block border by top:-0.78rem,
+     measured from the padding edge, so subtract the 2px border; add a little
+     breathing room so consecutive titled blocks do not visually collide. */
+  margin-bottom: calc(var(--ustc-component-gap) + 0.78rem + 0.25rem - 2px);
+}
+
+.slidev-layout.content > .slidev-code-wrapper:has(+ .block:not(.block-untitled)),
+.slidev-layout.split > .slidev-code-wrapper:has(+ .block:not(.block-untitled)),
+.slidev-layout.split .split-col > .slidev-code-wrapper:has(+ .block:not(.block-untitled)) {
+  --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.78rem + 0.25rem - 2px);
+}
+
+.slidev-layout:is(.dense, .compact).content
+  > :is(
+    p,
+    ul,
+    ol,
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout:is(.dense, .compact).split
+  > :is(
+    p,
+    ul,
+    ol,
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout:is(.dense, .compact).split
+  .split-col
+  > :is(
+    p,
+    ul,
+    ol,
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ):has(+ .block:not(.block-untitled)) {
+  margin-bottom: calc(var(--ustc-component-gap) + 0.68rem - 2px);
+}
+
+.slidev-layout:is(.dense, .compact).content
+  > .slidev-code-wrapper:has(+ .block:not(.block-untitled)),
+.slidev-layout:is(.dense, .compact).split > .slidev-code-wrapper:has(+ .block:not(.block-untitled)),
+.slidev-layout:is(.dense, .compact).split
+  .split-col
+  > .slidev-code-wrapper:has(+ .block:not(.block-untitled)) {
+  --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.68rem - 2px);
+}
+
 /* ─── Dense mode — variable swap ──────────────────────────────────────────
    Anywhere with `.dense` (on the layout root or a wrapper inside a slide)
    resolves typography vars to their *-dense variants automatically. New
