@@ -32,7 +32,7 @@ const blockStyle = computed<StyleValue | undefined>(() =>
   border-radius: 6px;
   box-shadow: none;
   padding: 0 1rem 0.9rem;
-  margin-top: 0.78rem;
+  margin-top: 0.9rem;
   margin-bottom: 0.55rem;
 }
 
@@ -43,16 +43,17 @@ const blockStyle = computed<StyleValue | undefined>(() =>
 
 .block-title {
   position: relative;
-  top: -0.78rem;
-  left: 0.55rem;
-  display: inline-block;
+  top: -0.9rem;
+  left: -0.45rem;
+  display: block;
+  width: fit-content;
   max-width: calc(100% - 1.1rem);
   overflow-wrap: anywhere;
   font-weight: var(--ustc-fw-semibold);
   color: var(--ustc-block-accent);
   font-size: var(--ustc-fs-block-title);
   letter-spacing: 0;
-  margin: 0 0 -0.28rem;
+  margin: 0 0 -0.6rem;
   padding: 0 0.34rem;
   background: #fff;
   line-height: 1.25;

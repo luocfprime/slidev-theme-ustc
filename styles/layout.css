@@ -932,16 +932,16 @@
     .mermaid,
     .typst-doc
   ):has(+ .block:not(.block-untitled)) {
-  /* Block.vue's floating label paints above the block border by top:-0.78rem,
+  /* Block.vue's floating label paints above the block border by top:-0.9rem,
      measured from the padding edge, so subtract the 2px border; add a little
      breathing room so consecutive titled blocks do not visually collide. */
-  margin-bottom: calc(var(--ustc-component-gap) + 0.78rem + 0.25rem - 2px);
+  margin-bottom: calc(var(--ustc-component-gap) + 0.9rem + 0.25rem - 2px);
 }
 
 .slidev-layout.content > .slidev-code-wrapper:has(+ .block:not(.block-untitled)),
 .slidev-layout.split > .slidev-code-wrapper:has(+ .block:not(.block-untitled)),
 .slidev-layout.split .split-col > .slidev-code-wrapper:has(+ .block:not(.block-untitled)) {
-  --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.78rem + 0.25rem - 2px);
+  --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.9rem + 0.25rem - 2px);
 }
 
 .slidev-layout:is(.dense, .compact).content
@@ -1011,7 +1011,7 @@
     .mermaid,
     .typst-doc
   ):has(+ .block:not(.block-untitled)) {
-  margin-bottom: calc(var(--ustc-component-gap) + 0.68rem - 2px);
+  margin-bottom: calc(var(--ustc-component-gap) + 0.9rem - 2px);
 }
 
 .slidev-layout:is(.dense, .compact).content
@@ -1020,7 +1020,7 @@
 .slidev-layout:is(.dense, .compact).split
   .split-col
   > .slidev-code-wrapper:has(+ .block:not(.block-untitled)) {
-  --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.68rem - 2px);
+  --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.9rem - 2px);
 }
 
 /* ─── Dense mode — variable swap ──────────────────────────────────────────
