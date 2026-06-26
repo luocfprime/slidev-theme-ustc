@@ -82,9 +82,7 @@
   --ustc-fs-takeaway: 1.4rem; /* Takeaway text                       */
   --ustc-fs-takeaway-dense: 1.05rem; /* Takeaway text — dense mode          */
   --ustc-fs-footnote: 0.67rem; /* footnote list items                 */
-  --ustc-fs-badge: calc(
-    var(--ustc-fs-body) * 0.7
-  ); /* <Badge> text — tracks body density via --ustc-fs-body swap */
+  --ustc-fs-badge-scale: 0.68; /* <Badge> text scale relative to current body size */
   --ustc-lh: 1.8; /* default line-height for body text   */
   --ustc-lh-dense: 1.5; /* line-height for body text in dense mode */
   --ustc-lh-caption: 1.35; /* figure/table captions               */
@@ -468,6 +466,8 @@
   position: relative;
   padding: calc(var(--ustc-py) + var(--ustc-nav-h)) var(--ustc-px) var(--ustc-pb) var(--ustc-pl);
   box-sizing: border-box;
+  font-size: var(--ustc-fs-body);
+  line-height: var(--ustc-lh);
 }
 
 .slidev-layout.content.no-section-bar,
@@ -480,6 +480,8 @@
   position: relative;
   padding: calc(var(--ustc-py) + var(--ustc-nav-h)) var(--ustc-px) var(--ustc-pb) var(--ustc-pl);
   box-sizing: border-box;
+  font-size: var(--ustc-fs-body);
+  line-height: var(--ustc-lh);
 }
 
 /* ─── Content subtitle slot ──────────────────────────────────────────────── */
@@ -556,12 +558,50 @@
 /* Block components: top margin zeroed so h1 { margin-bottom: --ustc-title-gap }
    is the single control point. Bottom margins (from scoped CSS) handle
    inter-component spacing. */
-:is(.slidev-layout.content, .slidev-layout.split)
-  :is(div.callout, div.block, div.result-box, div.takeaway, div.grid, .typst-doc) {
+.slidev-layout.content
+  > :is(
+    div.callout,
+    div.block,
+    div.result-box,
+    div.takeaway,
+    div.grid,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ),
+.slidev-layout.split
+  > :is(
+    div.callout,
+    div.block,
+    div.result-box,
+    div.takeaway,
+    div.grid,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ),
+.slidev-layout.split
+  .split-col
+  > :is(
+    div.callout,
+    div.block,
+    div.result-box,
+    div.takeaway,
+    div.grid,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ) {
   margin-top: 0;
 }
 
-.slidev-layout:is(.content, .split)
+.slidev-layout.content
   > :is(
     .callout,
     .block,
@@ -574,12 +614,61 @@
     .table-block,
     .plotly-wrap,
     .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ),
+.slidev-layout.split
+  > :is(
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
+    .typst-doc
+  ),
+.slidev-layout.split
+  .split-col
+  > :is(
+    .callout,
+    .block,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
     .typst-doc
   ) {
   margin-bottom: var(--ustc-component-gap);
 }
 
-.slidev-layout:is(.content, .split)
+.slidev-layout.content > .slidev-code-wrapper,
+.slidev-layout.split > .slidev-code-wrapper,
+.slidev-layout.split .split-col > .slidev-code-wrapper {
+  --slidev-code-margin: 0 0 var(--ustc-component-gap);
+}
+
+.slidev-layout.content
   > div:not(
     .callout,
     .block,
@@ -590,6 +679,8 @@
     .abs,
     .table-block,
     .plotly-wrap,
+    .slidev-code-wrapper,
+    .mermaid,
     .content-subtitle,
     .footnotes
   )
@@ -605,6 +696,10 @@
     .table-block,
     .plotly-wrap,
     .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    pre.slidev-code,
+    pre.shiki,
+    .mermaid,
     .typst-doc
   ) {
   margin-top: var(--ustc-component-gap);
@@ -839,13 +934,13 @@
 .slidev-layout.content figure.figure-block,
 .slidev-layout.split figure.figure-block {
   margin-top: 0;
-  margin-bottom: 0.65rem;
+  margin-bottom: var(--ustc-component-gap);
 }
 
 .slidev-layout.content div.table-block,
 .slidev-layout.split div.table-block {
   margin-top: 0;
-  margin-bottom: 0.65rem;
+  margin-bottom: var(--ustc-component-gap);
 }
 
 .slidev-layout.content > div.table-block,

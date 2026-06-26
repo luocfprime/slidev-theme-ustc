@@ -89,6 +89,8 @@ authorMarks:
 
 sectionBar: true # show section progress bar (default: true)
 sectionBarMode: full # 'full' (labels + progress indicator) | 'minimal' (indicator only) | 'labels' (labels only)
+lineHeight: 1.6 # optional deck-wide body line-height multiplier; body slides can override
+flowGap: normal # optional deck-wide top-level content block gap; 'none' | 'tight' | 'normal' | 'loose' or CSS length
 figurePrefix: Figure # auto-numbering prefix for FigureBlock
 tablePrefix: Table # auto-numbering prefix for TableBlock
 figureNumberSuffix: ': ' # suffix between FigureBlock number and caption
@@ -98,6 +100,18 @@ figureZoom: false # click-to-zoom lightbox for all FigureBlocks (default: false;
 ```
 
 **Authors format:** array of `{ name, affiliations, marks? }` objects. `presenterName` sets who is underlined (defaults to first author). Institutions get sequential superscript numbers in order of first appearance. `marks` are per-author symbols (e.g. `†`, `*`) displayed as superscripts after the institute number; `authorMarks` maps each symbol to its legend text (rendered below the affiliations line).
+
+**Global body rhythm:** `lineHeight` and `flowGap` may be set in the first
+slide's global frontmatter as deck-wide defaults for `default` / `content` /
+`split` body slides. A body slide can override either value locally.
+`lineHeight` is a unitless CSS line-height multiplier. `flowGap` controls
+vertical spacing between adjacent top-level content blocks (markdown tables,
+theme components, media blocks, Plotly, code fences, Mermaid diagrams, Typst
+output, grids, and split-column top-level blocks); it does not affect internal
+spacing such as image-caption gaps, component title/body gaps, list item gaps,
+or `split`/`Grid` column gaps. Accepted `flowGap` presets: `none` (`0`), `tight`
+(`0.45rem`), `normal` (`0.75rem`), `loose` (`1rem`), or a CSS length string
+such as `0.6rem` or `8px`.
 
 ---
 
@@ -135,7 +149,8 @@ Standard body slide. `default` is the fallback when no `layout:` is specified; `
 layout: default # or 'content'
 density: normal # 'normal' (default) | 'compact' | 'dense'
 margin: normal # 'normal' | 'tight' | 'tighter' | 'none'
-lineHeight: 1.8 # optional override; matches default body line-height
+lineHeight: 1.8 # optional slide override; falls back to global lineHeight if set
+flowGap: normal # optional slide override; 'none' | 'tight' | 'normal' | 'loose' or CSS length (e.g. 0.6rem)
 align: left # 'left' | 'center' | 'right'
 footnote: overlay # 'overlay' (default) | 'flow'
 footer: true
@@ -437,6 +452,7 @@ The theme exposes many features (subtitle, dense mode, section bar, footnotes, C
 - **Don't stack components.** One `<Block>` _or_ one `<Callout>` _or_ one `<Takeaway>` reads better than all three. Reach for a component only when its semantic role fits — wrapping every paragraph in something is a smell.
 - **Align parallel items horizontally.** When a slide does hold multiple instances of the same component (two `<Block>`s, three `<Box>`es, side-by-side `<Callout>`s), wrap them in `<Grid cols="N">` so they sit in a row, not stacked vertically. Vertical stacking reads as sequence; horizontal layout reads as comparison. For equal-height items, swap `<Grid>` for raw native CSS Grid (`<Grid>` defaults to `align-items: start`; native defaults to `stretch`).
 - **Use the theme rhythm first.** Top-level components and media blocks already share `--ustc-component-gap`, with compact/dense variants. If a single slide still needs a touch more separation at one specific point, one `<br>` is acceptable; for repeated spacing changes, override `--ustc-component-gap` on `.slidev-layout` for one slide or `:root` for the deck instead of sprinkling `<br>` throughout the deck.
+- **Use `flowGap` for body block rhythm.** Set `flowGap` globally when the whole deck should breathe tighter/looser, or per slide when one dense page needs special spacing. It controls the same top-level flow rhythm as `--ustc-component-gap`; use dedicated tokens for internal gaps such as figure caption spacing.
 - **Dense mode is for content pressure, not aesthetics.** If the slide already fits in `density: normal`, don't switch to `dense`. If the problem is page padding rather than text size, try `margin: tight` first.
 - **Toggle, don't litter.** Disable `sectionBar`/`footer` per-slide for cover, end, blank, and full-bleed visuals — not casually elsewhere.
 - **Climb the precedence ladder for one-off styling**: frontmatter prop → CSS variable override in a slide `<style>` block → wrap the component in a plain `<div style="…">`. Two scoping levels for CSS variable overrides: (a) `.my-scope { --var }` on a wrapper `<div>` — only that subtree changes; (b) `.slidev-layout { --var }` — the entire slide including h1, footer, and section bar. For deck-wide overrides, put `:root { --var }` in `styles/index.css`. If none of these fit, **propose a feature request or PR against the theme repo** — **never edit the installed theme files** (e.g. `node_modules/@luocfprime/slidev-theme-ustc/…`). Those files are outside project scope: they get wiped on every reinstall, the change does not version-control with your deck, and the deck silently forks from upstream.
@@ -522,10 +538,11 @@ Key overridable variables:
 | `--ustc-fs-result-title` / `--ustc-fs-result-body` | `1.15rem` / `1.15rem` | ResultBox title/body         |
 | `--ustc-fs-block-title` / `--ustc-fs-block-body`   | `1.15rem` / `1.15rem` | Block title/body             |
 | `--ustc-fs-takeaway`                               | `1.4rem`              | Takeaway text                |
-| `--ustc-fs-badge`                                  | `calc(body * 0.7)`    | Badge text (tracks density)  |
+| `--ustc-fs-badge-scale`                            | `0.68`                | Badge text scale vs body     |
+| `--ustc-fs-badge`                                  | unset                 | Fixed Badge text override    |
 | `--ustc-lh`                                        | `1.8`                 | body text line-height        |
 | `--ustc-title-gap`                                 | `1.5rem`              | h1 to first body element gap |
-| `--ustc-component-gap`                             | `0.75rem`             | top-level component gap      |
+| `--ustc-component-gap`                             | `0.75rem`             | top-level content block gap  |
 | `--ustc-px` / `--ustc-py`                          | `2.8rem` / `1.75rem`  | slide padding                |
 | `--ustc-max-w-cover-h1` / `--ustc-max-w-cover-sub` | `48rem` / `58rem`     | cover title/subtitle width   |
 | `--ustc-footer-h`                                  | `1.75rem`             | footer bar height            |
@@ -760,6 +777,8 @@ wip: true
 | Smaller body text globally               | `:root { --ustc-fs-body: 1.2rem }` in `styles/index.css`, or `.slidev-layout { --ustc-fs-body: 1.2rem }` per slide           |
 | Dense text on one slide                  | `density: dense` in frontmatter                                                                                              |
 | Middle density (between normal & dense)  | `density: compact` in frontmatter                                                                                            |
+| Deck-wide body line-height               | `lineHeight: 1.6` in first-slide global frontmatter; override per body slide with `lineHeight`                                |
+| Deck-wide top-level block spacing        | `flowGap: tight` in first-slide global frontmatter; override per body slide with `flowGap: 0.6rem`                            |
 | Change h1 / heading colour per slide     | `.slidev-layout { --ustc-blue-dark: #... }` in slide `<style>` — reaches h1, block/takeaway/callout titles                  |
 | Recolor section bar + footer per slide   | `.slidev-layout { --ustc-blue: #... }` in slide `<style>` — both chrome bars share this token                                |
 | Recolor only the footer (keep nav blue)  | `.slidev-layout { --ustc-footer-bg: #... }` in slide `<style>`                                                              |

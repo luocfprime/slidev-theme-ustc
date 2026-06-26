@@ -44,22 +44,21 @@ const isExternal = computed(() => /^(https?:)?\/\//.test(props.href))
   align-items: center;
   gap: 0.3em;
   vertical-align: middle;
-  /* Size off --ustc-fs-badge, a real theme token (styles/layout.css) defined as
-     calc(var(--ustc-fs-body) * 0.7). Anchoring to the globally-inherited
-     --ustc-fs-body custom property — rather than a bare `em` — keeps every badge
-     the same size regardless of wrapper: `em` resolves against the parent's
-     computed font-size, which differs between a markdown <p>/<li> and a bare
-     <div>, so `em` badges shrink inside plain <div>s. Because --ustc-fs-body is
-     swapped by .dense/.compact, the badge still scales with density. The inline
-     fallback mirrors the token so the component renders standalone. */
-  font-size: var(--ustc-fs-badge, calc(var(--ustc-fs-body, 1.4rem) * 0.7));
+  /* Anchor the default size to the current layout's --ustc-fs-body so dense /
+     compact variable swaps affect badges. Use --ustc-fs-badge for an explicit
+     fixed override, or --ustc-fs-badge-scale to keep density-aware scaling. */
+  font-size: var(
+    --ustc-fs-badge,
+    calc(var(--ustc-fs-body, 1.4rem) * var(--ustc-fs-badge-scale, 0.68))
+  );
   font-weight: 700;
   letter-spacing: 0.04em;
-  line-height: 1.15;
-  padding: 0.2em 0.55em;
+  line-height: 1.1;
+  padding: 0.14em 0.48em;
   border: 1px solid transparent; /* keep all variants the same height */
   border-radius: 0.4em;
   white-space: nowrap;
+  transform: translateY(-0.12em);
   text-decoration: none; /* badge-as-link should not be underlined */
 }
 
@@ -67,8 +66,8 @@ const isExternal = computed(() => /^(https?:)?\/\//.test(props.href))
    display:block drops the inline-SVG baseline gap so flex centering aligns the
    icon to the text instead of leaving it sitting high. */
 .ustc-badge :deep(svg) {
-  width: 1.15em;
-  height: 1.15em;
+  width: 1.08em;
+  height: 1.08em;
   display: block;
   flex-shrink: 0;
 }

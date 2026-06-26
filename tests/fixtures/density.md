@@ -15,7 +15,7 @@ footer: false
 
 # Normal
 
-Body paragraph at normal density.
+Body paragraph at normal density with <Badge variant="soft">normal badge</Badge>.
 
 ---
 layout: content
@@ -27,7 +27,7 @@ footer: false
 
 # Compact
 
-Body paragraph at compact density.
+Body paragraph at compact density with <Badge variant="soft">compact badge</Badge>.
 
 ---
 layout: content
@@ -39,7 +39,7 @@ footer: false
 
 # Dense
 
-Body paragraph at dense density.
+Body paragraph at dense density with <Badge variant="soft">dense badge</Badge>.
 
 ---
 layout: content
@@ -133,5 +133,32 @@ Figures should also participate in the same top-level component rhythm.
 .fixture-cell {
   border: 1px solid var(--ustc-blue-border);
   padding: 0.2rem 0.45rem;
+}
+</style>
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 7: inline Badge visual alignment with surrounding CJK body text -->
+
+# Badge Inline Alignment
+
+行内对齐: 正文中嵌 <Badge variant="solid" color="#24292f"><mdi-github /> GitHub</Badge> 和 <Badge variant="soft" color="#16a34a"><mdi-check-circle /> verified</Badge>, icon 与文字基线对齐。
+
+混合对齐: <Badge href="https://github.com" color="#24292f"><mdi-github /> GitHub</Badge> <Badge href="https://arxiv.org/abs/2509.20358" color="#b31b1b"><mdi-school /> arXiv</Badge> <Badge variant="outline" color="#16a34a">CERN Open Data</Badge>
+
+<div class="badge-list-fixture">
+  <div><Badge variant="soft" color="#16a34a">2026</Badge> <Badge variant="soft" color="#6b7280">CVPR</Badge> <b>方法 A</b> — 文本驱动的三维编辑 <Badge variant="solid" color="#c0392b">Oral</Badge></div>
+  <div><Badge variant="soft" color="#3b82f6">2025</Badge> <Badge variant="soft" color="#6b7280">NeurIPS</Badge> <b>方法 B</b> — 组合式生成框架 <Badge variant="soft" color="#c0392b">CCF A</Badge></div>
+</div>
+
+<style>
+.badge-list-fixture {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 </style>

@@ -174,7 +174,7 @@ Inline pill for compact factual tags — venue, year, status, CCF rank, dataset,
 
 **Slot content** is freeform: plain text, emoji, or Slidev Iconify icons (e.g. `<mdi-github />`). Icons are sized relative to the text and baseline-aligned automatically — no wrapper needed.
 
-**Sizing.** Badge text is `--ustc-fs-badge` (`calc(var(--ustc-fs-body) * 0.7)`), anchored to the theme body size so it auto-shrinks in `dense`/`compact` and stays consistent whether the badge sits in a `<p>`, `<li>`, or a bare `<div>`. Override `--ustc-fs-badge` to resize all badges.
+**Sizing.** Badge text defaults to `calc(var(--ustc-fs-body) * var(--ustc-fs-badge-scale))` (`--ustc-fs-badge-scale: 0.68`), anchored to the current layout body size so it auto-shrinks in `dense`/`compact` and stays consistent whether the badge sits in a `<p>`, `<li>`, or a bare `<div>`. Override `--ustc-fs-badge-scale` to resize badges while preserving density scaling; override `--ustc-fs-badge` only when you want a fixed text size.
 
 ---
 

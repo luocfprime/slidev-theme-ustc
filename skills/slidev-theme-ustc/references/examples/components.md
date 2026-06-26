@@ -1562,11 +1562,11 @@ density: dense
 
 # Badge — dense 下自动缩放
 
-badge 字号是 `--ustc-fs-badge`(`calc(var(--ustc-fs-body) * 0.7)`),锚定主题正文字号,dense / compact 下自动跟随缩小,无论它在 `<p>`、`<li>` 还是裸 `<div>` 里都保持一致大小。
+badge 字号默认由 `--ustc-fs-badge-scale`(`0.68`) 相对当前 `--ustc-fs-body` 计算,dense / compact 下自动跟随缩小,无论它在 `<p>`、`<li>` 还是裸 `<div>` 里都保持一致大小。
 
 - 带 icon 标签 <Badge variant="outline" color="#3b82f6"><mdi-github /> Code</Badge> 在 dense 行内的对齐
 - 纯文本标签 <Badge variant="soft" color="#16a34a">SOTA</Badge> 跟随上下文缩放
-- 要整体调大/调小所有 badge,覆盖 `--ustc-fs-badge` 即可
+- 要整体调大/调小所有 badge 且保留 density 缩放,覆盖 `--ustc-fs-badge-scale` 即可
 
 ---
 layout: end
