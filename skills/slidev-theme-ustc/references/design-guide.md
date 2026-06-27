@@ -189,6 +189,21 @@ SKILL.md has the semantic table. Three deciding questions when several component
 
 If you're wrapping every paragraph in a component, undo it. Plain markdown is usually right.
 
+### Avoid repeated identical component styling
+
+Do not fill a slide with the same component treatment over and over. Once one page has
+more than two identical-looking `<Block>`s, `<Callout>`s, `<ResultBox>`es, or card-like
+wrappers, the audience's eye groups them as one repeated pattern. That creates aesthetic
+and visual fatigue, and it hides the intended priority: everything looks equally boxed, so
+nothing reads as the main point.
+
+The exception is deliberate ordered structure. A 2×2 `<Block>` matrix, a 3×1 card-like
+stack, or a same-size comparison grid is valid when the repetition itself communicates
+parallelism. In that case, keep spacing and alignment strict and make the ordering obvious.
+If the items are not true peers, vary the composition instead: use one emphasized component
+plus plain bullets, split the slide, change one item into a figure/table, or use color/title
+emphasis sparingly to direct attention.
+
 ---
 
 ## Sanity Checks Before Committing
