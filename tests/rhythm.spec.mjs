@@ -17,6 +17,9 @@ test.setTimeout(60_000)
 // 11  content  Block floating label style and color prop
 // 12  content  dense Block floating label spacing stays compact
 // 13  split    code block before titled Block leaves floating-label space
+// 14  content  raw div before titled Block leaves floating-label space
+// 15  content  default list indent stays visually compact
+// 16  content  VSpace inserts explicit one-off vertical space
 
 async function gotoSlide(page, n) {
   await page.goto('/1', { waitUntil: 'domcontentloaded' })
@@ -72,6 +75,8 @@ test.describe('body rhythm frontmatter', () => {
 
     const defaultBlock = slide(page).locator('.block').filter({ hasText: 'Default block' })
     const defaultTitle = defaultBlock.locator('.block-title')
+    const defaultBody = defaultBlock.locator('.block-body p').first()
+    const defaultList = defaultBlock.locator('.block-body ul').first()
     const customBlock = slide(page).locator('.block').filter({ hasText: 'Green block' })
     const customTitle = customBlock.locator('.block-title')
 
@@ -80,6 +85,10 @@ test.describe('body rhythm frontmatter', () => {
     await expect(defaultTitle).toHaveCSS('position', 'relative')
     await expect(defaultTitle).toHaveCSS('background-color', 'rgb(255, 255, 255)')
     await expect(defaultTitle).toHaveCSS('color', 'rgb(22, 57, 107)')
+    await expect(defaultBody).toHaveCSS('font-size', '19.52px')
+    expect(
+      await defaultList.evaluate((el) => parseFloat(getComputedStyle(el).paddingLeft)),
+    ).toBeLessThanOrEqual(11)
 
     await expect(customTitle).toHaveCSS('color', 'rgb(6, 95, 70)')
     await expect(customBlock).not.toHaveCSS(
@@ -157,6 +166,69 @@ test.describe('body rhythm frontmatter', () => {
     })
 
     expect(gap).toBeGreaterThanOrEqual(10)
+  })
+
+  test('raw divs before titled Blocks leave visible space for floating labels', async ({
+    page,
+  }) => {
+    await gotoSlide(page, 14)
+
+    const gap = await slide(page).evaluate((root) => {
+      const raw = root.querySelector('.raw-badge-row')
+      const title = root.querySelector('.block .block-title')
+      if (!raw || !title) {
+        throw new Error('Expected raw div followed by a titled Block')
+      }
+      const rawRect = raw.getBoundingClientRect()
+      const titleRect = title.getBoundingClientRect()
+      return Math.round((titleRect.top - rawRect.bottom) * 100) / 100
+    })
+
+    expect(gap).toBeGreaterThanOrEqual(10)
+  })
+
+  test('default body list indent stays visually compact', async ({ page }) => {
+    await gotoSlide(page, 15)
+
+    const paddingLeft = await slide(page)
+      .locator('ul')
+      .first()
+      .evaluate((el) => parseFloat(getComputedStyle(el).paddingLeft))
+
+    expect(paddingLeft).toBeLessThanOrEqual(11)
+  })
+
+  test('VSpace inserts an explicit one-off vertical gap', async ({ page }) => {
+    await gotoSlide(page, 16)
+
+    const spacer = slide(page).locator('.vspace').first()
+    await expect(spacer).toHaveCSS('height', '32px')
+    await expect(spacer).toHaveAttribute('aria-hidden', 'true')
+
+    const gap = await borderBoxGap(page, '.vspace-before', '.vspace-after')
+    expect(gap).toBe(32)
+
+    await expect(slide(page).locator('.vspace-numeric')).toHaveCSS('height', '8px')
+    expect(await borderBoxGap(page, '.vspace-numeric-before', '.vspace-numeric-after')).toBe(8)
+
+    await expect(slide(page).locator('.vspace-negative')).toHaveCSS('height', '0px')
+    expect(await borderBoxGap(page, '.vspace-negative-before', '.vspace-negative-after')).toBe(-8)
+
+    await expect(slide(page).locator('.vspace-default')).toHaveCSS('height', '16px')
+    expect(await borderBoxGap(page, '.vspace-default-before', '.vspace-default-after')).toBe(16)
+
+    await expect(slide(page).locator('.vspace-token')).toHaveCSS('height', '8px')
+    expect(await borderBoxGap(page, '.vspace-token-before', '.vspace-token-after')).toBe(8)
+
+    await expect(slide(page).locator('.vspace-bound')).toHaveCSS('height', '24px')
+    expect(await borderBoxGap(page, '.vspace-bound-before', '.vspace-bound-after')).toBe(24)
+
+    await expect(slide(page).locator('.vspace-negative-numeric')).toHaveCSS('height', '0px')
+    expect(
+      await borderBoxGap(page, '.vspace-negative-numeric-before', '.vspace-negative-numeric-after'),
+    ).toBe(-8)
+
+    await expect(slide(page).locator('.vspace-before-block')).toHaveCSS('margin-bottom', '0px')
   })
 
   test('global lineHeight and flowGap apply to body layouts', async ({ page }) => {

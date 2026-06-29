@@ -309,7 +309,7 @@ This overrides the `background-image` produced by the frontmatter, so you can dr
 
 ## Components
 
-`Grid`, `Block`, `Abs` — layout helpers. `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `Takeaway` — content blocks. `Badge` — inline pill tag. `VideoBlock`, `PlotlyGraph`, `QRCode` — media.
+`Grid`, `Abs`, `VSpace` — layout helpers. `NumberedList`, `Note`, `Block`, `Box` — structural content blocks. `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`, `Takeaway` — content blocks. `Badge` — inline pill tag. `VideoBlock`, `PlotlyGraph`, `QRCode` — media.
 
 All are auto-imported by Slidev. For full prop tables see [references/api/components.md](references/api/components.md).
 
@@ -318,17 +318,80 @@ All are auto-imported by Slidev. For full prop tables see [references/api/compon
 | Component     | Semantic role                   | Typical use                                                                   |
 | ------------- | ------------------------------- | ----------------------------------------------------------------------------- |
 | `<Block>`     | Generic named container         | Definitions, lemmas, frameworks — any "labeled box" without emotional valence |
-| `<Callout>`   | Typed advisory notice with icon | Notes, tips, warnings, important caveats — when the _type_ of message matters |
+| `<NumberedList>` | Ordered module list          | Parts, stages, or ranked components where numbering matters but a process diagram would overstate the relation |
+| `<Note>`      | Lightweight title-body pair     | Q&A, summary/specification, assumption/limitation, observation/implication |
+| `<Callout>`   | Typed advisory notice with icon | Tips, warnings, important caveats — when the _type_ of message matters |
 | `<Takeaway>`  | The single most important point | One bold conclusion per slide; no props, forces brevity                       |
 | `<ResultBox>` | Quantitative or formal result   | Experimental numbers, theorem statements, final answers                       |
 | `<Badge>`     | Inline metadata tag (not a box) | Venue / year / status / CCF rank / dataset / links — flowing inline with text |
 
-Rules of thumb: use `<Takeaway>` at most once per slide. `<Callout type="warning">` is for the audience, not the presenter. `<Block>` is neutral — reach for it when none of the others fit.
+Rules of thumb: `<Callout type="warning">` is for the audience, not the presenter. `<Block>` is neutral — reach for it when none of the others fit.
+
+### Visual emphasis budget
+
+Every component spends visual attention. A border, background fill, icon,
+strong color, or oversized type each adds emphasis. Match the visual weight to
+the information's role: high-emphasis components should be rare; low-emphasis
+components can appear more often when they form a clean structure.
+
+These are recommended maximums per component type, not hard validation rules.
+They are also not shared quotas by emphasis tier: `<Takeaway>` and `<Callout>`
+each have their own limit. The real failure mode is mixing many different
+high-visibility treatments on one slide so that nothing has priority.
+
+| Component        | Visual emphasis | Recommended max per slide                                      |
+| ---------------- | --------------- | -------------------------------------------------------------- |
+| `<Takeaway>`     | High            | 1                                                              |
+| `<Callout>`      | High            | 1                                                              |
+| `<ResultBox>`    | Medium-high     | 2                                                              |
+| `<NumberedList>` | Medium          | 1 group; 2 groups only for a clear split-column process        |
+| `<Block>`        | Medium-low      | 2; in `split`, 2-3 when distributed across both columns        |
+| `<Box>`          | Low             | 2; in `split`, 2-3 when distributed across both columns        |
+| `<Badge>`        | Low, but easily fragmented | 6; more only as a deliberate legend or tag row       |
+| `<Note>`         | Low          | 4; in `split`, 5-6 when used as lightweight title-body pairs   |
+
+`<Note>` is a low-emphasis title-body pair for Q&A,
+summary/specification, assumption/limitation, or observation/implication
+content: more structured than a plain list, but lighter than `<Block>`,
+`<Callout>`, or `<ResultBox>`. Stack multiple `<Note>`s naturally; do not wrap
+them in a separate `<Notes>` container.
+
+Repeating one low- or medium-emphasis component in a strict grid, matrix, or
+comparison is usually calmer than mixing many component styles. A page with
+several peer `<Block>`s in a 2x2 matrix can work; a page with a `<Takeaway>`, a
+`<Callout>`, two `<ResultBox>`es, and multiple boxes usually over-spends the
+attention budget. Media/content carriers such as `<FigureBlock>`,
+`<TableBlock>`, `<VideoBlock>`, `<PlotlyGraph>`, and `<QRCode>` are governed by
+content/layout needs and are intentionally not included in this structural
+emphasis table.
 
 ### Quick reference
 
 ```vue
 <Grid cols="2" gap="md" alignY="top">...</Grid>
+<VSpace size="1rem" />
+<VSpace size="-0.5rem" />
+<!-- explicit one-off vertical spacing; prefer over <br>; negative values are an escape hatch -->
+
+<NumberedList
+  :items="[
+    { title: 'Collect data', body: 'gather sources and normalize fields' },
+    { title: 'Run analysis', body: 'apply the shared scoring protocol' },
+    { title: 'Write summary', body: 'report findings and remaining caveats' },
+  ]"
+/>
+
+<Note title="Input">
+
+...
+
+</Note>
+
+<Note title="Output" color="#92400e" :divider="false">
+
+...
+
+</Note>
 
 <Block title="Definition">
 
@@ -407,7 +470,7 @@ Cite[^1] in caption
 ```
 
 **Content-bearing Vue components must be multi-line with blank lines.** Write
-`<Block>`, `<Box>`, `<Callout>`, `<ResultBox>`, and `<Takeaway>` with the opening tag,
+`<Block>`, `<Box>`, `<Note>`, `<Callout>`, `<ResultBox>`, and `<Takeaway>` with the opening tag,
 a blank line, the body, another blank line, and the closing tag — even when the body
 is just one plain-text sentence. The one-line form is syntactically possible, but it
 is not the style for this skill and it fails as soon as the body grows markdown
@@ -433,7 +496,7 @@ Wrong (all on one line — not accepted, even if the text looks simple):
 ```
 
 Do not use one-line content components such as
-`<Takeaway>Key point.</Takeaway>` or `<Callout type="tip">Plain text.</Callout>`.
+`<Takeaway>Key point.</Takeaway>` or `<Note title="A">Plain text.</Note>`.
 `<Badge>` is different: it is an inline pill and should stay inline when used inside
 running text.
 
@@ -458,7 +521,7 @@ The theme exposes many features (subtitle, dense mode, section bar, footnotes, C
 - **Don't stack components.** One `<Block>` _or_ one `<Callout>` _or_ one `<Takeaway>` reads better than all three. Reach for a component only when its semantic role fits — wrapping every paragraph in something is a smell.
 - **Vary repeated component treatments.** More than two identical-looking instances of the same component on one slide flatten into a visual group: the audience sees "a pile of boxes" before it sees hierarchy. If you need 3+ peers, make the repetition intentional and ordered (for example a 2×2 `<Block>` matrix or a 3×1 card-like stack); otherwise vary structure, emphasis, or component choice so the main point stays legible.
 - **Align parallel items horizontally.** When a slide does hold multiple instances of the same component (two `<Block>`s, three `<Box>`es, side-by-side `<Callout>`s), wrap them in `<Grid cols="N">` so they sit in a row, not stacked vertically. Vertical stacking reads as sequence; horizontal layout reads as comparison. For equal-height items, swap `<Grid>` for raw native CSS Grid (`<Grid>` defaults to `align-items: start`; native defaults to `stretch`).
-- **Use the theme rhythm first.** Top-level components and media blocks already share `--ustc-component-gap`, with compact/dense variants. If a single slide still needs a touch more separation at one specific point, one `<br>` is acceptable; for repeated spacing changes, override `--ustc-component-gap` on `.slidev-layout` for one slide or `:root` for the deck instead of sprinkling `<br>` throughout the deck.
+- **Use the theme rhythm first.** Top-level components and media blocks already share `--ustc-component-gap`, with compact/dense variants. If a single slide still needs a touch more or less separation at one specific point, use `<VSpace size="..."/>` instead of `<br>`. For repeated spacing changes, override `--ustc-component-gap` on `.slidev-layout` for one slide or `:root` for the deck instead of sprinkling one-off spacers throughout the deck.
 - **Use `flowGap` for body block rhythm.** Set `flowGap` globally when the whole deck should breathe tighter/looser, or per slide when one dense page needs special spacing. It controls the same top-level flow rhythm as `--ustc-component-gap`; use dedicated tokens for internal gaps such as figure caption spacing.
 - **Dense mode is for content pressure, not aesthetics.** If the slide already fits in `density: normal`, don't switch to `dense`. If the problem is page padding rather than text size, try `margin: tight` first.
 - **Toggle, don't litter.** Disable `sectionBar`/`footer` per-slide for cover, end, blank, and full-bleed visuals — not casually elsewhere.
@@ -493,6 +556,7 @@ Add these to your line count. "Normal" = `density: normal`; "Dense" = `density: 
 | `<Callout type="…" title="…">` + 1 body line | 3 | 2.5 |
 | `<Block title="…">` + 1 body line | 2.5 | 2 |
 | `<ResultBox>` + 1 body line | 2.5 | 2 |
+| `<Note title="…">` + 1 body line | 2 | 1.5 |
 | `<Takeaway>` (1 sentence) | 1.5 | 1.5 |
 | Each extra body line inside any component | +1 | +1 |
 | `<Grid cols="2">` row | max(left, right) + 0.5 | max(left, right) + 0.5 |
@@ -543,7 +607,8 @@ Key overridable variables:
 | `--ustc-fs-body-dense`                             | `1.05rem`             | body text (dense density)    |
 | `--ustc-fs-callout` / `--ustc-fs-callout-title`    | `1.15rem` / `1.15rem` | Callout body/title           |
 | `--ustc-fs-result-title` / `--ustc-fs-result-body` | `1.15rem` / `1.15rem` | ResultBox title/body         |
-| `--ustc-fs-block-title` / `--ustc-fs-block-body`   | `1.15rem` / `1.15rem` | Block title/body             |
+| `--ustc-fs-block-title` / `--ustc-fs-block-body`   | `1.22rem` / `1.22rem` | Block title/body             |
+| `--ustc-fs-note-title` / `--ustc-fs-note-body`     | body scale            | Note title/body              |
 | `--ustc-fs-takeaway`                               | `1.4rem`              | Takeaway text                |
 | `--ustc-fs-badge-scale`                            | `0.68`                | Badge text scale vs body     |
 | `--ustc-fs-badge`                                  | unset                 | Fixed Badge text override    |
@@ -568,7 +633,7 @@ margin: tight
 ---
 ```
 
-`density: dense` is a coordinated scale-down — it simultaneously shrinks body text (`1.4rem` → `1.05rem`), Callout body/title (`1.15rem` → `0.95rem`), ResultBox and Block text (`1.15rem` → `0.96rem`), table cells (`1.1rem` → `0.96rem`), h2 (drops to h3 size `1.3rem`), Takeaway text (`1.4rem` → `1.05rem`), and tightens line-height (`1.8` → `1.5`) plus list spacing. Use it instead of overriding font sizes in `<style>` because a `<style>` override changes one element in isolation and breaks the theme's internal proportions. Dense mode keeps the whole slide visually coherent at a smaller scale. Combine with `margin: tight` or `margin: tighter` to reclaim additional page padding.
+`density: dense` is a coordinated scale-down — it simultaneously shrinks body text (`1.4rem` → `1.05rem`), Note title/body with the body scale, Callout body/title (`1.15rem` → `0.95rem`), ResultBox text (`1.15rem` → `0.96rem`), Block text (`1.22rem` → `1.05rem`), table cells (`1.1rem` → `0.96rem`), h2 (drops to h3 size `1.3rem`), Takeaway text (`1.4rem` → `1.05rem`), and tightens line-height (`1.8` → `1.5`) plus list spacing. Use it instead of overriding font sizes in `<style>` because a `<style>` override changes one element in isolation and breaks the theme's internal proportions. Dense mode keeps the whole slide visually coherent at a smaller scale. Combine with `margin: tight` or `margin: tighter` to reclaim additional page padding.
 
 **`density: compact` is the middle tier** — every typography token sits roughly halfway between `normal` and `dense` (body `1.4rem` → `1.22rem` → `1.05rem`; line-height `1.8` → `1.65` → `1.5`). Reach for it when a slide is slightly over budget at `normal` but `dense` shrinks things more than necessary. Same coordinated-scale mechanism as dense — don't hand-tune font sizes to fake an in-between size.
 

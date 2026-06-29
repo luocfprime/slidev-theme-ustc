@@ -53,6 +53,18 @@ export default {
       reuseExistingServer: !isCI,
       timeout: 120_000,
     },
+    {
+      command: 'pnpm exec slidev tests/fixtures/numbered-list.md --port 13039',
+      port: 13039,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
+    {
+      command: 'pnpm exec slidev tests/fixtures/note.md --port 13040',
+      port: 13040,
+      reuseExistingServer: !isCI,
+      timeout: 120_000,
+    },
   ],
 
   projects: [
@@ -95,6 +107,16 @@ export default {
       name: 'rhythm',
       use: { baseURL: 'http://localhost:13038' },
       testMatch: ['rhythm.spec.mjs'],
+    },
+    {
+      name: 'numbered-list',
+      use: { baseURL: 'http://localhost:13039' },
+      testMatch: ['numbered-list.spec.mjs'],
+    },
+    {
+      name: 'note',
+      use: { baseURL: 'http://localhost:13040' },
+      testMatch: ['note.spec.mjs'],
     },
   ],
 

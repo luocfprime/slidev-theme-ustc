@@ -11,7 +11,7 @@
 import { readFileSync, statSync } from 'node:fs'
 import { basename } from 'node:path'
 
-const DEFAULT_COMPONENTS = ['Block', 'Box', 'Callout', 'ResultBox', 'Takeaway']
+const DEFAULT_COMPONENTS = ['Block', 'Box', 'Callout', 'ResultBox', 'Takeaway', 'Note']
 
 const args = process.argv.slice(2)
 if (args.length === 0 || args.includes('-h') || args.includes('--help')) {

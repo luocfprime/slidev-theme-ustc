@@ -267,6 +267,8 @@ sectionBar: false
 
 Default title uses the theme accent without a solid label fill.
 
+- Block list indentation should stay tight.
+
 </Block>
 
 <Block title="Green block" color="#065f46">
@@ -327,5 +329,89 @@ const stage = 'synthetic supervised grounding'
 <Block title="Effect">
 
 The floating label should not collide with the preceding code block.
+
+</Block>
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 14: raw div before titled Block leaves room for the floating label -->
+
+# Raw Div Before Block
+
+<div class="raw-badge-row">
+  <Badge variant="solid" color="#1e4c90">Real-Time</Badge>
+  <Badge variant="soft">Project Page</Badge>
+  <Badge variant="soft" color="#b31b1b">arXiv 2603.05449</Badge>
+</div>
+
+<Block title="任务定义">
+
+给定一张图片和一个交互的力 / 力序列，生成可交互视频。
+
+</Block>
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 15: default list indent stays visually compact -->
+
+# List Rhythm
+
+- **Pipeline 仍然半自动**
+  - 需要手工或固定 pipeline 提供分割、重建、物性、初始状态、动作参数
+  - 仿真场景一旦初始条件错了，后续视频生成只能继承这个错误
+- **训练重心不在仿真**
+  - 系统并没有显式学习如何配置 simulator、检查 rollout、修正仿真结果
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 16: VSpace inserts explicit one-off vertical space -->
+
+# Explicit Vertical Space
+
+<div class="vspace-before">Before spacer</div>
+<VSpace size="2rem" />
+<div class="vspace-after">After spacer</div>
+
+<div class="vspace-numeric-before">Before numeric spacer</div>
+<VSpace size="8" class="vspace-numeric" />
+<div class="vspace-numeric-after">After numeric spacer</div>
+
+<div class="vspace-negative-before">Before negative spacer</div>
+<VSpace size="-0.5rem" class="vspace-negative" />
+<div class="vspace-negative-after">After negative spacer</div>
+
+<div class="vspace-default-before">Before default spacer</div>
+<VSpace class="vspace-default" />
+<div class="vspace-default-after">After default spacer</div>
+
+<div class="vspace-token-before">Before token spacer</div>
+<VSpace size="sm" class="vspace-token" />
+<div class="vspace-token-after">After token spacer</div>
+
+<div class="vspace-bound-before">Before bound spacer</div>
+<VSpace :size="24" class="vspace-bound" />
+<div class="vspace-bound-after">After bound spacer</div>
+
+<div class="vspace-negative-numeric-before">Before negative numeric spacer</div>
+<VSpace size="-8" class="vspace-negative-numeric" />
+<div class="vspace-negative-numeric-after">After negative numeric spacer</div>
+
+<VSpace size="1rem" class="vspace-before-block" />
+
+<Block title="After VSpace">
+
+The spacer before this block should not receive raw-div rhythm margins.
 
 </Block>

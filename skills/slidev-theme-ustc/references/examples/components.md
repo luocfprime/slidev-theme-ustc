@@ -3,7 +3,7 @@ theme: ../
 layout: cover
 conference: "USTC Slidev 主题"
 talkTitle: "组件与布局原语完整参考"
-subtitle: "Callout · FigureBlock · TableBlock · ResultBox · QRCode · PlotlyGraph · Grid · Block · Takeaway · Abs · Badge"
+subtitle: "Callout · FigureBlock · TableBlock · ResultBox · QRCode · PlotlyGraph · Grid · NumberedList · Note · Block · Takeaway · Abs · Badge"
 date: "2026 年 4 月 27 日"
 sectionBar: true
 figurePrefix: "图"
@@ -943,7 +943,63 @@ density: dense
 layout: section
 ---
 
-# 八、Block
+# 八、NumberedList
+`items` · `start` · `color` · `divider`
+
+---
+layout: content
+---
+
+# NumberedList — 基础用法
+
+用于展示有明确编号的模块、部分或阶段；横线只属于正文列，不跨到右侧内容。
+
+<NumberedList
+  :items="[
+    { title: 'Collect data', body: 'gather sources and normalize fields' },
+    { title: 'Run analysis', body: 'apply the shared scoring protocol' },
+    { title: 'Write summary', body: 'report findings and remaining caveats' },
+  ]"
+/>
+
+---
+layout: split
+ratio: "1:1"
+---
+
+# NumberedList — 样式控制
+
+::left::
+
+`start` 改起始编号，`color` 改圆点与标题色：
+
+<NumberedList
+  :start="4"
+  color="#065f46"
+  :items="[
+    { title: '**Observation** model $p(x_t)$', body: '**images** -> latent state $z_t$' },
+    { title: 'Policy head', body: 'state -> action' },
+  ]"
+/>
+
+::right::
+
+`:divider="false"` 去掉项目间分隔线：
+
+<NumberedList
+  :divider="false"
+  :items="[
+    { title: 'Input', body: 'video clips and prompts' },
+    { title: 'Estimator', body: 'score candidate summaries' },
+    { title: 'Verifier', body: 'compare rollout tracks' },
+  ]"
+/>
+
+---
+layout: section
+---
+
+# 九、Block
 `title`
 
 ---
@@ -1072,7 +1128,7 @@ Block 是 Grid 最常见的子元素。
 layout: section
 ---
 
-# 九、Takeaway
+# 十、Takeaway
 无 Props
 
 ---
@@ -1150,7 +1206,7 @@ Empirical results on three benchmarks confirm the theoretical prediction.
 layout: section
 ---
 
-# 十、Abs
+# 十一、Abs
 `x` · `y` · `w` · `z`
 
 ---
@@ -1262,7 +1318,7 @@ layout: content
 layout: section
 ---
 
-# 十一、v-drag 与组件联用
+# 十二、v-drag 与组件联用
 `<v-drag>` 直接包裹 Block · Callout · Takeaway · ResultBox · QRCode
 
 ---
@@ -1342,7 +1398,7 @@ dragPos:
 layout: section
 ---
 
-# 十二、WIP 标注
+# 十三、WIP 标注
 component 级 `wip` prop · slide 级 `wip` frontmatter
 
 ---
@@ -1428,7 +1484,7 @@ ship 前记得清掉 `wip: true` 和组件级 `wip`。
 layout: section
 ---
 
-# 十三、Box
+# 十四、Box
 `bg` / `border` / `radius` Props · 不承担语义的原子容器
 
 ---
@@ -1509,7 +1565,66 @@ layout: content
 layout: section
 ---
 
-# 十四、Badge
+# 十五、Note
+`title` / `color` / `divider` · 低强调 title-body pair
+
+---
+layout: content
+---
+
+# Note — 轻量结构化说明
+
+`<Note>` 用于 Q&A、summary/specification、assumption/limitation 等 pair 信息。
+它比普通 list 更有层次,但没有外框、背景或 icon,视觉显著度低于 Block / Callout / ResultBox。
+
+<Note title="输入是什么">
+
+数据范围、任务定义、评价指标和必要假设。
+
+</Note>
+
+<Note title="输出是什么">
+
+一段简短结论,以及可复用的配置和复现实验记录。
+
+</Note>
+
+---
+layout: split
+---
+
+# Note — split 中自然堆叠
+
+::left::
+
+<Note title="Context" color="#065f46">
+
+对比页使用同一组输入和统一评价口径。<br>
+辅助说明只补充上下文,不承载主要结论。
+
+</Note>
+
+<Note title="Decision" color="#065f46">
+
+把关键差异放在正文主线中。<br>
+把辅助解释放在右侧栏。
+
+</Note>
+
+::right::
+
+<Note title="No divider" color="#92400e" :divider="false">
+
+关闭 divider 后更接近短旁注。<br>
+适合右侧栏里的辅助说明。
+
+</Note>
+
+---
+layout: section
+---
+
+# 十六、Badge
 `variant` · `color` · `href`
 
 ---

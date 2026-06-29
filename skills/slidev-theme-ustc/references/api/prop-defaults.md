@@ -116,6 +116,35 @@ Used by `cover` and `end` layouts.
 
 ---
 
+## `<VSpace>` defaults (`vspaceDefaults`)
+
+| Prop   | Default | Notes                                      |
+| ------ | ------- | ------------------------------------------ |
+| `size` | `'md'`  | see VSpace docs; `'md'` resolves to `1rem` |
+
+---
+
+## `<NumberedList>` defaults (`numberedListDefaults`)
+
+| Prop      | Default            | Notes                                     |
+| --------- | ------------------ | ----------------------------------------- |
+| `items`   | `[]`               | array of `{ title, body? }` objects       |
+| `start`   | `1`                | first marker number                       |
+| `color`   | `var(--ustc-blue)` | marker fill and item-title color          |
+| `divider` | `true`             | show bounded dividers between list items  |
+
+---
+
+## `<Note>` defaults (`noteDefaults`)
+
+| Prop      | Default                 | Notes                                    |
+| --------- | ----------------------- | ---------------------------------------- |
+| `title`   | `''`                    | no title rendered                        |
+| `color`   | `var(--ustc-blue-dark)` | title accent color             |
+| `divider` | `true`                  | show a neutral title underline divider |
+
+---
+
 ## `<Callout>` defaults (`calloutDefaults`)
 
 | Prop    | Default                  |

@@ -51,9 +51,10 @@ line-height, footer, and section-bar controls. Structural layouts intentionally
 do not expose all body controls; check `utils/defaults.ts` before adding a prop.
 
 Components are auto-imported by Slidev. Structural/layout helpers are `Grid`,
-`Block`, `Abs`, and `Takeaway`. Content and media components include `Callout`,
-`FigureBlock`, `TableBlock`, `ResultBox`, `PlotlyGraph`, `QRCode`, and
-`VideoBlock`. `PageFooter` and `BodyLayout` are internal to layouts.
+`VSpace`, `NumberedList`, `Block`, `Abs`, and `Takeaway`. Content and media
+components include `Note`, `Callout`, `FigureBlock`, `TableBlock`, `ResultBox`,
+`PlotlyGraph`, `QRCode`, and `VideoBlock`. `PageFooter` and `BodyLayout` are
+internal to layouts.
 
 Shared helpers live in `utils/`:
 
@@ -99,6 +100,84 @@ reference them with root-relative paths such as `/Graph/plotly1.json`.
 
 Avoid changing generated or local-only output directories: `dist/`, `.slidev/`,
 `test-results/`, `playwright-report/`, `node_modules/`, and `.worktrees/`.
+
+## Common Failure Modes
+
+Check the following recurring issues explicitly before implementing a visual
+change, a new component, or a demo deck update.
+
+### Component and visual design
+
+- Do not ship a new component or visual variant from a verbal description alone
+  when the change is aesthetic. First make a small HTML or fixture-deck preview
+  with 2-5 alternatives, then implement the chosen direction. This is especially
+  important for `Block`, `TOC`, badge/pill, list, and callout-like designs.
+- Avoid making a slide use the same component style repeatedly. More than two
+  visually identical components on one slide usually creates visual fatigue and
+  hides emphasis. Exceptions are deliberate structures such as a 2x2 matrix, a
+  3x1 ordered card stack, or a table-like comparison where sameness is the point.
+- Do not add decorative effects just to make a component feel "designed".
+  Shadows, collage effects, solid label fills, heavy backgrounds, and ornamental
+  connectors should be used only when the requested design actually calls for
+  them. The default taste is restrained, academic, and structurally clear.
+- Preserve the user's design intent when borrowing from a reference. If the user
+  asks to follow a reference style, copy the visual idea, not unrelated legacy
+  API behavior or old implementation constraints.
+- For naming, avoid over-specific semantics. A component that can represent
+  parts, cases, steps, or categories should not be named as though it only
+  represents a process.
+
+### Spacing, rhythm, and alignment
+
+- Treat component rhythm as a system, not as isolated margins. When changing
+  gaps, check at least: paragraph/list -> component, raw top-level `div` ->
+  component, code block -> component, component -> component, table/figure/media
+  -> component, and `Grid`/`Abs` interactions.
+- Floating labels and absolutely positioned chrome must reserve real visual
+  space. A `Block` title, badge, or overlay that paints outside normal flow can
+  make the measured CSS gap look correct while the visible gap is cramped or
+  overlapping.
+- Check alignment visually and with DOM assertions where practical. Frequent
+  regressions are badges/pills sitting slightly above or below text, elements
+  drifting too far right/down, and dense/compact variants not scaling together.
+- Do not overuse `density: compact` or `density: dense` as a layout fix. Use the
+  largest readable density that fits, and rebalance content before shrinking the
+  whole slide.
+
+### Component APIs
+
+- Keep similar component props consistent. If `Box` and `ResultBox` expose color
+  knobs, prefer the same prop names and value semantics unless there is a real
+  reason to differ.
+- Make variant-specific props explicit in behavior and docs. For example, a prop
+  that only affects `variant: classic` should be documented as ignored by
+  `variant: arrow`, not silently treated as a hidden cross-variant control.
+- Component props should affect only that component unless Slidev exposes a clean
+  documented route to promote state to slide metadata. Do not infer global slide
+  behavior from rendered component state.
+
+### Deck/demo authoring while developing the theme
+
+- Do not invent technical content, labels, metrics, or claims to fill space.
+  Follow the user's outline, comments, and provided material. If something is
+  missing, leave a clear placeholder or ask rather than adding plausible detail.
+- User comments inside slides are task instructions, not disposable noise. When
+  resolving `<!-- ... -->` feedback, preserve the original comment and add
+  `fixed: <original comment>` only after the issue is actually addressed.
+- Avoid both extremes: slides that are cramped with content and slides with large
+  empty regions. Fix sparse pages by adding relevant structure or merging thin
+  slides; fix crowded pages by splitting or moving detail to `backup`, not by
+  silently deleting important content.
+- For component examples such as `Takeaway` and `Callout`, prefer multiline tags
+  for readable markdown:
+
+```md
+<Takeaway>
+
+Concise takeaway text.
+
+</Takeaway>
+```
 
 ## Code Review Style
 

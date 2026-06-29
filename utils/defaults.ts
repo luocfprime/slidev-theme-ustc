@@ -10,7 +10,7 @@ import logoSvgUrl from '../assets/ustc/logo.svg?url'
 //   Content layouts (content, split, default): editable body slides.
 //   They extend bodyDefaults (which already includes footerDefaults).
 //
-// Component defaults (grid, callout, figure, table, qrcode) are independent.
+// Component defaults (grid, vspace, numbered list, note, callout, figure, table, qrcode) are independent.
 
 export const footerDefaults = {
   footer: true,
@@ -71,6 +71,28 @@ export const gridDefaults = {
   cols: '2',
   gap: 'md' as 'sm' | 'md' | 'lg',
   alignY: 'top' as 'top' | 'center' | 'bottom',
+}
+
+export const vspaceDefaults = {
+  size: 'md' as string | number,
+}
+
+export type NumberedListItem = {
+  title: string
+  body?: string
+}
+
+export const numberedListDefaults = {
+  items: (): NumberedListItem[] => [],
+  start: 1,
+  color: 'var(--ustc-blue)',
+  divider: true,
+}
+
+export const noteDefaults = {
+  title: '',
+  color: 'var(--ustc-blue-dark)',
+  divider: true,
 }
 
 export const calloutDefaults = {

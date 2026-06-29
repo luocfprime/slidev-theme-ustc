@@ -54,6 +54,7 @@ In dense mode the `.dense` class **reassigns** the base tokens below to their `*
 | `--ustc-fs-callout` / `--ustc-fs-callout-title`                                     | `--ustc-fs-callout-dense` / `--ustc-fs-callout-title-dense`    |
 | `--ustc-fs-result-title` / `--ustc-fs-result-body`                                  | `--ustc-fs-result-title-dense` / `--ustc-fs-result-body-dense` |
 | `--ustc-fs-block-title` / `--ustc-fs-block-body`                                    | `--ustc-fs-block-title-dense` / `--ustc-fs-block-body-dense`   |
+| `--ustc-fs-note-title` / `--ustc-fs-note-body`                                      | `--ustc-fs-note-title-dense` / `--ustc-fs-note-body-dense`     |
 | `--ustc-fs-takeaway`                                                                | `--ustc-fs-takeaway-dense`                                     |
 | `--ustc-lh`                                                                         | `--ustc-lh-dense`                                              |
 | `--ustc-component-gap`                                                              | `--ustc-component-gap-dense`                                   |
@@ -121,10 +122,14 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-fs-result-title-dense`  | `0.96rem` | ResultBox title (dense density)                  |
 | `--ustc-fs-result-body`         | `1.15rem` | ResultBox body text (normal density)             |
 | `--ustc-fs-result-body-dense`   | `0.96rem` | ResultBox body text (dense density)              |
-| `--ustc-fs-block-title`         | `1.15rem` | Block title (normal density)                     |
-| `--ustc-fs-block-title-dense`   | `0.96rem` | Block title (dense density)                      |
-| `--ustc-fs-block-body`          | `1.15rem` | Block body text (normal density)                 |
-| `--ustc-fs-block-body-dense`    | `0.96rem` | Block body text (dense density)                  |
+| `--ustc-fs-block-title`         | `1.22rem` | Block title (normal density)                     |
+| `--ustc-fs-block-title-dense`   | `1.05rem` | Block title (dense density)                      |
+| `--ustc-fs-block-body`          | `1.22rem` | Block body text (normal density)                 |
+| `--ustc-fs-block-body-dense`    | `1.05rem` | Block body text (dense density)                  |
+| `--ustc-fs-note-title`          | `var(--ustc-fs-body)` | Note title (normal density)             |
+| `--ustc-fs-note-title-dense`    | `var(--ustc-fs-body-dense)` | Note title (dense density)       |
+| `--ustc-fs-note-body`           | `var(--ustc-fs-body)` | Note body text (normal density)         |
+| `--ustc-fs-note-body-dense`     | `var(--ustc-fs-body-dense)` | Note body text (dense density)   |
 | `--ustc-fs-takeaway`            | `1.4rem`  | Takeaway text (normal density)                   |
 | `--ustc-fs-takeaway-dense`      | `1.05rem` | Takeaway text (dense density)                    |
 | `--ustc-fs-footnote`            | `0.67rem` | footnote items                                   |
@@ -132,7 +137,7 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-fs-badge`               | unset    | fixed `<Badge>` text-size override; bypasses density scaling |
 | `--ustc-fs-footnote-ref`        | `0.64em`  | footnote superscript anchor (relative to parent) |
 
-**Compact tier (`density: compact`).** Every `*-dense` token above has a parallel `*-compact` variant holding a value roughly halfway between the base and the dense value. The `.compact` class swaps them in exactly as `.dense` swaps the dense variants. Values: `--ustc-fs-body-compact` `1.22rem`, `--ustc-fs-h2-compact` `1.42rem`, `--ustc-fs-table-cell-compact` `1.03rem`, `--ustc-fs-blockquote-compact` `1.1rem`, `--ustc-fs-caption-compact` `1.03rem`, `--ustc-fs-subtitle-compact` `1.06rem`, `--ustc-fs-callout-compact` / `--ustc-fs-callout-title-compact` `1.05rem`, `--ustc-fs-result-title-compact` / `--ustc-fs-result-body-compact` `1.05rem`, `--ustc-fs-block-title-compact` / `--ustc-fs-block-body-compact` `1.05rem`, `--ustc-fs-takeaway-compact` `1.22rem`, `--ustc-lh-compact` `1.65`, `--ustc-component-gap-compact` `0.65rem`, `--ustc-title-gap-compact` `1.2rem`.
+**Compact tier (`density: compact`).** Every `*-dense` token above has a parallel `*-compact` variant holding a value roughly halfway between the base and the dense value. The `.compact` class swaps them in exactly as `.dense` swaps the dense variants. Values: `--ustc-fs-body-compact` `1.22rem`, `--ustc-fs-h2-compact` `1.42rem`, `--ustc-fs-table-cell-compact` `1.03rem`, `--ustc-fs-blockquote-compact` `1.1rem`, `--ustc-fs-caption-compact` `1.03rem`, `--ustc-fs-subtitle-compact` `1.06rem`, `--ustc-fs-callout-compact` / `--ustc-fs-callout-title-compact` `1.05rem`, `--ustc-fs-result-title-compact` / `--ustc-fs-result-body-compact` `1.05rem`, `--ustc-fs-block-title-compact` / `--ustc-fs-block-body-compact` `1.12rem`, `--ustc-fs-note-title-compact` / `--ustc-fs-note-body-compact` `var(--ustc-fs-body-compact)`, `--ustc-fs-takeaway-compact` `1.22rem`, `--ustc-lh-compact` `1.65`, `--ustc-component-gap-compact` `0.65rem`, `--ustc-title-gap-compact` `1.2rem`.
 
 ---
 

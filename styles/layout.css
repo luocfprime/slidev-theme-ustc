@@ -75,10 +75,14 @@
   --ustc-fs-result-title-dense: 0.96rem; /* ResultBox title — dense mode    */
   --ustc-fs-result-body: 1.15rem; /* ResultBox body text                 */
   --ustc-fs-result-body-dense: 0.96rem; /* ResultBox body text — dense mode    */
-  --ustc-fs-block-title: 1.15rem; /* Block title                         */
-  --ustc-fs-block-title-dense: 0.96rem; /* Block title — dense mode         */
-  --ustc-fs-block-body: 1.15rem; /* Block body text                     */
-  --ustc-fs-block-body-dense: 0.96rem; /* Block body text — dense mode     */
+  --ustc-fs-block-title: 1.22rem; /* Block title                         */
+  --ustc-fs-block-title-dense: 1.05rem; /* Block title — dense mode         */
+  --ustc-fs-block-body: 1.22rem; /* Block body text                     */
+  --ustc-fs-block-body-dense: 1.05rem; /* Block body text — dense mode     */
+  --ustc-fs-note-title: var(--ustc-fs-body); /* Note title                    */
+  --ustc-fs-note-title-dense: var(--ustc-fs-body-dense); /* Note title — dense mode */
+  --ustc-fs-note-body: var(--ustc-fs-body); /* Note body text                */
+  --ustc-fs-note-body-dense: var(--ustc-fs-body-dense); /* Note body text — dense mode */
   --ustc-fs-takeaway: 1.4rem; /* Takeaway text                       */
   --ustc-fs-takeaway-dense: 1.05rem; /* Takeaway text — dense mode          */
   --ustc-fs-footnote: 0.67rem; /* footnote list items                 */
@@ -109,8 +113,10 @@
   --ustc-fs-callout-title-compact: 1.05rem; /* Callout title — compact     */
   --ustc-fs-result-title-compact: 1.05rem; /* ResultBox title — compact    */
   --ustc-fs-result-body-compact: 1.05rem; /* ResultBox body text — compact */
-  --ustc-fs-block-title-compact: 1.05rem; /* Block title — compact         */
-  --ustc-fs-block-body-compact: 1.05rem; /* Block body text — compact      */
+  --ustc-fs-block-title-compact: 1.12rem; /* Block title — compact         */
+  --ustc-fs-block-body-compact: 1.12rem; /* Block body text — compact      */
+  --ustc-fs-note-title-compact: var(--ustc-fs-body-compact); /* Note title — compact */
+  --ustc-fs-note-body-compact: var(--ustc-fs-body-compact); /* Note body text — compact */
   --ustc-fs-takeaway-compact: 1.22rem; /* Takeaway text — compact mode     */
   --ustc-lh-compact: 1.65; /* line-height for body text in compact mode  */
   --ustc-component-gap-compact: 0.65rem; /* top-level component gap — compact */
@@ -586,6 +592,7 @@
   > :is(
     div.callout,
     div.block,
+    div.note,
     div.result-box,
     div.takeaway,
     div.grid,
@@ -599,6 +606,7 @@
   > :is(
     div.callout,
     div.block,
+    div.note,
     div.result-box,
     div.takeaway,
     div.grid,
@@ -613,6 +621,7 @@
   > :is(
     div.callout,
     div.block,
+    div.note,
     div.result-box,
     div.takeaway,
     div.grid,
@@ -629,6 +638,7 @@
   > :is(
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -648,6 +658,7 @@
   > :is(
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -668,6 +679,7 @@
   > :is(
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -686,6 +698,24 @@
   margin-bottom: var(--ustc-component-gap);
 }
 
+.slidev-layout.content > .note + .note,
+.slidev-layout.split > .note + .note,
+.slidev-layout.split .split-col > .note + .note {
+  margin-top: 0.95rem !important;
+}
+
+.slidev-layout.content > .note,
+.slidev-layout.split > .note,
+.slidev-layout.split .split-col > .note {
+  margin-bottom: 0 !important;
+}
+
+.slidev-layout.content > .note:not(:last-child):not(:has(+ .note)),
+.slidev-layout.split > .note:not(:last-child):not(:has(+ .note)),
+.slidev-layout.split .split-col > .note:not(:last-child):not(:has(+ .note)) {
+  margin-bottom: var(--ustc-component-gap);
+}
+
 .slidev-layout.content > .slidev-code-wrapper,
 .slidev-layout.split > .slidev-code-wrapper,
 .slidev-layout.split .split-col > .slidev-code-wrapper {
@@ -696,10 +726,12 @@
   > div:not(
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
     .grid,
+    .vspace,
     .abs,
     .table-block,
     .plotly-wrap,
@@ -711,6 +743,7 @@
   + :is(
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -727,6 +760,76 @@
     .typst-doc
   ) {
   margin-top: var(--ustc-component-gap);
+}
+
+.slidev-layout.content
+  > div:not(
+    .callout,
+    .block,
+    .note,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .vspace,
+    .abs,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    .mermaid,
+    .typst-doc,
+    .content-subtitle,
+    .footnotes
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout.split
+  > div:not(
+    .callout,
+    .block,
+    .note,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .vspace,
+    .abs,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    .mermaid,
+    .typst-doc,
+    .content-subtitle,
+    .footnotes
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout.split
+  .split-col
+  > div:not(
+    .callout,
+    .block,
+    .note,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .vspace,
+    .abs,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    .mermaid,
+    .typst-doc,
+    .content-subtitle,
+    .footnotes
+  ):has(+ .block:not(.block-untitled)) {
+  margin-bottom: calc(var(--ustc-component-gap) + 0.9rem + 0.25rem - 2px);
 }
 
 .slidev-layout.content .typst-doc,
@@ -790,7 +893,7 @@
 .slidev-layout.split ul,
 .slidev-layout.split ol {
   margin: 0.35rem 0;
-  padding-left: 1.5rem;
+  padding-left: 0.65rem;
 }
 
 .slidev-layout.content li + li,
@@ -803,6 +906,7 @@
     + :is(
       .callout,
       .block,
+      .note,
       .result-box,
       .takeaway,
       .box,
@@ -824,6 +928,7 @@
     + :is(
       .callout,
       .block,
+      .note,
       .result-box,
       .takeaway,
       .box,
@@ -846,6 +951,7 @@
     + :is(
       .callout,
       .block,
+      .note,
       .result-box,
       .takeaway,
       .box,
@@ -872,6 +978,7 @@
     ol,
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -894,6 +1001,7 @@
     ol,
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -917,6 +1025,7 @@
     ol,
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -951,6 +1060,7 @@
     ol,
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -973,6 +1083,7 @@
     ol,
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -996,6 +1107,7 @@
     ol,
     .callout,
     .block,
+    .note,
     .result-box,
     .takeaway,
     .box,
@@ -1010,6 +1122,76 @@
     pre.shiki,
     .mermaid,
     .typst-doc
+  ):has(+ .block:not(.block-untitled)) {
+  margin-bottom: calc(var(--ustc-component-gap) + 0.9rem - 2px);
+}
+
+.slidev-layout:is(.dense, .compact).content
+  > div:not(
+    .callout,
+    .block,
+    .note,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .vspace,
+    .abs,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    .mermaid,
+    .typst-doc,
+    .content-subtitle,
+    .footnotes
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout:is(.dense, .compact).split
+  > div:not(
+    .callout,
+    .block,
+    .note,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .vspace,
+    .abs,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    .mermaid,
+    .typst-doc,
+    .content-subtitle,
+    .footnotes
+  ):has(+ .block:not(.block-untitled)),
+.slidev-layout:is(.dense, .compact).split
+  .split-col
+  > div:not(
+    .callout,
+    .block,
+    .note,
+    .result-box,
+    .takeaway,
+    .box,
+    .grid,
+    .vspace,
+    .abs,
+    .figure-block,
+    .video-block,
+    .table-block,
+    .plotly-wrap,
+    .ustc-qrcode-wrap,
+    .slidev-code-wrapper,
+    .mermaid,
+    .typst-doc,
+    .content-subtitle,
+    .footnotes
   ):has(+ .block:not(.block-untitled)) {
   margin-bottom: calc(var(--ustc-component-gap) + 0.9rem - 2px);
 }
@@ -1044,6 +1226,8 @@
   --ustc-fs-result-body: var(--ustc-fs-result-body-dense);
   --ustc-fs-block-title: var(--ustc-fs-block-title-dense);
   --ustc-fs-block-body: var(--ustc-fs-block-body-dense);
+  --ustc-fs-note-title: var(--ustc-fs-note-title-dense);
+  --ustc-fs-note-body: var(--ustc-fs-note-body-dense);
   --ustc-fs-takeaway: var(--ustc-fs-takeaway-dense);
   --ustc-component-gap: var(--ustc-component-gap-dense);
   --ustc-title-gap: var(--ustc-title-gap-dense);
@@ -1065,6 +1249,8 @@
   --ustc-fs-result-body: var(--ustc-fs-result-body-compact);
   --ustc-fs-block-title: var(--ustc-fs-block-title-compact);
   --ustc-fs-block-body: var(--ustc-fs-block-body-compact);
+  --ustc-fs-note-title: var(--ustc-fs-note-title-compact);
+  --ustc-fs-note-body: var(--ustc-fs-note-body-compact);
   --ustc-fs-takeaway: var(--ustc-fs-takeaway-compact);
   --ustc-component-gap: var(--ustc-component-gap-compact);
   --ustc-title-gap: var(--ustc-title-gap-compact);

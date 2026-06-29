@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Note Component Design Options</title>
+    <style>
+      :root {
+        --ustc-blue: #1e4c90;
+        --ustc-blue-dark: #173c78;
+        --ink: #111827;
+        --muted: #3f4a5c;
+        --line: #d8e1ee;
+        --line-soft: #e7edf6;
+        --canvas-w: 980px;
+        --canvas-h: 552px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 38px 0 56px;
+        background: #e9edf4;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      main {
+        display: grid;
+        gap: 32px;
+        justify-items: center;
+      }
+
+      .option {
+        width: var(--canvas-w);
+      }
+
+      .option-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin: 0 0 8px;
+        color: #475569;
+      }
+
+      .option-head h2 {
+        margin: 0;
+        color: #1f2937;
+        font-size: 18px;
+        line-height: 1.2;
+        letter-spacing: 0;
+      }
+
+      .option-head p {
+        margin: 0;
+        font-size: 13px;
+      }
+
+      .slide {
+        width: var(--canvas-w);
+        height: var(--canvas-h);
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 18px 55px rgba(15, 23, 42, 0.18);
+      }
+
+      .section-bar {
+        height: 28px;
+        background: var(--ustc-blue);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        align-items: center;
+        color: rgba(255, 255, 255, 0.62);
+        font-size: 9px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .section-bar span::after {
+        content: "";
+        display: block;
+        width: 5px;
+        height: 5px;
+        border: 2px solid rgba(255, 255, 255, 0.4);
+        border-radius: 999px;
+        margin: 3px auto 0;
+      }
+
+      .section-bar span:nth-child(3) {
+        color: #fff;
+      }
+
+      .section-bar span:nth-child(3)::after {
+        background: #fff;
+        border-color: #fff;
+      }
+
+      .content {
+        padding: 31px 42px 28px;
+      }
+
+      h1 {
+        margin: 0 0 24px;
+        color: var(--ustc-blue-dark);
+        font-size: 38px;
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 32px;
+        align-items: start;
+      }
+
+      .flow {
+        background: #f4f7fb;
+        border-left: 3px solid var(--ustc-blue);
+        padding: 12px 16px;
+        margin-bottom: 20px;
+        color: var(--ustc-blue-dark);
+        font-size: 20px;
+        font-weight: 760;
+        line-height: 1.55;
+      }
+
+      .mini-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 24px;
+        margin-top: 8px;
+      }
+
+      .block {
+        border: 2px solid #c9d3e1;
+        border-radius: 6px;
+        padding: 0 14px 14px;
+        min-height: 82px;
+      }
+
+      .block-title {
+        display: inline-block;
+        position: relative;
+        top: -15px;
+        margin: 0 0 -8px;
+        padding: 0 6px;
+        background: #fff;
+        color: var(--ustc-blue-dark);
+        font-size: 18px;
+        font-weight: 760;
+        line-height: 1.15;
+      }
+
+      .block p,
+      .caption {
+        margin: 0;
+        color: #1f2937;
+        font-size: 17px;
+        line-height: 1.48;
+      }
+
+      .takeaway {
+        margin-top: 22px;
+        padding: 10px 14px;
+        border-left: 3px solid var(--ustc-blue);
+        background: #eef4fb;
+        color: var(--ustc-blue-dark);
+        font-size: 18px;
+        font-weight: 760;
+        line-height: 1.45;
+      }
+
+      .notes {
+        display: grid;
+        gap: 18px;
+        padding-top: 2px;
+      }
+
+      .note-title {
+        margin: 0;
+        color: var(--ustc-blue-dark);
+        font-size: 20px;
+        font-weight: 780;
+        line-height: 1.24;
+        letter-spacing: 0;
+      }
+
+      .note-body {
+        margin: 0;
+        color: var(--ink);
+        font-size: 19px;
+        line-height: 1.42;
+      }
+
+      .note-body strong {
+        font-weight: 760;
+      }
+
+      /* A. Current baseline: title underline */
+      .note-a .note-title {
+        padding-bottom: 6px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      /* B. Left micro rail */
+      .note-b {
+        display: grid;
+        grid-template-columns: 3px minmax(0, 1fr);
+        column-gap: 12px;
+      }
+
+      .note-b::before {
+        content: "";
+        display: block;
+        width: 3px;
+        min-height: 100%;
+        background: color-mix(in srgb, var(--ustc-blue) 70%, white);
+      }
+
+      .note-b .note-title {
+        margin-bottom: 6px;
+      }
+
+      /* C. Label column */
+      .note-c {
+        display: grid;
+        grid-template-columns: 7.2rem minmax(0, 1fr);
+        column-gap: 14px;
+        align-items: start;
+        padding-bottom: 12px;
+        border-bottom: 1px solid var(--line-soft);
+      }
+
+      .note-c .note-title {
+        font-size: 17px;
+        line-height: 1.24;
+      }
+
+      .note-c .note-body {
+        font-size: 18px;
+      }
+
+      /* D. Short rule under title */
+      .note-d .note-title {
+        margin-bottom: 10px;
+      }
+
+      .note-d .note-title::after {
+        content: "";
+        display: block;
+        width: 58%;
+        height: 1px;
+        margin-top: 6px;
+        background: var(--line);
+      }
+
+      /* E. Top rule group */
+      .note-e {
+        padding-top: 9px;
+        border-top: 1px solid var(--line);
+      }
+
+      .note-e .note-title {
+        margin-bottom: 7px;
+      }
+
+      /* F. Plain colored heading */
+      .note-f {
+        padding-bottom: 5px;
+      }
+
+      .note-f .note-title {
+        margin-bottom: 6px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.1rem 0.44rem;
+        border-radius: 999px;
+        background: rgba(30, 76, 144, 0.1);
+        color: var(--ustc-blue-dark);
+        font-size: 12px;
+        font-weight: 740;
+        vertical-align: 0.08em;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="option">
+        <div class="option-head">
+          <h2>A. Title underline baseline</h2>
+          <p>清晰、最接近当前实现；层次明确但线条存在感稍高。</p>
+        </div>
+        <div class="slide">
+          <div class="section-bar"><span>背景</span><span>Motivation</span><span>核心思想</span><span>方案</span></div>
+          <div class="content">
+            <h1>Agent 操作 simulator 进行仿真</h1>
+            <div class="grid">
+              <div>
+                <div class="flow">GT video / prompt -> estimate simulator inputs -> simulator rollout -> track loss -> update agent</div>
+                <div class="mini-grid">
+                  <div class="block">
+                    <p class="block-title">GT video 侧</p>
+                    <p>提取 2D / 3D object tracks。</p>
+                  </div>
+                  <div class="block">
+                    <p class="block-title">Simulator 侧</p>
+                    <p>运行 rollout, 得到同样格式的 tracks。</p>
+                  </div>
+                </div>
+                <div class="takeaway">监督信号来自 simulator rollout tracks 与 GT video tracks 的匹配。</div>
+              </div>
+              <div class="notes">
+                <div class="note-a">
+                  <p class="note-title">Input</p>
+                  <p class="note-body">Dataset, task definition, and <strong>evaluation metric</strong>.</p>
+                </div>
+                <div class="note-a">
+                  <p class="note-title">Output</p>
+                  <p class="note-body">A short summary with reusable settings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="option">
+        <div class="option-head">
+          <h2>B. Left micro rail</h2>
+          <p>更像轻量旁注；左线给结构但不包成 box。</p>
+        </div>
+        <div class="slide">
+          <div class="section-bar"><span>背景</span><span>Motivation</span><span>核心思想</span><span>方案</span></div>
+          <div class="content">
+            <h1>Agent 操作 simulator 进行仿真</h1>
+            <div class="grid">
+              <div>
+                <div class="flow">GT video / prompt -> estimate simulator inputs -> simulator rollout -> track loss -> update agent</div>
+                <div class="mini-grid">
+                  <div class="block">
+                    <p class="block-title">GT video 侧</p>
+                    <p>提取 2D / 3D object tracks。</p>
+                  </div>
+                  <div class="block">
+                    <p class="block-title">Simulator 侧</p>
+                    <p>运行 rollout, 得到同样格式的 tracks。</p>
+                  </div>
+                </div>
+                <div class="takeaway">监督信号来自 simulator rollout tracks 与 GT video tracks 的匹配。</div>
+              </div>
+              <div class="notes">
+                <div class="note-b">
+                  <div>
+                    <p class="note-title">Input</p>
+                    <p class="note-body">Dataset, task definition, and <strong>evaluation metric</strong>.</p>
+                  </div>
+                </div>
+                <div class="note-b">
+                  <div>
+                    <p class="note-title">Output</p>
+                    <p class="note-body">A short summary with reusable settings.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="option">
+        <div class="option-head">
+          <h2>C. Label column</h2>
+          <p>最像 description / spec list；适合短标题，信息密度高。</p>
+        </div>
+        <div class="slide">
+          <div class="section-bar"><span>背景</span><span>Motivation</span><span>核心思想</span><span>方案</span></div>
+          <div class="content">
+            <h1>Agent 操作 simulator 进行仿真</h1>
+            <div class="grid">
+              <div>
+                <div class="flow">GT video / prompt -> estimate simulator inputs -> simulator rollout -> track loss -> update agent</div>
+                <div class="mini-grid">
+                  <div class="block">
+                    <p class="block-title">GT video 侧</p>
+                    <p>提取 2D / 3D object tracks。</p>
+                  </div>
+                  <div class="block">
+                    <p class="block-title">Simulator 侧</p>
+                    <p>运行 rollout, 得到同样格式的 tracks。</p>
+                  </div>
+                </div>
+                <div class="takeaway">监督信号来自 simulator rollout tracks 与 GT video tracks 的匹配。</div>
+              </div>
+              <div class="notes">
+                <div class="note-c">
+                  <p class="note-title">Input</p>
+                  <p class="note-body">Dataset, task definition, and <strong>evaluation metric</strong>.</p>
+                </div>
+                <div class="note-c">
+                  <p class="note-title">Output</p>
+                  <p class="note-body">A short summary with reusable settings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="option">
+        <div class="option-head">
+          <h2>D. Short rule</h2>
+          <p>保留分隔感，但规则线不铺满，视觉更轻。</p>
+        </div>
+        <div class="slide">
+          <div class="section-bar"><span>背景</span><span>Motivation</span><span>核心思想</span><span>方案</span></div>
+          <div class="content">
+            <h1>Agent 操作 simulator 进行仿真</h1>
+            <div class="grid">
+              <div>
+                <div class="flow">GT video / prompt -> estimate simulator inputs -> simulator rollout -> track loss -> update agent</div>
+                <div class="mini-grid">
+                  <div class="block">
+                    <p class="block-title">GT video 侧</p>
+                    <p>提取 2D / 3D object tracks。</p>
+                  </div>
+                  <div class="block">
+                    <p class="block-title">Simulator 侧</p>
+                    <p>运行 rollout, 得到同样格式的 tracks。</p>
+                  </div>
+                </div>
+                <div class="takeaway">监督信号来自 simulator rollout tracks 与 GT video tracks 的匹配。</div>
+              </div>
+              <div class="notes">
+                <div class="note-d">
+                  <p class="note-title">Input</p>
+                  <p class="note-body">Dataset, task definition, and <strong>evaluation metric</strong>.</p>
+                </div>
+                <div class="note-d">
+                  <p class="note-title">Output</p>
+                  <p class="note-body">A short summary with reusable settings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="option">
+        <div class="option-head">
+          <h2>E. Top rule</h2>
+          <p>标题和正文关系更松，适合 summary/specification stack。</p>
+        </div>
+        <div class="slide">
+          <div class="section-bar"><span>背景</span><span>Motivation</span><span>核心思想</span><span>方案</span></div>
+          <div class="content">
+            <h1>Agent 操作 simulator 进行仿真</h1>
+            <div class="grid">
+              <div>
+                <div class="flow">GT video / prompt -> estimate simulator inputs -> simulator rollout -> track loss -> update agent</div>
+                <div class="mini-grid">
+                  <div class="block">
+                    <p class="block-title">GT video 侧</p>
+                    <p>提取 2D / 3D object tracks。</p>
+                  </div>
+                  <div class="block">
+                    <p class="block-title">Simulator 侧</p>
+                    <p>运行 rollout, 得到同样格式的 tracks。</p>
+                  </div>
+                </div>
+                <div class="takeaway">监督信号来自 simulator rollout tracks 与 GT video tracks 的匹配。</div>
+              </div>
+              <div class="notes">
+                <div class="note-e">
+                  <p class="note-title">Input</p>
+                  <p class="note-body">Dataset, task definition, and <strong>evaluation metric</strong>.</p>
+                </div>
+                <div class="note-e">
+                  <p class="note-title">Output</p>
+                  <p class="note-body">A short summary with reusable settings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="option">
+        <div class="option-head">
+          <h2>F. Plain colored heading</h2>
+          <p>最低视觉预算；靠标题权重和间距形成层级。</p>
+        </div>
+        <div class="slide">
+          <div class="section-bar"><span>背景</span><span>Motivation</span><span>核心思想</span><span>方案</span></div>
+          <div class="content">
+            <h1>Agent 操作 simulator 进行仿真</h1>
+            <div class="grid">
+              <div>
+                <div class="flow">GT video / prompt -> estimate simulator inputs -> simulator rollout -> track loss -> update agent</div>
+                <div class="mini-grid">
+                  <div class="block">
+                    <p class="block-title">GT video 侧</p>
+                    <p>提取 2D / 3D object tracks。</p>
+                  </div>
+                  <div class="block">
+                    <p class="block-title">Simulator 侧</p>
+                    <p>运行 rollout, 得到同样格式的 tracks。</p>
+                  </div>
+                </div>
+                <div class="takeaway">监督信号来自 simulator rollout tracks 与 GT video tracks 的匹配。</div>
+              </div>
+              <div class="notes">
+                <div class="note-f">
+                  <p class="note-title">Input <span class="badge">data</span></p>
+                  <p class="note-body">Dataset, task definition, and <strong>evaluation metric</strong>.</p>
+                </div>
+                <div class="note-f">
+                  <p class="note-title">Output <span class="badge">result</span></p>
+                  <p class="note-body">A short summary with reusable settings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

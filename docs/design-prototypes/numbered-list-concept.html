@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Numbered List Component Concept</title>
+    <style>
+      :root {
+        --ustc-blue: #1e4c90;
+        --ustc-blue-dark: #173c78;
+        --ink: #111827;
+        --muted: #303846;
+        --line: #d7dfeb;
+        --soft: #eef3fb;
+        --canvas-w: 980px;
+        --canvas-h: 552px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 40px 0;
+        background: #e9edf4;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      main {
+        display: grid;
+        gap: 28px;
+        justify-items: center;
+      }
+
+      .slide {
+        width: var(--canvas-w);
+        height: var(--canvas-h);
+        overflow: hidden;
+        background: white;
+        box-shadow: 0 18px 55px rgba(15, 23, 42, 0.18);
+      }
+
+      .section-bar {
+        height: 30px;
+        background: var(--ustc-blue);
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        align-items: center;
+        color: rgba(255, 255, 255, 0.58);
+        font-size: 9px;
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .section-bar span::after {
+        content: "";
+        display: block;
+        width: 5px;
+        height: 5px;
+        border: 2px solid rgba(255, 255, 255, 0.42);
+        border-radius: 999px;
+        margin: 3px auto 0;
+      }
+
+      .content {
+        padding: 30px 42px 28px;
+      }
+
+      h1 {
+        margin: 0 0 26px;
+        color: var(--ustc-blue-dark);
+        font-size: 38px;
+        line-height: 1.05;
+        letter-spacing: 0;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1.05fr 0.95fr;
+        gap: 30px;
+        align-items: start;
+      }
+
+      .concept-label {
+        margin: 0 0 8px;
+        color: #65758f;
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .number-list {
+        --marker-size: 29px;
+        --marker-gap: 16px;
+        --item-gap: 13px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .number-list li {
+        display: grid;
+        grid-template-columns: var(--marker-size) minmax(0, 1fr);
+        column-gap: var(--marker-gap);
+        align-items: start;
+      }
+
+      .number-list li + li {
+        margin-top: var(--item-gap);
+      }
+
+      .marker {
+        width: var(--marker-size);
+        height: var(--marker-size);
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: var(--ustc-blue);
+        color: white;
+        font-size: 20px;
+        font-weight: 850;
+        line-height: 1;
+      }
+
+      .item-body {
+        min-width: 0;
+      }
+
+      .item-title {
+        margin: 0;
+        color: var(--ustc-blue-dark);
+        font-size: 21px;
+        font-weight: 850;
+        line-height: 1.2;
+      }
+
+      .item-desc {
+        margin: 12px 0 0;
+        color: var(--muted);
+        font-size: 22px;
+        line-height: 1.35;
+        white-space: nowrap;
+      }
+
+      .with-rules .item-body {
+        padding-bottom: 13px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .with-rules li:last-child .item-body {
+        padding-bottom: 0;
+        border-bottom: 0;
+      }
+
+      .subtle-rules .item-body {
+        padding-bottom: 13px;
+        background:
+          linear-gradient(var(--line), var(--line)) left bottom / 72% 1px no-repeat;
+      }
+
+      .subtle-rules li:last-child .item-body {
+        padding-bottom: 0;
+        background: none;
+      }
+
+      .rail-rules {
+        position: relative;
+      }
+
+      .rail-rules::before {
+        content: "";
+        position: absolute;
+        top: 36px;
+        bottom: 44px;
+        left: calc(var(--marker-size) / 2 - 1px);
+        width: 2px;
+        background: #dfe7f2;
+      }
+
+      .rail-rules .marker {
+        position: relative;
+        z-index: 1;
+        outline: 5px solid #fff;
+      }
+
+      .right-stack {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px;
+        padding-top: 88px;
+      }
+
+      .stage {
+        min-height: 158px;
+        border: 2px solid #c9d3e1;
+        border-radius: 6px;
+        padding: 0 16px 14px;
+        background: #fff;
+      }
+
+      .stage-title {
+        display: inline-block;
+        position: relative;
+        top: -18px;
+        margin: 0 0 -10px;
+        padding: 0 7px;
+        background: #fff;
+        color: var(--ustc-blue-dark);
+        font-size: 18px;
+        font-weight: 850;
+        line-height: 1.08;
+      }
+
+      .stage p {
+        margin: 0;
+        font-size: 18px;
+        line-height: 1.55;
+      }
+
+      .takeaway {
+        grid-column: 1 / -1;
+        margin-top: 0;
+        padding: 13px 18px;
+        border-left: 4px solid var(--ustc-blue);
+        background: var(--soft);
+        color: var(--ustc-blue-dark);
+        font-size: 20px;
+        font-weight: 850;
+        line-height: 1.55;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="slide">
+        <div class="section-bar">
+          <span>背景</span>
+          <span>Motivation</span>
+          <span>核心思想</span>
+        </div>
+
+        <div class="content">
+          <h1>训练一个力参数估计 VLM</h1>
+
+          <div class="grid">
+            <div>
+              <p class="concept-label">A. Full bounded divider</p>
+              <ol class="number-list with-rules">
+                <li>
+                  <span class="marker">1</span>
+                  <div class="item-body">
+                    <p class="item-title">Collect data</p>
+                    <p class="item-desc">gather sources and normalize fields</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="marker">2</span>
+                  <div class="item-body">
+                    <p class="item-title">Run analysis</p>
+                    <p class="item-desc">apply the shared scoring protocol</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="marker">3</span>
+                  <div class="item-body">
+                    <p class="item-title">Write summary</p>
+                    <p class="item-desc">report findings and remaining caveats</p>
+                  </div>
+                </li>
+              </ol>
+            </div>
+
+            <div class="right-stack">
+              <article class="stage">
+                <h2 class="stage-title">Stage 1: synthetic<br />supervision</h2>
+                <p>在 simulator 合成数据上训练。force / state / rollout 全部可知。</p>
+              </article>
+              <article class="stage">
+                <h2 class="stage-title">Stage 2:<br />bootstrap</h2>
+                <p>对真实视频采样候选参数，让奖励最接近真实轨迹。</p>
+              </article>
+              <div class="takeaway">
+                训练方式：交替训练 inverse dynamics、simulation agent，或用 DPO / GRPO 优化。
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="section-bar">
+          <span>背景</span>
+          <span>Motivation</span>
+          <span>核心思想</span>
+        </div>
+
+        <div class="content">
+          <h1>训练一个力参数估计 VLM</h1>
+
+          <div class="grid">
+            <div>
+              <p class="concept-label">B. Short subtle divider</p>
+              <ol class="number-list subtle-rules">
+                <li>
+                  <span class="marker">1</span>
+                  <div class="item-body">
+                    <p class="item-title">Collect data</p>
+                    <p class="item-desc">gather sources and normalize fields</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="marker">2</span>
+                  <div class="item-body">
+                    <p class="item-title">Run analysis</p>
+                    <p class="item-desc">apply the shared scoring protocol</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="marker">3</span>
+                  <div class="item-body">
+                    <p class="item-title">Write summary</p>
+                    <p class="item-desc">report findings and remaining caveats</p>
+                  </div>
+                </li>
+              </ol>
+            </div>
+
+            <div class="right-stack">
+              <article class="stage">
+                <h2 class="stage-title">Stage 1: synthetic<br />supervision</h2>
+                <p>在 simulator 合成数据上训练。force / state / rollout 全部可知。</p>
+              </article>
+              <article class="stage">
+                <h2 class="stage-title">Stage 2:<br />bootstrap</h2>
+                <p>对真实视频采样候选参数，让奖励最接近真实轨迹。</p>
+              </article>
+              <div class="takeaway">
+                训练方式：交替训练 inverse dynamics、simulation agent，或用 DPO / GRPO 优化。
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide">
+        <div class="section-bar">
+          <span>背景</span>
+          <span>Motivation</span>
+          <span>核心思想</span>
+        </div>
+
+        <div class="content">
+          <h1>训练一个力参数估计 VLM</h1>
+
+          <div class="grid">
+            <div>
+              <p class="concept-label">C. Vertical rail</p>
+              <ol class="number-list rail-rules">
+                <li>
+                  <span class="marker">1</span>
+                  <div class="item-body">
+                    <p class="item-title">Collect data</p>
+                    <p class="item-desc">gather sources and normalize fields</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="marker">2</span>
+                  <div class="item-body">
+                    <p class="item-title">Run analysis</p>
+                    <p class="item-desc">apply the shared scoring protocol</p>
+                  </div>
+                </li>
+                <li>
+                  <span class="marker">3</span>
+                  <div class="item-body">
+                    <p class="item-title">Write summary</p>
+                    <p class="item-desc">report findings and remaining caveats</p>
+                  </div>
+                </li>
+              </ol>
+            </div>
+
+            <div class="right-stack">
+              <article class="stage">
+                <h2 class="stage-title">Stage 1: synthetic<br />supervision</h2>
+                <p>在 simulator 合成数据上训练。force / state / rollout 全部可知。</p>
+              </article>
+              <article class="stage">
+                <h2 class="stage-title">Stage 2:<br />bootstrap</h2>
+                <p>对真实视频采样候选参数，让奖励最接近真实轨迹。</p>
+              </article>
+              <div class="takeaway">
+                训练方式：交替训练 inverse dynamics、simulation agent，或用 DPO / GRPO 优化。
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

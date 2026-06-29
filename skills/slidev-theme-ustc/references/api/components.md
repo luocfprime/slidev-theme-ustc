@@ -58,6 +58,125 @@ Left cell
 
 ---
 
+## `<VSpace>`
+
+Explicit one-off vertical spacer. Use it instead of `<br>` when a single slide
+needs a local rhythm adjustment between two flow elements.
+
+```vue
+Paragraph above.
+
+<VSpace size="1rem" />
+
+Paragraph below.
+```
+
+```vue
+<VSpace />
+<VSpace size="sm" />
+<VSpace size="24" />
+<VSpace :size="24" />
+<VSpace size="-0.5rem" />
+```
+
+| Prop   | Type             | Default | Values                                                                 |
+| ------ | ---------------- | ------- | ---------------------------------------------------------------------- |
+| `size` | string \| number | `'md'`  | `'xs'` (0.25rem) · `'sm'` (0.5rem) · `'md'` (1rem) · `'lg'` (1.5rem) · `'xl'` (2rem), a CSS length, or a number/number string in px. |
+
+Positive values insert space by setting the spacer height. Literal negative
+values such as `"-0.5rem"` or `"-8"` compress the following flow by applying a
+negative bottom margin. Negative space is intentionally supported for
+LaTeX-like fine-tuning, but treat it as an escape hatch: it can overlap text,
+floating labels, formulas, footnotes, or footer chrome if overused.
+
+For repeated spacing changes across a slide or deck, prefer `flowGap` or
+`--ustc-component-gap`; `<VSpace>` is for local one-off adjustments.
+
+---
+
+## `<NumberedList>`
+
+Numbered module list with blue circular markers and bounded horizontal dividers. Use it for ordered parts, components, stages, or checklist-like explanations when a plain bullet list is too weak but a process diagram would overstate the structure.
+
+```vue
+<NumberedList
+  :items="[
+    { title: 'Collect data', body: 'gather sources and normalize fields' },
+    { title: 'Run analysis', body: 'apply the shared scoring protocol' },
+    { title: 'Write summary', body: 'report findings and remaining caveats' },
+  ]"
+/>
+```
+
+```vue
+<NumberedList
+  :start="4"
+  color="#065f46"
+  :divider="false"
+  :items="[
+    { title: '**Observation** model $p(x_t)$', body: '**images** -> latent state $z_t$' },
+    { title: 'Policy head', body: 'state -> action' },
+  ]"
+/>
+```
+
+| Prop      | Type    | Default            | Description                                          |
+| --------- | ------- | ------------------ | ---------------------------------------------------- |
+| `items`   | array   | `[]`               | Array of `{ title, body? }`; both fields support inline markdown and `$...$` LaTeX math. |
+| `start`   | number  | `1`                | First marker number; following items increment by one. |
+| `color`   | string  | `var(--ustc-blue)` | Marker fill and item-title color.                    |
+| `divider` | boolean | `true`             | Show bounded dividers between items.                 |
+
+The dividers belong only to the text column, not the whole slide row, so they do not visually collide with adjacent columns in a `split` or `Grid` layout. `NumberedList` is explicit data only: it does not inspect slide markdown, rendered DOM, section state, or other Slidev internals, so dev/build/export behavior is the same.
+
+---
+
+## `<Note>`
+
+Low-emphasis title-body pair for lightweight structured notes. Use it for Q&A,
+summary/specification, assumption/limitation, or observation/implication
+content when a plain list is too flat but `<Block>`, `<Callout>`, or
+`<ResultBox>` would over-emphasize the material.
+
+```vue
+<Note title="Input">
+
+Dataset, task definition, and evaluation metric.
+
+</Note>
+
+<Note title="Output">
+
+A short summary with reusable settings.
+
+</Note>
+```
+
+```vue
+<Note title="Context" color="#065f46">
+
+The comparison uses a fixed dataset.
+
+</Note>
+```
+
+| Prop      | Type    | Default                 | Description                           |
+| --------- | ------- | ----------------------- | ------------------------------------- |
+| `title`   | string  | `''`                    | Optional title; supports inline markdown and `$...$` LaTeX math. |
+| `color`   | string  | `var(--ustc-blue-dark)` | Title accent color.                    |
+| `divider` | boolean | `true`                  | Show a neutral title underline divider. |
+
+The `title` prop is rendered as inline markdown, including `$...$` LaTeX math.
+The body slot uses normal Slidev markdown, so emphasis, links, code, and LaTeX
+math work there as well.
+
+`Note` is intentionally a single component, not a `<Notes>` wrapper. Stack
+multiple `<Note>`s naturally in document flow, or place them in `split` /
+`Grid` columns. It has no icon, filled background, or outer border so it stays
+below `<Block>` in the visual emphasis budget.
+
+---
+
 ## `<Block>`
 
 Labeled neutral container with a floating title label and outlined box.
