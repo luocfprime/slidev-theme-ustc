@@ -295,7 +295,7 @@ The main conclusion in one sentence.
 
 ## `<Badge>`
 
-Inline pill for compact factual tags — venue, year, status, CCF rank, dataset, links. Renders as a single inline-flex pill that sits on the text baseline, so multiple badges flow inline or wrap naturally inside a `<div class="row">`.
+Inline pill for compact factual tags — venue, year, status, CCF rank, dataset, links. Renders as a single inline-flex pill that sits on the text baseline, so multiple badges flow inline or wrap naturally.
 
 ```vue
 <Badge>default soft</Badge>
@@ -311,6 +311,11 @@ Inline pill for compact factual tags — venue, year, status, CCF rank, dataset,
 | `href`    | `''`               | Turns the badge into a link. `http(s)://` or `//` opens in a new tab; in-deck anchors (`#/5`) navigate in place |
 
 **Slot content** is freeform: plain text, emoji, or Slidev Iconify icons (e.g. `<mdi-github />`). Icons are sized relative to the text and baseline-aligned automatically — no wrapper needed.
+
+Adjacent badges get a small default horizontal gap (`--ustc-badge-gap`). A bare
+top-level badge sequence may be followed directly by a titled `<Block>`; the
+theme reserves space for the Block's floating label. For stronger control over
+wrapping or alignment, wrap the badges in a plain `<div>`.
 
 **Sizing.** Badge text defaults to `calc(var(--ustc-fs-body) * var(--ustc-fs-badge-scale))` (`--ustc-fs-badge-scale: 0.68`), anchored to the current layout body size so it auto-shrinks in `dense`/`compact` and stays consistent whether the badge sits in a `<p>`, `<li>`, or a bare `<div>`. Override `--ustc-fs-badge-scale` to resize badges while preserving density scaling; override `--ustc-fs-badge` only when you want a fixed text size.
 

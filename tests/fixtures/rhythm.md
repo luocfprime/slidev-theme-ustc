@@ -421,3 +421,27 @@ sectionBar: false
 The spacer before this block should not receive raw-div rhythm margins.
 
 </Block>
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 17: top-level Badge flow before a titled Block -->
+
+# Badge Rhythm
+
+<Badge variant="solid" color="#1e4c90" class="multiline-badge">
+
+Real-Time · 13.2 FPS
+
+</Badge>
+<Badge variant="soft" color="#2563c9">Project Page</Badge>
+<Badge variant="soft" color="#b31b1b">arXiv 2603.05449</Badge>
+
+<Block title="任务定义">
+
+Badge rows should leave visible space before a titled Block.
+
+</Block>

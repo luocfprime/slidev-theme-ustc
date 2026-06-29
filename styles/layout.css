@@ -100,6 +100,7 @@
   --ustc-note-stack-gap-dense: 0.75rem; /* adjacent Notes — dense mode              */
   --ustc-note-after-gap: 1rem; /* gap after a Note before non-Note content  */
   --ustc-note-after-gap-dense: 0.75rem; /* Note after-gap — dense mode              */
+  --ustc-badge-gap: 0.5rem; /* horizontal gap between adjacent Badges   */
   --ustc-title-gap: 1.5rem; /* gap between h1 and first content element  */
   --ustc-title-gap-dense: 0.9rem; /* gap between h1 and first content element — dense mode */
   --ustc-lh-heading: 1.1; /* h1 across all layouts               */
@@ -878,6 +879,11 @@
   line-height: var(--ustc-lh);
 }
 
+.slidev-layout.content .ustc-badge + .ustc-badge,
+.slidev-layout.split .ustc-badge + .ustc-badge {
+  margin-left: var(--ustc-badge-gap);
+}
+
 .slidev-layout.content td,
 .slidev-layout.content th,
 .slidev-layout.split td,
@@ -1061,6 +1067,15 @@
   --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.9rem + 0.25rem - 2px);
 }
 
+/* Badge is an inline pill, so it intentionally is not part of the general
+   top-level block rhythm. When a top-level Badge row is followed directly by a
+   titled Block, move the Block down enough for its floating label. */
+.slidev-layout.content > .ustc-badge + .block:not(.block-untitled),
+.slidev-layout.split > .ustc-badge + .block:not(.block-untitled),
+.slidev-layout.split .split-col > .ustc-badge + .block:not(.block-untitled) {
+  margin-top: calc(var(--ustc-component-gap) + 0.9rem - 2px);
+}
+
 .slidev-layout:is(.dense, .compact).content
   > :is(
     p,
@@ -1211,6 +1226,12 @@
   .split-col
   > .slidev-code-wrapper:has(+ .block:not(.block-untitled)) {
   --slidev-code-margin: 0 0 calc(var(--ustc-component-gap) + 0.9rem - 2px);
+}
+
+.slidev-layout:is(.dense, .compact).content > .ustc-badge + .block:not(.block-untitled),
+.slidev-layout:is(.dense, .compact).split > .ustc-badge + .block:not(.block-untitled),
+.slidev-layout:is(.dense, .compact).split .split-col > .ustc-badge + .block:not(.block-untitled) {
+  margin-top: calc(var(--ustc-component-gap) + 0.9rem - 2px);
 }
 
 /* ─── Dense mode — variable swap ──────────────────────────────────────────

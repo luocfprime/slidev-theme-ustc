@@ -201,6 +201,7 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | `--ustc-note-stack-gap-dense` | `0.75rem`                       | adjacent `<Note>` gap — dense mode                               |
 | `--ustc-note-after-gap`  | `1rem`                                | gap after a `<Note>` before the next non-Note block              |
 | `--ustc-note-after-gap-dense` | `0.75rem`                       | Note after-gap — dense mode                                      |
+| `--ustc-badge-gap`      | `0.5rem`                              | horizontal gap between adjacent `<Badge>` pills                  |
 | `--ustc-fig-caption-gap` | `0.75rem`                             | gap between figure image and its caption (inside FigureBlock)    |
 | `--ustc-tab-caption-gap` | `0.3rem`                              | gap between table caption and the table (inside TableBlock)      |
 

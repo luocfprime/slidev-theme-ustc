@@ -20,6 +20,7 @@ test.setTimeout(120_000)
 // 14  content  raw div before titled Block leaves floating-label space
 // 15  content  default list indent stays visually compact
 // 16  content  VSpace inserts explicit one-off vertical space
+// 17  content  top-level Badge flow before a titled Block
 
 async function gotoSlide(page, n) {
   await page.goto('/1', { waitUntil: 'domcontentloaded' })
@@ -242,6 +243,41 @@ test.describe('body rhythm frontmatter', () => {
     ).toBe(-8)
 
     await expect(slide(page).locator('.vspace-before-block')).toHaveCSS('margin-bottom', '0px')
+  })
+
+  test('top-level Badges keep inline sizing, horizontal breathing room, and space before titled Blocks', async ({
+    page,
+  }) => {
+    await gotoSlide(page, 17)
+
+    const multilineBadge = slide(page).locator('.multiline-badge')
+    const multilineParagraph = multilineBadge.locator('p')
+    await expect(multilineParagraph).toHaveCSS('color', 'rgb(255, 255, 255)')
+    expect(
+      await multilineParagraph.evaluate((el) => parseFloat(getComputedStyle(el).fontSize)),
+    ).toBeLessThan(16)
+
+    const badgeGap = await slide(page).evaluate((root) => {
+      const badges = [...root.querySelectorAll('.ustc-badge')]
+      if (badges.length < 2) throw new Error('Expected adjacent Badge components')
+      const firstRect = badges[0].getBoundingClientRect()
+      const secondRect = badges[1].getBoundingClientRect()
+      return Math.round((secondRect.left - firstRect.right) * 100) / 100
+    })
+    expect(badgeGap).toBeGreaterThanOrEqual(8)
+
+    const blockGap = await slide(page).evaluate((root) => {
+      const badges = [...root.querySelectorAll('.ustc-badge')]
+      const lastBadge = badges.at(-1)
+      const title = root.querySelector('.block .block-title')
+      if (!lastBadge || !title) {
+        throw new Error('Expected Badge sequence followed by a titled Block')
+      }
+      const badgeRect = lastBadge.getBoundingClientRect()
+      const titleRect = title.getBoundingClientRect()
+      return Math.round((titleRect.top - badgeRect.bottom) * 100) / 100
+    })
+    expect(blockGap).toBeGreaterThanOrEqual(10)
   })
 
   test('global lineHeight and flowGap apply to body layouts', async ({ page }) => {

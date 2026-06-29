@@ -62,6 +62,18 @@ const isExternal = computed(() => /^(https?:)?\/\//.test(props.href))
   text-decoration: none; /* badge-as-link should not be underlined */
 }
 
+/* Blank-line slot content becomes <p> through markdown-it. Keep that defensive
+   path visually identical to the intended inline Badge text. */
+.ustc-badge :deep(p) {
+  display: inline;
+  margin: 0;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
 /* Icons (Iconify SVG) track the text size, slightly larger for visual balance.
    display:block drops the inline-SVG baseline gap so flex centering aligns the
    icon to the text instead of leaving it sitting high. */
