@@ -43,7 +43,7 @@ const hasIcon = computed(() => props.showIcon && hasTitle.value)
 <style scoped>
 .callout {
   display: block;
-  padding: 0.72rem 0.9rem 0.72rem 1rem;
+  padding: 0.42rem 0.85rem 0.46rem 0.9rem;
   border-radius: 0;
   border-left: 4px solid;
   margin-bottom: 0.65rem;
@@ -86,7 +86,7 @@ const hasIcon = computed(() => props.showIcon && hasTitle.value)
   align-items: center;
   gap: 0.45rem;
   font-weight: var(--ustc-fw-semibold);
-  margin: 0 0 0.28rem;
+  margin: 0 0 0.18rem;
   font-size: var(--ustc-fs-callout-title);
   line-height: 1.28;
 }
