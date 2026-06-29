@@ -183,7 +183,7 @@ A direct `p { font-size: … }` desyncs the theme's coordinated proportions (tab
 
 SKILL.md has the semantic table. Three deciding questions when several components seem to fit:
 
-1. **Does the box need an icon and severity color?** Yes → `<Callout>`. No → `<Block>` or `<ResultBox>`.
+1. **Does a side note need type color or an optional icon?** Yes → `<Callout>`. No → `<Block>` or `<ResultBox>`. Do not use `<Callout>` for the main conclusion; its rail and type color read as supplementary.
 2. **Is this the slide's single key message?** Yes → `<Takeaway>`. Otherwise don't use Takeaway.
 3. **Is the content a measured number, theorem, or final answer?** Yes → `<ResultBox>`. Otherwise → `<Block>`.
 

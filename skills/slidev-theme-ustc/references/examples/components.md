@@ -35,7 +35,7 @@ layout: section
 ---
 
 # 一、Callout
-`type` · `title`
+`type` · `title` · `showIcon` · `filled`
 
 ---
 layout: content
@@ -63,7 +63,7 @@ layout: content
 
 <Callout type="important" title="重要（important）">
 
-红色。适合**关键结论**、重要限制、不可忽略的信息。
+红色。适合**重要限制**、不可忽略的约束或需要显式提醒的风险。
 
 </Callout>
 
@@ -112,6 +112,30 @@ density: dense
 
 ---
 layout: content
+---
+
+# Callout — icon / filled 开关
+
+<Callout type="note" title="默认 rail 样式">
+
+默认显示左侧色条和 title icon，不使用底色。
+
+</Callout>
+
+<Callout type="note" title="关闭 icon" :showIcon="false">
+
+当页面已经有较多视觉元素时，可以只保留色条和标题。
+
+</Callout>
+
+<Callout type="warning" title="打开 filled" filled>
+
+需要更明显的附加提醒时，打开浅色背景。
+
+</Callout>
+
+---
+layout: content
 density: dense
 ---
 
@@ -129,9 +153,9 @@ JES 和 JER 不确定性对该分析影响最大（约 **8%**），建议在最�
 
 </Callout>
 
-<Callout type="important" title="主要结论">
+<Callout type="important" title="重要限制">
 
-在 $\sqrt{s} = 13\,\text{TeV}$ 数据集（139 fb$^{-1}$）中，观测到信号超出 $4.2\sigma$（期望 $3.8\sigma$），信号强度 $\mu = 1.15^{+0.32}_{-0.28}$。
+当前显著性仍依赖一个主导系统误差项；在最终报告中需要单独列出该误差来源及其对 $\mu$ 的影响。
 
 </Callout>
 

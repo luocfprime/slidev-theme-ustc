@@ -249,7 +249,10 @@ customization via `--ustc-box-*` tokens (see `theme-tokens.md`).
 
 ## `<Callout>`
 
-Alert box with icon and colored left border.
+Typed supplementary note with a colored left rail and optional title icon. Use
+it for side information such as notes, tips, warnings, important caveats, or
+examples. By default it follows the restrained rail style: no filled background,
+icon on, and typography aligned with `<Block>` / `<ResultBox>`.
 
 ```vue
 <Callout type="tip" title="Key Insight">
@@ -267,7 +270,12 @@ Body text here.
 | `important`      | alert-circle | red    |
 | `example`        | beaker       | purple |
 
-Both `type` and `title` are optional.
+| Prop       | Type      | Default  | Notes                                      |
+| ---------- | --------- | -------- | ------------------------------------------ |
+| `type`     | union     | `'note'` | controls rail color and default icon       |
+| `title`    | `string`  | `''`     | no title rendered when empty               |
+| `showIcon` | `boolean` | `true`   | set `:showIcon="false"` for title-only rail |
+| `filled`   | `boolean` | `false`  | add the type-specific pale background      |
 
 ---
 

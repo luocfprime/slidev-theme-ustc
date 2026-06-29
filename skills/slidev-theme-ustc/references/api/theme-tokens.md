@@ -114,18 +114,18 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-fs-caption-dense`       | `0.96rem` | figure/table captions (dense density)            |
 | `--ustc-fs-subtitle`            | `1.15rem` | content layout subtitle (normal density)         |
 | `--ustc-fs-subtitle-dense`      | `0.97rem` | content layout subtitle (dense density)          |
-| `--ustc-fs-callout`             | `1.15rem` | Callout body (normal density)                    |
-| `--ustc-fs-callout-dense`       | `0.95rem` | Callout body (dense density)                     |
-| `--ustc-fs-callout-title`       | `1.15rem` | Callout title (normal density)                   |
-| `--ustc-fs-callout-title-dense` | `0.95rem` | Callout title (dense density)                    |
-| `--ustc-fs-result-title`        | `1.15rem` | ResultBox title (normal density)                 |
-| `--ustc-fs-result-title-dense`  | `0.96rem` | ResultBox title (dense density)                  |
-| `--ustc-fs-result-body`         | `1.15rem` | ResultBox body text (normal density)             |
-| `--ustc-fs-result-body-dense`   | `0.96rem` | ResultBox body text (dense density)              |
 | `--ustc-fs-block-title`         | `1.22rem` | Block title (normal density)                     |
 | `--ustc-fs-block-title-dense`   | `1.05rem` | Block title (dense density)                      |
 | `--ustc-fs-block-body`          | `1.22rem` | Block body text (normal density)                 |
 | `--ustc-fs-block-body-dense`    | `1.05rem` | Block body text (dense density)                  |
+| `--ustc-fs-callout`             | `var(--ustc-fs-block-body)` | Callout body (normal density)        |
+| `--ustc-fs-callout-dense`       | `var(--ustc-fs-block-body-dense)` | Callout body (dense density) |
+| `--ustc-fs-callout-title`       | `var(--ustc-fs-block-title)` | Callout title (normal density)      |
+| `--ustc-fs-callout-title-dense` | `var(--ustc-fs-block-title-dense)` | Callout title (dense density) |
+| `--ustc-fs-result-title`        | `var(--ustc-fs-block-title)` | ResultBox title (normal density)    |
+| `--ustc-fs-result-title-dense`  | `var(--ustc-fs-block-title-dense)` | ResultBox title (dense density) |
+| `--ustc-fs-result-body`         | `var(--ustc-fs-block-body)` | ResultBox body text (normal density) |
+| `--ustc-fs-result-body-dense`   | `var(--ustc-fs-block-body-dense)` | ResultBox body text (dense density) |
 | `--ustc-fs-note-title`          | `var(--ustc-fs-body)` | Note title (normal density)             |
 | `--ustc-fs-note-title-dense`    | `var(--ustc-fs-body-dense)` | Note title (dense density)       |
 | `--ustc-fs-note-body`           | `var(--ustc-fs-body)` | Note body text (normal density)         |
@@ -137,7 +137,7 @@ All tokens not listed above are straightforward overrides. Common targets:
 | `--ustc-fs-badge`               | unset    | fixed `<Badge>` text-size override; bypasses density scaling |
 | `--ustc-fs-footnote-ref`        | `0.64em`  | footnote superscript anchor (relative to parent) |
 
-**Compact tier (`density: compact`).** Every `*-dense` token above has a parallel `*-compact` variant holding a value roughly halfway between the base and the dense value. The `.compact` class swaps them in exactly as `.dense` swaps the dense variants. Values: `--ustc-fs-body-compact` `1.22rem`, `--ustc-fs-h2-compact` `1.42rem`, `--ustc-fs-table-cell-compact` `1.03rem`, `--ustc-fs-blockquote-compact` `1.1rem`, `--ustc-fs-caption-compact` `1.03rem`, `--ustc-fs-subtitle-compact` `1.06rem`, `--ustc-fs-callout-compact` / `--ustc-fs-callout-title-compact` `1.05rem`, `--ustc-fs-result-title-compact` / `--ustc-fs-result-body-compact` `1.05rem`, `--ustc-fs-block-title-compact` / `--ustc-fs-block-body-compact` `1.12rem`, `--ustc-fs-note-title-compact` / `--ustc-fs-note-body-compact` `var(--ustc-fs-body-compact)`, `--ustc-fs-takeaway-compact` `1.22rem`, `--ustc-lh-compact` `1.65`, `--ustc-component-gap-compact` `0.65rem`, `--ustc-title-gap-compact` `1.2rem`.
+**Compact tier (`density: compact`).** Every `*-dense` token above has a parallel `*-compact` variant holding a value roughly halfway between the base and the dense value. The `.compact` class swaps them in exactly as `.dense` swaps the dense variants. Values: `--ustc-fs-body-compact` `1.22rem`, `--ustc-fs-h2-compact` `1.42rem`, `--ustc-fs-table-cell-compact` `1.03rem`, `--ustc-fs-blockquote-compact` `1.1rem`, `--ustc-fs-caption-compact` `1.03rem`, `--ustc-fs-subtitle-compact` `1.06rem`, `--ustc-fs-block-title-compact` / `--ustc-fs-block-body-compact` `1.12rem`, `--ustc-fs-callout-compact` / `--ustc-fs-callout-title-compact` and `--ustc-fs-result-title-compact` / `--ustc-fs-result-body-compact` follow the corresponding Block compact tokens, `--ustc-fs-note-title-compact` / `--ustc-fs-note-body-compact` `var(--ustc-fs-body-compact)`, `--ustc-fs-takeaway-compact` `1.22rem`, `--ustc-lh-compact` `1.65`, `--ustc-component-gap-compact` `0.65rem`, `--ustc-note-stack-gap-compact` / `--ustc-note-after-gap-compact` `0.85rem`, `--ustc-title-gap-compact` `1.2rem`.
 
 ---
 
@@ -197,6 +197,10 @@ These apply to cover, end, section, and backup layouts (not overridden by dense 
 | `--ustc-title-gap-dense` | `0.9rem`                              | gap between h1 and first content element — dense mode            |
 | `--ustc-component-gap`   | `0.75rem`                             | gap between top-level flow blocks in content/split layouts       |
 | `--ustc-component-gap-dense` | `0.55rem`                         | top-level flow block gap — dense mode                            |
+| `--ustc-note-stack-gap`  | `0.95rem`                             | gap between adjacent `<Note>` pairs                              |
+| `--ustc-note-stack-gap-dense` | `0.75rem`                       | adjacent `<Note>` gap — dense mode                               |
+| `--ustc-note-after-gap`  | `1rem`                                | gap after a `<Note>` before the next non-Note block              |
+| `--ustc-note-after-gap-dense` | `0.75rem`                       | Note after-gap — dense mode                                      |
 | `--ustc-fig-caption-gap` | `0.75rem`                             | gap between figure image and its caption (inside FigureBlock)    |
 | `--ustc-tab-caption-gap` | `0.3rem`                              | gap between table caption and the table (inside TableBlock)      |
 
@@ -206,7 +210,9 @@ per body slide as needed. `flowGap` writes `--ustc-component-gap` on the layout
 root, so an explicit frontmatter value wins over density's normal/compact/dense
 gap swap for that slide. Covered flow blocks include theme components, media
 components, code fences, Mermaid diagrams, Plotly blocks, Typst output, and
-split-column top-level blocks.
+split-column top-level blocks. `<Note>` uses `--ustc-note-stack-gap` and
+`--ustc-note-after-gap` for its title-body-pair rhythm; override those when
+Note stacks need to tighten or breathe independently from the rest of the flow.
 
 ### Margin presets
 

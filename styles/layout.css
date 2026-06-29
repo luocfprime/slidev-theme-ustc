@@ -67,18 +67,18 @@
   --ustc-fs-caption-dense: 0.96rem; /* figure & table captions — dense    */
   --ustc-fs-subtitle: 1.15rem; /* content layout subtitle             */
   --ustc-fs-subtitle-dense: 0.97rem; /* content layout subtitle — dense    */
-  --ustc-fs-callout: 1.15rem; /* Callout body text                   */
-  --ustc-fs-callout-dense: 0.95rem; /* Callout body text in dense mode     */
-  --ustc-fs-callout-title: 1.15rem; /* Callout title                       */
-  --ustc-fs-callout-title-dense: 0.95rem; /* Callout title — dense mode     */
-  --ustc-fs-result-title: 1.15rem; /* ResultBox title                     */
-  --ustc-fs-result-title-dense: 0.96rem; /* ResultBox title — dense mode    */
-  --ustc-fs-result-body: 1.15rem; /* ResultBox body text                 */
-  --ustc-fs-result-body-dense: 0.96rem; /* ResultBox body text — dense mode    */
   --ustc-fs-block-title: 1.22rem; /* Block title                         */
   --ustc-fs-block-title-dense: 1.05rem; /* Block title — dense mode         */
   --ustc-fs-block-body: 1.22rem; /* Block body text                     */
   --ustc-fs-block-body-dense: 1.05rem; /* Block body text — dense mode     */
+  --ustc-fs-callout: var(--ustc-fs-block-body); /* Callout body text          */
+  --ustc-fs-callout-dense: var(--ustc-fs-block-body-dense); /* Callout body — dense */
+  --ustc-fs-callout-title: var(--ustc-fs-block-title); /* Callout title        */
+  --ustc-fs-callout-title-dense: var(--ustc-fs-block-title-dense); /* Callout title — dense */
+  --ustc-fs-result-title: var(--ustc-fs-block-title); /* ResultBox title      */
+  --ustc-fs-result-title-dense: var(--ustc-fs-block-title-dense); /* ResultBox title — dense */
+  --ustc-fs-result-body: var(--ustc-fs-block-body); /* ResultBox body text  */
+  --ustc-fs-result-body-dense: var(--ustc-fs-block-body-dense); /* ResultBox body — dense */
   --ustc-fs-note-title: var(--ustc-fs-body); /* Note title                    */
   --ustc-fs-note-title-dense: var(--ustc-fs-body-dense); /* Note title — dense mode */
   --ustc-fs-note-body: var(--ustc-fs-body); /* Note body text                */
@@ -96,6 +96,10 @@
   --ustc-tab-caption-gap: 0.3rem; /* gap between table caption and the table   */
   --ustc-component-gap: 0.75rem; /* gap between top-level flow components     */
   --ustc-component-gap-dense: 0.55rem; /* top-level component gap — dense mode     */
+  --ustc-note-stack-gap: 0.95rem; /* gap between adjacent Notes                */
+  --ustc-note-stack-gap-dense: 0.75rem; /* adjacent Notes — dense mode              */
+  --ustc-note-after-gap: 1rem; /* gap after a Note before non-Note content  */
+  --ustc-note-after-gap-dense: 0.75rem; /* Note after-gap — dense mode              */
   --ustc-title-gap: 1.5rem; /* gap between h1 and first content element  */
   --ustc-title-gap-dense: 0.9rem; /* gap between h1 and first content element — dense mode */
   --ustc-lh-heading: 1.1; /* h1 across all layouts               */
@@ -109,17 +113,21 @@
   --ustc-fs-blockquote-compact: 1.1rem; /* blockquote — compact mode      */
   --ustc-fs-caption-compact: 1.03rem; /* figure & table captions — compact */
   --ustc-fs-subtitle-compact: 1.06rem; /* content layout subtitle — compact */
-  --ustc-fs-callout-compact: 1.05rem; /* Callout body text — compact      */
-  --ustc-fs-callout-title-compact: 1.05rem; /* Callout title — compact     */
-  --ustc-fs-result-title-compact: 1.05rem; /* ResultBox title — compact    */
-  --ustc-fs-result-body-compact: 1.05rem; /* ResultBox body text — compact */
   --ustc-fs-block-title-compact: 1.12rem; /* Block title — compact         */
   --ustc-fs-block-body-compact: 1.12rem; /* Block body text — compact      */
+  --ustc-fs-callout-compact: var(--ustc-fs-block-body-compact); /* Callout body — compact */
+  --ustc-fs-callout-title-compact: var(--ustc-fs-block-title-compact); /* Callout title — compact */
+  --ustc-fs-result-title-compact: var(
+    --ustc-fs-block-title-compact
+  ); /* ResultBox title — compact */
+  --ustc-fs-result-body-compact: var(--ustc-fs-block-body-compact); /* ResultBox body — compact */
   --ustc-fs-note-title-compact: var(--ustc-fs-body-compact); /* Note title — compact */
   --ustc-fs-note-body-compact: var(--ustc-fs-body-compact); /* Note body text — compact */
   --ustc-fs-takeaway-compact: 1.22rem; /* Takeaway text — compact mode     */
   --ustc-lh-compact: 1.65; /* line-height for body text in compact mode  */
   --ustc-component-gap-compact: 0.65rem; /* top-level component gap — compact */
+  --ustc-note-stack-gap-compact: 0.85rem; /* adjacent Notes — compact mode */
+  --ustc-note-after-gap-compact: 0.85rem; /* Note after-gap — compact mode */
   --ustc-title-gap-compact: 1.2rem; /* h1 → first content gap — compact   */
   --ustc-lh-footnote: 1.28; /* footnote list items                 */
   --ustc-fs-footnote-ref: 0.64em; /* footnote superscript anchor         */
@@ -701,7 +709,7 @@
 .slidev-layout.content > .note + .note,
 .slidev-layout.split > .note + .note,
 .slidev-layout.split .split-col > .note + .note {
-  margin-top: 0.95rem !important;
+  margin-top: var(--ustc-note-stack-gap) !important;
 }
 
 .slidev-layout.content > .note,
@@ -713,7 +721,7 @@
 .slidev-layout.content > .note:not(:last-child):not(:has(+ .note)),
 .slidev-layout.split > .note:not(:last-child):not(:has(+ .note)),
 .slidev-layout.split .split-col > .note:not(:last-child):not(:has(+ .note)) {
-  margin-bottom: var(--ustc-component-gap);
+  margin-bottom: var(--ustc-note-after-gap) !important;
 }
 
 .slidev-layout.content > .slidev-code-wrapper,
@@ -1230,6 +1238,8 @@
   --ustc-fs-note-body: var(--ustc-fs-note-body-dense);
   --ustc-fs-takeaway: var(--ustc-fs-takeaway-dense);
   --ustc-component-gap: var(--ustc-component-gap-dense);
+  --ustc-note-stack-gap: var(--ustc-note-stack-gap-dense);
+  --ustc-note-after-gap: var(--ustc-note-after-gap-dense);
   --ustc-title-gap: var(--ustc-title-gap-dense);
 }
 
@@ -1253,6 +1263,8 @@
   --ustc-fs-note-body: var(--ustc-fs-note-body-compact);
   --ustc-fs-takeaway: var(--ustc-fs-takeaway-compact);
   --ustc-component-gap: var(--ustc-component-gap-compact);
+  --ustc-note-stack-gap: var(--ustc-note-stack-gap-compact);
+  --ustc-note-after-gap: var(--ustc-note-after-gap-compact);
   --ustc-title-gap: var(--ustc-title-gap-compact);
 }
 

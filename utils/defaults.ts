@@ -98,6 +98,8 @@ export const noteDefaults = {
 export const calloutDefaults = {
   type: 'note' as 'note' | 'tip' | 'warning' | 'important' | 'example',
   title: '',
+  showIcon: true,
+  filled: false,
 }
 
 export const DEFAULT_NUMBER_SUFFIX = '. '

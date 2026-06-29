@@ -1,18 +1,28 @@
 import { test, expect } from '@playwright/test'
 
-test.setTimeout(60_000)
+test.setTimeout(120_000)
 
 // Fixture deck layout (note.md, port 13040)
 //
 //  1  cover
-//  2  content  default stacked notes with markdown body
+//  2  content  default stacked notes with markdown body and post-Note rhythm
 //  3  split    notes in both columns with color/divider controls
 
 async function gotoSlide(page, n) {
   await page.goto('/1', { waitUntil: 'domcontentloaded' })
-  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 30_000 })
+  await waitForRenderedSlide(page)
   await page.goto(`/${n}`, { waitUntil: 'domcontentloaded' })
-  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 30_000 })
+  await waitForRenderedSlide(page)
+}
+
+async function waitForRenderedSlide(page) {
+  await page.locator('.slidev-layout:visible').first().waitFor({
+    state: 'visible',
+    timeout: 60_000,
+  })
+  await page.waitForFunction(() => !document.body.innerText.includes('Loading slide...'), {
+    timeout: 60_000,
+  })
 }
 
 const slide = (page) => page.locator('.slidev-layout:visible').first()
@@ -96,6 +106,22 @@ test.describe('Note', () => {
     expect(rhythm.titleBodyGap).toBeLessThanOrEqual(6)
     expect(rhythm.titleWeight).toBe('800')
     expect(Number.parseFloat(rhythm.bodyLineHeight)).toBeGreaterThan(30)
+
+    const noteGaps = await slide(page).evaluate((root) => {
+      const notes = [...root.querySelectorAll('.note')]
+      const after = root.querySelector('.callout')
+      const style = getComputedStyle(root)
+      return {
+        stackToken: style.getPropertyValue('--ustc-note-stack-gap').trim(),
+        afterToken: style.getPropertyValue('--ustc-note-after-gap').trim(),
+        afterGap: Math.round(
+          after.getBoundingClientRect().top - notes.at(-1).getBoundingClientRect().bottom,
+        ),
+      }
+    })
+    expect(noteGaps.stackToken).toBe('0.95rem')
+    expect(noteGaps.afterToken).toBe('1rem')
+    expect(noteGaps.afterGap).toBeGreaterThanOrEqual(15)
   })
 
   test('color and divider props control note presentation in split columns', async ({ page }) => {

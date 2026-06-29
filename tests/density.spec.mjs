@@ -11,6 +11,7 @@ test.setTimeout(60_000)
 //  5  content  Box/ResultBox custom bg and borderColor props
 //  6  content  top-level component flow spacing
 //  7  content  inline Badge visual alignment against CJK body text
+//  8  content  component typography alignment and Callout switches
 //
 // Verifies the three-tier density scale: the `.compact` class is applied and
 // its body font-size sits strictly between normal and dense (monotonic
@@ -87,6 +88,51 @@ test.describe('Box and ResultBox — styling props', () => {
     const tokenResolved = slide(page).locator('.result-box').nth(1)
     await expect(tokenResolved).toHaveCSS('background-color', 'rgb(245, 245, 245)')
     await expect(tokenResolved).toHaveCSS('border-color', 'rgb(217, 119, 6)')
+  })
+})
+
+test.describe('Callout — visual switches and typography', () => {
+  test('Callout defaults to icon-on rail style, with optional fill and icon toggle', async ({
+    page,
+  }) => {
+    await gotoSlide(page, 8)
+
+    const callouts = slide(page).locator('.callout')
+    const defaultCallout = callouts.nth(0)
+    const noIconCallout = callouts.nth(1)
+    const filledCallout = callouts.nth(2)
+
+    await expect(defaultCallout).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)')
+    await expect(defaultCallout.locator('.callout-icon')).toHaveCount(1)
+    await expect(noIconCallout.locator('.callout-icon')).toHaveCount(0)
+    await expect(filledCallout.locator('.callout-icon')).toHaveCount(1)
+    await expect(filledCallout).toHaveCSS('background-color', 'rgba(217, 119, 6, 0.07)')
+  })
+
+  test('ResultBox and Callout typography follows Block typography', async ({ page }) => {
+    await gotoSlide(page, 8)
+
+    const sizes = await slide(page).evaluate((root) => {
+      const fontSize = (selector) => {
+        const el = root.querySelector(selector)
+        if (!el) throw new Error(`Missing typography selector: ${selector}`)
+        return getComputedStyle(el).fontSize
+      }
+
+      return {
+        blockTitle: fontSize('.block-title'),
+        blockBody: fontSize('.block-body p'),
+        resultTitle: fontSize('.result-box-title'),
+        resultBody: fontSize('.result-box-body p'),
+        calloutTitle: fontSize('.callout-title'),
+        calloutBody: fontSize('.callout-body p'),
+      }
+    })
+
+    expect(sizes.resultTitle).toBe(sizes.blockTitle)
+    expect(sizes.resultBody).toBe(sizes.blockBody)
+    expect(sizes.calloutTitle).toBe(sizes.blockTitle)
+    expect(sizes.calloutBody).toBe(sizes.blockBody)
   })
 })
 

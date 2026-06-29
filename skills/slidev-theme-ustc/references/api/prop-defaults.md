@@ -147,10 +147,12 @@ Used by `cover` and `end` layouts.
 
 ## `<Callout>` defaults (`calloutDefaults`)
 
-| Prop    | Default                  |
-| ------- | ------------------------ |
-| `type`  | `'note'`                 |
-| `title` | `''` (no title rendered) |
+| Prop       | Default                  |
+| ---------- | ------------------------ |
+| `type`     | `'note'`                 |
+| `title`    | `''` (no title rendered) |
+| `showIcon` | `true`                   |
+| `filled`   | `false`                  |
 
 ---
 

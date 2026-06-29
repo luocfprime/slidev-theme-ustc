@@ -162,3 +162,43 @@ sectionBar: false
   gap: 0.5rem;
 }
 </style>
+
+---
+layout: content
+footer: false
+sectionBar: false
+---
+
+<!-- slide 8: component typography alignment and Callout switches -->
+
+# Component Typography
+
+<Block title="Block Title">
+
+Block body text.
+
+</Block>
+
+<ResultBox title="Result Title">
+
+Result body text.
+
+</ResultBox>
+
+<Callout type="tip" title="Default Callout">
+
+Default callout body text.
+
+</Callout>
+
+<Callout type="warning" title="No Icon Callout" :showIcon="false">
+
+No-icon callout body text.
+
+</Callout>
+
+<Callout type="warning" title="Filled Callout" filled>
+
+Filled callout body text.
+
+</Callout>

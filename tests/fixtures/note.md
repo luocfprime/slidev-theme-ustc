@@ -27,6 +27,12 @@ A short summary with reusable settings and score $s_t$.
 
 </Note>
 
+<Callout type="note" title="Follow-up">
+
+This note should leave room before the next non-Note component.
+
+</Callout>
+
 ---
 layout: split
 footer: false
