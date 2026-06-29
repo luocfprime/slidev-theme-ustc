@@ -325,7 +325,14 @@ All are auto-imported by Slidev. For full prop tables see [references/api/compon
 | `<ResultBox>` | Quantitative or formal result   | Experimental numbers, theorem statements, final answers                       |
 | `<Badge>`     | Inline metadata tag (not a box) | Venue / year / status / CCF rank / dataset / links — flowing inline with text |
 
-Rules of thumb: `<Callout type="warning">` is for the audience, not the presenter. `<Callout>` has visible type color and a left rail; use it for typed side notes, not for the slide's main claim. `<Block>` is neutral — reach for it when none of the others fit.
+Choose components by semantic role before visual taste:
+
+1. If items are peers, start with the same component treatment.
+2. If two treatments differ, be able to name the semantic difference: different information type, different reading role, or different emphasis intent.
+3. If the only reason for changing component type is "visual variety", use the same component and fix rhythm with `Grid`, `flowGap`, or `VSpace` instead.
+4. Use layout first, emphasis second: a better column ratio, alignment, or spacer is usually cleaner than upgrading a paragraph into a louder box.
+
+Rules of thumb: `<Callout type="warning">` is for the audience, not the presenter. `<Callout>` has visible type color and a left rail; use it for typed side notes, not for the slide's main claim. `<Block>` is neutral — reach for it when a named container is useful but no warning/tip/result semantics are intended. `<Box>`, `<Block>`, and quiet `<Callout :showIcon="false">` are all middle-weight containers; pick among them by meaning, not by trying to make every region look different.
 
 ### Visual emphasis budget
 
@@ -342,11 +349,11 @@ has priority.
 | Component        | Visual emphasis | Recommended max per slide                                      |
 | ---------------- | --------------- | -------------------------------------------------------------- |
 | `<Takeaway>`     | High            | 1                                                              |
-| `<Callout>`      | Medium-high     | 1; 2 only for brief side notes with distinct types |
+| `<Callout>`      | Medium; medium-high when filled/icon-heavy | 1; 2 only for brief side notes with distinct types |
 | `<ResultBox>`    | Medium-high     | 2                                                              |
 | `<NumberedList>` | Medium          | 1 group; 2 groups only for a clear split-column process        |
-| `<Block>`        | Medium-low      | 2; in `split`, 2-3 when distributed across both columns        |
-| `<Box>`          | Low             | 2; in `split`, 2-3 when distributed across both columns        |
+| `<Block>`        | Medium          | 2; in `split`, 2-3 when distributed across both columns        |
+| `<Box>`          | Low-medium      | 2; in `split`, 2-3 when distributed across both columns        |
 | `<Badge>`        | Low, but easily fragmented | 6; more only as a deliberate legend or tag row       |
 | `<Note>`         | Low          | 4; in `split`, 5-6 when used as lightweight title-body pairs   |
 
@@ -359,14 +366,18 @@ them in a separate `<Notes>` container.
 `<Callout>` uses a GitHub-like rail style by default: colored left rail, title
 icon on, and no filled background. Set `:showIcon="false"` for a quieter rail
 or `filled` for the older, more salient pale background. Treat it as typed
-supplementary information, not as a high-level conclusion box. Use `<Takeaway>`
-or `<ResultBox>` when the message should carry the slide.
+supplementary information, not as a high-level conclusion box. It is easy to
+overuse because the rail/color implies semantic urgency even when the content is
+only a normal note. Use `<Takeaway>` or `<ResultBox>` when the message should
+carry the slide.
 
 Repeating one low- or medium-emphasis component in a strict grid, matrix, or
-comparison is usually calmer than mixing many component styles. A page with
-several peer `<Block>`s in a 2x2 matrix can work; a page with a `<Takeaway>`, a
-`<Callout>`, two `<ResultBox>`es, and multiple boxes usually over-spends the
-attention budget. Media/content carriers such as `<FigureBlock>`,
+comparison is usually calmer than mixing many component styles. Mixed
+components are correct only when the slide has mixed semantic roles (for
+example: main comparison + warning caveat + final quantitative result). A page
+with several peer `<Block>`s in a 2x2 matrix can work; a page with a
+`<Takeaway>`, a `<Callout>`, two `<ResultBox>`es, and multiple boxes usually
+over-spends the attention budget. Media/content carriers such as `<FigureBlock>`,
 `<TableBlock>`, `<VideoBlock>`, `<PlotlyGraph>`, and `<QRCode>` are governed by
 content/layout needs and are intentionally not included in this structural
 emphasis table.
@@ -534,9 +545,9 @@ The theme exposes many features (subtitle, dense mode, section bar, footnotes, C
 
 - **Subtitle is optional.** Add `subtitle:` only when the title is genuinely ambiguous. (`default`/`content` are aliases — both accept `subtitle:`; pick whichever name reads better in your frontmatter.)
 - **Don't stack components.** One `<Block>` _or_ one `<Callout>` _or_ one `<Takeaway>` reads better than all three. Reach for a component only when its semantic role fits — wrapping every paragraph in something is a smell.
-- **Vary repeated component treatments.** More than two identical-looking instances of the same component on one slide flatten into a visual group: the audience sees "a pile of boxes" before it sees hierarchy. If you need 3+ peers, make the repetition intentional and ordered (for example a 2×2 `<Block>` matrix or a 3×1 card-like stack); otherwise vary structure, emphasis, or component choice so the main point stays legible.
+- **Same-kind first; mix only for meaning.** Peer items should usually share component treatment, size, and alignment. Different component types on the same slide must signal a real semantic difference: information type, reading role, or emphasis intent. If you cannot name that difference, keep the same component and adjust layout/rhythm instead.
 - **Align parallel items horizontally.** When a slide does hold multiple instances of the same component (two `<Block>`s, three `<Box>`es, side-by-side `<Callout>`s), wrap them in `<Grid cols="N">` so they sit in a row, not stacked vertically. Vertical stacking reads as sequence; horizontal layout reads as comparison. For equal-height items, swap `<Grid>` for raw native CSS Grid (`<Grid>` defaults to `align-items: start`; native defaults to `stretch`).
-- **Use the theme rhythm first.** Top-level components and media blocks already share `--ustc-component-gap`, with compact/dense variants. `<Note>` also has dedicated `--ustc-note-stack-gap` / `--ustc-note-after-gap` tokens because title-body pairs often need slightly more breathing room than ordinary flow blocks. If a single slide still needs a touch more or less separation at one specific point, use `<VSpace size="..."/>` instead of `<br>`. For repeated spacing changes, override the relevant rhythm token on `.slidev-layout` for one slide or `:root` for the deck instead of sprinkling one-off spacers throughout the deck.
+- **Use the theme rhythm first.** Top-level components and media blocks already share `--ustc-component-gap`, with compact/dense variants. `<Note>` also has dedicated `--ustc-note-stack-gap` / `--ustc-note-after-gap` tokens because title-body pairs often need slightly more breathing room than ordinary flow blocks. If a single slide still needs a touch more or less separation at one specific point, use `<VSpace size="..."/>` instead of `<br>`: small values (`xs`, `sm`, or about `0.3-0.8rem`) for local breathing room; `md`/`lg` or about `1rem+` only between major zones. If a slide needs many manual spacers, the layout or component choice is probably wrong. For repeated spacing changes, override the relevant rhythm token on `.slidev-layout` for one slide or `:root` for the deck instead of sprinkling one-off spacers throughout the deck.
 - **Use `flowGap` for body block rhythm.** Set `flowGap` globally when the whole deck should breathe tighter/looser, or per slide when one dense page needs special spacing. It controls the same top-level flow rhythm as `--ustc-component-gap`; use dedicated tokens for component-specific structure such as Note stacking or figure caption spacing.
 - **Dense mode is for content pressure, not aesthetics.** If the slide already fits in `density: normal`, don't switch to `dense`. If the problem is page padding rather than text size, try `margin: tight` first.
 - **Toggle, don't litter.** Disable `sectionBar`/`footer` per-slide for cover, end, blank, and full-bleed visuals — not casually elsewhere.

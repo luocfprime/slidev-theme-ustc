@@ -24,6 +24,7 @@ import { spawn } from 'node:child_process'
 import { setTimeout as sleep } from 'node:timers/promises'
 import { mkdirSync } from 'node:fs'
 import { dirname, resolve, isAbsolute } from 'node:path'
+import { DEFAULT_THRESHOLDS as TH, ICON, classifyMeasurement } from './audit-layout-heuristics.mjs'
 
 // Chromium comes from whichever Playwright package the deck has. `@playwright/test`
 // is present wherever `slidev export` works; fall back to playwright / playwright-core.
@@ -53,20 +54,6 @@ const wantShot = flags.has('--shot')
 const wantJson = flags.has('--json')
 const wantAll = flags.has('--all')
 const target = positional.find((p) => p !== String(slideArg)) ?? null
-
-// ── thresholds (tuned to the theme's "dense is fine, empty is ugly" stance) ───
-const TH = {
-  overflowPx: 4, // > this many px past the frame = overflow
-  sparseFill: 40, // content fills < this % of usable height = egregiously empty
-  // (academic slides at 55–70% are normal breathing room, NOT a defect — only
-  //  flag the genuinely near-empty; raise/lower to taste)
-  upscale: 1.3, // img rendered / natural width above this = blurry
-  imgWhite: 15, // whitespace band on any image edge % = likely needs cropping
-  imgTinyArea: 4, // img occupies < this % of the slide = postage stamp
-  wideFigAr: 2.5, // figure aspect ratio (w/h) above this = a wide strip
-  figVoidPct: 30, // empty space below a figure in its column, % of usable height
-  orphanRatio: 0.15, // wrapped last line width / widest line below this = orphan
-}
 
 // ── resolve target: existing server URL, or spawn slidev on a deck ────────────
 async function reachable(url) {
@@ -240,126 +227,219 @@ function measureInPage(layout, thresholds) {
     out.images.push(rec)
   }
 
-  // orphan wrap: a heading/bullet whose wrapped last line is a tiny stub.
-  // Only on body layouts (content/split) and only headings/bullets — a flowing
-  // <p> with a short final line is normal prose, not a defect; and structural
-  // layouts (cover/section/end) wrap their titles by design.
-  out.orphans = []
   const isBody = /\b(content|split)\b/.test(layout.className)
-  for (const el of isBody ? layout.querySelectorAll('h1, h2, li') : []) {
-    if (isChrome(el)) continue
-    if (el.querySelector('.katex')) continue // math notation wraps by its own rules
+  const visibleBox = (el) => {
+    if (isChrome(el)) return null
+    const cs = getComputedStyle(el)
+    if (cs.display === 'none' || cs.visibility === 'hidden' || cs.position === 'fixed') return null
+    const r = el.getBoundingClientRect()
+    if (r.width < 1 || r.height < 1) return null
+    return {
+      left: un(r.left - lr.left),
+      top: un(r.top - lr.top),
+      right: un(r.right - lr.left),
+      bottom: un(r.bottom - lr.top),
+      width: un(r.width),
+      height: un(r.height),
+    }
+  }
+
+  const splitCols = [...layout.querySelectorAll('.split-col')]
+  out.columns = splitCols.map((col, index) => {
+    const box = visibleBox(col)
+    if (!box) return { index, name: index === 0 ? 'left' : 'right', fillPct: 0, remaining: 0 }
+    let colBottom = box.top
+    for (const el of col.querySelectorAll('*')) {
+      const b = visibleBox(el)
+      if (!b) continue
+      colBottom = Math.max(colBottom, b.bottom)
+    }
+    const usable = Math.max(1, availBottom - box.top)
+    return {
+      index,
+      name: index === 0 ? 'left' : 'right',
+      fillPct: Math.max(0, Math.round(((colBottom - box.top) / usable) * 100)),
+      remaining: Math.round(availBottom - colBottom),
+      width: Math.round(box.width),
+    }
+  })
+
+  function textLines(el) {
+    if (isChrome(el)) return null
+    if (el.querySelector('.katex')) return null // math notation wraps by its own rules
     const range = document.createRange()
     range.selectNodeContents(el)
     const rects = [...range.getClientRects()].filter((r) => r.width > 1 && r.height > 1)
-    if (rects.length < 2) continue
+    if (rects.length < 2) return null
     const lines = []
     for (const r of rects) {
       const line = lines.find((L) => Math.abs(L.top - r.top) < 4)
-      if (line) line.width += r.width
+      if (line) line.width = Math.max(line.width, r.width)
       else lines.push({ top: r.top, width: r.width })
     }
-    if (lines.length < 2) continue
+    if (lines.length < 2) return null
     const widths = lines.map((L) => L.width)
     const ratio = widths[widths.length - 1] / Math.max(...widths)
     const text = (el.textContent || '').trim().replace(/\s+/g, ' ')
-    if (ratio < TH.orphanRatio && text.length > 10) {
-      out.orphans.push({
-        tag: el.tagName.toLowerCase(),
-        lines: lines.length,
-        lastRatio: +ratio.toFixed(2),
-        text: text.slice(0, 44),
-      })
+    return { lines: lines.length, ratio, text }
+  }
+
+  // Wrap quality: measure real rendered line boxes, but only for text blocks
+  // where a short tail harms scanability. Structured NumberedList items are
+  // measured as title/body, not as the whole root <li>; captions are tracked
+  // separately because a two-line figure caption is usually fine.
+  out.wraps = { wrappedBlocks: 0, shortWraps: [], captionWraps: [] }
+  out.orphans = out.wraps.shortWraps // backward-compatible JSON alias
+  if (isBody) {
+    const candidates = layout.querySelectorAll(
+      [
+        'h1',
+        'h2',
+        'h3',
+        'p:not(.figure-caption p):not(.table-block-caption p)',
+        'li:not(.numbered-list-item)',
+        '.numbered-list-title',
+        '.numbered-list-body',
+        '.block-title',
+        '.callout-title',
+        '.result-box-title',
+      ].join(', '),
+    )
+    for (const el of candidates) {
+      if (el.closest('.figure-caption, .table-block-caption')) continue
+      if (el.matches('li') && el.querySelector('.numbered-list-title, .numbered-list-body'))
+        continue
+      const rec = textLines(el)
+      if (!rec || rec.text.length <= 10) continue
+      out.wraps.wrappedBlocks++
+      const isCjk = /[\u3400-\u9fff]/.test(rec.text)
+      const cutoff = isCjk ? Math.min(TH.orphanRatio, 0.12) : TH.orphanRatio
+      if (rec.ratio < cutoff && rec.text.length > 14) {
+        out.wraps.shortWraps.push({
+          tag: el.tagName.toLowerCase(),
+          lines: rec.lines,
+          lastRatio: +rec.ratio.toFixed(2),
+          text: rec.text.slice(0, 44),
+        })
+      }
+    }
+    for (const el of layout.querySelectorAll('.figure-caption, .table-block-caption')) {
+      const rec = textLines(el)
+      if (rec) out.wraps.captionWraps.push({ lines: rec.lines, text: rec.text.slice(0, 44) })
+    }
+  }
+
+  // Approximate the largest continuous empty body region. This is intentionally
+  // coarse: it is a composition signal, not a pixel-perfect packing score.
+  out.empty = null
+  if (isBody) {
+    const header = layout.querySelector('.split-header')
+    const h1 = layout.querySelector('h1')
+    const bodyTop = Math.max(
+      0,
+      Math.round(header ? visibleBox(header)?.bottom || 0 : h1 ? visibleBox(h1)?.bottom || 0 : 0),
+    )
+    const body = { left: 0, top: bodyTop, right: clientW, bottom: availBottom }
+    body.width = body.right - body.left
+    body.height = Math.max(1, body.bottom - body.top)
+    const cols = 32
+    const rows = 18
+    const grid = Array.from({ length: rows }, () => Array(cols).fill(false))
+    const meaningfulSelector = [
+      'h1',
+      'h2',
+      'h3',
+      'p',
+      'li',
+      'img',
+      'video',
+      'table',
+      'pre',
+      'blockquote',
+      'iframe',
+      'svg',
+      'canvas',
+      'object',
+      'embed',
+      '.block',
+      '.note',
+      '.callout',
+      '.result-box',
+      '.takeaway',
+      '.figure-block',
+      '.video-block',
+      '.table-block',
+      '.plotly-graph',
+      '.ustc-qrcode-wrap',
+      '.lineage-frame',
+    ].join(', ')
+    const mark = (box) => {
+      const left = Math.max(body.left, box.left)
+      const right = Math.min(body.right, box.right)
+      const top = Math.max(body.top, box.top)
+      const bottom = Math.min(body.bottom, box.bottom)
+      if (right - left < 3 || bottom - top < 3) return
+      const x1 = Math.max(0, Math.floor(((left - body.left) / body.width) * cols))
+      const x2 = Math.min(cols - 1, Math.floor(((right - body.left) / body.width) * cols))
+      const y1 = Math.max(0, Math.floor(((top - body.top) / body.height) * rows))
+      const y2 = Math.min(rows - 1, Math.floor(((bottom - body.top) / body.height) * rows))
+      for (let y = y1; y <= y2; y++) for (let x = x1; x <= x2; x++) grid[y][x] = true
+    }
+    for (const el of layout.querySelectorAll(meaningfulSelector)) {
+      if (el.closest('.page-footer, .footnotes')) continue
+      const b = visibleBox(el)
+      if (b) mark(b)
+    }
+    const seen = Array.from({ length: rows }, () => Array(cols).fill(false))
+    let best = null
+    for (let y = 0; y < rows; y++) {
+      for (let x = 0; x < cols; x++) {
+        if (grid[y][x] || seen[y][x]) continue
+        const q = [[x, y]]
+        seen[y][x] = true
+        let cells = 0
+        let minX = x
+        let maxX = x
+        let minY = y
+        let maxY = y
+        for (let i = 0; i < q.length; i++) {
+          const [cx, cy] = q[i]
+          cells++
+          minX = Math.min(minX, cx)
+          maxX = Math.max(maxX, cx)
+          minY = Math.min(minY, cy)
+          maxY = Math.max(maxY, cy)
+          for (const [nx, ny] of [
+            [cx + 1, cy],
+            [cx - 1, cy],
+            [cx, cy + 1],
+            [cx, cy - 1],
+          ]) {
+            if (nx < 0 || ny < 0 || nx >= cols || ny >= rows || seen[ny][nx] || grid[ny][nx]) {
+              continue
+            }
+            seen[ny][nx] = true
+            q.push([nx, ny])
+          }
+        }
+        if (!best || cells > best.cells) best = { cells, minX, maxX, minY, maxY }
+      }
+    }
+    if (best) {
+      const cx = (best.minX + best.maxX + 1) / 2 / cols
+      const cy = (best.minY + best.maxY + 1) / 2 / rows
+      const horiz = cx < 0.37 ? 'left' : cx > 0.63 ? 'right' : 'center'
+      const vert = cy < 0.37 ? 'top' : cy > 0.63 ? 'bottom' : 'middle'
+      out.empty = {
+        largestPct: Math.round((best.cells / (cols * rows)) * 100),
+        location: `${vert}-${horiz}`,
+        grid: `${best.maxX - best.minX + 1}x${best.maxY - best.minY + 1}`,
+      }
     }
   }
 
   return out
 }
-
-// ── classify a slide's measurement into flagged findings ──────────────────────
-function classify(m) {
-  const findings = []
-  if (m.error) return [{ kind: 'error', msg: m.error }]
-
-  const isBody = /\b(content|split)\b/.test(m.layoutClass || '')
-  const overflowing = m.overflowY > TH.overflowPx
-  if (overflowing) {
-    findings.push({
-      kind: 'overflow',
-      msg: `OVERFLOW +${m.overflowY}px (fill ${m.fillPct}%)`,
-      detail: m.deepest ? `↳ deepest <${m.deepest.tag}> "${m.deepest.text}"` : null,
-      fix: 'split slide / density:compact / cut an item / limit width',
-    })
-  } else if (isBody && m.fillPct < TH.sparseFill) {
-    // sparse only matters on body layouts — section/cover/end/toc are meant to
-    // be airy; flagging their whitespace is noise.
-    findings.push({
-      kind: 'sparse',
-      msg: `SPARSE (fill ${m.fillPct}%, ${m.remaining}px empty below)`,
-      fix: 'add figure / center / merge with neighbour / <br> for rhythm',
-    })
-  }
-
-  const isSplit = /\bsplit\b/.test(m.layoutClass || '')
-  for (const im of m.images || []) {
-    // a wide figure stuffed into a split column fills only a thin strip, leaving
-    // the rest of that column empty — it should span full width instead.
-    if (isSplit && im.ar != null && im.ar >= TH.wideFigAr && im.belowPct >= TH.figVoidPct) {
-      findings.push({
-        kind: 'image',
-        msg: `WIDE FIGURE ${im.src} (AR ${im.ar}) in a split column, ${im.belowPct}% empty below`,
-        fix: 'go full-width: content layout, text above, figure below at width~100%',
-      })
-    }
-    if (im.white) {
-      const labels = { t: 'top', b: 'bottom', l: 'left', r: 'right' }
-      const sides = Object.keys(labels)
-        .filter((k) => im.white[k] >= TH.imgWhite)
-        .map((k) => `${labels[k]} ${im.white[k]}%`)
-      if (sides.length) {
-        findings.push({
-          kind: 'image',
-          msg: `IMAGE ${im.src}: whitespace band ${sides.join(', ')}`,
-          fix: 'crop the source image',
-        })
-      }
-    }
-    if (im.upscale != null && im.upscale > TH.upscale) {
-      findings.push({
-        kind: 'image',
-        msg: `IMAGE ${im.src}: upscaled ${im.upscale}× (blurry)`,
-        fix: 'use a higher-resolution source',
-      })
-    }
-    if (im.areaPct != null && im.areaPct > 0 && im.areaPct < TH.imgTinyArea) {
-      findings.push({
-        kind: 'image',
-        msg: `IMAGE ${im.src}: only ${im.areaPct}% of the slide (too small)`,
-        fix: 'enlarge, or place beside text',
-      })
-    }
-  }
-
-  // Orphans are noise on an already-overflowing slide (fix the overflow first).
-  // Cap at 2 so a long list doesn't bury the signal.
-  if (!overflowing) {
-    const orphans = m.orphans || []
-    for (const o of orphans.slice(0, 2)) {
-      findings.push({
-        kind: 'orphan',
-        msg: `ORPHAN: <${o.tag}> wraps ${o.lines} lines, last line only ${Math.round(o.lastRatio * 100)}% "${o.text}"`,
-        fix: 'rephrase, or adjust the column width, then re-render',
-      })
-    }
-    if (orphans.length > 2) {
-      findings.push({ kind: 'orphan', msg: `…and ${orphans.length - 2} more orphans`, fix: null })
-    }
-  }
-
-  return findings
-}
-
-const ICON = { overflow: '⚠', sparse: '⚪', image: '🖼', orphan: '↵', error: '✗' }
 
 // ── main ──────────────────────────────────────────────────────────────────────
 let child = null
@@ -396,7 +476,7 @@ try {
       .waitFor({ state: 'detached', timeout: 8000 })
       .catch(() => {})
     const m = await page.locator('.slidev-layout:visible').first().evaluate(measureInPage, TH)
-    const findings = classify(m)
+    const findings = classifyMeasurement(m, TH)
     results.push({ n, m, findings })
     if (wantShot && findings.length) {
       const path = resolve(process.cwd(), 'audit-shots', `slide-${n}.png`)
@@ -415,23 +495,29 @@ try {
 }
 
 function printReport(url, total, results) {
-  const flagged = results.filter((r) => r.findings.length)
-  console.log(`\nLayout audit — ${total} slides @ ${url}\n`)
-  const shown = wantAll ? results : flagged
+  const observed = results.filter((r) => r.findings.length)
+  console.log(`\nLayout measurements — ${total} slides @ ${url}\n`)
+  const shown = wantAll ? results : observed
   for (const { n, m, findings } of shown) {
-    if (!findings.length) {
-      console.log(`✓ slide ${n}  fill ${m.fillPct}%  ${m.layoutClass || ''}`)
-      continue
-    }
+    const summary = slideSummary(m)
+    console.log(`slide ${n}  ${summary}`)
     for (const f of findings) {
-      console.log(`${ICON[f.kind] || '•'} slide ${n}  ${f.msg}`)
+      console.log(`  ${ICON[f.kind] || '•'} ${f.msg}`)
       if (f.detail) console.log(`     ${f.detail}`)
       if (f.fix) console.log(`     fix: ${f.fix}`)
     }
   }
-  const okCount = results.length - flagged.length
   const scope =
     results.length === total ? `${total} slides` : `${results.length} of ${total} audited`
-  console.log(`\n${okCount}/${results.length} clean · ${flagged.length} flagged  (${scope})`)
-  if (wantShot && flagged.length) console.log(`screenshots → audit-shots/`)
+  console.log(`\n${observed.length} slides with observations  (${scope})`)
+  if (wantShot && observed.length) console.log(`screenshots → audit-shots/`)
+}
+
+function slideSummary(m) {
+  const parts = [`fill ${m.fillPct}%`]
+  if (m.columns?.length) parts.push(`cols ${m.columns.map((c) => c.fillPct).join('/')}%`)
+  if (m.empty) parts.push(`empty ${m.empty.largestPct}% ${m.empty.location}`)
+  if (m.wraps?.shortWraps?.length) parts.push(`short-wraps ${m.wraps.shortWraps.length}`)
+  if (m.layoutClass) parts.push(m.layoutClass)
+  return parts.join('  ')
 }

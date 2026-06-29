@@ -25,13 +25,16 @@ Slides should be clean, compact, and readable. Both extremes are defects:
 - Do not use `compact` to fix sparse slides. Sparse slides need better content placement, larger figures, stronger hierarchy, or more appropriate line spacing; shrinking everything makes the theme look flattened while still leaving empty space.
 - If the slide is sparse, do not switch to `compact` or `dense`.
 - If the slide is crowded but should not be `dense`, split, rebalance columns, shorten wording, or move details to backup.
-- Use `<br>` only for local breathing room when there is room to spare.
+- Use `<VSpace>` for intentional local breathing room; `<br>` is only an escape hatch inside prose or raw HTML. If a slide needs many manual spacers, fix the layout/component choice instead.
 
 ## Component Restraint
 
 - A component must earn its semantic role.
 - Do not box every paragraph.
+- Peer information should normally use the same component treatment. Mix `Block`, `Box`, `Callout`, `Note`, or `ResultBox` only when the difference signals a real difference in information type, reading role, or emphasis intent.
+- Layout fixes come before emphasis upgrades: adjust `Grid`, column ratio, alignment, `flowGap`, or `VSpace` before turning neutral content into a louder component.
 - `Takeaway` is for one important slide-level point, not every slide.
+- `Callout` is easy to overuse because its rail/color implies typed urgency. Use it for warnings, caveats, tips, or typed side notes, not ordinary grouping.
 - `ResultBox` is for measured/final results, not decorative grouping.
 - A few parallel `ResultBox`es work when they expose key numbers. Too many small boxes can become cramped and over-designed; switch to a simple table or list when the numbers no longer need card emphasis.
 - Plain bullets plus a `FigureBlock` are often enough.
