@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test'
 
-test.setTimeout(60_000)
+test.setTimeout(120_000)
 
 // Fixture deck layout (rhythm.md, port 13038)
 //
@@ -23,9 +23,19 @@ test.setTimeout(60_000)
 
 async function gotoSlide(page, n) {
   await page.goto('/1', { waitUntil: 'domcontentloaded' })
-  await page.locator('.slidev-layout').first().waitFor({ state: 'attached', timeout: 30_000 })
+  await waitForRenderedSlide(page)
   await page.goto(`/${n}`, { waitUntil: 'domcontentloaded' })
-  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 30_000 })
+  await waitForRenderedSlide(page)
+}
+
+async function waitForRenderedSlide(page) {
+  await page.locator('.slidev-layout:visible').first().waitFor({
+    state: 'visible',
+    timeout: 60_000,
+  })
+  await page.waitForFunction(() => !document.body.innerText.includes('Loading slide...'), {
+    timeout: 60_000,
+  })
 }
 
 const slide = (page) => page.locator('.slidev-layout:visible').first()

@@ -20,10 +20,20 @@ test('all slides load without errors', async ({ page }) => {
     if (msg.type() === 'error' && !ignore(text)) allErrors.push({ slide: 1, msg: text })
   })
 
-  // Slide 1: full networkidle to ensure Vite dep-optimization completes before we
-  // read $slidev.nav.total and start scanning.
-  await page.goto('/1', { waitUntil: 'networkidle' })
-  await page.waitForSelector('.slidev-layout', { timeout: 30_000 })
+  const waitForRenderedSlide = async () => {
+    await page.locator('.slidev-layout:visible').first().waitFor({
+      state: 'visible',
+      timeout: 60_000,
+    })
+    await page.waitForFunction(() => !document.body.innerText.includes('Loading slide...'), {
+      timeout: 60_000,
+    })
+  }
+
+  // Slide 1: mount the deck before route-hopping. Waiting for the Slidev layout
+  // is more reliable than networkidle because Vite/Slidev may keep requests open.
+  await page.goto('/1', { waitUntil: 'domcontentloaded' })
+  await waitForRenderedSlide()
 
   // Read exact slide count from Slidev's runtime. In Slidev v52+ $slidev is
   // exposed on window.__slidev__ rather than Vue globalProperties.
@@ -64,9 +74,7 @@ test('all slides load without errors', async ({ page }) => {
       .catch(() => null)
     if (!res) break
 
-    // Wait for Vue to finish mounting all slide layouts (state: 'attached' matches
-    // hidden elements too, so this fires as soon as Slidev renders the slide tree).
-    await page.locator('.slidev-layout').first().waitFor({ state: 'attached', timeout: 30_000 })
+    await waitForRenderedSlide()
 
     const layouts = await page.locator('.slidev-layout').count()
 

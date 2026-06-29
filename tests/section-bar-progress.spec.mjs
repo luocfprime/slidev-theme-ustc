@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test'
 
 async function gotoSlide(page, n) {
-  await page.goto(`/${n}`, { waitUntil: 'networkidle' })
-  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 10_000 })
+  await page.goto(`/${n}`, { waitUntil: 'domcontentloaded' })
+  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 30_000 })
 }
 
 const slide = (page) => page.locator('.slidev-layout:visible').first()

@@ -2,9 +2,9 @@ import { test, expect } from '@playwright/test'
 
 // Navigate to slide N and wait for the layout to mount.
 async function gotoSlide(page, n) {
-  await page.goto(`/${n}`, { waitUntil: 'networkidle' })
+  await page.goto(`/${n}`, { waitUntil: 'domcontentloaded' })
   // Slidev keeps all slides in DOM simultaneously; wait for the visible one.
-  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 10_000 })
+  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 30_000 })
 }
 
 // Scope queries to the currently visible layout so sibling slides in DOM don't

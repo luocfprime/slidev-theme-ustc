@@ -5,13 +5,19 @@ test('visual snapshots', async ({ page }) => {
 
   await page.emulateMedia({ reducedMotion: 'reduce' })
 
-  await page.goto('/1', { waitUntil: 'networkidle' })
-  await page.waitForSelector('.slidev-layout', { timeout: 30_000 })
-  await page.evaluate(() => document.fonts.ready)
-  await page
-    .locator('text=Loading slide...')
-    .waitFor({ state: 'detached', timeout: 30_000 })
-    .catch(() => {})
+  const waitForRenderedSlide = async () => {
+    await page.locator('.slidev-layout:visible').first().waitFor({
+      state: 'visible',
+      timeout: 60_000,
+    })
+    await page.evaluate(() => document.fonts.ready)
+    await page.waitForFunction(() => !document.body.innerText.includes('Loading slide...'), {
+      timeout: 60_000,
+    })
+  }
+
+  await page.goto('/1', { waitUntil: 'domcontentloaded' })
+  await waitForRenderedSlide()
 
   let total = null
   for (let attempt = 0; attempt < 15 && !total; attempt++) {
@@ -25,16 +31,12 @@ test('visual snapshots', async ({ page }) => {
     await test.step(`slide ${n}`, async () => {
       if (n > 1) {
         await page.goto(`/${n}`, { waitUntil: 'domcontentloaded' })
-        await page.locator('.slidev-layout').first().waitFor({ state: 'attached' })
-        await page.evaluate(() => document.fonts.ready)
+        await waitForRenderedSlide()
       }
 
       // Wait for lazy-loaded components (e.g. PlotlyGraph) to finish mounting.
       // Slidev shows a "Loading slide..." spinner while async components resolve.
-      await page
-        .locator('text=Loading slide...')
-        .waitFor({ state: 'detached', timeout: 30_000 })
-        .catch(() => {})
+      await waitForRenderedSlide()
 
       await expect.soft(page).toHaveScreenshot(`slide-${n}.png`, {
         maxDiffPixelRatio: 0.04,

@@ -2,7 +2,8 @@ const isCI = !!process.env.CI
 
 export default {
   testDir: './tests',
-  timeout: 30_000,
+  timeout: 120_000,
+  workers: 2,
 
   webServer: [
     {

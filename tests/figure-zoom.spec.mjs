@@ -12,10 +12,10 @@ import { test, expect } from '@playwright/test'
 // turns zoom off, opening the lightbox on click, and closing via Esc / backdrop.
 
 async function gotoSlide(page, n) {
-  await page.goto('/1', { waitUntil: 'networkidle' })
-  await page.locator('.slidev-layout').first().waitFor({ state: 'attached', timeout: 15_000 })
+  await page.goto('/1', { waitUntil: 'domcontentloaded' })
+  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 30_000 })
   await page.goto(`/${n}`, { waitUntil: 'domcontentloaded' })
-  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 15_000 })
+  await page.locator('.slidev-layout:visible').first().waitFor({ timeout: 30_000 })
 }
 
 const slide = (page) => page.locator('.slidev-layout:visible').first()
