@@ -11,16 +11,18 @@ from __future__ import annotations
 
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from html import escape
 import os
 from pathlib import Path
 import shutil
 import subprocess
 import sys
 import time
+from urllib.parse import quote
 
 
 ROOT = Path(__file__).resolve().parents[1]
-BASE = "/slidev-theme-ustc"
+BASE = os.environ.get("PREVIEW_BASE", "/slidev-theme-ustc").rstrip("/")
 STAGE = ROOT / ".preview"
 PUBLIC = ROOT / "public"
 
@@ -63,6 +65,95 @@ def discover_decks() -> list[Deck]:
     return decks
 
 
+def deck_url(base: str, name: str) -> str:
+    prefix = base.rstrip("/")
+    path = quote(name)
+    return f"{prefix}/{path}/" if prefix else f"/{path}/"
+
+
+def render_index(decks: list[Deck], base: str = BASE) -> str:
+    items = "\n".join(
+        f'  <li><a href="{deck_url(base, deck.name)}">{escape(deck.name)}</a></li>'
+        for deck in decks
+    )
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>slidev-theme-ustc previews</title>
+<style>
+  :root {{
+    color-scheme: light;
+    --blue: #1E4C90;
+    --ink: #1f2933;
+    --muted: #5f6b7a;
+    --line: #d8dee7;
+    --surface: #f7f9fc;
+  }}
+  body {{
+    font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    max-width: 48rem;
+    margin: 4rem auto;
+    padding: 0 1.5rem;
+    color: var(--ink);
+    background: white;
+  }}
+  h1 {{
+    font-size: 1.65rem;
+    line-height: 1.2;
+    margin: 0 0 0.35rem;
+  }}
+  p {{
+    color: var(--muted);
+    margin: 0 0 1.4rem;
+  }}
+  ul {{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+  }}
+  li + li {{
+    border-top: 1px solid var(--line);
+  }}
+  a {{
+    display: block;
+    padding: 0.75rem 0.95rem;
+    color: var(--blue);
+    background: var(--surface);
+    text-decoration: none;
+    font-weight: 600;
+  }}
+  a:hover {{
+    background: #eef4fb;
+    text-decoration: underline;
+  }}
+  code {{
+    background: #eef1f5;
+    padding: 0 0.3em;
+    border-radius: 3px;
+  }}
+</style>
+</head>
+<body>
+<h1>slidev-theme-ustc previews</h1>
+<p>Static builds for every deck under <code>examples/</code>.</p>
+<ul>
+{items}
+</ul>
+</body>
+</html>
+"""
+
+
+def write_index(out_dir: Path, decks: list[Deck], base: str = BASE) -> None:
+    out_dir.mkdir(parents=True, exist_ok=True)
+    (out_dir / "index.html").write_text(render_index(decks, base), encoding="utf-8")
+
+
 def copy_public_assets(out_dir: Path) -> None:
     if not PUBLIC.exists():
         return
@@ -77,7 +168,7 @@ def copy_public_assets(out_dir: Path) -> None:
 
 def build_one(deck: Deck) -> BuildResult:
     out_dir = ROOT / "dist" / deck.name
-    base = f"{BASE}/{deck.name}/"
+    base = deck_url(BASE, deck.name)
     cmd = [
         "pnpm",
         "exec",
@@ -146,6 +237,9 @@ def main() -> int:
     shutil.rmtree(STAGE, ignore_errors=True)
 
     decks = discover_decks()
+    if not decks:
+        print("[build-previews] no decks found under examples/", file=sys.stderr, flush=True)
+        return 1
 
     print(f"[build-previews] building {len(decks)} deck(s) in parallel:", flush=True)
     for deck in decks:
@@ -172,6 +266,8 @@ def main() -> int:
                 print(f"--- {result.name} stdout ---\n{result.stdout}", file=sys.stderr, flush=True)
         return 1
 
+    write_index(ROOT / "dist", decks, BASE)
+    print(f"[build-previews] wrote index at {ROOT / 'dist' / 'index.html'}", flush=True)
     print(f"\n[build-previews] all {len(decks)} deck(s) built in {elapsed:.1f}s", flush=True)
     return 0
 
