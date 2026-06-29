@@ -48,10 +48,7 @@ if (files.length === 0) {
 }
 
 const componentPattern = components.map(escapeRegExp).join('|')
-const sameLineContent = new RegExp(
-  `^\\s*<(${componentPattern})\\b([^>]*)>(\\s*\\S[\\s\\S]*?)</\\1>`,
-)
-const sameLineOpenText = new RegExp(`^\\s*<(${componentPattern})\\b([^>]*)>\\s*\\S`)
+const openingTag = new RegExp(`^\\s*<(${componentPattern})\\b`)
 
 const findings = []
 for (const file of files) {
@@ -66,6 +63,7 @@ for (const file of files) {
 
   const lines = readFileSync(file, 'utf8').split(/\r?\n/)
   let inFence = false
+  const stack = []
   lines.forEach((line, idx) => {
     const trimmed = line.trim()
     if (/^(```|~~~)/.test(trimmed)) {
@@ -74,14 +72,43 @@ for (const file of files) {
     }
     if (inFence) return
     if (!trimmed || trimmed.startsWith('<!--')) return
-    if (sameLineContent.test(trimmed) || sameLineOpenText.test(trimmed)) {
+    if (/^ {4,}<\/?/.test(line) && new RegExp(`^</?(${componentPattern})\\b`).test(trimmed)) {
+      findings.push({
+        file,
+        line: idx + 1,
+        text: `${trimmed} (content component tag has 4+ leading spaces; remove indentation to avoid Markdown code blocks)`,
+      })
+      return
+    }
+    const closing = trimmed.match(new RegExp(`^</(${componentPattern})>$`))
+    if (closing) {
+      const top = stack[stack.length - 1]
+      if (top?.component === closing[1]) stack.pop()
+      return
+    }
+    if (hasSameLineComponentContent(trimmed)) {
       findings.push({ file, line: idx + 1, text: trimmed })
+      return
+    }
+
+    const open = trimmed.match(openingTag)
+    if (open && !trimmed.endsWith('/>')) {
+      stack.push({ component: open[1], line: idx + 1 })
+      return
+    }
+
+    if (stack.length > 0 && /^ {4,}\S/.test(line)) {
+      findings.push({
+        file,
+        line: idx + 1,
+        text: `${line.trim()} (indented content inside <${stack[stack.length - 1].component}>; remove leading spaces unless this is intentional code)`,
+      })
     }
   })
 }
 
 if (findings.length > 0) {
-  console.error('One-line content components found. Use:')
+  console.error('Invalid content component formatting found. Use:')
   console.error('<Component props>')
   console.error('')
   console.error('content')
@@ -95,8 +122,37 @@ if (findings.length > 0) {
   process.exit(1)
 }
 
-console.log(`OK: no one-line content components in ${files.length} file(s).`)
+console.log(`OK: no invalid content component formatting in ${files.length} file(s).`)
 
 function escapeRegExp(value) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+}
+
+function hasSameLineComponentContent(line) {
+  const match = openingTag.exec(line)
+  if (!match) return false
+  const closeIdx = findTagClose(line)
+  if (closeIdx < 0) return false
+
+  const beforeClose = line.slice(0, closeIdx).trimEnd()
+  if (beforeClose.endsWith('/')) return false
+
+  return line.slice(closeIdx + 1).trim().length > 0
+}
+
+function findTagClose(line) {
+  let quote = null
+  for (let i = 0; i < line.length; i += 1) {
+    const ch = line[i]
+    if (quote) {
+      if (ch === quote && line[i - 1] !== '\\') quote = null
+      continue
+    }
+    if (ch === '"' || ch === "'") {
+      quote = ch
+      continue
+    }
+    if (ch === '>') return i
+  }
+  return -1
 }

@@ -529,9 +529,21 @@ $$
 </ResultBox>
 
 <Grid cols="3" gap="md" style="margin-top:1rem">
-  <Block title="内层（Pixel + SCT）">效率 98.4%，占推理时间 40%</Block>
-  <Block title="外层（TRT）">效率 95.8%，占推理时间 35%</Block>
-  <Block title="全局合并">融合后综合效率 97.1%，无额外代价</Block>
+  <Block title="内层（Pixel + SCT）">
+
+  效率 98.4%，占推理时间 40%
+
+  </Block>
+  <Block title="外层（TRT）">
+
+  效率 95.8%，占推理时间 35%
+
+  </Block>
+  <Block title="全局合并">
+
+  融合后综合效率 97.1%，无额外代价
+
+  </Block>
 </Grid>
 
 ---

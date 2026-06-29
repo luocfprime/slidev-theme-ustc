@@ -1316,12 +1316,18 @@
   font-size: var(--ustc-fs-block-title);
 }
 
+.slidev-layout.content .block-body,
+.slidev-layout.split .block-body {
+  font-size: var(--ustc-fs-block-body);
+  line-height: var(--ustc-lh);
+}
+
 .slidev-layout.content .block-body p,
 .slidev-layout.split .block-body p,
 .slidev-layout.content .block-body li,
 .slidev-layout.split .block-body li {
-  font-size: var(--ustc-fs-block-body);
-  line-height: var(--ustc-lh);
+  font-size: inherit;
+  line-height: inherit;
 }
 
 .slidev-layout.content .takeaway p,

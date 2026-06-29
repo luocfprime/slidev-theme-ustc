@@ -89,6 +89,8 @@ test.describe('body rhythm frontmatter', () => {
     const defaultList = defaultBlock.locator('.block-body ul').first()
     const customBlock = slide(page).locator('.block').filter({ hasText: 'Green block' })
     const customTitle = customBlock.locator('.block-title')
+    const inlineBlock = slide(page).locator('.block').filter({ hasText: 'Inline block' })
+    const inlineBody = inlineBlock.locator('.block-body')
 
     await expect(defaultBlock).toHaveCSS('position', 'relative')
     await expect(defaultBlock).toHaveCSS('border-top-width', '2px')
@@ -99,6 +101,7 @@ test.describe('body rhythm frontmatter', () => {
     expect(
       await defaultList.evaluate((el) => parseFloat(getComputedStyle(el).paddingLeft)),
     ).toBeLessThanOrEqual(11)
+    await expect(inlineBody).toHaveCSS('font-size', '19.52px')
 
     await expect(customTitle).toHaveCSS('color', 'rgb(6, 95, 70)')
     await expect(customBlock).not.toHaveCSS(

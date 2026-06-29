@@ -477,13 +477,15 @@ Cite[^1] in caption
 
 **Content-bearing Vue components must be multi-line with blank lines.** Write
 `<Block>`, `<Box>`, `<Note>`, `<Callout>`, `<ResultBox>`, and `<Takeaway>` with the opening tag,
-a blank line, the body, another blank line, and the closing tag — even when the body
-is just one plain-text sentence. The one-line form is syntactically possible, but it
-is not the style for this skill and it fails as soon as the body grows markdown
-syntax (bold `**...**`, lists, links, footnotes `[^x]`, inline/block math, embedded
-HTML, etc.). In those cases Slidev/markdown-it treats the body as raw HTML:
-`**foo**` keeps the literal asterisks and `[^1]` is not turned into a footnote
-reference.
+a blank line, the body, another blank line, and the closing tag. Do this even when
+the body is a single short sentence or a tiny demo cell; `<Takeaway>` is not an
+exception. The one-line form is syntactically possible, but it is not the style for
+this skill and it fails as soon as the body grows markdown syntax (bold `**...**`,
+lists, links, footnotes `[^x]`, inline/block math, embedded HTML, etc.). In those
+cases Slidev/markdown-it treats the body as raw HTML: `**foo**` keeps the literal
+asterisks and `[^1]` is not turned into a footnote reference. One-line bodies also
+bypass some theme typography hooks, so the rendered size can differ from the
+normal component body.
 
 Correct (multi-line + blank lines):
 
@@ -502,9 +504,16 @@ Wrong (all on one line — not accepted, even if the text looks simple):
 ```
 
 Do not use one-line content components such as
-`<Takeaway>Key point.</Takeaway>` or `<Note title="A">Plain text.</Note>`.
+`<Takeaway>Key point.</Takeaway>`, `<Block title="A">Plain text.</Block>`, or
+`<Note title="A">Plain text.</Note>`.
 `<Badge>` is different: it is an inline pill and should stay inline when used inside
 running text.
+
+When a content component is nested inside raw HTML such as `<div>`, keep the
+component tag and its body below Markdown's code-block indentation threshold:
+do not indent them by 4 or more spaces. Four-space indentation turns the body or
+tag into `<pre><code>...`, which can make Vue report "Element is missing end
+tag." Prefer unindented component markup inside raw HTML wrappers.
 
 Named slots follow the same rule: `<template #caption>` also needs a blank line around its content, otherwise a `[^x]` footnote reference in the caption renders literally. For a plain-text caption the `caption` prop is enough; only open the slot when you need footnote references, links, or Vue components.
 

@@ -739,25 +739,61 @@ layout: content
 **cols="2"**
 
 <Grid cols="2" gap="md">
-  <Block title="左列">等宽两列，左。</Block>
-  <Block title="右列">等宽两列，右。</Block>
+  <Block title="左列">
+
+  等宽两列，左。
+
+  </Block>
+  <Block title="右列">
+
+  等宽两列，右。
+
+  </Block>
 </Grid>
 
 **cols="3"**
 
 <Grid cols="3" gap="md">
-  <Block title="A">三列，A。</Block>
-  <Block title="B">三列，B。</Block>
-  <Block title="C">三列，C。</Block>
+  <Block title="A">
+
+  三列，A。
+
+  </Block>
+  <Block title="B">
+
+  三列，B。
+
+  </Block>
+  <Block title="C">
+
+  三列，C。
+
+  </Block>
 </Grid>
 
 **cols="4"**
 
 <Grid cols="4" gap="sm">
-  <Block title="一">四列，一。</Block>
-  <Block title="二">四列，二。</Block>
-  <Block title="三">四列，三。</Block>
-  <Block title="四">四列，四。</Block>
+  <Block title="一">
+
+  四列，一。
+
+  </Block>
+  <Block title="二">
+
+  四列，二。
+
+  </Block>
+  <Block title="三">
+
+  四列，三。
+
+  </Block>
+  <Block title="四">
+
+  四列，四。
+
+  </Block>
 </Grid>
 
 ---
@@ -771,23 +807,51 @@ layout: content
 **cols="45 55"**（接近等宽，稍偏右）
 
 <Grid cols="45 55" gap="lg" style="margin-bottom:1rem">
-  <Block title="45fr">较窄列，放文字说明。</Block>
-  <Block title="55fr">较宽列，放图或内容。</Block>
+  <Block title="45fr">
+
+  较窄列，放文字说明。
+
+  </Block>
+  <Block title="55fr">
+
+  较宽列，放图或内容。
+
+  </Block>
 </Grid>
 
 **cols="1 2"**（1:2 比例）
 
 <Grid cols="1 2" gap="lg" style="margin-bottom:1rem">
-  <Block title="1fr">窄列。</Block>
-  <Block title="2fr">宽列，宽度是左侧两倍。</Block>
+  <Block title="1fr">
+
+  窄列。
+
+  </Block>
+  <Block title="2fr">
+
+  宽列，宽度是左侧两倍。
+
+  </Block>
 </Grid>
 
 **cols="1 2 1"**（中间宽，两侧窄）
 
 <Grid cols="1 2 1" gap="md">
-  <Block title="1fr">侧栏。</Block>
-  <Block title="2fr">主内容区，宽度最大。</Block>
-  <Block title="1fr">侧栏。</Block>
+  <Block title="1fr">
+
+  侧栏。
+
+  </Block>
+  <Block title="2fr">
+
+  主内容区，宽度最大。
+
+  </Block>
+  <Block title="1fr">
+
+  侧栏。
+
+  </Block>
 </Grid>
 
 ---
@@ -801,15 +865,51 @@ layout: content
 **cols="3"，9 个子元素 → 3×3**
 
 <Grid cols="3" gap="sm">
-  <Block>1</Block>
-  <Block>2</Block>
-  <Block>3</Block>
-  <Block>4</Block>
-  <Block>5</Block>
-  <Block>6</Block>
-  <Block>7</Block>
-  <Block>8</Block>
-  <Block>9</Block>
+  <Block>
+
+  1
+
+  </Block>
+  <Block>
+
+  2
+
+  </Block>
+  <Block>
+
+  3
+
+  </Block>
+  <Block>
+
+  4
+
+  </Block>
+  <Block>
+
+  5
+
+  </Block>
+  <Block>
+
+  6
+
+  </Block>
+  <Block>
+
+  7
+
+  </Block>
+  <Block>
+
+  8
+
+  </Block>
+  <Block>
+
+  9
+
+  </Block>
 </Grid>
 
 ---
@@ -821,21 +921,57 @@ layout: content
 `gap` 控制行列间距，三档可选。
 
 <Grid cols="3" gap="sm" style="margin-bottom:0.8rem">
-  <Block title="gap=sm">间距 0.6rem</Block>
-  <Block>内容</Block>
-  <Block>内容</Block>
+  <Block title="gap=sm">
+
+  间距 0.6rem
+
+  </Block>
+  <Block>
+
+  内容
+
+  </Block>
+  <Block>
+
+  内容
+
+  </Block>
 </Grid>
 
 <Grid cols="3" gap="md" style="margin-bottom:0.8rem">
-  <Block title="gap=md（默认）">间距 1.2rem</Block>
-  <Block>内容</Block>
-  <Block>内容</Block>
+  <Block title="gap=md（默认）">
+
+  间距 1.2rem
+
+  </Block>
+  <Block>
+
+  内容
+
+  </Block>
+  <Block>
+
+  内容
+
+  </Block>
 </Grid>
 
 <Grid cols="3" gap="lg">
-  <Block title="gap=lg">间距 2rem</Block>
-  <Block>内容</Block>
-  <Block>内容</Block>
+  <Block title="gap=lg">
+
+  间距 2rem
+
+  </Block>
+  <Block>
+
+  内容
+
+  </Block>
+  <Block>
+
+  内容
+
+  </Block>
 </Grid>
 
 ---
@@ -847,21 +983,57 @@ layout: content
 `align` 控制单元格纵向对齐方式（`align-items`）。高度不一致时效果明显。
 
 <Grid cols="3" gap="md" alignY="top" style="margin-bottom:0.8rem">
-  <Block title="alignY=top（默认）">顶部对齐。内容较短。</Block>
-  <Block title="较高的单元格">这个单元格的内容更多一些，撑高了整行，其他单元格顶部对齐。</Block>
-  <Block title="短内容">短。</Block>
+  <Block title="alignY=top（默认）">
+
+  顶部对齐。内容较短。
+
+  </Block>
+  <Block title="较高的单元格">
+
+  这个单元格的内容更多一些，撑高了整行，其他单元格顶部对齐。
+
+  </Block>
+  <Block title="短内容">
+
+  短。
+
+  </Block>
 </Grid>
 
 <Grid cols="3" gap="md" alignY="center" style="margin-bottom:0.8rem">
-  <Block title="alignY=center">居中对齐。</Block>
-  <Block title="较高的单元格">这个单元格的内容更多一些，撑高了整行，其他单元格垂直居中。</Block>
-  <Block title="短内容">短。</Block>
+  <Block title="alignY=center">
+
+  居中对齐。
+
+  </Block>
+  <Block title="较高的单元格">
+
+  这个单元格的内容更多一些，撑高了整行，其他单元格垂直居中。
+
+  </Block>
+  <Block title="短内容">
+
+  短。
+
+  </Block>
 </Grid>
 
 <Grid cols="3" gap="md" alignY="bottom">
-  <Block title="alignY=bottom">底部对齐。</Block>
-  <Block title="较高的单元格">这个单元格的内容更多一些，撑高了整行，其他单元格底部对齐。</Block>
-  <Block title="短内容">短。</Block>
+  <Block title="alignY=bottom">
+
+  底部对齐。
+
+  </Block>
+  <Block title="较高的单元格">
+
+  这个单元格的内容更多一些，撑高了整行，其他单元格底部对齐。
+
+  </Block>
+  <Block title="短内容">
+
+  短。
+
+  </Block>
 </Grid>
 
 ---
@@ -931,11 +1103,19 @@ density: dense
 <Grid cols="2" gap="lg" alignY="top">
   <div>
     <PlotlyGraph filePath="/Graph/plotly1.json" :tickFontSize="11" :legendFontSize="10" :graphHeight="400" :graphWidth="500" />
-    <Takeaway>左图：2D 折线，观察趋势。</Takeaway>
+<Takeaway>
+
+左图：2D 折线，观察趋势。
+
+</Takeaway>
   </div>
   <div>
     <PlotlyGraph filePath="/Graph/plotly2.json" :tickFontSize="11" :graphHeight="400" :graphWidth="500" />
-    <Takeaway>右图：3D 曲面，可旋转查看。</Takeaway>
+<Takeaway>
+
+右图：3D 曲面，可旋转查看。
+
+</Takeaway>
   </div>
 </Grid>
 
@@ -958,7 +1138,11 @@ density: dense
   - 本底估计采用 ABCD 方法
   - 系统误差 $< 5\%$
 
-  <Takeaway>结果与标准模型预期一致。</Takeaway>
+  <Takeaway>
+
+  结果与标准模型预期一致。
+
+  </Takeaway>
 
   </div>
 </Grid>
@@ -1143,9 +1327,21 @@ Block 是 Grid 最常见的子元素。
 </Grid>
 
 <Grid cols="3" gap="sm" style="margin-top:0.8rem">
-  <Block title="P1">第一个命题。</Block>
-  <Block title="P2">第二个命题。</Block>
-  <Block title="P3">第三个命题。</Block>
+  <Block title="P1">
+
+  第一个命题。
+
+  </Block>
+  <Block title="P2">
+
+  第二个命题。
+
+  </Block>
+  <Block title="P3">
+
+  第三个命题。
+
+  </Block>
 </Grid>
 
 ---

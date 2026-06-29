@@ -277,6 +277,12 @@ Custom color changes the title and outline color family.
 
 </Block>
 
+<Block title="Inline block">
+
+Block bodies should not inherit the larger slide body text.
+
+</Block>
+
 <Block title="A deliberately long theorem label that can wrap without overlapping body text">
 
 Wrapped titles should reserve enough vertical space before the body starts.
