@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@iconify-json/mdi": "^1.2.3",
-    "@myriaddreamin/typst-ts-node-compiler": "^0.6.0",
-    "katex": "^0.17.0",
+    "@myriaddreamin/typst-ts-node-compiler": "^0.7.0",
+    "katex": "^0.18.1",
     "markdown-it": "^14.1.1",
     "plotly.js-dist": "^3.5.0",
     "qrcode.vue": "^3.9.0"
